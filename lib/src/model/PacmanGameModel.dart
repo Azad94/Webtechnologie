@@ -12,6 +12,7 @@ class PacmanGameModel{
   Pacman pacman;
 
 
+
   //gets the controller as param
   PacmanGameModel(this.controller);
 
