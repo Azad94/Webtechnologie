@@ -1,6 +1,3 @@
-part of pacman;
+part of pacmanLib;
 
-class Pill extends Item{
-
-  Pill();
-}
+class Pill extends Item {}

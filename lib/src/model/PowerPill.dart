@@ -1,11 +1,5 @@
-part of pacman;
+part of pacmanLib;
 
-class PowerPill extends Item{
-
-  PowerPill();
-
-  enablePowerMode(){
-
-  }
-
+class PowerPill extends Item {
+  void enablePowerMode() {}
 }

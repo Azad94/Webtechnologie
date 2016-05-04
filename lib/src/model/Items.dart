@@ -1,7 +1,3 @@
-part of pacman;
+part of pacmanLib;
 
-enum Items{
-  PILL,
-  POWERPILL,
-  CHERRY
-}
+enum Items { PILL, POWERPILL, CHERRY }

@@ -1,25 +1,13 @@
-part of pacman;
-class Item{
+part of pacmanLib;
 
-  bool visible = false;
-  int score = 0;
-  int pillCount = 0;
+class Item {
+  bool _visible = false;
+  int _score = 0;
+  int _pillCount = 0;
 
-  Item();
+  void increaseScore() {}
 
-  increaseScore(){
+  void setInvisible() {}
 
-  }
-
-  setInvisible(){
-
-  }
-
-  updatePillCount(){
-
-  }
-
-  setGameWon(){
-
-  }
+  void updatePillCount() {}
 }

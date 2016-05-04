@@ -1,34 +1,19 @@
-part of pacman;
+part of pacmanLib;
 
-class PacmanGameView{
+class PacmanGameView {
+  int _start = 0;
 
-  int start = 0;
+  PacmanGameView(this._start);
 
-  PacmanGameView(this.start);
+  void updateEnvironment() {}
 
-  updateEnvironment(){
+  void updateDynamicMap() {}
 
-  }
+  void updateItemMap() {}
 
-  updateDynamicMap(){
+  void updateGameStatus() {}
 
-  }
+  void updateListen() {}
 
-  updateItemMap(){
-
-  }
-
-  updateGameStatus(){
-
-  }
-
-  updateListen(){
-
-  }
-
-  updateScore(){
-
-  }
-
-
+  void updateScore() {}
 }

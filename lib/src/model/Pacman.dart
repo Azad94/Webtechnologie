@@ -1,21 +1,12 @@
-part of pacman;
+part of pacmanLib;
 
-class pacman{
+class Pacman {
+  double _speed;
+  int _lives;
 
-  int speed = 0;
-  int lifes = 0;
+  Pacman(this.lives);
 
-  pacman(this.lifes);
+  void move(Directions dir) {}
 
-  getLife int(){
-    return 3;
-  }
-
-  move (Directions dir){
-
-  }
-
-  decreaseLife(){
-
-  }
+  void decreaseLife() {}
 }

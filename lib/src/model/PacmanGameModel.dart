@@ -1,61 +1,27 @@
 part of pacman;
 
-class PacmanGameModel{
+class PacmanGameModel {
+  bool _pause = false;
+  bool _gameOver = false;
+  int _size = 0;
 
+  bool getGameOver() => false;
 
-  bool pause = false;
-  bool gameOver = false;
-  int size = 0;
-  //to prevent error warnings for the constructor
-  int x, y;
-  Controller controller;
-  Pacman pacman;
+  void moveUp() {}
 
+  void moveDown() {}
 
+  void moveLeft() {}
 
-  //gets the controller as param
-  PacmanGameModel(this.controller);
+  void moveRight() {}
 
-  PacmanGame(int x, int y){
-    this.x = x;
-    this.y = y;
-  }
+  void pauseGame() {}
 
-  getGameOver bool(){ return (pacman.getLife()) == 0 ? true : false;}
+  void moveGhost() {}
 
-  moveUp(){
+  void getEnvironmentMap() {}
 
-  }
+  void getDynamicMap() {}
 
-  moveDown(){
-
-  }
-
-  moveLeft(){
-
-  }
-
-  moveRight(){
-
-  }
-
-  pauseGame(){
-
-  }
-
-  moveGhost(){
-
-  }
-
-  getEnvironmentMap(){
-
-  }
-
-  getDynamicMap(){
-
-  }
-
-  getItemMap(){
-    
-  }
+  void getItemMap() {}
 }

@@ -1,10 +1,5 @@
-part of pacman;
+part of pacmanLib;
 
-class cherry extends Item{
-
-  cherry();
-
-  scoreReached() {
-
-  }
+class cherry extends Item {
+  void scoreReached() {}
 }
