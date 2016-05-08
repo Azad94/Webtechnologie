@@ -1,3 +1,3 @@
 part of pacmanLib;
 
-enum Statics { WALL, FLOOR }
+enum Statics { WALL, FLOOR, DOOR, NOTHING }

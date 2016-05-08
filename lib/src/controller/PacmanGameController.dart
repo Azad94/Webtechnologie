@@ -4,8 +4,4 @@ class PacmanGameController{
 
   var keyListener;
 
-  PacmanGameModel pacman;
-
-  Controller();
-
 }
