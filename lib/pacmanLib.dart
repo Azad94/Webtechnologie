@@ -2,6 +2,7 @@ library pacmanLib;
 
 // Imports
 import 'dart:collection';
+import 'dart:math';
 
 // Items
 part 'src/model/Item.dart';
@@ -17,10 +18,10 @@ part 'src/model/Statics.dart';
 
 // Ghosts
 part 'src/model/Ghost.dart';
-part 'src/model/Bashful.dart';
-part 'src/model/Shadow.dart';
-part 'src/model/Speedy.dart';
-part 'src/model/Pokey.dart';
+part 'src/model/Inky.dart';
+part 'src/model/Blinky.dart';
+part 'src/model/Pinky.dart';
+part 'src/model/Clyde.dart';
 
 //IO
 part 'src/model/LevelLoader.dart';
@@ -31,6 +32,7 @@ part 'src/model/GameElement.dart';
 part 'src/model/Environment.dart';
 part 'src/model/Level.dart';
 part 'src/model/Pacman.dart';
+part 'src/model/PacmanGameModel.dart';
 
 // View
 part 'src/view/PacmanGameView.dart';

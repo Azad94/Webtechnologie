@@ -6,6 +6,6 @@ class PacmanGameController{
 
   PacmanGameModel pacman;
 
-  Controller();
+  PacmanGameController();
 
 }

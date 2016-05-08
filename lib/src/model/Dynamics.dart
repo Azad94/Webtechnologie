@@ -1,3 +1,3 @@
 part of pacmanLib;
 
-enum Dynamics { BASHFUL, SHADOW, POKEY, SPEEDY }
+enum Dynamics {BLINKY, PINKY, INKY, CLYDE}

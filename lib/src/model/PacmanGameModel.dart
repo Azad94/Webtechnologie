@@ -1,4 +1,4 @@
-part of pacman;
+part of pacmanLib;
 
 class PacmanGameModel {
   bool _pause = false;
