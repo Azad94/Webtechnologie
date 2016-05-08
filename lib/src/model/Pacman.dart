@@ -4,7 +4,7 @@ class Pacman {
   double _speed;
   int _lives;
 
-  Pacman(this.lives);
+  Pacman(this._lives);
 
   void move(Directions dir) {}
 

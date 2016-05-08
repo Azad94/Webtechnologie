@@ -13,13 +13,39 @@
     <meta name="scaffolded-by" content="https://github.com/google/stagehand">
     <title>Webtechnologie</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="main.dart" type="application/dart"></script>
-    <script defer src="packages/browser/dart.js"></script>
 </head>
 
 <body>
+<!-- Container für die Startseite -->
+<div class="start">
+    <p id="startText"></p>
+    <p id="startButton">START</p>
+</div>
 
-  <div id="output"></div>
+<!-- Container für die Nachrichten -->
+<div class="messages">
+    <p id="msg"></p>
+</div>
 
+<div class="game">
+    <!-- das Spielfeld -->
+    <div id="labyrinth"></div>
+
+    <!-- Spielinformationen -->
+    <div id="information">
+        <p id="level"></p>
+        <p id="score"></p>
+        <p id="lives"></p>
+    </div>
+
+    <p>
+        <small>
+            &copy; Sheraz Azad, Malte Grebe, Niklas Klatt & Juliane Steglich, 2016<br>
+        </small>
+    </p>
+</div>
+
+<script defer src="main.dart" type="application/dart"></script>
+<script defer src="packages/browser/dart.js"></script>
 </body>
 </html>
