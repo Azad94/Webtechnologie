@@ -8,25 +8,30 @@ abstract class Ghost extends GameElement {
   int start = 0;
   int frightenedModeTimer = 0;
   bool scatter;
+  final int chaseMode = 200;
+  final int scatterMode = 50;
+  int countDownTimer;
+  Directions nextDirection;
+  Directions _previousDirection = Directions.LEFT;
+  int _ghostsEaten = 0;
 
   //8 X 7 DUMMY MAP
   List<List> _dummyMap =[
-                              [00,01,02,03,04,05,06],
-                              [10,11,12,13,14,15,16],
-                              [20,21,22,23,24,25,26],
-                              [30,31,32,33,34,35,36],
-                              [40,41,42,43,44,45,46],
-                              [50,51,52,53,54,55,56],
-                              [60,61,62,63,64,65,66],
-                              [70,71,72,73,74,75,76],
+                              [00,10,20,30,40,50,60],//00
+                              [01,11,21,31,41,51,61],
+                              [02,12,22,32,42,52,62],
+                              [03,13,23,33,43,53,63],
+                              [04,14,24,34,44,54,64],//24
+                              [05,15,25,35,45,55,65],
+                              [06,16,26,36,46,56,66],
+                              [07,17,27,37,74,57,67],
                             ];
 
   Ghost(){  }
 
-  void setEatable(bool eatable){  }
-
   //intializes the default START and SCATTER POSITIONS
-  void initDefaultPosition(_positions, _dummyMap){
+  void initDefaultPosition(_positions, _dummyMap)
+  {
     //erst Spalte dann Zeile, das sind auf einem 8x6 Feld die passenden Positionen
 
     //BLINKY Start Position
@@ -39,7 +44,8 @@ abstract class Ghost extends GameElement {
     _dummyMap[5][5] = Dynamics.CLYDE;
   }
 
-  void initScatterPosition(_dummyMap){
+  void initScatterPosition(_dummyMap)
+  {
     //BLINKY SCATTER POSITION
     _dummyMap[6][0] = Statics.SBLINKY;
     //PINKY SCATTER POSITION
@@ -50,67 +56,119 @@ abstract class Ghost extends GameElement {
     _dummyMap[0][7] = Statics.SCLYDE;
   }
 
-  void startScatter(){
-    scatter = true;
-    int _scatterTimer = 7;
-
-    while (_scatterTimer > 0){
-      _scatterTimer--;
-    }
-  }
-
-  void stopScatter(){
-    scatter = false;
-  }
-
-  List<List> findScatterPosition(_dummyMap){
+  List<List> findScatterPosition(_dummyMap)
+  {
     List<List> _scatterPosition = [6][7];
     return _scatterPosition;
   }
 
-  List<List> getCurrentPosition(){
+  List<List> getCurrentPosition()
+  {
     List<List> _currentPosition = [3][5];
     return _currentPosition;
   }
 
-  void setWalls(_dummyMap){
+  void setWalls(_dummyMap)
+  {
     _dummyMap[4][5] = Statics.WALL;
     _dummyMap[5][5] = Statics.WALL;
     _dummyMap[4][6] = Statics.WALL;
     _dummyMap[5][6] = Statics.WALL;
   }
 
-  int currentX(int x){return x = 3;}
-  int currentY(int y){return y = 5;}
+  /**
+   * if the ghosts are eatable, return value is set to false
+   * if the ghosts are not eatable, return value is set to true
+   **/
+  void setEatable()
+  {
+    eatable ? eatable = true : eatable = false;
+  }
 
-  int targetX(int x){return x = 6;}
-  int targetY(int y){return y = 7;}
+  //return's true if the ghosts are eatable else false
+  bool isEatable()
+  {
+    return eatable;
+  }
 
-  void startGhost(){
+  /**
+  void setDirection(Directions dir)
+  {
+    _previousDirection = nextDirection;
+    nextDirection = dir;
+  }
+  **/
+
+  //returns true if the ghosts are in Scatter Mode
+  bool isScatterModeOn()
+  {
+    return scatter;
+  }
+
+  void startScatterMode()
+  {
+    //TODO muss noch implementiert werden, Logik fehlt noch, muss ich mir noch überlegen
+    scatter = true;
+    int _scatterTimer = 7;
+
+    while (_scatterTimer > 0)
+    {
+      _scatterTimer--;
+    }
+  }
+
+  void stopScatter()
+  {
+    //TODO muss noch implementiert werden, Logik fehlt noch, muss ich mir noch überlegen
+    scatter = false;
 
   }
 
-  Directions nextDirection;
-  Directions _previousDirection = Directions.LEFT;
+  //as param give the ghost to be respawned
+  void respawn(Dynamics ghost){
+    //TODO muss noch geklärt werden auf wessen seite das passiert auf meiner oder der von niklas
+  }
 
+  //abhängig davon wieviele Ghosts schon gefressen wurden
+  int getScoreValue()
+  {
+    _ghostsEaten++;
+    return _ghostsEaten;
+  }
+
+  //sets the score of the ghosts to zero
+  void setGhostScoreToZero()
+  {
+   _ghostsEaten = 0;
+  }
+
+  int getDoorX()
+  {
+    int x = 3;
+    return x;
+  }
+
+  int getDoorY()
+  {
+    int y = 4;
+    return y;
+  }
+
+  //TODO seeehr großer Fehler, der noch behoben werden muss
   void tryMove(currentX, currentY, targetX, targetY){
     //horizontal difference from currentPosition to targetPosition
     int horDifference = currentX-targetX;
     int verDifference = currentY-targetY;
 
-    //prefered direction considering the difference     UP-> LEFT-> DOWN
-    Directions prefferedHorDirection = horDifference > 0 ? Directions.LEFT : Directions.RIGHT;
-    Directions prefferedVerDirection = verDifference > 0 ? Directions.UP : Directions.DOWN;
+    //preferred direction considering the difference     UP-> LEFT-> DOWN
+    Directions preferredHorDirection = horDifference > 0 ? Directions.LEFT : Directions.RIGHT;
+    Directions preferredVerDirection = verDifference > 0 ? Directions.UP : Directions.DOWN;
 
     //checks if the vertical difference is greater than the horizontal
     bool verticalMoreImportant = verDifference.abs() > horDifference.abs();
 
     //sets next preferred direction
-    if(verticalMoreImportant) nextDirection = prefferedVerDirection;
-    else nextDirection = prefferedHorDirection;
-
-    // MACHT MAN DAS SO BZW SOLLTE MAN ?
-    // verticalMoreImportant == true ? nextDirection = prefferedVerDirection : nextDirection = prefferedHorDirection;
+    verticalMoreImportant ? nextDirection = preferredVerDirection : nextDirection = preferredHorDirection;
 
     if(!isMoveAllowed(nextDirection, currentX, currentY))
     {
@@ -124,13 +182,12 @@ abstract class Ghost extends GameElement {
         }
         else
         {
-          nextDirection = prefferedHorDirection;
+          nextDirection = preferredHorDirection;
           if(!isMoveAllowed(nextDirection, currentX, currentY))
           {
-            nextDirection = prefferedHorDirection == Directions.LEFT ? Directions.RIGHT : Directions.LEFT;
+            nextDirection = preferredHorDirection == Directions.LEFT ? Directions.RIGHT : Directions.LEFT;
               if(!isMoveAllowed(nextDirection,currentX,currentY))
-                nextDirection = prefferedVerDirection == Directions.UP ? Directions.DOWN : Directions.UP;
-
+                nextDirection = preferredVerDirection == Directions.UP ? Directions.DOWN : Directions.UP;
           }
         }
       }
@@ -145,12 +202,12 @@ abstract class Ghost extends GameElement {
           }
           else
           {
-            nextDirection = prefferedVerDirection;
+            nextDirection = preferredVerDirection;
             if(!isMoveAllowed(nextDirection, currentX, currentY))
             {
-              nextDirection = prefferedVerDirection == Directions.UP ? Directions.DOWN : Directions.UP;
+              nextDirection = preferredVerDirection == Directions.UP ? Directions.DOWN : Directions.UP;
               if(!isMoveAllowed(nextDirection, currentX, currentY))
-                nextDirection = prefferedHorDirection == Directions.LEFT ? Directions.RIGHT : Directions.LEFT;
+                nextDirection = preferredHorDirection == Directions.LEFT ? Directions.RIGHT : Directions.LEFT;
             }
           }
         }
@@ -158,22 +215,26 @@ abstract class Ghost extends GameElement {
     }
   }
 
-  //false if move is not allowed
-  bool isMoveAllowed(Directions d, int currentX, currentY){
-
+  /**
+   * checks is there is any collision with a wall
+   * returns false if move is not allowed else true
+   * */
+  bool isMoveAllowed(Directions d, int currentX, currentY)
+  {
     //Map Measures
     int currentXPos = currentX;
     int currentYPos = currentY;
 
-    if(d == Directions.UP && isCollisionPossible(currentYPos, currentXPos, _dummyMap))return false;
-    if(d == Directions.DOWN && isCollisionPossible(currentYPos, currentXPos, _dummyMap))return false;
-    if(d == Directions.LEFT && isCollisionPossible(currentYPos, currentXPos, _dummyMap))return false;
-    if(d == Directions.RIGHT && isCollisionPossible(currentYPos, currentXPos, _dummyMap))return false;
+    if(d == Directions.UP && isCollisionPossible(currentYPos, currentXPos, _dummyMap))    return false;
+    if(d == Directions.DOWN && isCollisionPossible(currentYPos, currentXPos, _dummyMap))  return false;
+    if(d == Directions.LEFT && isCollisionPossible(currentYPos, currentXPos, _dummyMap))  return false;
+    if(d == Directions.RIGHT && isCollisionPossible(currentYPos, currentXPos, _dummyMap)) return false;
     return true;
   }
 
   //true if there is an collision with a WALL
-  bool isCollisionPossible(int nextX, int nextY, _dummyMap){
+  bool isCollisionPossible(int nextX, int nextY, _dummyMap)
+  {
     if (_dummyMap[nextY][nextX] == Statics.WALL) return true;
     return false;
   }
