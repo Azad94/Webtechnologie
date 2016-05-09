@@ -195,19 +195,18 @@ class Level {
                 new Environment(x, y, true, true, false, false);
             break;
 
-          // TODO score
           case LevelLoader.PILL:
-            _tiles[y][x]._item = new Pill(x, y, true, false, true, _scorePill);
+            _tiles[y][x]._item = new Pill(x, y, true, false, true, _scorePill, _model);
             break;
 
           case LevelLoader.POWERPILL:
             _tiles[y][x]._item =
-                new PowerPill(x, y, true, false, true, _scorePill);
+                new PowerPill(x, y, true, false, true, _scorePill, _model);
             break;
 
           case LevelLoader.CHERRY:
             _tiles[y][x]._item =
-                new Cherry(x, y, true, false, true, _scoreCherry);
+                new Cherry(x, y, true, false, true, _scoreCherry, _model);
             break;
 
           case LevelLoader.INKY:
@@ -227,7 +226,7 @@ class Level {
             break;
 
           case LevelLoader.PACMAN:
-            final p = new Pacman(x, y, false, true, _lives, this);
+            final p = new Pacman(x, y, false, true, _lives, this, _model);
             _tiles[y][x]._pacman = p;
             _model.registerGameElement(p);
             break;

@@ -76,6 +76,18 @@ class PacmanGameModel {
   }
 
   /**
+   * set the game to game over
+   */
+  void gameOver() {
+    _gameOver = true;
+  }
+
+  /**
+   * enable the power mode, means that ghosts are eatable
+   */
+  void enablePowerMode() => _ghosts.forEach((g) => g.eatableMode());
+
+  /**
    * Moves all [Ghost]s DO NOT CALL
    */
   void moveGhost() => _ghosts.forEach((g) => g.move());

@@ -4,11 +4,13 @@ class Pacman extends GameElement {
   double _speed; // TODO speed
   int _lives;
   Level _level;
+  PacmanGameModel _model;
 
-  Pacman(int x, int y, bool collPlayer, bool collGhost, int lives, Level l)
+  Pacman(int x, int y, bool collPlayer, bool collGhost, int lives, Level l, PacmanGameModel model)
       : super(x, y, collPlayer, collGhost),
         this._lives = lives,
-        this._level = l;
+        this._level = l,
+        this._model = model;
 
   /**
    * moves [Pacman] in the given [Directions].
@@ -33,7 +35,8 @@ class Pacman extends GameElement {
   }
 
   void decreaseLife() {
-    /* TODO reaction */
-    print("decreaseLife");
+    if(--_lives == 0) {
+      _model.gameOver();
+    }
   }
 }
