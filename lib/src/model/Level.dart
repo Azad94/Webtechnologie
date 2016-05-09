@@ -106,15 +106,15 @@ class Level {
         else if (_tiles[y][x].ghosts.length != 0) {
           // is ghost Bashful
           if (_tiles[y][x].ghosts[0] is Inky)
-            ret[y].add(Dynamics.BASHFUL);
+            ret[y].add(Dynamics.INKY);
           // is ghost Shadow
           else if (_tiles[y][x].ghosts[0] is Blinky)
-            ret[y].add(Dynamics.SHADOW);
+            ret[y].add(Dynamics.BLINKY);
           // is ghost Speedy
           else if (_tiles[y][x].ghosts[0] is Clyde)
-            ret[y].add(Dynamics.SPEEDY);
+            ret[y].add(Dynamics.CLYDE);
           //  is ghost Pokey
-          else if (_tiles[y][x].ghosts[0] is Pinky) ret[y].add(Dynamics.POKEY);
+          else if (_tiles[y][x].ghosts[0] is Pinky) ret[y].add(Dynamics.PINKY);
         }
         // no dynamics
         else
@@ -142,7 +142,8 @@ class Level {
         else if (_tiles[y][x]._item is PowerPill && _tiles[y][x]._item._visible)
           ret[y].add(Items.POWERPILL);
         // is cherry
-        else if (_tiles[y][x]._item is Cherry && _tiles[y][x]._item._visible) ret[y].add(Items.CHERRY);
+        else if (_tiles[y][x]._item is Cherry && _tiles[y][x]._item._visible)
+          ret[y].add(Items.CHERRY);
       }
     }
     return ret;
@@ -175,16 +176,29 @@ class Level {
             break;
 
           case LevelLoader.POWERPILL:
-            _tiles[y][x]._item = new PowerPill(x, y, true, false, true, _scorePill);
+            _tiles[y][x]._item =
+                new PowerPill(x, y, true, false, true, _scorePill);
             break;
 
           case LevelLoader.CHERRY:
-            _tiles[y][x]._item = new Cherry(x, y, true, false, true, _scoreCherry);
+            _tiles[y][x]._item =
+                new Cherry(x, y, true, false, true, _scoreCherry);
             break;
 
-          case LevelLoader.GHOST:
-            _tiles[y][x].ghosts.add(new Inky(
-                x, y, false, false, this)); // TODO create all Ghosts
+          case LevelLoader.INKY:
+            _tiles[y][x].ghosts.add(new Inky(x, y, false, false, this));
+            break;
+
+          case LevelLoader.PINKY:
+            _tiles[y][x].ghosts.add(new Pinky(x, y, false, false, this));
+            break;
+
+          case LevelLoader.CLYDE:
+            _tiles[y][x].ghosts.add(new Clyde(x, y, false, false, this));
+            break;
+
+          case LevelLoader.BLINKY:
+            _tiles[y][x].ghosts.add(new Blinky(x, y, false, false, this));
             break;
 
           case LevelLoader.PACMAN:

@@ -83,6 +83,26 @@ class LevelLoader {
   static const GHOST = "G";
 
   /**
+   * character for Pinky
+   */
+  static const PINKY = "Y";
+
+  /**
+   * character for Clyde
+   */
+  static const CLYDE = "C";
+
+  /**
+   * character for Blinky
+   */
+  static const BLINKY = "B";
+
+  /**
+   * character for Inky
+   */
+  static const INKY = "I";
+
+  /**
    * character for Pacman
    */
   static const PACMAN = "P";
