@@ -5,13 +5,16 @@ class PacmanGameModel {
   Pacman _pacman;
 
   bool _gameOver = false;
-  int _size = 0;
+  int _sizeX;
+  int _sizeY;
 
   Level _level;
   int _currentLevel = -1;
 
   PacmanGameModel() {
     LevelLoader.loadConfig();
+    _sizeX = LevelLoader.sizeX;
+    _sizeY = LevelLoader.sizeY;
   }
 
   bool getGameOver() => false;
