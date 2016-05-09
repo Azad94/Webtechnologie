@@ -13,6 +13,7 @@ abstract class Ghost extends GameElement {
   int countDownTimer;
   Directions nextDirection;
   Directions _previousDirection = Directions.LEFT;
+  Directions _savePreviousDirection;
   int _ghostsEaten = 0;
 
   //8 X 7 DUMMY MAP
@@ -155,7 +156,7 @@ abstract class Ghost extends GameElement {
   }
 
   //TODO seeehr großer Fehler, der noch behoben werden muss
-  void tryMove(currentX, currentY, targetX, targetY){
+  bool tryMove(currentX, currentY, targetX, targetY){
     //horizontal difference from currentPosition to targetPosition
     int horDifference = currentX-targetX;
     int verDifference = currentY-targetY;
@@ -191,28 +192,107 @@ abstract class Ghost extends GameElement {
           }
         }
       }
+      /// ELSE ZWEIG BEGINN
       else
-      {
-        if(_previousDirection == Directions.UP || _previousDirection == Directions.DOWN)
-        {
-          nextDirection = _previousDirection;
-          if(!isMoveAllowed(nextDirection, currentX, currentY))
-          {
-            nextDirection = nextDirection == Directions.UP ? Directions.DOWN : Directions.UP;
-          }
-          else
-          {
-            nextDirection = preferredVerDirection;
-            if(!isMoveAllowed(nextDirection, currentX, currentY))
+      { //if the next and previous Direction are same nothing changes
+        if(_previousDirection == Directions.LEFT || _previousDirection == Directions.RIGHT) {
+
+          _savePreviousDirection = _previousDirection;
+
+          //if they are different, try going UP first
+          nextDirection == _previousDirection ? nextDirection : nextDirection = Directions.UP;
+          if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+          //if UP is not allowed try going LEFT
+          //if LEFT is not allowed try going DOWN
+          //nextDirection == Directions.UP ? nextDirection = Directions.LEFT : nextDirection = Directions.DOWN;
+          if (nextDirection == Directions.UP) {
+                                                      // && nextDirection == Directions.RIGHT
+            if(_savePreviousDirection == Directions.LEFT || _savePreviousDirection == Directions.RIGHT)
             {
-              nextDirection = preferredVerDirection == Directions.UP ? Directions.DOWN : Directions.UP;
-              if(!isMoveAllowed(nextDirection, currentX, currentY))
-                nextDirection = preferredHorDirection == Directions.LEFT ? Directions.RIGHT : Directions.LEFT;
+              nextDirection = Directions.DOWN;
+
+              if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+              if (nextDirection == Directions.DOWN && _savePreviousDirection == Directions.RIGHT)
+              {
+                nextDirection = Directions.RIGHT;
+                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+                else return false;
+              }
+              else
+              {
+                nextDirection = Directions.LEFT;
+                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+                return false;
+              }
+            }
+            else
+            {
+              // macht kein sinn weil nicht beides gleichzeitig stimmen kann das hintere eig NIE
+              if (_savePreviousDirection == Directions.LEFT && nextDirection == Directions.DOWN)
+                  nextDirection = Directions.RIGHT;
+
+              if(_savePreviousDirection == Directions.LEFT && preferredHorDirection == Directions.LEFT)
+              {
+                nextDirection = Directions.LEFT;
+                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+                nextDirection = Directions.DOWN;
+                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+              }
+
+              if(_savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.LEFT)
+              {
+                nextDirection = Directions.DOWN;
+                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+                nextDirection = Directions.RIGHT;
+                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+                return false;
+              }
+
+              if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+              //TODO is this return still needed, i mean there is no possibility where you can get stucked
+              return false;
             }
           }
+
+          //if RIGHT is not allowed try going UP
+          if(nextDirection == Directions.RIGHT)
+          {
+            nextDirection = Directions.UP;
+            if(!isMoveAllowed(nextDirection, currentX,currentY)) return true;
+
+            //if UP not allowed try going LEFT
+            nextDirection = Directions.LEFT;
+            if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+            //if UP not allowed try going DOWN
+            nextDirection = Directions.DOWN;
+            if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+            //no way to go, !trapped!
+            //TODO is this return still needed, i mean there is no possibility where you can get stucked
+            return false;
+          }
+
+          //if going LEFT ist not allowed try going DOWN
+          nextDirection == Directions.LEFT ? nextDirection = Directions.DOWN : Directions.UP;
+          if(!isMoveAllowed(nextDirection, currentX,currentY)) return true;
+
+          //if(nextDirection == Directions.DOWN && _savePreviousDirection == Directions.)
+          //if going DOWN is not allowed try going UP
+          if(nextDirection == Directions.DOWN) nextDirection = Directions.UP;
+          if(!isMoveAllowed(nextDirection, currentX,currentY)) return true;
+
+          //TODO is this return still needed, i mean there is no possibility where you can get stucked
+          return false;
         }
       }
     }
+    return false;
   }
 
   /**
