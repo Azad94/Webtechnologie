@@ -10,6 +10,10 @@ class PacmanGameModel {
   Level _level;
   int _currentLevel = -1;
 
+  PacmanGameModel() {
+    LevelLoader.loadConfig();
+  }
+
   bool getGameOver() => false;
 
   int getCurrentLevel() => _currentLevel;
@@ -20,7 +24,15 @@ class PacmanGameModel {
     _ghosts = new List();
     LevelLoader.loadLevel(level);
     _currentLevel = LevelLoader.levelNumber;
-    _level = new Level(LevelLoader._map, LevelLoader.sizeX, LevelLoader.sizeY, LevelLoader._lives, this);
+    _level = new Level(
+        LevelLoader._map,
+        LevelLoader.sizeX,
+        LevelLoader.sizeY,
+        LevelLoader._lives,
+        LevelLoader.SCORE_PILL,
+        LevelLoader.SCORE_CHERRY,
+        LevelLoader.SCORE_POWERPILL,
+        this);
   }
 
   /**

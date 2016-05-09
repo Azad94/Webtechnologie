@@ -4,17 +4,25 @@ class Level {
   int _sizeX;
   int _sizeY;
   int _lives;
+  num _scorePill;
+  num _scoreCherry;
+  num _scorePowerPill;
+
   List<List<Tile>> _tiles = new List<List<Tile>>();
   PacmanGameModel _model;
 
   /**
    * Creates a level by given parameters
    */
-  Level(String environmentCode, num sizeX, num sizeY, int lives, PacmanGameModel model) {
+  Level(String environmentCode, num sizeX, num sizeY, int lives, num scorePill,
+      num scoreCherry, num scorePowerPill, PacmanGameModel model) {
     this._sizeX = sizeX;
     this._sizeY = sizeY;
     this._model = model;
     this._lives = lives;
+    this._scorePill = scorePill;
+    this._scoreCherry = scoreCherry;
+    this._scorePowerPill = scorePowerPill;
     initTiles();
     createObjects(environmentCode);
   }
@@ -163,15 +171,15 @@ class Level {
 
           // TODO score
           case LevelLoader.PILL:
-            _tiles[y][x]._item = new Pill(x, y, true, false, true, 0);
+            _tiles[y][x]._item = new Pill(x, y, true, false, true, _scorePill);
             break;
 
           case LevelLoader.POWERPILL:
-            _tiles[y][x]._item = new PowerPill(x, y, true, false, true, 0);
+            _tiles[y][x]._item = new PowerPill(x, y, true, false, true, _scorePill);
             break;
 
           case LevelLoader.CHERRY:
-            _tiles[y][x]._item = new Cherry(x, y, true, false, true, 0);
+            _tiles[y][x]._item = new Cherry(x, y, true, false, true, _scoreCherry);
             break;
 
           case LevelLoader.GHOST:
