@@ -13,6 +13,7 @@ class Item extends GameElement {
    * the [Item] is picked up. Increase the score and make [Item] invisible
    */
   void pickUp() {
+    print("pickedUp");
     _scoreCounter += _score;
     _visible = false;
   }

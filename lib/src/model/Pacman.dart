@@ -32,5 +32,8 @@ class Pacman extends GameElement {
     }
   }
 
-  void decreaseLife() {}
+  void decreaseLife() {
+    /* TODO reaction */
+    print("decreaseLife");
+  }
 }

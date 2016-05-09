@@ -3,6 +3,7 @@ part of pacmanLib;
 class PacmanGameModel {
   List<Ghost> _ghosts = new List();
   Pacman _pacman;
+  Directions _pac_dir;
 
   bool _gameOver = false;
   int _sizeX;
@@ -41,25 +42,41 @@ class PacmanGameModel {
   /**
    * moves [Pacman] up if possible
    */
-  void moveUp() => _pacman.move(Directions.UP);
+  void moveUp() {
+    _pac_dir = Directions.UP;
+  }
 
   /**
    * moves [Pacman] down if possible
    */
-  void moveDown() => _pacman.move(Directions.DOWN);
+  void moveDown() {
+    _pac_dir = Directions.DOWN;
+  }
 
   /**
    * moves [Pacman] left if possible
    */
-  void moveLeft() => _pacman.move(Directions.LEFT);
+  void moveLeft() {
+    _pac_dir = Directions.LEFT;
+  }
 
   /**
    * moves [Pacman] right if possible
    */
-  void moveRight() => _pacman.move(Directions.RIGHT);
+  void moveRight() {
+    _pac_dir = Directions.RIGHT;
+  }
 
   /**
-   * Moves all [Ghost]s
+   * move [Pacman] and [Ghost] to the next position. Call this method each frame.
+   */
+  void triggerFrame() {
+    this.moveGhost();
+    _pacman.move(_pac_dir);
+  }
+
+  /**
+   * Moves all [Ghost]s DO NOT CALL
    */
   void moveGhost() => _ghosts.forEach((g) => g.move());
 
