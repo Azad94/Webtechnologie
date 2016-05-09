@@ -3,16 +3,18 @@ part of pacmanLib;
 class Level {
   int _sizeX;
   int _sizeY;
+  int _lives;
   List<List<Tile>> _tiles = new List<List<Tile>>();
   PacmanGameModel _model;
 
   /**
    * Creates a level by given parameters
    */
-  Level(String environmentCode, num sizeX, num sizeY, PacmanGameModel model) {
+  Level(String environmentCode, num sizeX, num sizeY, int lives, PacmanGameModel model) {
     this._sizeX = sizeX;
     this._sizeY = sizeY;
     this._model = model;
+    this._lives = lives;
     initTiles();
     createObjects(environmentCode);
   }
@@ -178,8 +180,8 @@ class Level {
             break;
 
           case LevelLoader.PACMAN:
-            final p = new Pacman(x, y, false, true, 3, this);
-            _tiles[y][x]._pacman = p; // TODO lives
+            final p = new Pacman(x, y, false, true, _lives, this);
+            _tiles[y][x]._pacman = p;
             _model.registerGameElement(p);
             break;
 

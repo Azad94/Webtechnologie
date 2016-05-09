@@ -15,11 +15,12 @@ class PacmanGameModel {
   int getCurrentLevel() => _currentLevel;
 
   void loadLevel(int level) {
+    // Delete old references
     _pacman = null;
     _ghosts = new List();
     LevelLoader.loadLevel(level);
     _currentLevel = LevelLoader.levelNumber;
-    _level = new Level(LevelLoader._map, LevelLoader.sizeX, LevelLoader.sizeY, this);
+    _level = new Level(LevelLoader._map, LevelLoader.sizeX, LevelLoader.sizeY, LevelLoader._lives, this);
   }
 
   /**

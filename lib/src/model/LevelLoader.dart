@@ -11,6 +11,8 @@ class LevelLoader {
    */
   static String _map = null;
 
+  static int _lives = -1;
+
   /**
    * current level number
    */
@@ -93,6 +95,7 @@ class LevelLoader {
     sizeX = data["sizeX"];
     sizeY = data["sizeY"];
     _map = data["map"];
+    _lives = data["lives"];
 
     _loaded = true;
     return true;
