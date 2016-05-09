@@ -4,13 +4,15 @@ class Level {
   int _sizeX;
   int _sizeY;
   List<List<Tile>> _tiles = new List<List<Tile>>();
+  PacmanGameModel _model;
 
   /**
    * Creates a level by given parameters
    */
-  Level(String environmentCode, num sizeX, num sizeY) {
+  Level(String environmentCode, num sizeX, num sizeY, PacmanGameModel model) {
     this._sizeX = sizeX;
     this._sizeY = sizeY;
+    this._model = model;
     initTiles();
     createObjects(environmentCode);
   }
@@ -21,13 +23,12 @@ class Level {
    */
   bool checkCollision(int x, int y, GameElement g) {
     // no Statics
-    if(_tiles[y][x]._environment == null)
-      return false;
+    if (_tiles[y][x]._environment == null) return false;
     // ghosts collides
-    if(_tiles[y][x]._environment._collisionGhost == true && g is Ghost)
+    if (_tiles[y][x]._environment._collisionGhost == true && g is Ghost)
       return true;
     // pacman collides
-    if(_tiles[y][x]._environment._collisionPlayer == true && g is Pacman)
+    if (_tiles[y][x]._environment._collisionPlayer == true && g is Pacman)
       return true;
     // no collision
     return false;
@@ -38,11 +39,11 @@ class Level {
    * xOld and yOld is the old position and xNew and yNew the new one. g is a reference on the moving objekt.
    */
   void registerElement(int xOld, int yOld, int xNew, int yNew, GameElement g) {
-    if (GameElement is Pacman) {
+    if (g is Pacman) {
       _tiles[yOld][xOld]._pacman = null;
       _tiles[yNew][xNew]._pacman = g;
     }
-    if (GameElement is Ghost) {
+    if (g is Ghost) {
       _tiles[yOld][xOld].ghosts.remove(g);
       _tiles[yNew][xNew].ghosts.add(g);
     }
@@ -172,14 +173,14 @@ class Level {
             break;
 
           case LevelLoader.GHOST:
-            _tiles[y][x]
-                .ghosts
-                .add(new Bashful(x, y, false, false, this)); // TODO create all Ghosts
+            _tiles[y][x].ghosts.add(new Bashful(
+                x, y, false, false, this)); // TODO create all Ghosts
             break;
 
           case LevelLoader.PACMAN:
-            _tiles[y][x]._pacman =
-                new Pacman(x, y, false, true, 1); // TODO lives
+            final p = new Pacman(x, y, false, true, 3, this);
+            _tiles[y][x]._pacman = p; // TODO lives
+            _model.registerGameElement(p);
             break;
 
           case LevelLoader.DOOR:

@@ -5,5 +5,5 @@ abstract class GameElement {
   bool _collisionPlayer;
   bool _collisionGhost;
 
-  GameElement(this._y, this._x, this._collisionPlayer, this._collisionGhost);
+  GameElement(this._x, this._y, this._collisionPlayer, this._collisionGhost);
 }

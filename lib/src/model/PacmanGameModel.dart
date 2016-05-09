@@ -1,7 +1,9 @@
 part of pacmanLib;
 
 class PacmanGameModel {
-  bool _pause = false;
+  List<Ghost> _ghosts = new List();
+  Pacman _pacman;
+
   bool _gameOver = false;
   int _size = 0;
 
@@ -13,22 +15,37 @@ class PacmanGameModel {
   int getCurrentLevel() => _currentLevel;
 
   void loadLevel(int level) {
+    _pacman = null;
+    _ghosts = new List();
     LevelLoader.loadLevel(level);
     _currentLevel = LevelLoader.levelNumber;
-    _level = new Level(LevelLoader._map, LevelLoader.sizeX, LevelLoader.sizeY);
+    _level = new Level(LevelLoader._map, LevelLoader.sizeX, LevelLoader.sizeY, this);
   }
 
-  void moveUp() {}
+  /**
+   * moves [Pacman] up if possible
+   */
+  void moveUp() => _pacman.move(Directions.UP);
 
-  void moveDown() {}
+  /**
+   * moves [Pacman] down if possible
+   */
+  void moveDown() => _pacman.move(Directions.DOWN);
 
-  void moveLeft() {}
+  /**
+   * moves [Pacman] left if possible
+   */
+  void moveLeft() => _pacman.move(Directions.LEFT);
 
-  void moveRight() {}
+  /**
+   * moves [Pacman] right if possible
+   */
+  void moveRight() => _pacman.move(Directions.RIGHT);
 
-  void pauseGame() {}
-
-  void moveGhost() {}
+  /**
+   * Moves all [Ghost]s
+   */
+  void moveGhost() => _ghosts.forEach((g) => g.move());
 
   List<List<Statics>> getStaticMap() {
     if (_level == null) return null;
@@ -45,4 +62,15 @@ class PacmanGameModel {
 
     return _level.getIemMap();
   }
+
+  /**
+   * register a new [GameElement]
+   */
+  void registerGameElement(GameElement g) {
+    if (g is Ghost) _ghosts.add(g);
+    if (g is Pacman) _pacman = g;
+  }
+
+  Level returnLevel() => _level;
+  Pacman returnPacman() => _pacman;
 }
