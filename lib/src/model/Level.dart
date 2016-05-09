@@ -105,16 +105,16 @@ class Level {
         // is a ghost
         else if (_tiles[y][x].ghosts.length != 0) {
           // is ghost Bashful
-          if (_tiles[y][x].ghosts[0] is Bashful)
+          if (_tiles[y][x].ghosts[0] is Inky)
             ret[y].add(Dynamics.BASHFUL);
           // is ghost Shadow
-          else if (_tiles[y][x].ghosts[0] is Shadow)
+          else if (_tiles[y][x].ghosts[0] is Blinky)
             ret[y].add(Dynamics.SHADOW);
           // is ghost Speedy
-          else if (_tiles[y][x].ghosts[0] is Speedy)
+          else if (_tiles[y][x].ghosts[0] is Clyde)
             ret[y].add(Dynamics.SPEEDY);
           //  is ghost Pokey
-          else if (_tiles[y][x].ghosts[0] is Pokey) ret[y].add(Dynamics.POKEY);
+          else if (_tiles[y][x].ghosts[0] is Pinky) ret[y].add(Dynamics.POKEY);
         }
         // no dynamics
         else
@@ -183,7 +183,7 @@ class Level {
             break;
 
           case LevelLoader.GHOST:
-            _tiles[y][x].ghosts.add(new Bashful(
+            _tiles[y][x].ghosts.add(new Inky(
                 x, y, false, false, this)); // TODO create all Ghosts
             break;
 

@@ -21,10 +21,10 @@ part 'src/model/Statics.dart';
 
 // Ghosts
 part 'src/model/Ghost.dart';
-part 'src/model/Bashful.dart';
-part 'src/model/Shadow.dart';
-part 'src/model/Speedy.dart';
-part 'src/model/Pokey.dart';
+part 'src/model/Inky.dart';
+part 'src/model/Blinky.dart';
+part 'src/model/Clyde.dart';
+part 'src/model/Pinky.dart';
 
 //IO
 part 'src/model/LevelLoader.dart';
