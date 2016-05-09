@@ -3,8 +3,9 @@ library pacmanLib;
 // Imports
 import 'dart:collection';
 import 'dart:convert';
-import 'dart:io';
+import 'dart:io' as io show File;
 import 'dart:async';
+import 'dart:html';
 
 // Items
 part 'src/model/Item.dart';
@@ -35,6 +36,7 @@ part 'src/model/Environment.dart';
 part 'src/model/Level.dart';
 part 'src/model/Pacman.dart';
 part 'src/model/Tile.dart';
+part 'src/model/PacmanGameModel.dart';
 
 // View
 part 'src/view/PacmanGameView.dart';

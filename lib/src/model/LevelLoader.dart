@@ -85,7 +85,7 @@ class LevelLoader {
    */
   static bool loadLevel(int level) {
     // TODO exception handling and logging
-    File f = new File(jsonLevel);
+    io.File f = new io.File(jsonLevel);
     String json =  f.readAsStringSync(encoding: const Utf8Codec());
 
     Map data = JSON.decode(json);
