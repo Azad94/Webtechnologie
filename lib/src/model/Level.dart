@@ -136,13 +136,13 @@ class Level {
         if (_tiles[y][x]._item == null)
           ret[y].add(Items.NOTHING);
         // is pill
-        else if (_tiles[y][x]._item is Pill)
+        else if (_tiles[y][x]._item is Pill && _tiles[y][x]._item._visible)
           ret[y].add(Items.PILL);
         // is powerPill
-        else if (_tiles[y][x]._item is PowerPill)
+        else if (_tiles[y][x]._item is PowerPill && _tiles[y][x]._item._visible)
           ret[y].add(Items.POWERPILL);
         // is cherry
-        else if (_tiles[y][x]._item is Cherry) ret[y].add(Items.CHERRY);
+        else if (_tiles[y][x]._item is Cherry && _tiles[y][x]._item._visible) ret[y].add(Items.CHERRY);
       }
     }
     return ret;

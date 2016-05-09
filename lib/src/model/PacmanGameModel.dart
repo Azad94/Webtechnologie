@@ -77,6 +77,11 @@ class PacmanGameModel {
   }
 
   /**
+   * return the current score
+   */
+  int getScore() => Item._scoreCounter;
+
+  /**
    * register a new [GameElement]
    */
   void registerGameElement(GameElement g) {
