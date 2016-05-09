@@ -1,10 +1,13 @@
 part of pacmanLib;
 
 class Level {
-  num _sizeX;
-  num _sizeY;
+  int _sizeX;
+  int _sizeY;
   List<List<Tile>> _tiles = new List<List<Tile>>();
 
+  /**
+   * Creates a level by given parameters
+   */
   Level(String environmentCode, num sizeX, num sizeY) {
     this._sizeX = sizeX;
     this._sizeY = sizeY;
@@ -12,7 +15,23 @@ class Level {
     createObjects(environmentCode);
   }
 
-  bool checkCollision(int x, int y) => false;
+  /**
+   * checks if the given [GameElement] collides with another [GameElement]
+   * return true if the object collides with another one, else false
+   */
+  bool checkCollision(int x, int y, GameElement g) {
+    // no Statics
+    if(_tiles[y][x]._environment == null)
+      return false;
+    // ghosts collides
+    if(_tiles[y][x]._environment._collisionGhost == true && g is Ghost)
+      return true;
+    // pacman collides
+    if(_tiles[y][x]._environment._collisionPlayer == true && g is Pacman)
+      return true;
+    // no collision
+    return false;
+  }
 
   /**
    * Register a [GameElement] on a new position.
@@ -56,6 +75,9 @@ class Level {
     return ret;
   }
 
+  /**
+   * Creates a List<List> with all Dynamic [GameElement] and return it
+   */
   List<List<Dynamics>> getDynamicMap() {
     List<List<Dynamics>> ret = new List<List<Dynamics>>();
     for (int y = 0; y < _sizeY; y++) {
@@ -91,6 +113,9 @@ class Level {
     return ret;
   }
 
+  /**
+   * Creates a List<List> with all Items [GameElement] and return it
+   */
   List<List<Items>> getIemMap() {
     List<List<Items>> ret = new List<List<Items>>();
     for (int y = 0; y < _sizeY; y++) {
@@ -149,7 +174,7 @@ class Level {
           case LevelLoader.GHOST:
             _tiles[y][x]
                 .ghosts
-                .add(new Bashful(x, y, false, false)); // TODO create all Ghosts
+                .add(new Bashful(x, y, false, false, this)); // TODO create all Ghosts
             break;
 
           case LevelLoader.PACMAN:

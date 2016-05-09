@@ -15,7 +15,7 @@ class PacmanGameModel {
   void loadLevel(int level) {
     LevelLoader.loadLevel(level);
     _currentLevel = LevelLoader.levelNumber;
-    _level = new Level(LevelLoader.map, LevelLoader.sizeX, LevelLoader.sizeY);
+    _level = new Level(LevelLoader._map, LevelLoader.sizeX, LevelLoader.sizeY);
   }
 
   void moveUp() {}

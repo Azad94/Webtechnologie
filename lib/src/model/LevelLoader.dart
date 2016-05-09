@@ -4,22 +4,22 @@ class LevelLoader {
   /**
    * indicates if a file is loaded
    */
-  static bool loaded = false;
+  static bool _loaded = false;
 
   /**
    * the map coded as [String]
    */
-  static String map = null;
+  static String _map = null;
 
   /**
    * current level number
    */
-  static num levelNumber = -1;
+  static int levelNumber = -1;
 
   /**
    * width field size
    */
-  static num sizeX;
+  static int sizeX;
 
   /**
    * height field size
@@ -92,9 +92,9 @@ class LevelLoader {
     levelNumber = data["level"];
     sizeX = data["sizeX"];
     sizeY = data["sizeY"];
-    map = data["map"];
+    _map = data["map"];
 
-    loaded = true;
+    _loaded = true;
     return true;
   }
 }
