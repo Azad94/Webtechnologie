@@ -117,39 +117,36 @@ class LevelLoader {
    */
   static const NOTHING = "X";
 
-  static const _CONFIGJSON = "lib/GameConfig.json";
+  static const _CONFIGJSON = "../lib/GameConfig.json";
 
   // TODO choose level
   // Path for json files? Fix hard coding of path
-  static const _jsonLevel = "lib/1_Level.json";
+  static const _jsonLevel = "../lib/1_Level.json";
 
   /**
    * Loads a level from json file by given level number.
    * Return true if file is loaded, else false
    */
   static bool loadLevel(int level) {
-    io.File f = new io.File(_jsonLevel);
-    String json = f.readAsStringSync(encoding: const Utf8Codec());
-
-    Map data = JSON.decode(json);
-    levelNumber = data["level"];
-    sizeX = data["sizeX"];
-    sizeY = data["sizeY"];
-    _map = data["map"];
-    _lives = data["lives"];
-
+    HttpRequest.getString(_jsonLevel).then((json) {
+      final data = JSON.decode(json);
+      levelNumber = data["level"];
+      sizeX = data["sizeX"];
+      sizeY = data["sizeY"];
+      _map = data["map"];
+      _lives = data["lives"];
+    });
     _loaded = true;
     return true;
   }
 
   static bool loadConfig() {
-    io.File f = new io.File(_CONFIGJSON);
-    String json = f.readAsStringSync(encoding: const Utf8Codec());
-
-    Map data = JSON.decode(json);
-    SCORE_PILL = data["scorePill"];
-    SCORE_POWERPILL = data["scorePowerPill"];
-    SCORE_CHERRY = data["scoreCherry"];
+    HttpRequest.getString(_CONFIGJSON).then((json) {
+      final data = JSON.decode(json);
+      SCORE_PILL = data["scorePill"];
+      SCORE_POWERPILL = data["scorePowerPill"];
+      SCORE_CHERRY = data["scoreCherry"];
+    });
 
     return true;
   }

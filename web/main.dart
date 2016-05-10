@@ -5,5 +5,7 @@ import 'dart:html';
 import 'package:Webtechnologie/pacmanLib.dart';
 
 void main() {
-  querySelector('#output').text = 'Your Dart app is running.';
+  PacmanGameModel model = new PacmanGameModel();
+  model.loadLevel(0);
+  querySelector('#output').text = model.getStaticMap().toString();
 }
