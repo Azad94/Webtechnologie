@@ -202,9 +202,6 @@ abstract class Ghost extends GameElement {
           nextDirection == _previousDirection ? nextDirection : nextDirection = Directions.UP;
           if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
-          //if UP is not allowed try going LEFT
-          //if LEFT is not allowed try going DOWN
-          //nextDirection == Directions.UP ? nextDirection = Directions.LEFT : nextDirection = Directions.DOWN;
           if (nextDirection == Directions.UP)
           {
             if(_savePreviousDirection == Directions.LEFT)
@@ -216,13 +213,6 @@ abstract class Ghost extends GameElement {
               {
                 nextDirection = Directions.RIGHT;
                 if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-                  //TODO sollte raus weil wenn dieser Fall eintritt es eine Sackgasse gibt, was in diesem Spiel nciht implementiert wird
-                else
-                {
-                 nextDirection = Directions.LEFT;
-                  if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-                  return false;
-                }
               }
               else
               {
@@ -233,32 +223,6 @@ abstract class Ghost extends GameElement {
             }
             else
             {
-              //TODO kann raus nach dem preferredHor = LEFT testfälle durchgeführt wurden
-              if (_savePreviousDirection == Directions.LEFT && nextDirection == Directions.DOWN)
-                  nextDirection = Directions.RIGHT;
-
-              //TODO wurde bislang nicht verwendet kann raus
-              if(_savePreviousDirection == Directions.LEFT && preferredHorDirection == Directions.LEFT)
-              {
-                nextDirection = Directions.LEFT;
-                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
-                nextDirection = Directions.DOWN;
-                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-              }
-
-              //TODO wurde bislang nicht verwendet kann raus
-              if(_savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.LEFT)
-              {
-                nextDirection = Directions.DOWN;
-                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
-                nextDirection = Directions.RIGHT;
-                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
-                return false;
-              }
-
               if(_savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.LEFT)
               {
                 nextDirection = Directions.DOWN;
@@ -269,10 +233,6 @@ abstract class Ghost extends GameElement {
 
                 return false;
               }
-
-              //TODO kann raus nach dem preferredHor = LEFT testfälle durchgeführt wurden
-              if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
               //TODO is this return still needed, i mean there is no possibility where you can get stucked
               return false;
             }
@@ -288,12 +248,6 @@ abstract class Ghost extends GameElement {
             nextDirection = Directions.DOWN;
             if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
-            //TODO sollte raus weill wenn dieser Fall eintritt es eine Sackgasse gibt, was in diesem Spiel nicht implementiert wird
-            //if UP not allowed try going LEFT
-            nextDirection = Directions.LEFT;
-            if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
-            //no way to go, !trapped!
             //TODO is this return still needed, i mean there is no possibility where you can get stucked
             return false;
           }
@@ -302,7 +256,6 @@ abstract class Ghost extends GameElement {
           nextDirection == Directions.LEFT ? nextDirection = Directions.DOWN : Directions.UP;
           if(!isMoveAllowed(nextDirection, currentX,currentY)) return true;
 
-          //if(nextDirection == Directions.DOWN && _savePreviousDirection == Directions.)
           //if going DOWN is not allowed try going UP
           if(nextDirection == Directions.DOWN) nextDirection = Directions.UP;
           if(!isMoveAllowed(nextDirection, currentX,currentY)) return true;
