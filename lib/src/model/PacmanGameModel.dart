@@ -1,40 +1,97 @@
 part of pacmanLib;
 
 class PacmanGameModel {
-  bool _pause = false;
+  List<Ghost> _ghosts = new List();
+  Pacman _pacman;
+
   bool _gameOver = false;
-  int _size = 0;
+  int _sizeX;
+  int _sizeY;
 
   Level _level;
   int _currentLevel = -1;
 
-
+  PacmanGameModel() {
+    LevelLoader.loadConfig();
+    _sizeX = LevelLoader.sizeX;
+    _sizeY = LevelLoader.sizeY;
+  }
 
   bool getGameOver() => false;
 
   int getCurrentLevel() => _currentLevel;
 
   void loadLevel(int level) {
+    // Delete old references
+    _pacman = null;
+    _ghosts = new List();
     LevelLoader.loadLevel(level);
     _currentLevel = LevelLoader.levelNumber;
-    _level = new Level(LevelLoader._environment);
+    _level = new Level(
+        LevelLoader._map,
+        LevelLoader.sizeX,
+        LevelLoader.sizeY,
+        LevelLoader._lives,
+        LevelLoader.SCORE_PILL,
+        LevelLoader.SCORE_CHERRY,
+        LevelLoader.SCORE_POWERPILL,
+        this);
   }
 
-  void moveUp() {}
+  /**
+   * moves [Pacman] up if possible
+   */
+  void moveUp() => _pacman.move(Directions.UP);
 
-  void moveDown() {}
+  /**
+   * moves [Pacman] down if possible
+   */
+  void moveDown() => _pacman.move(Directions.DOWN);
 
-  void moveLeft() {}
+  /**
+   * moves [Pacman] left if possible
+   */
+  void moveLeft() => _pacman.move(Directions.LEFT);
 
-  void moveRight() {}
+  /**
+   * moves [Pacman] right if possible
+   */
+  void moveRight() => _pacman.move(Directions.RIGHT);
 
-  void pauseGame() {}
+  /**
+   * Moves all [Ghost]s
+   */
+  void moveGhost() => _ghosts.forEach((g) => g.move());
 
-  void moveGhost() {}
+  List<List<Statics>> getStaticMap() {
+    if (_level == null) return null;
+    return _level.getStaticMap();
+  }
 
-  void getEnvironmentMap() {}
+  List<List<Dynamics>> getDynamicMap() {
+    if (_level == null) return null;
+    return _level.getDynamicMap();
+  }
 
-  void getDynamicMap() {}
+  List<List<Items>> getItemMap() {
+    if (_level == null) return null;
 
-  void getItemMap() {}
+    return _level.getIemMap();
+  }
+
+  /**
+   * return the current score
+   */
+  int getScore() => Item._scoreCounter;
+
+  /**
+   * register a new [GameElement]
+   */
+  void registerGameElement(GameElement g) {
+    if (g is Ghost) _ghosts.add(g);
+    if (g is Pacman) _pacman = g;
+  }
+
+  Level returnLevel() => _level;
+  Pacman returnPacman() => _pacman;
 }

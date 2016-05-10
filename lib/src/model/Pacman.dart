@@ -1,12 +1,36 @@
 part of pacmanLib;
 
-class Pacman {
-  double _speed;
+class Pacman extends GameElement {
+  double _speed; // TODO speed
   int _lives;
+  Level _level;
 
-  Pacman(this.lives);
+  Pacman(int x, int y, bool collPlayer, bool collGhost, int lives, Level l)
+      : super(x, y, collPlayer, collGhost),
+        this._lives = lives,
+        this._level = l;
 
-  void move(Directions dir) {}
+  /**
+   * moves [Pacman] in the given [Directions].
+   */
+  void move(Directions dir) {
+    if (dir == Directions.UP) {
+      if (!_level.checkCollision(_x, _y - 1, this))
+        _level.registerElement(_x, _y, _x, --_y, this);
+    }
+    if (dir == Directions.DOWN) {
+      if (!_level.checkCollision(_x, _y + 1, this))
+        _level.registerElement(_x, _y, _x, ++_y, this);
+    }
+    if (dir == Directions.LEFT) {
+      if (!_level.checkCollision(_x - 1, _y, this))
+        _level.registerElement(_x, _y, --_x, _y, this);
+    }
+    if (dir == Directions.RIGHT) {
+      if (!_level.checkCollision(_x + 1, _y, this))
+        _level.registerElement(_x, _y, ++_x, _y, this);
+    }
+  }
 
   void decreaseLife() {}
 }

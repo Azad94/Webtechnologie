@@ -1,30 +1,53 @@
 part of pacmanLib;
 
+// TODO exception handling and logging
 class LevelLoader {
   /**
    * indicates if a file is loaded
    */
-  static bool loaded = false;
+  static bool _loaded = false;
 
   /**
    * the map coded as [String]
    */
-  static String map = null;
+  static String _map = null;
+
+  /**
+   * lives of Pacman
+   */
+  static int _lives = -1;
 
   /**
    * current level number
    */
-  static num levelNumber = -1;
+  static int levelNumber = -1;
 
   /**
    * width field size
    */
-  static num sizeX;
+  static int sizeX;
 
   /**
    * height field size
    */
   static int sizeY;
+
+  /* gerneral const */
+
+  /**
+   * score of one pill
+   */
+  static num SCORE_PILL = -1;
+
+  /**
+   * score of one powerPill
+   */
+  static num SCORE_POWERPILL = -1;
+
+  /**
+   * score of one cherry
+   */
+  static num SCORE_CHERRY = -1;
 
   /*
   MapCode
@@ -74,27 +97,40 @@ class LevelLoader {
    */
   static const NOTHING = "X";
 
+  static const _CONFIGJSON = "lib/GameConfig.json";
+
   // TODO choose level
   // Path for json files? Fix hard coding of path
-  static const jsonLevel =
-      "C:/Users/Niklas/WebstormProjects/Webtechnologie/lib/src/model/1_Level.json";
+  static const _jsonLevel = "lib/1_Level.json";
 
   /**
    * Loads a level from json file by given level number.
    * Return true if file is loaded, else false
    */
   static bool loadLevel(int level) {
-    // TODO exception handling and logging
-    File f = new File(jsonLevel);
-    String json =  f.readAsStringSync(encoding: const Utf8Codec());
+    io.File f = new io.File(_jsonLevel);
+    String json = f.readAsStringSync(encoding: const Utf8Codec());
 
     Map data = JSON.decode(json);
     levelNumber = data["level"];
     sizeX = data["sizeX"];
     sizeY = data["sizeY"];
-    map = data["map"];
+    _map = data["map"];
+    _lives = data["lives"];
 
-    loaded = true;
+    _loaded = true;
+    return true;
+  }
+
+  static bool loadConfig() {
+    io.File f = new io.File(_CONFIGJSON);
+    String json = f.readAsStringSync(encoding: const Utf8Codec());
+
+    Map data = JSON.decode(json);
+    SCORE_PILL = data["scorePill"];
+    SCORE_POWERPILL = data["scorePowerPill"];
+    SCORE_CHERRY = data["scoreCherry"];
+
     return true;
   }
 }
