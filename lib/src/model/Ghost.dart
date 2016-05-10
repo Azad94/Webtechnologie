@@ -237,6 +237,7 @@ abstract class Ghost extends GameElement {
               if (_savePreviousDirection == Directions.LEFT && nextDirection == Directions.DOWN)
                   nextDirection = Directions.RIGHT;
 
+              //TODO wurde bislang nicht verwendet kann raus
               if(_savePreviousDirection == Directions.LEFT && preferredHorDirection == Directions.LEFT)
               {
                 nextDirection = Directions.LEFT;
@@ -246,12 +247,24 @@ abstract class Ghost extends GameElement {
                 if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
               }
 
+              //TODO wurde bislang nicht verwendet kann raus
               if(_savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.LEFT)
               {
                 nextDirection = Directions.DOWN;
                 if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
                 nextDirection = Directions.RIGHT;
+                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+                return false;
+              }
+
+              if(_savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.LEFT)
+              {
+                nextDirection = Directions.DOWN;
+                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+                nextDirection = Directions.LEFT;
                 if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
                 return false;
