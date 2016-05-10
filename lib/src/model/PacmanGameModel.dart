@@ -5,7 +5,18 @@ class PacmanGameModel {
   bool _gameOver = false;
   int _size = 0;
 
+  Level _level;
+  int _currentLevel = -1;
+
   bool getGameOver() => false;
+
+  int getCurrentLevel() => _currentLevel;
+
+  void loadLevel(int level) {
+    LevelLoader.loadLevel(level);
+    _currentLevel = LevelLoader.levelNumber;
+    _level = new Level(LevelLoader.map, LevelLoader.sizeX, LevelLoader.sizeY);
+  }
 
   void moveUp() {}
 
@@ -19,9 +30,19 @@ class PacmanGameModel {
 
   void moveGhost() {}
 
-  void getEnvironmentMap() {}
+  List<List<Statics>> getStaticMap() {
+    if (_level == null) return null;
+    return _level.getStaticMap();
+  }
 
-  void getDynamicMap() {}
+  List<List<Dynamics>> getDynamicMap() {
+    if (_level == null) return null;
+    return _level.getDynamicMap();
+  }
 
-  void getItemMap() {}
+  List<List<Items>> getItemMap() {
+    if (_level == null) return null;
+
+    return _level.getIemMap();
+  }
 }

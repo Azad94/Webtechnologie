@@ -2,7 +2,7 @@
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 import 'dart:html';
-//import 'package:Webtechnologie/pacmanLib.dart';
+import 'package:Webtechnologie/pacmanLib.dart';
 
 void main() {
   querySelector('#output').text = 'Your Dart app is running.';
