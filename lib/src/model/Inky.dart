@@ -5,4 +5,8 @@ class Inky extends Ghost {
 
   void move() {}
   void eatableMode() {}
+
+  /*
+  *
+   */
 }
