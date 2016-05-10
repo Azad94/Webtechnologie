@@ -255,21 +255,6 @@ abstract class Ghost extends GameElement {
                 return false;
               }
 
-              if(_savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.RIGHT)
-              {
-                nextDirection = Directions.UP;
-                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
-                nextDirection = Directions.DOWN;
-                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
-                nextDirection = Directions.LEFT;
-                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
-                //TODO is this return still needed, i mean there is no possibility where you can get stucked
-                return false;
-              }
-
               //TODO kann raus nach dem preferredHor = LEFT testfälle durchgeführt wurden
               if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
@@ -279,17 +264,17 @@ abstract class Ghost extends GameElement {
           }
 
           //if RIGHT is not allowed try going UP
-          if(nextDirection == Directions.RIGHT)
+          if(nextDirection == Directions.RIGHT && _savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.RIGHT)
           {
             nextDirection = Directions.UP;
             if(!isMoveAllowed(nextDirection, currentX,currentY)) return true;
 
-            //if UP not allowed try going LEFT
-            nextDirection = Directions.LEFT;
-            if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
             //if UP not allowed try going DOWN
             nextDirection = Directions.DOWN;
+            if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+            //if UP not allowed try going LEFT
+            nextDirection = Directions.LEFT;
             if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
             //no way to go, !trapped!
