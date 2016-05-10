@@ -19,7 +19,9 @@ body {
     font-weight: bold;
     text-align: center;
 }
-.start.close { display: none; }
+.start.close { display: none;
+
+}
 
 #startText {
     position:absolute;
@@ -52,18 +54,18 @@ body {
     display: none;
 }
 
-#field td {
+#labyrinth td {
     background-color: rgba(255, 255, 255, 0.1);
     width: 22px;
     height: 22px;
 }
 
-#field {
+#labyrinth {
     position: absolute;
     border-collapse: separate;
     border: 10px solid gray;
 }
-#field { top: 12%; left: 0; }
+#labyrinth { top: 12%; left: 0; }
 
 #information {
     position: absolute;

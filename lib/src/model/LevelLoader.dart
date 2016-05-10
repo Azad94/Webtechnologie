@@ -108,7 +108,7 @@ class LevelLoader {
    * Return true if file is loaded, else false
    */
   static bool loadLevel(int level) {
-    io.File f = new io.File(_jsonLevel);
+    File f = new File(_jsonLevel);
     String json = f.readAsStringSync(encoding: const Utf8Codec());
 
     Map data = JSON.decode(json);
@@ -123,7 +123,7 @@ class LevelLoader {
   }
 
   static bool loadConfig() {
-    io.File f = new io.File(_CONFIGJSON);
+    File f = new File(_CONFIGJSON);
     String json = f.readAsStringSync(encoding: const Utf8Codec());
 
     Map data = JSON.decode(json);

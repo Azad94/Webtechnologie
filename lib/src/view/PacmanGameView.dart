@@ -15,7 +15,7 @@ class PacmanGameView {
 
   //Die verschiedenen Elemente aus dem HTML-Dokument
   final _startText = querySelector("#startText");
-  final _startButton = querySelector("#startButton");
+  final startButton = querySelector("#startButton");
 
   final _msg = querySelector("#msg");
 
@@ -26,20 +26,50 @@ class PacmanGameView {
   final _score = querySelector("#score");
   final _lives = querySelector("#lives");
 
+  //Konstruktor
   PacmanGameView(_con);
 
-  void updateEnvironmentMap() {}
 
-  void updateDynamicMap() {}
+  void showGameview() {
+    _startScreen.classes.toggle('close');
+    _game.classes.toggle('show');
+    _message.classes.toggle('show');
+  }
 
-  void updateItemMap() {}
+
+  void updateEnvironmentMap() {
+
+  }
+
+  void updateDynamicMap() {
+
+  }
+
+  void updateItemMap() {
+
+  }
 
   void updateGameStatus() {}
 
-  void updateListen() {}
+  void updateListen(List<List<Tile>> l) {
+    _labyrinth.innerHtml = _labyrinthToHTMLTable(l);
+  }
 
   void updateScore(int score) {
     _score.innerHtml = "Score: $score";
   }
+  String _labyrinthToHTMLTable(List<List<Tile>> l) {
 
+    String htmlTable = "<table><tbody>";
+
+    for (List<Tile> row in l) {
+      htmlTable += "<tr>";
+
+      for (Tile t in row) {
+        if(t.enviornment != Statics.NOTHING){
+          htmlTable += "<td>#</td>";
+        }
+      }
+    }
+  }
 }
