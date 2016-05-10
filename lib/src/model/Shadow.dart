@@ -9,6 +9,7 @@ class Shadow extends Ghost {
 
   int _x=4;
   int _y=4;
+  // weiterer Test
 
   boolean scatter=false;
   super();
@@ -23,15 +24,33 @@ if(scatter==false)
   wenn gefressen, dann ins Haus
 */
   {
-  while(){
-    for (var i = 0; i <getXPacMan; i++){
+  while(getXPacMan && getYPacMan != x && y){
+    if(getXPacMan< x){
+    for (int i = 0; i <getXPacMan; i++){
       i=x;
-      for (var j = 0; j <getYPacMan; j++){
+      if(getYPacMan <y){
+      for (int j = 0; j <getYPacMan; j++){
         j=y;
-       }
-     }
-   }
+       }}
+       else{for (int k = 0; k <getYPacMan; k--){
+        j=y;
+      }
+    if(getYPacman>x){
+
+  if(getXPacMan< x){
+  for (int i = 0; i <getXPacMan; i++){
+  i=x;
+  if(getYPacMan <y){
+  for (int j = 0; j <getYPacMan; j++){
+  j=y;
+  }}
+  else{for (int k = 0; k <getYPacMan; k--){
+  j=y;
   }
+      }
+
+   }
+  }}}}
  if(scatter==true) {
     void returnHome(){
 
