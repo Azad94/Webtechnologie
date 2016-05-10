@@ -1,59 +1,61 @@
 part of pacmanLib;
 
 class Shadow extends Ghost {
+  int getXPacMan = 3;
+  int getYPacMan = 3;
 
-  int _getXPacMan;
-  int _getYPacMan;
+  int start = 0;
 
-  int _start=0;
+  int x = 4;
+  int y = 4;
 
-  int _x=4;
-  int _y=4;
   // weiterer Test
-
-  boolean scatter=false;
-  super();
-  this.speed=speed;
-
-if(scatter==false)
 
 /*solange ShadowXY != PacXY ist, sollen die for-Schleifen die Werte hochzählen
   Muss nach jedem Durchlauf aktuelle Pac Postion abfragen
   !!!Problem, man muss evlt. runterzählen, also variabel mal rauf mal runter, wie unterscheiden????
   bricht ab bei PowerPill, dann soll shadow langsamer werden
   wenn gefressen, dann ins Haus
+  ScatterMode und InvsibleMode verschiedene Strategien unterscheiden
+
 */
-  {
-  while(getXPacMan && getYPacMan != x && y){
-    if(getXPacMan< x){
-    for (int i = 0; i <getXPacMan; i++){
-      i=x;
-      if(getYPacMan <y){
-      for (int j = 0; j <getYPacMan; j++){
-        j=y;
-       }}
-       else{for (int k = 0; k <getYPacMan; k--){
-        j=y;
+  void PacManRun(int getXPacMan, int getYPacMan) {
+    for (int x = 0; x < 100; x++) {
+      getXPacMan = x;
+      for (int y = 0; y < 100; y++) {
+        getYPacMan = y;
       }
-    if(getYPacman>x){
+    }
 
-  if(getXPacMan< x){
-  for (int i = 0; i <getXPacMan; i++){
-  i=x;
-  if(getYPacMan <y){
-  for (int j = 0; j <getYPacMan; j++){
-  j=y;
-  }}
-  else{for (int k = 0; k <getYPacMan; k--){
-  j=y;
-  }
+    while (getYPacMan != x) {
+      if (getXPacMan < x) {
+        for (int i = 0; i < getXPacMan; i++) {
+          i = x;
+          if (getYPacMan < y) {
+            for (int j = 0; j < getYPacMan; j++) {
+              j = y;
+            }
+          } else {
+            for (int k = 0; k < getYPacMan; k--) {
+              k = y;
+            }
+            if (getXPacMan < x) {
+              for (int l = 0; l < getXPacMan; l++) {
+                l = x;
+                if (getYPacMan < y) {
+                  for (int m = 0; m < getYPacMan; m++) {
+                    m = y;
+                  }
+                } else {
+                  for (int n = 0; n < getYPacMan; n--) {
+                    n = y;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
-
-   }
-  }}}}
- if(scatter==true) {
-    void returnHome(){
-
-  }
+    }
   }
 }
