@@ -1,5 +1,7 @@
 part of pacmanLib;
 
-class PacmanGameController {
+class PacmanGameController{
+
   var keyListener;
+
 }
