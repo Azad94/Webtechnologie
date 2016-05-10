@@ -189,6 +189,15 @@ abstract class Ghost extends GameElement {
           nextDirection == Directions.RIGHT;
           if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
         }
+
+        if(nextDirection == Directions.LEFT)
+        {
+          nextDirection == Directions.RIGHT;
+          if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+          nextDirection == Directions.UP;
+          if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+        }
       }
 
       if(_previousDirection == Directions.LEFT || _previousDirection == Directions.RIGHT)
