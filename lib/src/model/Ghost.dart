@@ -155,7 +155,8 @@ abstract class Ghost extends GameElement {
   }
 
   //TODO seeehr großer Fehler, der noch behoben werden muss
-  bool tryMove(currentX, currentY, targetX, targetY){
+  bool tryMove(currentX, currentY, targetX, targetY)
+  {
     //horizontal difference from currentPosition to targetPosition
     int horDifference = currentX-targetX;
     int verDifference = currentY-targetY;
@@ -170,99 +171,107 @@ abstract class Ghost extends GameElement {
     //sets next preferred direction
     verticalMoreImportant ? nextDirection = preferredVerDirection : nextDirection = preferredHorDirection;
 
-    if(!isMoveAllowed(nextDirection, currentX, currentY))
+
+    if(verticalMoreImportant)
     {
-      if(verticalMoreImportant)
+      if(_previousDirection == Directions.UP || _previousDirection == Directions.DOWN)
       {
-        if(_previousDirection == Directions.LEFT || _previousDirection == Directions.RIGHT)
+        _savePreviousDirection = _previousDirection;
+
+        nextDirection == _previousDirection ? nextDirection : nextDirection = Directions.LEFT;
+        if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+        if(nextDirection == Directions.UP)
         {
-          nextDirection = _previousDirection;
-          if (!isMoveAllowed(nextDirection, currentX, currentY))
-            nextDirection = nextDirection == Directions.LEFT ? Directions.RIGHT : Directions.LEFT;
-        }
-        else
-        {
-          nextDirection = preferredHorDirection;
-          if(!isMoveAllowed(nextDirection, currentX, currentY))
-          {
-            nextDirection = preferredHorDirection == Directions.LEFT ? Directions.RIGHT : Directions.LEFT;
-              if(!isMoveAllowed(nextDirection,currentX,currentY))
-                nextDirection = preferredVerDirection == Directions.UP ? Directions.DOWN : Directions.UP;
-          }
+          nextDirection == Directions.LEFT;
+          if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+          nextDirection == Directions.RIGHT;
+          if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
         }
       }
-      /// ELSE ZWEIG BEGINN
+
+      if(_previousDirection == Directions.LEFT || _previousDirection == Directions.RIGHT)
+      {
+        nextDirection = _previousDirection;
+        if (!isMoveAllowed(nextDirection, currentX, currentY))
+          nextDirection = nextDirection == Directions.LEFT ? Directions.RIGHT : Directions.LEFT;
+      }
       else
-      { //if the next and previous Direction are same nothing changes
-        if(_previousDirection == Directions.LEFT || _previousDirection == Directions.RIGHT) {
+      {
+        nextDirection = preferredHorDirection;
+        if(!isMoveAllowed(nextDirection, currentX, currentY))
+        {
+          nextDirection = preferredHorDirection == Directions.LEFT ? Directions.RIGHT : Directions.LEFT;
+          if(!isMoveAllowed(nextDirection,currentX,currentY))
+            nextDirection = preferredVerDirection == Directions.UP ? Directions.DOWN : Directions.UP;
+        }
+      }
+    }
+    /// ELSE ZWEIG BEGINN
+    else
+    { //if the next and previous Direction are same nothing changes
+      if(_previousDirection == Directions.LEFT || _previousDirection == Directions.RIGHT) {
+        _savePreviousDirection = _previousDirection;
 
-          _savePreviousDirection = _previousDirection;
+        //if they are different, try going UP first
+        nextDirection == _previousDirection ? nextDirection : nextDirection = Directions.UP;
+        if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
-          //if they are different, try going UP first
-          nextDirection == _previousDirection ? nextDirection : nextDirection = Directions.UP;
-          if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
-          if (nextDirection == Directions.UP)
+        if (nextDirection == Directions.UP)
+        {
+          if(_savePreviousDirection == Directions.LEFT)
           {
-            if(_savePreviousDirection == Directions.LEFT)
+            nextDirection = Directions.DOWN;
+            if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+            if (nextDirection == Directions.DOWN && preferredHorDirection == Directions.RIGHT)
+            {
+              nextDirection = Directions.RIGHT;
+              if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+            }
+          }
+          else
+          {
+            if(_savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.LEFT)
             {
               nextDirection = Directions.DOWN;
               if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
-              if (nextDirection == Directions.DOWN && preferredHorDirection == Directions.RIGHT)
-              {
-                nextDirection = Directions.RIGHT;
-                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-              }
-              else
-              {
-                nextDirection = Directions.LEFT;
-                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-                return false;
-              }
-            }
-            else
-            {
-              if(_savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.LEFT)
-              {
-                nextDirection = Directions.DOWN;
-                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+              nextDirection = Directions.LEFT;
+              if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
-                nextDirection = Directions.LEFT;
-                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
-                return false;
-              }
-              //TODO is this return still needed, i mean there is no possibility where you can get stucked
               return false;
             }
-          }
-
-          //if RIGHT is not allowed try going UP
-          if(nextDirection == Directions.RIGHT && _savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.RIGHT)
-          {
-            nextDirection = Directions.UP;
-            if(!isMoveAllowed(nextDirection, currentX,currentY)) return true;
-
-            //if UP not allowed try going DOWN
-            nextDirection = Directions.DOWN;
-            if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-
             //TODO is this return still needed, i mean there is no possibility where you can get stucked
             return false;
           }
+        }
 
-          //if going LEFT ist not allowed try going DOWN
-          nextDirection == Directions.LEFT ? nextDirection = Directions.DOWN : Directions.UP;
+        //if RIGHT is not allowed try going UP
+        if(nextDirection == Directions.RIGHT && _savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.RIGHT)
+        {
+          nextDirection = Directions.UP;
           if(!isMoveAllowed(nextDirection, currentX,currentY)) return true;
 
-          //if going DOWN is not allowed try going UP
-          if(nextDirection == Directions.DOWN) nextDirection = Directions.UP;
-          if(!isMoveAllowed(nextDirection, currentX,currentY)) return true;
+          //if UP not allowed try going DOWN
+          nextDirection = Directions.DOWN;
+          if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
           //TODO is this return still needed, i mean there is no possibility where you can get stucked
           return false;
         }
+
+        //if going LEFT ist not allowed try going DOWN
+        nextDirection == Directions.LEFT ? nextDirection = Directions.DOWN : Directions.UP;
+        if(!isMoveAllowed(nextDirection, currentX,currentY)) return true;
+
+        //if going DOWN is not allowed try going UP
+        if(nextDirection == Directions.DOWN) nextDirection = Directions.UP;
+        if(!isMoveAllowed(nextDirection, currentX,currentY)) return true;
+
+        //TODO is this return still needed, i mean there is no possibility where you can get stucked
+        return false;
       }
     }
     return false;
