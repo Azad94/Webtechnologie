@@ -205,7 +205,8 @@ abstract class Ghost extends GameElement {
           //if UP is not allowed try going LEFT
           //if LEFT is not allowed try going DOWN
           //nextDirection == Directions.UP ? nextDirection = Directions.LEFT : nextDirection = Directions.DOWN;
-          if (nextDirection == Directions.UP) {
+          if (nextDirection == Directions.UP)
+          {
             if(_savePreviousDirection == Directions.LEFT)
             {
               nextDirection = Directions.DOWN;
@@ -215,6 +216,7 @@ abstract class Ghost extends GameElement {
               {
                 nextDirection = Directions.RIGHT;
                 if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+                  //TODO sollte raus weil wenn dieser Fall eintritt es eine Sackgasse gibt, was in diesem Spiel nciht implementiert wird
                 else
                 {
                  nextDirection = Directions.LEFT;
@@ -273,6 +275,7 @@ abstract class Ghost extends GameElement {
             nextDirection = Directions.DOWN;
             if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
+            //TODO sollte raus weill wenn dieser Fall eintritt es eine Sackgasse gibt, was in diesem Spiel nicht implementiert wird
             //if UP not allowed try going LEFT
             nextDirection = Directions.LEFT;
             if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
