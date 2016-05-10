@@ -15,6 +15,12 @@ abstract class Ghost extends GameElement {
   Directions _previousDirection = Directions.LEFT;
   Directions _savePreviousDirection;
   int _ghostsEaten = 0;
+  Level _level;
+
+  Ghost(int x, int y, bool collPlayer, bool collGhost, Level l) : super(x, y, collPlayer, collGhost), this._level = l;
+
+  void move();
+  void eatableMode();
 
   //8 X 7 DUMMY MAP
   List<List> _dummyMap =[
@@ -45,7 +51,7 @@ abstract class Ghost extends GameElement {
   }
 
   void initScatterPosition(_dummyMap)
-  {
+  { /*
     //BLINKY SCATTER POSITION
     _dummyMap[6][0] = Statics.SBLINKY;
     //PINKY SCATTER POSITION
@@ -54,6 +60,7 @@ abstract class Ghost extends GameElement {
     _dummyMap[6][7] = Statics.SINKY;
     //CLYDE SCATTER POSITION
     _dummyMap[0][7] = Statics.SCLYDE;
+    */
   }
 
   List<List> findScatterPosition(_dummyMap)
