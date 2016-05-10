@@ -28,7 +28,6 @@ abstract class Ghost extends GameElement {
                               [07,17,27,37,74,57,67],
                             ];
 
-  Ghost(){  }
 
   //intializes the default START and SCATTER POSITIONS
   void initDefaultPosition(_positions, _dummyMap)
@@ -207,17 +206,21 @@ abstract class Ghost extends GameElement {
           //if LEFT is not allowed try going DOWN
           //nextDirection == Directions.UP ? nextDirection = Directions.LEFT : nextDirection = Directions.DOWN;
           if (nextDirection == Directions.UP) {
-                                                      // && nextDirection == Directions.RIGHT
-            if(_savePreviousDirection == Directions.LEFT || _savePreviousDirection == Directions.RIGHT)
+            if(_savePreviousDirection == Directions.LEFT)
             {
               nextDirection = Directions.DOWN;
-
               if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-              if (nextDirection == Directions.DOWN && _savePreviousDirection == Directions.RIGHT)
+
+              if (nextDirection == Directions.DOWN && preferredHorDirection == Directions.RIGHT)
               {
                 nextDirection = Directions.RIGHT;
                 if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
-                else return false;
+                else
+                {
+                 nextDirection = Directions.LEFT;
+                  if(!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+                  return false;
+                }
               }
               else
               {
@@ -228,7 +231,7 @@ abstract class Ghost extends GameElement {
             }
             else
             {
-              // macht kein sinn weil nicht beides gleichzeitig stimmen kann das hintere eig NIE
+              //TODO kann raus nach dem preferredHor = LEFT testfälle durchgeführt wurden
               if (_savePreviousDirection == Directions.LEFT && nextDirection == Directions.DOWN)
                   nextDirection = Directions.RIGHT;
 
@@ -252,6 +255,22 @@ abstract class Ghost extends GameElement {
                 return false;
               }
 
+              if(_savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.RIGHT)
+              {
+                nextDirection = Directions.UP;
+                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+                nextDirection = Directions.DOWN;
+                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+                nextDirection = Directions.LEFT;
+                if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
+
+                //TODO is this return still needed, i mean there is no possibility where you can get stucked
+                return false;
+              }
+
+              //TODO kann raus nach dem preferredHor = LEFT testfälle durchgeführt wurden
               if (!isMoveAllowed(nextDirection, currentX, currentY)) return true;
 
               //TODO is this return still needed, i mean there is no possibility where you can get stucked
