@@ -3,7 +3,10 @@
 "*" = pill
 "+" = powerPill
 "^" = cherry
-"G" = Ghost
+"B" = Blinky
+"I" = Inky
+"Y" = Pinky
+"C" = Clyde
 "P" = Pacman
 "~" = door
 "X" = nothing
