@@ -15,6 +15,7 @@ class PacmanGameModel {
 
   PacmanGameModel(PacmanGameController con) {
     LevelLoader.loadConfig();
+    LevelLoader.loadLevel(0);
     _sizeX = LevelLoader.sizeX;
     _sizeY = LevelLoader.sizeY;
     this._con = con;

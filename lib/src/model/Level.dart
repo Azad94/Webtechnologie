@@ -1,9 +1,9 @@
 part of pacmanLib;
 
 class Level {
-  int _sizeX;
-  int _sizeY;
-  int _lives;
+  num _sizeX;
+  num _sizeY;
+  num _lives;
   num _scorePill;
   num _scoreCherry;
   num _scorePowerPill;
