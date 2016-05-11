@@ -1,11 +1,14 @@
 part of pacmanLib;
 
+const speed = const Duration(milliseconds: 500);
+
 class PacmanGameController{
 
   PacmanGameModel _pacmanModel;
   PacmanGameView _pacmanView;
 
   var _keyListener;
+  Timer _timer;
 
   PacmanGameController() {
 
@@ -19,18 +22,11 @@ class PacmanGameController{
   void startGame() {
     _pacmanView.showGameview();
 
-    var labyrinth = _pacmanModel.getStaticMap();
-
-    refreshField(labyrinth);
-    refreshField4(labyrinth);
-    labyrinth = _pacmanModel.getDynamicMap();
-
+    var labyrinth = _pacmanModel.getMap();
+    initField(labyrinth);
     refreshField2(labyrinth);
 
-    labyrinth = _pacmanModel.getItemMap();
-
-    refreshField3(labyrinth);
-
+    _timer = new Timer.periodic(speed, (_) => _pacmanModel.triggerFrame());
 
     _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
       switch (ev.keyCode) {
@@ -43,25 +39,22 @@ class PacmanGameController{
 
   }
 
-  void refreshField(List<List<Statics>> l ) {
-      _pacmanView.updateListen(l);
+  void initField(List<List<Types>> l ) {
+      _pacmanView.initField(l);
   }
-  void refreshField2(List<List<Dynamics>> l) {
-    _pacmanView._labyrinthAddDynamic(l);
-  }
-  void refreshField3(List<List<Items>> l) {
-    _pacmanView._labyrinthAddItems(l);
-  }
-  void refreshField4(List<List<Statics>> l) {
-    _pacmanView._labyrinthAddStatics(l);
+  void refreshField2(List<List<Types>> l) {
+    _pacmanView._labyrinthFill(l);
   }
   void updateGameStatus() {
-
+    updateScore();
+    var labyrinth = _pacmanModel.getMap();
+    print(labyrinth[16]);
+    refreshField2(labyrinth);
   }
   void updateListen() {
 
   }
   void updateScore() {
-
+      _pacmanView.updateScore(_pacmanModel.getScore());
   }
 }

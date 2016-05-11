@@ -77,7 +77,8 @@ html, body {
     position: static;
     top: 50%;
     right: 15%;
-    font-size: 22%;
+    font-size: 200%;
+    background-color: black;
 }
 
 .messages.show { display: block; }
