@@ -92,21 +92,35 @@ class PacmanGameModel {
    */
   void moveGhost() => _ghosts.forEach((g) => g.move());
 
+  /**
+   * DEPRECATED
+   */
   List<List<Statics>> getStaticMap() {
     if (_level == null) return null;
     return _level.getStaticMap();
   }
 
+  /**
+   *DEPRECATED
+   */
   List<List<Dynamics>> getDynamicMap() {
     if (_level == null) return null;
     return _level.getDynamicMap();
   }
 
+  /**
+   *DEPRECATED
+   */
   List<List<Items>> getItemMap() {
     if (_level == null) return null;
 
     return _level.getIemMap();
   }
+
+  /**
+   * return the full gameField as list over list with enum [Type]
+   */
+  List<List<Types>> getMap() => _level.getMap();
 
   /**
    * return the current score
