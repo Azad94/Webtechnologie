@@ -90,7 +90,6 @@ class PacmanGameView {
         switch(s) {
           case Statics.WALL :
             kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/wall32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
-            /*"background-image:url(../web/resc/blinky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;";*/
             break;
           case Statics.FLOOR :
             break;
@@ -121,7 +120,6 @@ class PacmanGameView {
         switch(s) {
           case Dynamics.BLINKY :
             kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/blinky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
-            /*"background-image:url(../web/resc/blinky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;";*/
             break;
           case Dynamics.PINKY :
             kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/pinky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
@@ -165,7 +163,7 @@ class PacmanGameView {
             kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/powerpill32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Items.CHERRY :
-            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/cherry32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/animatedcherry32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Items.NOTHING :
             break;
