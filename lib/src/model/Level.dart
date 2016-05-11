@@ -8,6 +8,8 @@ class Level {
   num _scoreCherry;
   num _scorePowerPill;
 
+  Pacman _pacman;
+
   /**
    * brain for collision detection
    * Only check collision for ghost when pacman is already moved.
@@ -38,6 +40,9 @@ class Level {
     initTiles();
     createObjects(environmentCode);
   }
+
+  int get pacmanX => _pacman._x;
+  int get pacmanY => _pacman._y;
 
   /**
    * checks if the given [GameElement] collides with another [GameElement]
@@ -201,7 +206,7 @@ class Level {
 
           case LevelLoader.POWERPILL:
             _tiles[y][x]._item =
-                new PowerPill(x, y, true, false, true, _scorePill, _model);
+                new PowerPill(x, y, true, false, true, _scorePowerPill, _model);
             break;
 
           case LevelLoader.CHERRY:
@@ -226,9 +231,9 @@ class Level {
             break;
 
           case LevelLoader.PACMAN:
-            final p = new Pacman(x, y, false, true, _lives, this, _model);
-            _tiles[y][x]._pacman = p;
-            _model.registerGameElement(p);
+            _pacman = new Pacman(x, y, false, true, _lives, this, _model);
+            _tiles[y][x]._pacman = _pacman;
+            _model.registerGameElement(_pacman);
             break;
 
           case LevelLoader.DOOR:
