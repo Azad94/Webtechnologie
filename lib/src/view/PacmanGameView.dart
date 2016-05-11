@@ -157,10 +157,10 @@ class PacmanGameView {
 
         switch(s) {
           case Items.PILL :
-            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/pill32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/pill32_2.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Items.POWERPILL :
-            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/powerpill32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/powerpill32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Items.CHERRY :
             kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/animatedcherry32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");

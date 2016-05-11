@@ -1,11 +1,14 @@
 part of pacmanLib;
 
+const speed = const Duration(milliseconds: 500);
+
 class PacmanGameController{
 
   PacmanGameModel _pacmanModel;
   PacmanGameView _pacmanView;
 
   var _keyListener;
+  Timer _timer;
 
   PacmanGameController() {
 
@@ -31,6 +34,7 @@ class PacmanGameController{
 
     refreshField3(labyrinth);
 
+    _timer = new Timer.periodic(speed, (_) => _pacmanModel.triggerFrame());
 
     _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
       switch (ev.keyCode) {

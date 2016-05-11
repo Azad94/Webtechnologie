@@ -121,7 +121,7 @@ class LevelLoader {
 
   // TODO choose level
   // Path for json files? Fix hard coding of path
-  static const _jsonLevel = "../lib/2_Level.json";
+  static const _jsonLevel = "../lib/1_Level.json";
 
   /**
    * Loads a level from json file by given level number.
