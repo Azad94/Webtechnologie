@@ -8,6 +8,8 @@ class Level {
   num _scoreCherry;
   num _scorePowerPill;
 
+  Pacman _pacman;
+
   /**
    * brain for collision detection
    * Only check collision for ghost when pacman is already moved.
@@ -38,6 +40,9 @@ class Level {
     initTiles();
     createObjects(environmentCode);
   }
+
+  int get pacmanX => _pacman._x;
+  int get pacmanY => _pacman._y;
 
   /**
    * checks if the given [GameElement] collides with another [GameElement]
@@ -72,19 +77,20 @@ class Level {
     // ghost chance position
     if (g is Ghost) {
       _ghostMoved++;
-      _tiles[yOld][xOld].ghosts.remove(g);
-      _tiles[yNew][xNew].ghosts.add(g);
+      _tiles[yOld][xOld]._ghosts.remove(g);
+      _tiles[yNew][xNew]._ghosts.add(g);
       this.collisionDetectionGhost(xNew, yNew);
     }
     // every Dynamic GameElement had been moved
     // reset brain
-    if(_pacmanMoved && _ghostMoved == 4) {
+    if (_pacmanMoved && _ghostMoved == 4) {
       _pacmanMoved = false;
       _ghostMoved = 0;
     }
   }
 
   /**
+   * DEPRECATED
    * Creates a List<List> with all static [GameElement] and return it
    */
   List<List<Statics>> getStaticMap() {
@@ -112,6 +118,7 @@ class Level {
   }
 
   /**
+   * DEPRECATED
    * Creates a List<List> with all Dynamic [GameElement] and return it
    */
   List<List<Dynamics>> getDynamicMap() {
@@ -128,18 +135,18 @@ class Level {
         if (_tiles[y][x]._pacman != null)
           ret[y].add(Dynamics.PACMAN);
         // is a ghost
-        else if (_tiles[y][x].ghosts.length != 0) {
+        else if (_tiles[y][x]._ghosts.length != 0) {
           // is ghost Bashful
-          if (_tiles[y][x].ghosts[0] is Inky)
+          if (_tiles[y][x]._ghosts[0] is Inky)
             ret[y].add(Dynamics.INKY);
           // is ghost Shadow
-          else if (_tiles[y][x].ghosts[0] is Blinky)
+          else if (_tiles[y][x]._ghosts[0] is Blinky)
             ret[y].add(Dynamics.BLINKY);
           // is ghost Speedy
-          else if (_tiles[y][x].ghosts[0] is Clyde)
+          else if (_tiles[y][x]._ghosts[0] is Clyde)
             ret[y].add(Dynamics.CLYDE);
           //  is ghost Pokey
-          else if (_tiles[y][x].ghosts[0] is Pinky) ret[y].add(Dynamics.PINKY);
+          else if (_tiles[y][x]._ghosts[0] is Pinky) ret[y].add(Dynamics.PINKY);
         }
         // no dynamics
         else
@@ -150,6 +157,7 @@ class Level {
   }
 
   /**
+   * DEPRECATED
    * Creates a List<List> with all Items [GameElement] and return it
    */
   List<List<Items>> getIemMap() {
@@ -169,6 +177,60 @@ class Level {
         // is cherry
         else if (_tiles[y][x]._item is Cherry && _tiles[y][x]._item._visible)
           ret[y].add(Items.CHERRY);
+      }
+    }
+    return ret;
+  }
+
+  /**
+   * return the full gameField as list over list with enum [Type]
+   */
+  List<List<Types>> getMap() {
+    /*
+         * if more ghosts of pacman and ghosts on the same field the following priority are used:
+         * if pacman on a field, only pacman is returned
+         * if two or more ghost on one field, only the first ghost in list is returned
+         */
+    List<List<Types>> ret = new List<List<Types>>();
+    for (int y = 0; y < _sizeY; y++) {
+      ret.add(new List());
+      for (int x = 0; x < _sizeX; x++) {
+        final tile = _tiles[y][x];
+        // environments
+        if (tile._environment != null) {
+          // door
+          if (tile._environment._door) ret[y].add(Types.DOOR);
+          // wall
+          if (tile._environment._collisionPlayer) ret[y].add(Types.WALL);
+        }
+        // pacman
+        if (tile._pacman != null) ret[y].add(Types.PACMAN);
+
+        // ghosts
+        if (tile._ghosts.length != 0) {
+          // blinky
+          if (tile._ghosts[0] is Blinky) ret[y].add(Types.BLINKY);
+          // pinky
+          if (tile._ghosts[0] is Pinky) ret[y].add(Types.PINKY);
+          // inky
+          if (tile._ghosts[0] is Inky) ret[y].add(Types.INKY);
+          // clyde
+          if (tile._ghosts[0] is Clyde) ret[y].add(Types.CLYDE);
+        }
+        // items
+        if (tile._item != null) {
+          // pill
+          if (tile._item is Pill && tile._item._visible) ret[y].add(Types.PILL);
+          // powerpill
+          if (tile._item is PowerPill && tile._item._visible)
+            ret[y].add(Types.POWERPILL);
+          // cherry
+          if (tile._item is Cherry && tile._item._visible)
+            ret[y].add(Types.CHERRY);
+        }
+        if (tile._item == null &&
+            tile._environment == null &&
+            tile._ghosts.length == 0) ret[y].add(Types.NOTHING);
       }
     }
     return ret;
@@ -196,12 +258,13 @@ class Level {
             break;
 
           case LevelLoader.PILL:
-            _tiles[y][x]._item = new Pill(x, y, true, false, true, _scorePill, _model);
+            _tiles[y][x]._item =
+                new Pill(x, y, true, false, true, _scorePill, _model);
             break;
 
           case LevelLoader.POWERPILL:
             _tiles[y][x]._item =
-                new PowerPill(x, y, true, false, true, _scorePill, _model);
+                new PowerPill(x, y, true, false, true, _scorePowerPill, _model);
             break;
 
           case LevelLoader.CHERRY:
@@ -210,25 +273,25 @@ class Level {
             break;
 
           case LevelLoader.INKY:
-            _tiles[y][x].ghosts.add(new Inky(x, y, false, false, this));
+            _tiles[y][x]._ghosts.add(new Inky(x, y, false, false, this));
             break;
 
           case LevelLoader.PINKY:
-            _tiles[y][x].ghosts.add(new Pinky(x, y, false, false, this));
+            _tiles[y][x]._ghosts.add(new Pinky(x, y, false, false, this));
             break;
 
           case LevelLoader.CLYDE:
-            _tiles[y][x].ghosts.add(new Clyde(x, y, false, false, this));
+            _tiles[y][x]._ghosts.add(new Clyde(x, y, false, false, this));
             break;
 
           case LevelLoader.BLINKY:
-            _tiles[y][x].ghosts.add(new Blinky(x, y, false, false, this));
+            _tiles[y][x]._ghosts.add(new Blinky(x, y, false, false, this));
             break;
 
           case LevelLoader.PACMAN:
-            final p = new Pacman(x, y, false, true, _lives, this, _model);
-            _tiles[y][x]._pacman = p;
-            _model.registerGameElement(p);
+            _pacman = new Pacman(x, y, false, true, _lives, this, _model);
+            _tiles[y][x]._pacman = _pacman;
+            _model.registerGameElement(_pacman);
             break;
 
           case LevelLoader.DOOR:
@@ -255,18 +318,18 @@ class Level {
 
   void collisionDetectionItem(int x, int y) {
     // no collision possible, pacman is not here
-    if(_tiles[y][x]._pacman == null) return;
+    if (_tiles[y][x]._pacman == null) return;
     // pacman collides with item
-    if(_tiles[y][x]._item != null) {
+    if (_tiles[y][x]._item != null) {
       _tiles[y][x]._item.pickUp();
     }
   }
 
   void collisionDetectionGhost(int x, int y) {
     // pacman will move later
-    if(!_pacmanMoved) return;
+    if (!_pacmanMoved) return;
     // pacman is already moved and ghost collides with pacman
-    if(_tiles[y][x]._pacman != null && _tiles[y][x].ghosts.length != 0) {
+    if (_tiles[y][x]._pacman != null && _tiles[y][x]._ghosts.length != 0) {
       _tiles[y][x]._pacman.decreaseLife();
     }
   }
