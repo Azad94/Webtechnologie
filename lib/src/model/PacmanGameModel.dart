@@ -5,6 +5,8 @@ class PacmanGameModel {
   Pacman _pacman;
   Directions _pac_dir;
 
+  PacmanGameController _con;
+
   bool _gameOver = false;
   int _sizeX;
   int _sizeY;
@@ -12,10 +14,11 @@ class PacmanGameModel {
   Level _level;
   int _currentLevel = -1;
 
-  PacmanGameModel() {
+  PacmanGameModel(PacmanGameController con) {
     LevelLoader.loadConfig();
     _sizeX = LevelLoader.sizeX;
     _sizeY = LevelLoader.sizeY;
+    this._con = con;
   }
 
   bool getGameOver() => false;
@@ -73,6 +76,7 @@ class PacmanGameModel {
   void triggerFrame() {
     this.moveGhost();
     _pacman.move(_pac_dir);
+    _con.updateGameStatus();
   }
 
   /**
