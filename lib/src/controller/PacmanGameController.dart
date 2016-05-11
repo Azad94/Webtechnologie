@@ -12,7 +12,7 @@ class PacmanGameController{
     _pacmanModel = new PacmanGameModel();
     _pacmanView = new PacmanGameView(this);
 
-    _pacmanView.startButton.onClick.listen((_) { _pacmanModel.loadLevel(1); startGame();});
+    _pacmanView.startButton.onClick.listen((_) {_pacmanModel.loadLevel(1);  startGame();});
   }
 
 
@@ -22,6 +22,14 @@ class PacmanGameController{
     var labyrinth = _pacmanModel.getStaticMap();
 
     refreshField(labyrinth);
+    refreshField4(labyrinth);
+    labyrinth = _pacmanModel.getDynamicMap();
+
+    refreshField2(labyrinth);
+
+    labyrinth = _pacmanModel.getItemMap();
+
+    refreshField3(labyrinth);
 
 
     _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
@@ -35,8 +43,17 @@ class PacmanGameController{
 
   }
 
-  void refreshField(List<List<Tile>> l ) {
+  void refreshField(List<List<Statics>> l ) {
       _pacmanView.updateListen(l);
+  }
+  void refreshField2(List<List<Dynamics>> l) {
+    _pacmanView._labyrinthAddDynamic(l);
+  }
+  void refreshField3(List<List<Items>> l) {
+    _pacmanView._labyrinthAddItems(l);
+  }
+  void refreshField4(List<List<Statics>> l) {
+    _pacmanView._labyrinthAddStatics(l);
   }
   void updateGameStatus() {
 

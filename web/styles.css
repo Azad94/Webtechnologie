@@ -1,8 +1,9 @@
-body {
-    background-image: url("resc/Pacman_Background1_trans.png");
+html, body {
     margin: 0;
     height: 100%;
     color: white;
+    width:100%;
+    text-align:center;
 }
 
 .start {
@@ -45,30 +46,35 @@ body {
     font-size: 30px;
 }
 
-.game.show { display: block; }
+.game.show { display: block }
 .game {
-    position: relative;
+    position: static;
     height: 100%;
-    width: 500px;
-    margin: auto;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
     display: none;
 }
 
 #labyrinth td {
-    background-color: rgba(255, 255, 255, 0.1);
-    width: 22px;
-    height: 22px;
+    background-color: black;
+    width: 32px;
+    height: 32px;
+
 }
 
 #labyrinth {
-    position: absolute;
+    position: static;
     border-collapse: separate;
-    border: 10px solid gray;
+    border: 5px solid gray;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
-#labyrinth { top: 12%; left: 0; }
+
 
 #information {
-    position: absolute;
+    position: static;
     top: 50%;
     right: 15%;
     font-size: 22%;
@@ -76,8 +82,8 @@ body {
 
 .messages.show { display: block; }
 .messages {
-    background-color: rgba(255, 255, 255, 0.1);
-    position: absolute;
+    background-color: rgba(255, 0, 255, 0.1);
+    position: static;
     margin: 0;
     width: 100%;
     text-align: center;

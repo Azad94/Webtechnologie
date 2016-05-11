@@ -10,7 +10,7 @@ class PacmanGameView {
 
   //Die verschiedenen DivKlassen aus dem HTML-Dokument
   final _startScreen = querySelector(".start");
-  final _message = querySelector(".message");
+  final _message = querySelector(".messages");
   final _game = querySelector(".game");
 
   //Die verschiedenen Elemente aus dem HTML-Dokument
@@ -51,25 +51,131 @@ class PacmanGameView {
 
   void updateGameStatus() {}
 
-  void updateListen(List<List<Tile>> l) {
+  void updateListen(List<List<Statics>> l) {
     _labyrinth.innerHtml = _labyrinthToHTMLTable(l);
   }
-
   void updateScore(int score) {
     _score.innerHtml = "Score: $score";
   }
-  String _labyrinthToHTMLTable(List<List<Tile>> l) {
+  String _labyrinthToHTMLTable(List<List<Statics>> l) {
 
-    String htmlTable = "<table><tbody>";
+   /* l.forEach((List<Statics> s) => s.forEach((Statics k) => print(k)));*/
 
-    for (List<Tile> row in l) {
+    String htmlTable = "<table>";
+    int xindex = 0;
+    int yindex = 0;
+    for (List<Statics> row in l) {
       htmlTable += "<tr>";
 
-      for (Tile t in row) {
-        if(t.enviornment != Statics.NOTHING){
-          htmlTable += "<td>#</td>";
+      for (Statics s in row) {
+        if(s == Statics.WALL){
+          htmlTable += "<td></td>";
+        } else { htmlTable += "<td></td>";
         }
       }
+      htmlTable += "</tr>";
+    }
+    return htmlTable += "</table>";
+  }
+  void _labyrinthAddStatics(List<List<Statics>> l) {
+
+    var kl = _labyrinth.children[0].children[0];
+
+    int dummy = 0;
+    int dummy2 = 0;
+    for (List<Statics> row in l) {
+
+      for (Statics s in row) {
+
+        switch(s) {
+          case Statics.WALL :
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/wall32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            /*"background-image:url(../web/resc/blinky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;";*/
+            break;
+          case Statics.FLOOR :
+            break;
+          case Statics.DOOR :
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/door32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            break;
+          case Statics.NOTHING :
+            break;
+          default:
+            break;
+        }
+        dummy2++;
+      }
+      dummy2 = 0;
+      dummy++;
+    }
+  }
+  void _labyrinthAddDynamic(List<List<Dynamics>> l) {
+
+    var kl = _labyrinth.children[0].children[0];
+
+    int dummy = 0;
+    int dummy2 = 0;
+    for (List<Dynamics> row in l) {
+
+      for (Dynamics s in row) {
+
+        switch(s) {
+          case Dynamics.BLINKY :
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/blinky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            /*"background-image:url(../web/resc/blinky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;";*/
+            break;
+          case Dynamics.PINKY :
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/pinky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            break;
+          case Dynamics.INKY :
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/inky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            break;
+          case Dynamics.CLYDE :
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/clyde32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            break;
+          case Dynamics.PACMAN :
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/animatedPac.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            break;
+          case Dynamics.NOTHING :
+            break;
+          default:
+            break;
+        }
+        dummy2++;
+    }
+      dummy2 = 0;
+      dummy++;
+    }
+  }
+
+  void _labyrinthAddItems(List<List<Items>> l) {
+
+    var kl = _labyrinth.children[0].children[0];
+
+    int dummy = 0;
+    int dummy2 = 0;
+    for (List<Items> row in l) {
+
+      for (Items s in row) {
+
+        switch(s) {
+          case Items.PILL :
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/pill32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            break;
+          case Items.POWERPILL :
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/powerpill32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            break;
+          case Items.CHERRY :
+            kl.children[dummy].children[dummy2].setAttribute("style", "background-image:url(../web/resc/cherry32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            break;
+          case Items.NOTHING :
+            break;
+          default:
+            break;
+        }
+        dummy2++;
+      }
+      dummy2 = 0;
+      dummy++;
     }
   }
 }
