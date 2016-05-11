@@ -12,7 +12,7 @@ class PacmanGameController{
 
   PacmanGameController() {
 
-    _pacmanModel = new PacmanGameModel(this);
+    _pacmanModel = new PacmanGameModel();
     _pacmanView = new PacmanGameView(this);
 
     _pacmanView.startButton.onClick.listen((_) {_pacmanModel.loadLevel(1);  startGame();});
@@ -48,6 +48,7 @@ class PacmanGameController{
   void updateGameStatus() {
     updateScore();
     var labyrinth = _pacmanModel.getMap();
+    print(labyrinth[16]);
     refreshField2(labyrinth);
   }
   void updateListen() {

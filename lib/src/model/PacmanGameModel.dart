@@ -3,7 +3,7 @@ part of pacmanLib;
 class PacmanGameModel {
   List<Ghost> _ghosts = new List();
   Pacman _pacman;
-  Directions _pac_dir = Directions.NOTHING;
+  Directions _pac_dir;
 
   bool _gameOver = false;
   int _sizeX;
@@ -73,7 +73,6 @@ class PacmanGameModel {
   void triggerFrame() {
     this.moveGhost();
     _pacman.move(_pac_dir);
-    _pac_dir = Directions.NOTHING;
   }
 
   /**
