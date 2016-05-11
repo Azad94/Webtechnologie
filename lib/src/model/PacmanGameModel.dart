@@ -3,6 +3,7 @@ part of pacmanLib;
 class PacmanGameModel {
   List<Ghost> _ghosts = new List();
   Pacman _pacman;
+  PacmanGameController _con;
   Directions _pac_dir = Directions.NOTHING;
 
   bool _gameOver = false;
@@ -12,10 +13,11 @@ class PacmanGameModel {
   Level _level;
   int _currentLevel = -1;
 
-  PacmanGameModel() {
+  PacmanGameModel(PacmanGameController con) {
     LevelLoader.loadConfig();
     _sizeX = LevelLoader.sizeX;
     _sizeY = LevelLoader.sizeY;
+    this._con = con;
   }
 
   bool getGameOver() => false;
@@ -71,7 +73,7 @@ class PacmanGameModel {
    * move [Pacman] and [Ghost] to the next position. Call this method each frame.
    */
   void triggerFrame() {
-    this.moveGhost();
+    //this.moveGhost();
     _pacman.move(_pac_dir);
     _pac_dir = Directions.NOTHING;
   }
@@ -89,7 +91,7 @@ class PacmanGameModel {
   void enablePowerMode() => _ghosts.forEach((g) => g.eatableMode());
 
   void updateView() {
-
+    _con.updateGameStatus();
   }
 
   /**

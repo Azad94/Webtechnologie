@@ -73,6 +73,7 @@ class Level {
       _tiles[yNew][xNew]._pacman = g;
       this.collisionDetectionItem(xNew, yNew);
       this.collisionDetectionGhost(xNew, yNew);
+      _model.updateView(); // TODO only for testing, when ghosts finished remove
     }
     // ghost chance position
     if (g is Ghost) {
@@ -226,13 +227,16 @@ class Level {
         // items
         else if (tile._item != null) {
           // pill
-          if (tile._item is Pill && tile._item._visible) ret[y].add(Types.PILL);
+          if (tile._item is Pill && tile._item._visible)
+            ret[y].add(Types.PILL);
           // powerpill
-          if (tile._item is PowerPill && tile._item._visible)
+          else if (tile._item is PowerPill && tile._item._visible)
             ret[y].add(Types.POWERPILL);
           // cherry
-          if (tile._item is Cherry && tile._item._visible)
+          else if (tile._item is Cherry && tile._item._visible)
             ret[y].add(Types.CHERRY);
+          else
+            ret[y].add(Types.NOTHING);
         } else
           ret[y].add(Types.NOTHING);
       }
