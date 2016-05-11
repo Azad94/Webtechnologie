@@ -4,8 +4,4 @@
 import 'dart:html';
 import 'package:Webtechnologie/pacmanLib.dart';
 
-void main() {
-  PacmanGameModel model = new PacmanGameModel();
-  model.loadLevel(0);
-  querySelector('#output').text = model.getStaticMap().toString();
-}
+main() => new PacmanGameController();

@@ -12,13 +12,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="scaffolded-by" content="https://github.com/google/stagehand">
     <title>Webtechnologie</title>
-    <script defer src="main.dart" type="application/dart"></script>
-    <script defer src="packages/browser/dart.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+<!-- Container für die Startseite -->
+<div class="start">
+    <p id="startText">Willkommen</p>
+    <p id="startButton">START</p>
+</div>
 
-  <div id="output"></div>
+<!-- Container für die Nachrichten -->
+<div class="messages">
+    <p id="msg"></p>
+</div>
+
+<div class="game">
+    <!-- das Spielfeld -->
+    <div id="labyrinth"></div>
+
+    <!-- Spielinformationen -->
+    <div id="information">
+        <p id="level"></p>
+        <p id="score"></p>
+        <p id="lives"></p>
+    </div>
+</div>
+
+<script defer src="main.dart" type="application/dart"></script>
+<script defer src="packages/browser/dart.js"></script>
 </body>
 </html>

@@ -1,9 +1,96 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto);
-
 html, body {
+    margin: 0;
+    height: 100%;
+    color: white;
+    width:100%;
+    text-align:center;
+}
+
+.start {
     width: 100%;
     height: 100%;
+    background-image: url("resc/Pacman_Background1.png");
+    -webkit-background-size:cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    font-weight: bold;
+    text-align: center;
+}
+.start.close { display: none;
+
+}
+
+#startText {
+    position:absolute;
+    width: 1000px;
+    margin-left:-500px;
+    left:50%;
+    bottom: 150px;
+    letter-spacing: 3px;
+    font-family: Calibri;
+    font-size: 50px;
+}
+
+#startButton {
+    position: absolute;
+    border: 5px solid gray;
+    border-radius: 17px;
+    cursor: pointer;  width: 150px;
+    margin-left: -75px;
+    left: 50%;
+    bottom: 60px;
+    font-size: 30px;
+}
+
+.game.show { display: block }
+.game {
+    position: static;
+    height: 100%;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+}
+
+#labyrinth td {
+    background-color: black;
+    width: 32px;
+    height: 32px;
+
+}
+
+#labyrinth {
+    position: static;
+    border-collapse: separate;
+    border: 5px solid gray;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+#information {
+    position: static;
+    top: 50%;
+    right: 15%;
+    font-size: 22%;
+}
+
+.messages.show { display: block; }
+.messages {
+    background-color: rgba(255, 0, 255, 0.1);
+    position: static;
     margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
+    width: 100%;
+    text-align: center;
+    display: none;
+}
+
+.messages #msg {
+    font-size: 22px;
+    line-height: 8%;
 }
