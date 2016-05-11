@@ -82,10 +82,11 @@ class Level {
       this.collisionDetectionGhost(xNew, yNew);
     }
     // every Dynamic GameElement had been moved
-    // reset brain
+    // reset brain and update View
     if (_pacmanMoved && _ghostMoved == 4) {
       _pacmanMoved = false;
       _ghostMoved = 0;
+      _model.updateView();
     }
   }
 
@@ -199,26 +200,31 @@ class Level {
         // environments
         if (tile._environment != null) {
           // door
-          if (tile._environment._door) ret[y].add(Types.DOOR);
+          if (tile._environment._door)
+            ret[y].add(Types.DOOR);
           // wall
-          if (tile._environment._collisionPlayer) ret[y].add(Types.WALL);
+          else if (tile._environment._collisionPlayer) ret[y].add(Types.WALL);
         }
         // pacman
-        if (tile._pacman != null) ret[y].add(Types.PACMAN);
+        else if (tile._pacman != null)
+          ret[y].add(Types.PACMAN);
 
         // ghosts
-        if (tile._ghosts.length != 0) {
+        else if (tile._ghosts.length != 0) {
           // blinky
-          if (tile._ghosts[0] is Blinky) ret[y].add(Types.BLINKY);
+          if (tile._ghosts[0] is Blinky)
+            ret[y].add(Types.BLINKY);
           // pinky
-          if (tile._ghosts[0] is Pinky) ret[y].add(Types.PINKY);
+          else if (tile._ghosts[0] is Pinky)
+            ret[y].add(Types.PINKY);
           // inky
-          if (tile._ghosts[0] is Inky) ret[y].add(Types.INKY);
+          else if (tile._ghosts[0] is Inky)
+            ret[y].add(Types.INKY);
           // clyde
-          if (tile._ghosts[0] is Clyde) ret[y].add(Types.CLYDE);
+          else if (tile._ghosts[0] is Clyde) ret[y].add(Types.CLYDE);
         }
         // items
-        if (tile._item != null) {
+        else if (tile._item != null) {
           // pill
           if (tile._item is Pill && tile._item._visible) ret[y].add(Types.PILL);
           // powerpill
@@ -227,10 +233,8 @@ class Level {
           // cherry
           if (tile._item is Cherry && tile._item._visible)
             ret[y].add(Types.CHERRY);
-        }
-        if (tile._item == null &&
-            tile._environment == null &&
-            tile._ghosts.length == 0) ret[y].add(Types.NOTHING);
+        } else
+          ret[y].add(Types.NOTHING);
       }
     }
     return ret;

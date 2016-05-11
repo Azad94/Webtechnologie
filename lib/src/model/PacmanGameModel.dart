@@ -87,6 +87,10 @@ class PacmanGameModel {
    */
   void enablePowerMode() => _ghosts.forEach((g) => g.eatableMode());
 
+  void updateView() {
+
+  }
+
   /**
    * Moves all [Ghost]s DO NOT CALL
    */
