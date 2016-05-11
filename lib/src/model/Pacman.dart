@@ -6,7 +6,8 @@ class Pacman extends GameElement {
   Level _level;
   PacmanGameModel _model;
 
-  Pacman(int x, int y, bool collPlayer, bool collGhost, int lives, Level l, PacmanGameModel model)
+  Pacman(int x, int y, bool collPlayer, bool collGhost, int lives, Level l,
+      PacmanGameModel model)
       : super(x, y, collPlayer, collGhost),
         this._lives = lives,
         this._level = l,
@@ -16,26 +17,30 @@ class Pacman extends GameElement {
    * moves [Pacman] in the given [Directions].
    */
   void move(Directions dir) {
-    if (dir == Directions.UP) {
-      if (!_level.checkCollision(_x, _y - 1, this))
-        _level.registerElement(_x, _y, _x, --_y, this);
-    }
-    if (dir == Directions.DOWN) {
-      if (!_level.checkCollision(_x, _y + 1, this))
-        _level.registerElement(_x, _y, _x, ++_y, this);
-    }
-    if (dir == Directions.LEFT) {
-      if (!_level.checkCollision(_x - 1, _y, this))
-        _level.registerElement(_x, _y, --_x, _y, this);
-    }
-    if (dir == Directions.RIGHT) {
-      if (!_level.checkCollision(_x + 1, _y, this))
-        _level.registerElement(_x, _y, ++_x, _y, this);
+    switch (dir) {
+      case Directions.UP:
+        if (!_level.checkCollision(_x, _y - 1, this))
+          _level.registerElement(_x, _y, _x, --_y, this);
+        break;
+      case Directions.DOWN:
+        if (!_level.checkCollision(_x, _y + 1, this))
+          _level.registerElement(_x, _y, _x, ++_y, this);
+        break;
+      case Directions.LEFT:
+        if (!_level.checkCollision(_x - 1, _y, this))
+          _level.registerElement(_x, _y, --_x, _y, this);
+        break;
+      case Directions.RIGHT:
+        if (!_level.checkCollision(_x + 1, _y, this))
+          _level.registerElement(_x, _y, ++_x, _y, this);
+        break;
+      default:
+        break;
     }
   }
 
   void decreaseLife() {
-    if(--_lives == 0) {
+    if (--_lives == 0) {
       _model.gameOver();
     }
   }
