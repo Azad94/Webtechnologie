@@ -2,7 +2,6 @@ part of pacmanLib;
 
 abstract class Ghost extends GameElement {
 
-  double speed = 0.0;
   bool eatable = false;
   bool invisible = true;
   int start = 0;
