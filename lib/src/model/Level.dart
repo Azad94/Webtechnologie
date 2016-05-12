@@ -71,6 +71,7 @@ class Level {
    * xOld and yOld is the old position and xNew and yNew the new one. g is a reference on the moving objekt.
    */
   void registerElement(int xOld, int yOld, int xNew, int yNew, GameElement g) {
+    print("$xNew : $yNew by $g");
     // pacman chance position
     if (g is Pacman) {
       _pacmanMoved = true;
@@ -87,13 +88,14 @@ class Level {
       _tiles[yNew][xNew]._ghosts.add(g);
       this.collisionDetectionGhost(xNew, yNew);
     }
+    _model.updateView();
     // every Dynamic GameElement had been moved
     // reset brain and update View
-    if (_pacmanMoved && _ghostMoved == 4) {
+    /*if (_pacmanMoved &&_ghostMoved == 4) {
       _pacmanMoved = false;
       _ghostMoved = 0;
       _model.updateView();
-    }
+    }*/
   }
 
   /**
@@ -302,19 +304,28 @@ class Level {
             break;
 
           case LevelLoader.INKY:
-            _tiles[y][x]._ghosts.add(new Inky(x, y, false, false, this));
+            Ghost g = new Inky(x, y, false, false, this);
+            _tiles[y][x]._ghosts.add(g);
+            _model.registerGameElement(g);
+
             break;
 
           case LevelLoader.PINKY:
-            _tiles[y][x]._ghosts.add(new Pinky(x, y, false, false, this));
+            Ghost g = new Pinky(x, y, false, false, this);
+            _tiles[y][x]._ghosts.add(g);
+            _model.registerGameElement(g);
             break;
 
           case LevelLoader.CLYDE:
-            _tiles[y][x]._ghosts.add(new Clyde(x, y, false, false, this));
+            Ghost g = new Clyde(x, y, false, false, this);
+            _tiles[y][x]._ghosts.add(g);
+            _model.registerGameElement(g);
             break;
 
           case LevelLoader.BLINKY:
-            _tiles[y][x]._ghosts.add(new Blinky(x, y, false, false, this));
+            Ghost g = new Blinky(x, y, false, false, this);
+            _tiles[y][x]._ghosts.add(g);
+            _model.registerGameElement(g);
             break;
 
           case LevelLoader.PACMAN:
@@ -356,7 +367,7 @@ class Level {
 
   void collisionDetectionGhost(int x, int y) {
     // pacman will move later
-    if (!_pacmanMoved) return;
+    //if (!_pacmanMoved) return;
     // pacman is already moved and ghost collides with pacman
     if (_tiles[y][x]._pacman != null && _tiles[y][x]._ghosts.length != 0) {
       _tiles[y][x]._pacman.decreaseLife();

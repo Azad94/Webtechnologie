@@ -73,10 +73,10 @@ class PacmanGameModel {
    * move [Pacman] and [Ghost] to the next position. Call this method each frame.
    */
   void triggerFrame() {
-    this.moveGhost();
     _pacman.move(_pac_dir);
     _level.pacmanDir = _pac_dir;
     _pac_dir = Directions.NOTHING;
+    this.moveGhost();
   }
 
   /**
@@ -98,7 +98,9 @@ class PacmanGameModel {
   /**
    * Moves all [Ghost]s DO NOT CALL
    */
-  void moveGhost() => _ghosts.forEach((g) => g.move());
+  void moveGhost() {
+    _ghosts.forEach((g) => g.move());
+  }
 
   /**
    * DEPRECATED
