@@ -7,68 +7,68 @@ class Blinky extends Ghost {
 
   int x1 = 5;
   int y1 = 5;
-  int x2 = 1;
-  int y2 = 4;
+
+  Directions nextMove;
 
   Blinky(int x, int y, bool collPlayer, bool collGhost, Level l)
       : super(x, y, collPlayer, collGhost, l);
 
 //gibt die bisher beste Liste zurück
-  List<Direction> getRoute() {
-    List<Direction> route = new List();
+  List<Directions> getRoute() {
+    List<Directions> route = new List();
     return getRouteRecursive(route, _x, _y);
   }
 
-  List<Direction> getRouteRecursive(
-      List<Direction> prev, int routeX, int routeY) {
+  List<Directions> getRouteRecursive(
+      List<Directions> prev, int routeX, int routeY) {
     if (prev.length > 10) {
       return prev;
     }
 
-    List<Direction> left;
-    List<Direction> up;
-    List<Direction> right;
-    List<Direction> down;
-    List<Direction> best = new List();
+    List<Directions> left;
+    List<Directions> up;
+    List<Directions> right;
+    List<Directions> down;
+    List<Directions> best = new List();
 
     // requires better interface to differentiate collisions from finding pacman
-    if ((prev.length == 0 || prev.last != Direction.RIGHT) &&
+    if ((prev.length == 0 || prev.last != Directions.RIGHT) &&
         !_level.checkCollision(routeX + 1, routeY, this)) {
       if (routeX + 1 == x1 && routeY == y1) {
-        prev.add(Direction.RIGHT);
+        prev.add(Directions.RIGHT);
         right = prev;
       } else {
-        prev.add(Direction.RIGHT);
+        prev.add(Directions.RIGHT);
         right = getRouteRecursive(prev, routeX + 1, routeY);
       }
     }
-    if ((prev.length == 0 || prev.last != Direction.UP) &&
+    if ((prev.length == 0 || prev.last != Directions.UP) &&
         !_level.checkCollision(routeX, routeY + 1, this)) {
       if (routeX == x1 && routeY + 1 == y1) {
-        prev.add(Direction.UP);
+        prev.add(Directions.UP);
         up = prev;
       } else {
-        prev.add(Direction.UP);
+        prev.add(Directions.UP);
         up = getRouteRecursive(prev, routeX, routeY + 1);
       }
     }
-    if ((prev.length == 0 || prev.last != Direction.LEFT) &&
+    if ((prev.length == 0 || prev.last != Directions.LEFT) &&
         !_level.checkCollision(routeX - 1, routeY, this)) {
       if (routeX - 1 == x1 && routeY == y1) {
-        prev.add(Direction.LEFT);
+        prev.add(Directions.LEFT);
         left = prev;
       } else {
-        prev.add(Direction.LEFT);
+        prev.add(Directions.LEFT);
         left = getRouteRecursive(prev, routeX - 1, routeY);
       }
     }
-    if ((prev.length == 0 || prev.last != Direction.DOWN) &&
+    if ((prev.length == 0 || prev.last != Directions.DOWN) &&
         !_level.checkCollision(routeX, routeY - 1, this)) {
       if (routeX + 1 == x1 && routeY == y1) {
-        prev.add(Direction.DOWN);
+        prev.add(Directions.DOWN);
         down = prev;
       } else {
-        prev.add(Direction.DOWN);
+        prev.add(Directions.DOWN);
         down = getRouteRecursive(prev, routeX, routeY - 1);
       }
     }
@@ -80,9 +80,9 @@ class Blinky extends Ghost {
       best = up;
     }
     if (right != null && (best.length == 0 || right.length < best.length)) {
-      best = rigth;
+      best = right;
     }
-    if (down != null && (best.length == 0 || down.length() < best.length)) {
+    if (down != null && (best.length == 0 || down.length < best.length)) {
       best = down;
     }
     return best;
@@ -98,52 +98,35 @@ void eatableMode() {}
 void calcRoute() {}
 
 void move() {
-  dir = getRoute().first;
-  if (dir == Directions.UP) {
-    if (!_level.checkCollision(_x, _y - 1, this))
-      _level.registerElement(_x, _y, _x, --_y, this);
-  }
-  if (dir == Directions.DOWN) {
-    if (!_level.checkCollision(_x, _y + 1, this))
-      _level.registerElement(_x, _y, _x, ++_y, this);
-  }
-  if (dir == Directions.LEFT) {
-    if (!_level.checkCollision(_x - 1, _y, this))
-      _level.registerElement(_x, _y, --_x, _y, this);
-  }
-  if (dir == Directions.RIGHT) {
-    if (!_level.checkCollision(_x + 1, _y, this))
-      _level.registerElement(_x, _y, ++_x, _y, this);
-  }
 
-  /*switch(d)
+  switch(nextMove)
   {
-    case Direction.UP:
+    case Directions.UP:
 
-        if((checkCollision(bx,by+1))==false){
-        by++;
+        if((checkCollision(_x,_y+1))==false){
+        _y++;
         }
         break;
 
-    case Direction.DOWN:
+    case Directions.DOWN:
 
-      if((checkCollision(bx,by-1))==false){
-        by--;
+      if((checkCollision(_x,_y-1))==false){
+        _y--;
         }
          break;
 
-    case Direction.LEFT:r
+    case Directions.LEFT:
 
-         if((checkCollision(bx-1,by))==false){
-          bx--;
+         if((checkCollision(_x-1,_y))==false){
+          _x--;
          }
         break;
 
-    case Direction.RIGHT:
+    case Directions.RIGHT:
 
-      if((checkCollision(bx+1,by))==false){
-          bx++;
+      if((checkCollision(_x+1,_y))==false){
+          _x++;
          }
          break;
-  }*/
+  }
 }
