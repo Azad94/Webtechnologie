@@ -13,12 +13,10 @@ class Clyde extends Ghost {
   int _alternativeTargetX = 28;
   int _alternativeTargetY = 2;
 
-  int _currentX = 18;
-  int _currentY = 11;
 
   void move()
   {
-    _level.registerElement(_currentX,_currentY,_currentX,_currentY,this);
+    _level.registerElement(_x,_y,_x,_y,this);
   }
 
   void eatableMode() {}

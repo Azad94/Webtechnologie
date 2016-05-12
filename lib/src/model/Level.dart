@@ -9,7 +9,8 @@ class Level {
   num _scorePowerPill;
 
   Pacman _pacman;
-  Directions _pacmanDir;
+  Directions _pacmanDir = Directions.RIGHT;
+  Types _pacmanPre = Types.PACMAN_RIGHT;
 
   /**
    * brain for collision detection
@@ -205,31 +206,28 @@ class Level {
       ret.add(new List());
       for (int x = 0; x < _sizeX; x++) {
         final tile = _tiles[y][x];
-        // environments
-        if (tile._environment != null) {
-          // door
-          if (tile._environment._door)
-            ret[y].add(Types.DOOR);
-          // wall
-          else if (tile._environment._collisionPlayer) ret[y].add(Types.WALL);
-        }
+
         // pacman
-        else if (tile._pacman != null)
+        if (tile._pacman != null)
           switch(_pacmanDir) {
             case Directions.UP:
               ret[y].add(Types.PACMAN_UP);
+              _pacmanPre = Types.PACMAN_UP;
               break;
             case Directions.DOWN:
               ret[y].add(Types.PACMAN_DOWN);
+              _pacmanPre = Types.PACMAN_DOWN;
               break;
             case Directions.LEFT:
               ret[y].add(Types.PACMAN_LEFT);
-                  break;
+              _pacmanPre = Types.PACMAN_LEFT;
+              break;
             case Directions.RIGHT:
               ret[y].add(Types.PACMAN_RIGHT);
+              _pacmanPre = Types.PACMAN_RIGHT;
               break;
             default:
-              ret[y].add(Types.PACMAN_RIGHT);
+              ret[y].add(_pacmanPre);
               break;
           }
 
@@ -260,7 +258,15 @@ class Level {
             ret[y].add(Types.CHERRY);
           else
             ret[y].add(Types.NOTHING);
-        } else
+        } // environments
+        else if (tile._environment != null) {
+          // door
+          if (tile._environment._door)
+            ret[y].add(Types.DOOR);
+          // wall
+          else if (tile._environment._collisionPlayer) ret[y].add(Types.WALL);
+        }
+        else
           ret[y].add(Types.NOTHING);
       }
     }

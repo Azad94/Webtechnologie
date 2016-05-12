@@ -73,8 +73,8 @@ class PacmanGameModel {
    * move [Pacman] and [Ghost] to the next position. Call this method each frame.
    */
   void triggerFrame() {
-    _pacman.move(_pac_dir);
     _level.pacmanDir = _pac_dir;
+    _pacman.move(_pac_dir);
     _pac_dir = Directions.NOTHING;
     this.moveGhost();
   }
