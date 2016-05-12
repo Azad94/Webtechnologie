@@ -119,16 +119,13 @@ class LevelLoader {
 
   static const _CONFIGJSON = "GameConfig.json";
 
-  // TODO choose level
-  // Path for json files? Fix hard coding of path
-  static const _jsonLevel = "1_Level.json";
 
   /**
    * Loads a level from json file by given level number.
    * Return true if file is loaded, else false
    */
   static bool loadLevel(int level) {
-    HttpRequest.getString(_jsonLevel).then((json) {
+    HttpRequest.getString("${level}_Level.json").then((json) {
       final data = JSON.decode(json);
       levelNumber = data["level"];
       sizeX = data["sizeX"];
