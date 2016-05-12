@@ -11,5 +11,9 @@ enum Types {
   PINKY,
   CLYDE,
   PACMAN,
+  PACMAN_UP,
+  PACMAN_DOWN,
+  PACMAN_LEFT,
+  PACMAN_RIGHT,
   NOTHING
 }
