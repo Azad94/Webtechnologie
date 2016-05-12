@@ -76,7 +76,6 @@ class Inky extends Ghost{
 
       case Directions.NOTHING:
         _level.registerElement(_currentX,_currentY,_currentX,_currentY,this);
-        _currentY -= 1;
         break;
     }
   }
