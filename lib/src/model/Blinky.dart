@@ -102,28 +102,28 @@ void move(){
     case Directions.UP:
 
         if(!_level.checkCollision(_x, _y + 1, this)){
-        _y++;
+          _level.registerElement(_x, _y, _x, _y++, this);
         }
         break;
 
     case Directions.DOWN:
 
       if(!_level.checkCollision(_x, _y - 1, this)){
-        _y--;
+        _level.registerElement(_x, _y, _x, _y--, this);
       }
       break;
 
     case Directions.LEFT:
 
       if(!_level.checkCollision(_x + 1, _y, this)){
-        _x++;
+        _level.registerElement(_x, _y, _x++, _y, this);
       }
       break;
 
     case Directions.RIGHT:
 
       if(!_level.checkCollision(_x - 1, _y, this)){
-        _x--;
+        _level.registerElement(_x, _y, _x--, _y, this);
       }
       break;
   }
