@@ -34,10 +34,7 @@ class PacmanGameController{
     initField(labyrinth);
     refreshField2(labyrinth);
 
-    _timer = new Timer.periodic(speed, (_) {
-      _pacmanModel.triggerFrame();
-      print(_pacmanModel.getMap());
-    });
+    _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
 
     _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
       switch (ev.keyCode) {
@@ -79,6 +76,6 @@ class PacmanGameController{
     //_pacmanView.updateLevel();
   }
   void updateLives() {
-   // _pacmanView.updateLives();
+   // _pacmanView.updateLives(_pacmanModel.lives);
   }
 }
