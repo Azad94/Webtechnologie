@@ -71,7 +71,6 @@ class Level {
    * xOld and yOld is the old position and xNew and yNew the new one. g is a reference on the moving objekt.
    */
   void registerElement(int xOld, int yOld, int xNew, int yNew, GameElement g) {
-    print("$xNew : $yNew by $g");
     // pacman chance position
     if (g is Pacman) {
       _pacmanMoved = true;
@@ -83,6 +82,7 @@ class Level {
     }
     // ghost chance position
     if (g is Ghost) {
+      print("von $xOld : $yOld nach $xNew : $yNew by ${g is Inky ? "Inky" : ""}");
       _ghostMoved++;
       _tiles[yOld][xOld]._ghosts.remove(g);
       _tiles[yNew][xNew]._ghosts.add(g);
