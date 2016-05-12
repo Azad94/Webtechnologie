@@ -5,7 +5,7 @@ abstract class Ghost extends GameElement{
   bool _eatable = false;
   bool scatter;
   Directions nextDirection;
-  Directions _previousDirection = Directions.NOTHING;
+  Directions _previousDirection = Directions.UP;
   Directions _savePreviousDirection = Directions.NOTHING;
   int _ghostsEaten = 0;
   Level _level;
@@ -81,8 +81,6 @@ abstract class Ghost extends GameElement{
     _ghostsEaten = 0;
   }
 
-
-
   Directions getNextMove(int currentX, int currentY, int targetX, int targetY, GameElement g)
   {
     //horizontal difference from currentPosition to targetPosition
@@ -102,9 +100,9 @@ abstract class Ghost extends GameElement{
 
     if(verticalMoreImportant)
     {
-      if(_previousDirection == Directions.UP || _previousDirection == Directions.DOWN)
-      {
-        _savePreviousDirection = _previousDirection;
+    //  if(_previousDirection == Directions.UP || _previousDirection == Directions.DOWN)
+    //  {
+    //    _savePreviousDirection = _previousDirection;
 
         nextDirection == _previousDirection ? nextDirection : nextDirection = Directions.LEFT;
 
@@ -168,13 +166,13 @@ abstract class Ghost extends GameElement{
           default:
             Directions.RIGHT;
             break;
-        }
+      //  }
       }
     }
     else
     { //if the next and previous Direction are same nothing changes
-      if(_previousDirection == Directions.LEFT || _previousDirection == Directions.RIGHT) {
-        _savePreviousDirection = _previousDirection;
+    //  if(_previousDirection == Directions.LEFT || _previousDirection == Directions.RIGHT) {
+    //    _savePreviousDirection = _previousDirection;
 
         //if they are different, try going UP first
         nextDirection == _previousDirection ? nextDirection : nextDirection = Directions.UP;
@@ -251,7 +249,7 @@ abstract class Ghost extends GameElement{
         if(!_level.checkCollision(currentX, currentY - 1, this)) return Directions.UP;
 
         return Directions.NOTHING;
-      }
+    //  }
     }
     return Directions.NOTHING;
   }
