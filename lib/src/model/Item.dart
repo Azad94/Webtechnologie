@@ -6,7 +6,8 @@ class Item extends GameElement {
   static int _scoreCounter = 0;
   PacmanGameModel _model;
 
-  Item(int x, int y, bool collPlayer, bool collGhost, bool visible, int score, PacmanGameModel model)
+  Item(int x, int y, bool collPlayer, bool collGhost, bool visible, int score,
+      PacmanGameModel model)
       : super(x, y, collPlayer, collGhost),
         this._visible = visible,
         this._score = score,
@@ -15,7 +16,7 @@ class Item extends GameElement {
    * the [Item] is picked up. Increase the score and make [Item] invisible
    */
   void pickUp() {
-    _scoreCounter += _score;
+    if (_visible) _scoreCounter += _score;
     _visible = false;
   }
 }

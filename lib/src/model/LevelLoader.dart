@@ -25,12 +25,12 @@ class LevelLoader {
   /**
    * width field size
    */
-  static int sizeX;
+  static num sizeX;
 
   /**
    * height field size
    */
-  static int sizeY;
+  static num sizeY;
 
   /* gerneral const */
 
