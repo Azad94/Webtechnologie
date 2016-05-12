@@ -1,15 +1,22 @@
 part of pacmanLib;
 
+//the refreshrate of the view
 const speed = const Duration(milliseconds: 100);
 
 class PacmanGameController{
 
+  //instances of PacmanGameModel and PacmanGameView
   PacmanGameModel _pacmanModel;
   PacmanGameView _pacmanView;
 
+  //the current Direction of Pacman
+  Directions pacmanDir = Directions.RIGHT;
+
+  //keyListener for User interaction and timer for the refreshrate
   var _keyListener;
   Timer _timer;
 
+  //constructor
   PacmanGameController() {
 
     _pacmanModel = new PacmanGameModel(this);
@@ -19,6 +26,7 @@ class PacmanGameController{
   }
 
 
+  //starts a new game
   void startGame() {
     _pacmanView.showGameview();
 
@@ -39,22 +47,35 @@ class PacmanGameController{
 
   }
 
+  //let the view create the table
   void initField(List<List<Types>> l ) {
       _pacmanView.initField(l);
   }
+  //let the view load the current game elements and graphis into the table
   void refreshField2(List<List<Types>> l) {
     _pacmanView._labyrinthFill(l);
   }
+  //updates the current view
   void updateGameStatus() {
     updateScore();
     var labyrinth = _pacmanModel.getMap();
-    print(labyrinth[16]);
     refreshField2(labyrinth);
   }
   void updateListen() {
 
   }
+  //set the direction for pacman to choose the right graphic
+  void setPacmanDir(Directions p){
+    this.pacmanDir = p;
+  }
+  //let the view display the current score
   void updateScore() {
       _pacmanView.updateScore(_pacmanModel.getScore());
+  }
+  void updateLevel() {
+    //_pacmanView.updateLevel();
+  }
+  void updateLives() {
+   // _pacmanView.updateLives();
   }
 }

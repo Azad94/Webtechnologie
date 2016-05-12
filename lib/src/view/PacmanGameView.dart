@@ -8,12 +8,12 @@ class PacmanGameView {
 
   PacmanGameController _con;
 
-  //Die verschiedenen DivKlassen aus dem HTML-Dokument
+  //the different div-classes from the html-document
   final _startScreen = querySelector(".start");
   final _message = querySelector(".messages");
   final _game = querySelector(".game");
 
-  //Die verschiedenen Elemente aus dem HTML-Dokument
+  //different elements from the html-document
   final _startText = querySelector("#startText");
   final startButton = querySelector("#startButton");
 
@@ -26,10 +26,10 @@ class PacmanGameView {
   final _score = querySelector("#score");
   final _lives = querySelector("#lives");
 
-  //Konstruktor
+  //constructor
   PacmanGameView(_con);
 
-
+  //close start screen and show the gamefield
   void showGameview() {
     _startScreen.classes.toggle('close');
     _game.classes.toggle('show');
@@ -51,13 +51,21 @@ class PacmanGameView {
 
   void updateGameStatus() {}
 
+  //see _labyrinthToHTMLTable
   void initField(List<List<Types>> l) {
     _labyrinth.innerHtml = _labyrinthToHTMLTable(l);
   }
+  //displays the current score
   void updateScore(int score) {
     _score.innerHtml = "Score: $score";
   }
-
+  void updateLevel(int level){
+    _level.innerHtml = "Level: $level";
+  }
+  void updateLives(int lives){
+    _level.innerHtml = "Lives: $lives";
+  }
+  //creates the table in the html-document
   String _labyrinthToHTMLTable(List<List<Types>> l) {
 
     String htmlTable = "<table>";
@@ -72,6 +80,8 @@ class PacmanGameView {
     }
     return htmlTable += "</table>";
   }
+
+  //loads the different game elements and their graphical representation into the table
   void _labyrinthFill(List<List<Types>> l) {
 
     var kl = _labyrinth.children[0].children[0];

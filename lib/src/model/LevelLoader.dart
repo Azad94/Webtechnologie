@@ -117,11 +117,11 @@ class LevelLoader {
    */
   static const NOTHING = "X";
 
-  static const _CONFIGJSON = "../lib/GameConfig.json";
+  static const _CONFIGJSON = "GameConfig.json";
 
   // TODO choose level
   // Path for json files? Fix hard coding of path
-  static const _jsonLevel = "../lib/1_Level.json";
+  static const _jsonLevel = "1_Level.json";
 
   /**
    * Loads a level from json file by given level number.
