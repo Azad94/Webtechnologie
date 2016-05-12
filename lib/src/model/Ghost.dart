@@ -23,7 +23,7 @@ abstract class Ghost extends GameElement {
   void eatableMode();
 
   //8 X 7 DUMMY MAP
-  List<List> dummyMap =[
+  List<List> _dummyMap =[
     [00,10,20,30,40,50,60],//00
     [01,11,21,31,41,51,61],
     [02,12,22,32,42,52,62],
