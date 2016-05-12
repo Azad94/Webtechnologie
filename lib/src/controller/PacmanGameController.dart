@@ -73,9 +73,9 @@ class PacmanGameController{
       _pacmanView.updateScore(_pacmanModel.score);
   }
   void updateLevel() {
-    //_pacmanView.updateLevel();
+    _pacmanView.updateLevel(_pacmanModel.level);
   }
   void updateLives() {
-   // _pacmanView.updateLives(_pacmanModel.lives);
+    _pacmanView.updateLives(_pacmanModel.lives);
   }
 }

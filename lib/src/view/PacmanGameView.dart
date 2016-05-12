@@ -33,7 +33,7 @@ class PacmanGameView {
   void showGameview() {
     _startScreen.classes.toggle('close');
     _game.classes.toggle('show');
-    _message.classes.toggle('show');
+   // _message.classes.toggle('show');
   }
 
 
