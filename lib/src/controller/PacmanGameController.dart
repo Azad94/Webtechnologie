@@ -1,6 +1,6 @@
 part of pacmanLib;
 
-const speed = const Duration(milliseconds: 500);
+const speed = const Duration(milliseconds: 100);
 
 class PacmanGameController{
 
@@ -12,7 +12,7 @@ class PacmanGameController{
 
   PacmanGameController() {
 
-    _pacmanModel = new PacmanGameModel();
+    _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
 
     _pacmanView.startButton.onClick.listen((_) {_pacmanModel.loadLevel(1);  startGame();});
