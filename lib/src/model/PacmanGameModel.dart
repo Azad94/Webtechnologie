@@ -133,7 +133,17 @@ class PacmanGameModel {
   /**
    * return the current score
    */
-  int getScore() => Item._scoreCounter;
+  int get score => Item._scoreCounter;
+
+  /**
+   * return the lives of [Pacman]
+   */
+  int get lives => _pacman._lives;
+
+  /**
+   * return true if the game is game over, else false
+   */
+  bool get gameEnd => _gameOver;
 
   /**
    * register a new [GameElement]

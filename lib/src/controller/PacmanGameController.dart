@@ -70,7 +70,7 @@ class PacmanGameController{
   }
   //let the view display the current score
   void updateScore() {
-      _pacmanView.updateScore(_pacmanModel.getScore());
+      _pacmanView.updateScore(_pacmanModel.score);
   }
   void updateLevel() {
     //_pacmanView.updateLevel();
