@@ -3,7 +3,6 @@ part of pacmanLib;
 class Blinky extends Ghost {
   Blinky(int x, int y, bool collPlayer, bool collGhost, Level l) : super(x, y, collPlayer, collGhost, l);
 
-
   void move()
   {
     _level.registerElement(_x,_y,_x,_y,this);
