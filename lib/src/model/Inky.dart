@@ -4,13 +4,10 @@ class Inky extends Ghost{
 
   Inky(int x, int y, bool collPlayer, bool collGhost, Level l) : super(x,y,collPlayer, collGhost, l);
 
-  int _currentX = 16;
-  int _currentY = 11;
-
   int _targetX;
   int _targetY;
 
-  int _doorTargetX = 15;
+  int _doorTargetX = 14;
   int _doorTargetY = 9;
 
   int _scatterTargetX = 2;
@@ -23,59 +20,56 @@ class Inky extends Ghost{
 
 
   void move() {
+    if(_x == _targetX && _y == _targetY) _directionsChanged++;
 
     switch(_directionsChanged)
     {
       case 0:
         _targetX = _doorTargetX;
         _targetY = _doorTargetY;
-        if(_targetX == _doorTargetX && _targetY == _targetY) _directionsChanged++;
         break;
 
       case 1:
         _targetX = _scatterTargetX;
         _targetY = _scatterTargetY;
-        if(_targetX == _scatterTargetX && _targetY == _scatterTargetY) _directionsChanged++;
         break;
 
       case 2:
         _targetX = _alternativeTargetX;
         _targetY = _alternativeTargetY;
-        if(_targetX == _alternativeTargetX && _targetY == _alternativeTargetY) _directionsChanged++;
         break;
 
       case 3:
-        if(_targetX == _doorTargetX && _targetY == _targetY) _directionsChanged++;
         _targetX = _doorTargetX;
         _targetY = _doorTargetY;
         _directionsChanged = 0;
         break;
     }
 
-    switch(getNextMove(_currentX, _currentY, _targetX, _targetY, this))
+    switch(getNextMove(_x, _y, _targetX, _targetY, this))
     {
       case Directions.UP:
-        _level.registerElement(_currentX,_currentY,_currentX,_currentY-1,this);
-        _currentY -= 1;
+        _level.registerElement(_x, _y, _x, _y--,this);
+        _y--;
         break;
 
       case Directions.DOWN:
-        _level.registerElement(_currentX,_currentY,_currentX,_currentY+1,this);
-        _currentY += 1;
+        _level.registerElement(_x,_y,_x,_y++,this);
+       _y++;
         break;
 
       case Directions.LEFT:
-        _level.registerElement(_currentX,_currentY,_currentX-1,_currentY,this);
-        _currentX -= 1;
+        _level.registerElement(_x,_y,_x--,_y,this);
+        _x--;
         break;
 
       case Directions.RIGHT:
-        _level.registerElement(_currentX,_currentY,_currentX+1,_currentY,this);
-        _currentX += 1;
+        _level.registerElement(_x,_y,_x++,_y,this);
+        _x++;
         break;
 
       case Directions.NOTHING:
-        _level.registerElement(_currentX,_currentY,_currentX,_currentY,this);
+        _level.registerElement(_x,_y,_x,_y,this);
         break;
     }
   }
