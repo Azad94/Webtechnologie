@@ -1,7 +1,7 @@
 part of pacmanLib;
 
 //the refreshrate of the view
-const speed = const Duration(milliseconds: 500);
+const speed = const Duration(milliseconds: 1000);
 
 class PacmanGameController{
 

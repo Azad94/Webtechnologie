@@ -104,7 +104,9 @@ abstract class Ghost extends GameElement{
     //  {
     //    _savePreviousDirection = _previousDirection;
 
-        nextDirection == _previousDirection ? nextDirection : nextDirection = Directions.LEFT;
+        if(preferredVerDirection == Directions.UP &&
+            _previousDirection == Directions.LEFT) nextDirection = preferredVerDirection;
+        else nextDirection = Directions.LEFT;
 
         //try move from above
         switch (nextDirection)
@@ -155,13 +157,11 @@ abstract class Ghost extends GameElement{
             }
             else
             {
-              //TODO Richtungswechsel beeinflussend muss noch getestet werden ...
-              nextDirection = Directions.UP;
-              if(!_level.checkCollision(currentX, currentY--, this)) return Directions.UP;
-
               nextDirection = Directions.RIGHT;
               if(!_level.checkCollision(currentX++, currentY, this)) return Directions.RIGHT;
 
+              nextDirection = Directions.UP;
+              if(!_level.checkCollision(currentX, currentY--, this)) return Directions.UP;
             }
             break;
 

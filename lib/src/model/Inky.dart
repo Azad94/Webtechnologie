@@ -4,9 +4,6 @@ class Inky extends Ghost{
 
   Inky(int x, int y, bool collPlayer, bool collGhost, Level l) : super(x,y,collPlayer, collGhost, l);
 
-  int _targetX;
-  int _targetY;
-
   int _doorTargetX = 14;
   int _doorTargetY = 9;
 
@@ -16,12 +13,14 @@ class Inky extends Ghost{
   int _alternativeTargetX = 28;
   int _alternativeTargetY = 17;
 
+  int _targetX = 2;
+  int _targetY = 2;
+
   int _directionsChanged = 0;
 
-
   void move() {
-    if(_x == _targetX && _y == _targetY) _directionsChanged++;
 
+    /**
     switch(_directionsChanged)
     {
       case 0:
@@ -45,7 +44,7 @@ class Inky extends Ghost{
         _directionsChanged = 0;
         break;
     }
-
+    **/
     switch(getNextMove(_x, _y, _targetX, _targetY, this))
     {
       case Directions.UP:
@@ -68,6 +67,8 @@ class Inky extends Ghost{
         _level.registerElement(_x,_y,_x,_y,this);
         break;
     }
+
+    //if(_x == _targetX && _y == _targetY) _directionsChanged++;
   }
 
   void eatableMode() {
