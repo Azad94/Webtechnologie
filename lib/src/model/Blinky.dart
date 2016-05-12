@@ -3,12 +3,9 @@ part of pacmanLib;
 class Blinky extends Ghost {
   Blinky(int x, int y, bool collPlayer, bool collGhost, Level l) : super(x, y, collPlayer, collGhost, l);
 
-  int _currentX = 12;
-  int _currentY = 11;
-
   void move()
   {
-    _level.registerElement(_currentX,_currentY,_currentX,_currentY,this);
+    _level.registerElement(_x,_y,_x,_y,this);
   }
 
   void eatableMode() {}

@@ -8,7 +8,7 @@ class Pinky extends Ghost {
 
   void move()
   {
-    _level.registerElement(_currentX,_currentY,_currentX,_currentY,this);
+    _level.registerElement(_x,_y,_x,_y,this);
   }
 
   void eatableMode() {}
