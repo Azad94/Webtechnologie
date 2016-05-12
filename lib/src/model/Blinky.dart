@@ -126,6 +126,8 @@ void move(){
         _level.registerElement(_x, _y, _x--, _y, this);
       }
       break;
+    default:
+      break;
   }
       }
 

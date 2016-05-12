@@ -147,6 +147,8 @@ class PacmanGameModel {
    */
   bool get gameEnd => _gameOver;
 
+  int get level => LevelLoader.levelNumber;
+
   /**
    * register a new [GameElement]
    */
