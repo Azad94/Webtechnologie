@@ -15,7 +15,6 @@ class PacmanGameModel {
 
   PacmanGameModel(PacmanGameController con) {
     LevelLoader.loadConfig();
-    LevelLoader.loadLevel(0);
     _sizeX = LevelLoader.sizeX;
     _sizeY = LevelLoader.sizeY;
     this._con = con;
@@ -76,6 +75,7 @@ class PacmanGameModel {
   void triggerFrame() {
     //this.moveGhost();
     _pacman.move(_pac_dir);
+    _level.pacmanDir = _pac_dir;
     _pac_dir = Directions.NOTHING;
   }
 

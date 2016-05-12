@@ -9,6 +9,7 @@ class Level {
   num _scorePowerPill;
 
   Pacman _pacman;
+  Directions _pacmanDir;
 
   /**
    * brain for collision detection
@@ -43,6 +44,10 @@ class Level {
 
   int get pacmanX => _pacman._x;
   int get pacmanY => _pacman._y;
+
+  void set pacmanDir(Directions dir) {
+   this._pacmanDir = dir;
+  }
 
   /**
    * checks if the given [GameElement] collides with another [GameElement]
@@ -208,7 +213,23 @@ class Level {
         }
         // pacman
         else if (tile._pacman != null)
-          ret[y].add(Types.PACMAN);
+          switch(_pacmanDir) {
+            case Directions.UP:
+              ret[y].add(Types.PACMAN_UP);
+              break;
+            case Directions.DOWN:
+              ret[y].add(Types.PACMAN_DOWN);
+              break;
+            case Directions.LEFT:
+              ret[y].add(Types.PACMAN_LEFT);
+                  break;
+            case Directions.RIGHT:
+              ret[y].add(Types.PACMAN_RIGHT);
+              break;
+            default:
+              ret[y].add(Types.PACMAN_RIGHT);
+              break;
+          }
 
         // ghosts
         else if (tile._ghosts.length != 0) {
