@@ -94,34 +94,34 @@ class PacmanGameView {
 
         switch(s) {
           case Types.WALL :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/wall32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/enviornment/wall32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.DOOR :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/door32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/enviornment/door32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.BLINKY :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/blinky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/ghosts/blinky/blinky_r32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.PINKY :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/pinky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/ghosts/pinky/pinky_r32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.INKY :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/inky32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/ghosts/inky/inky_r32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.CLYDE :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/clyde32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/ghosts/clyde/clyde_r32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.PACMAN :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/animatedPac.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/pacman/a_pacman_r32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.PILL :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/pill32_2.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/items/pill32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.POWERPILL :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/powerpill32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/items/a_powerpill32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.CHERRY :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/animatedcherry32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/items/a_cherry32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.NOTHING :
             kl.children[_row].children[_col].setAttribute("style", "");
