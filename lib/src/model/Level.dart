@@ -73,7 +73,7 @@ class Level {
       _tiles[yNew][xNew]._pacman = g;
       this.collisionDetectionItem(xNew, yNew);
       this.collisionDetectionGhost(xNew, yNew);
-      _model.updateView(); // TODO only for testing, when ghosts finished remove
+      //_model.updateView(); // TODO only for testing, when ghosts finished remove
     }
     // ghost chance position
     if (g is Ghost) {
