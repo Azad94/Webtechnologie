@@ -84,6 +84,7 @@ class PacmanGameModel {
    */
   void gameOver() {
     _gameOver = true;
+    _con._updateMessage("Game Over");
   }
 
   /**
