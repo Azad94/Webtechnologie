@@ -81,4 +81,7 @@ class PacmanGameController{
   void updateLives() {
     _pacmanView.updateLives(_pacmanModel.lives);
   }
+  void _updateMessage(String str) {
+    _pacmanView.updateMessages(str);
+  }
 }
