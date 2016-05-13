@@ -59,6 +59,8 @@ class PacmanGameController{
   //updates the current view
   void updateGameStatus() {
     updateScore();
+    updateLevel();
+    updateLives();
     var labyrinth = _pacmanModel.getMap();
     refreshField2(labyrinth);
   }

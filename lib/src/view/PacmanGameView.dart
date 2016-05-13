@@ -61,7 +61,7 @@ class PacmanGameView {
     _level.innerHtml = "Level: $level";
   }
   void updateLives(int lives){
-    _level.innerHtml = "Lives: $lives";
+    _lives.innerHtml = "Lives: $lives";
   }
   void updateMessages(String str) {
     _message.innerHtml = "Msg: $str"; }

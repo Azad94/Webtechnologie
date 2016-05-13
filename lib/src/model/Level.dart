@@ -12,18 +12,6 @@ class Level {
   Directions _pacmanDir = Directions.RIGHT;
   Types _pacmanPre = Types.PACMAN_RIGHT;
 
-  /**
-   * brain for collision detection
-   * Only check collision for ghost when pacman is already moved.
-   */
-  bool _pacmanMoved = false;
-
-  /**
-   * brain for collision detection
-   * if every ghost has been moved reset brain
-   */
-  int _ghostMoved = 0;
-
   List<List<Tile>> _tiles = new List<List<Tile>>();
   PacmanGameModel _model;
 
@@ -47,7 +35,7 @@ class Level {
   int get pacmanY => _pacman._y;
 
   void set pacmanDir(Directions dir) {
-   this._pacmanDir = dir;
+    this._pacmanDir = dir;
   }
 
   /**
@@ -74,29 +62,18 @@ class Level {
   void registerElement(int xOld, int yOld, int xNew, int yNew, GameElement g) {
     // pacman chance position
     if (g is Pacman) {
-      _pacmanMoved = true;
       _tiles[yOld][xOld]._pacman = null;
       _tiles[yNew][xNew]._pacman = g;
       this.collisionDetectionItem(xNew, yNew);
       this.collisionDetectionGhost(xNew, yNew);
-      //_model.updateView(); // TODO only for testing, when ghosts finished remove
     }
     // ghost chance position
     if (g is Ghost) {
-      print("von $xOld : $yOld nach $xNew : $yNew by ${g is Inky ? "Inky" : ""}");
-      _ghostMoved++;
       _tiles[yOld][xOld]._ghosts.remove(g);
       _tiles[yNew][xNew]._ghosts.add(g);
       this.collisionDetectionGhost(xNew, yNew);
     }
     _model.updateView();
-    // every Dynamic GameElement had been moved
-    // reset brain and update View
-    /*if (_pacmanMoved &&_ghostMoved == 4) {
-      _pacmanMoved = false;
-      _ghostMoved = 0;
-      _model.updateView();
-    }*/
   }
 
   /**
@@ -209,27 +186,27 @@ class Level {
 
         // pacman
         if (tile._pacman != null)
-          switch(_pacmanDir) {
-            case Directions.UP:
-              ret[y].add(Types.PACMAN_UP);
-              _pacmanPre = Types.PACMAN_UP;
-              break;
-            case Directions.DOWN:
-              ret[y].add(Types.PACMAN_DOWN);
-              _pacmanPre = Types.PACMAN_DOWN;
-              break;
-            case Directions.LEFT:
-              ret[y].add(Types.PACMAN_LEFT);
-              _pacmanPre = Types.PACMAN_LEFT;
-              break;
-            case Directions.RIGHT:
-              ret[y].add(Types.PACMAN_RIGHT);
-              _pacmanPre = Types.PACMAN_RIGHT;
-              break;
-            default:
-              ret[y].add(_pacmanPre);
-              break;
-          }
+          switch (_pacmanDir) {
+          case Directions.UP:
+            ret[y].add(Types.PACMAN_UP);
+            _pacmanPre = Types.PACMAN_UP;
+            break;
+          case Directions.DOWN:
+            ret[y].add(Types.PACMAN_DOWN);
+            _pacmanPre = Types.PACMAN_DOWN;
+            break;
+          case Directions.LEFT:
+            ret[y].add(Types.PACMAN_LEFT);
+            _pacmanPre = Types.PACMAN_LEFT;
+            break;
+          case Directions.RIGHT:
+            ret[y].add(Types.PACMAN_RIGHT);
+            _pacmanPre = Types.PACMAN_RIGHT;
+            break;
+          default:
+            ret[y].add(_pacmanPre);
+            break;
+        }
 
         // ghosts
         else if (tile._ghosts.length != 0) {
@@ -265,8 +242,7 @@ class Level {
             ret[y].add(Types.DOOR);
           // wall
           else if (tile._environment._collisionPlayer) ret[y].add(Types.WALL);
-        }
-        else
+        } else
           ret[y].add(Types.NOTHING);
       }
     }
@@ -372,9 +348,7 @@ class Level {
   }
 
   void collisionDetectionGhost(int x, int y) {
-    // pacman will move later
-    //if (!_pacmanMoved) return;
-    // pacman is already moved and ghost collides with pacman
+    // ghost collides with pacman
     if (_tiles[y][x]._pacman != null && _tiles[y][x]._ghosts.length != 0) {
       _tiles[y][x]._pacman.decreaseLife();
     }

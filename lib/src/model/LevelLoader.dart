@@ -15,12 +15,12 @@ class LevelLoader {
   /**
    * lives of Pacman
    */
-  static int _lives = -1;
+  static num _lives = -1;
 
   /**
    * current level number
    */
-  static int levelNumber = -1;
+  static num levelNumber = -1;
 
   /**
    * width field size
