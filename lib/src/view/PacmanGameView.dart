@@ -17,8 +17,6 @@ class PacmanGameView {
   final _startText = querySelector("#startText");
   final startButton = querySelector("#startButton");
 
-  final _msg = querySelector("#msg");
-
   final _labyrinth = querySelector("#labyrinth");
 
   final _information = querySelector("#information");
@@ -33,7 +31,7 @@ class PacmanGameView {
   void showGameview() {
     _startScreen.classes.toggle('close');
     _game.classes.toggle('show');
-   // _message.classes.toggle('show');
+    _message.classes.toggle('show');
   }
 
 
@@ -65,6 +63,8 @@ class PacmanGameView {
   void updateLives(int lives){
     _level.innerHtml = "Lives: $lives";
   }
+  void updateMessages(String str) {
+    _message.innerHtml = "Msg: $str"; }
   //creates the table in the html-document
   String _labyrinthToHTMLTable(List<List<Types>> l) {
 

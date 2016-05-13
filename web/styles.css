@@ -53,7 +53,9 @@ html, body {
     background-image: url("resc/PacmanHeader.png");
     background-repeat: no-repeat;
     background-position: center;
+    background-color: black;
 }
+
 .game.show { display: block }
 .game {
     position: relative;
@@ -85,15 +87,19 @@ html, body {
     background-color: black;
     width: 450px;
 }
-.messages.show { display: block; }
+.messages.show { visibility: visible; }
 .messages {
     background-color: white;
     color:red;
-    text-align: center;
-    display: none;
+    visibility: hidden;
 }
 
 .messages #msg {
     font-size: 22px;
     line-height: 8%;
+}
+
+#footer{
+    text-align: center;
+    color: white;
 }
