@@ -63,7 +63,16 @@ class PacmanGameController{
     updateLives();
     var labyrinth = _pacmanModel.getMap();
     refreshField2(labyrinth);
+    gameOver(_pacmanModel.gameEnd);
   }
+
+  void gameOver(bool b) {
+    if(b){
+    _keyListener.cancel();
+    _timer.cancel();
+    _pacmanView.updateOverlay("GAME OVER");}
+  }
+
   void updateListen() {
 
   }

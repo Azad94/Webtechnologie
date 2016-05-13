@@ -46,6 +46,28 @@ html, body {
     bottom: 60px;
     font-size: 30px;
 }
+#overlay:empty {
+    display: none;
+}
+#overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: rgba(0,0,0,0.50);
+    height: 100%;
+    text-align: center;
+    color: red;
+    font-family: Calibri;
+    font-size: 2rem;
+    z-index: +1;
+}
+span {
+    margin-top: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
 .header {
     margin-top: 20px;
     min-height: 100px;

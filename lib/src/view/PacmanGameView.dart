@@ -17,6 +17,7 @@ class PacmanGameView {
   final _startText = querySelector("#startText");
   final startButton = querySelector("#startButton");
 
+  final _overlay = querySelector("#overlay");
   final _labyrinth = querySelector("#labyrinth");
 
   final _information = querySelector("#information");
@@ -65,6 +66,10 @@ class PacmanGameView {
   }
   void updateMessages(String str) {
     _message.innerHtml = "Msg: $str"; }
+
+  void updateOverlay(String s) {
+    _overlay.innerHtml = "<span> $s </span>";
+  }
   //creates the table in the html-document
   String _labyrinthToHTMLTable(List<List<Types>> l) {
 
