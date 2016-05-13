@@ -5,7 +5,7 @@ class Inky extends Ghost{
   Inky(int x, int y, bool collPlayer, bool collGhost, Level l) : super(x,y,collPlayer, collGhost, l);
 
   int _doorTargetX = 14;
-  int _doorTargetY = 9;
+  int _doorTargetY = 8;
 
   int _scatterTargetX = 2;
   int _scatterTargetY = 2;
@@ -13,14 +13,13 @@ class Inky extends Ghost{
   int _alternativeTargetX = 28;
   int _alternativeTargetY = 17;
 
-  int _targetX = 2;
-  int _targetY = 2;
+  int _targetX;
+  int _targetY;
 
   int _directionsChanged = 0;
 
   void move() {
 
-    /**
     switch(_directionsChanged)
     {
       case 0:
@@ -28,12 +27,12 @@ class Inky extends Ghost{
         _targetY = _doorTargetY;
         break;
 
-      case 1:
+      case 2:
         _targetX = _scatterTargetX;
         _targetY = _scatterTargetY;
         break;
 
-      case 2:
+      case 1:
         _targetX = _alternativeTargetX;
         _targetY = _alternativeTargetY;
         break;
@@ -44,7 +43,7 @@ class Inky extends Ghost{
         _directionsChanged = 0;
         break;
     }
-    **/
+
     switch(getNextMove(_x, _y, _targetX, _targetY, this))
     {
       case Directions.UP:
@@ -68,8 +67,10 @@ class Inky extends Ghost{
         break;
     }
 
-    //if(_x == _targetX && _y == _targetY) _directionsChanged++;
-  }
+    if(_x == _targetX && _y == _targetY) {
+     print("POSITION ERREICHT");
+      _directionsChanged++;
+    }  }
 
   void eatableMode() {
   }
