@@ -100,269 +100,268 @@ abstract class Ghost extends GameElement{
 
     if(verticalMoreImportant)
     {
-    //  if(_previousDirection == Directions.UP || _previousDirection == Directions.DOWN)
-    //  {
-    //    _savePreviousDirection = _previousDirection;
-
-        if(preferredVerDirection == Directions.UP &&
-            _previousDirection == Directions.LEFT) nextDirection = preferredVerDirection;
-        else nextDirection = Directions.LEFT;
-
-
-        //try move from above
-        switch (nextDirection)
-            {
-          case Directions.UP:
-            if(_previousDirection == Directions.DOWN){
-              nextDirection = Directions.DOWN;
-              if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;}
-
-            if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
-
-            nextDirection = Directions.LEFT;
-            if(!_level.checkCollision(--currentX, currentY, this))return Directions.LEFT;
-
-            nextDirection = Directions.RIGHT;
-            if(!_level.checkCollision(++currentX, currentY, this))return Directions.RIGHT;
-
-            break;
-
-          case Directions.DOWN:
-            if(_previousDirection == Directions.UP){
-              nextDirection = Directions.UP;
-              if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;}
-
-            if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
-            nextDirection = Directions.LEFT;
-            if(!_level.checkCollision(--currentX, currentY, this))return Directions.LEFT;
-            nextDirection = Directions.RIGHT;
-            if(!_level.checkCollision(++currentX, currentY, this))return Directions.RIGHT;
-
-            break;
-
-          case Directions.LEFT:
-            if(_previousDirection == Directions.RIGHT){
-              nextDirection = Directions.RIGHT;
-              if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;}
-            if(!_level.checkCollision(--currentX, currentY, this))return Directions.LEFT;
-            nextDirection = Directions.DOWN;
-            if(!_level.checkCollision(currentX, ++currentY, this))return Directions.DOWN;
-            nextDirection = Directions.UP;
-            if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
-            break;
-
-          default:
-            break;
-        }
-
-        //if move from above wasnt possible change Direction
-        switch(nextDirection)
-            {
-          case Directions.UP :
-            nextDirection = Directions.LEFT;
-            if(!_level.checkCollision(--currentX, currentY, this))return Directions.LEFT;
-
-            nextDirection = Directions.RIGHT;
-            if(!_level.checkCollision(++currentX, currentY, this))return Directions.RIGHT;
-            break;
-
-          case Directions.DOWN :
-            nextDirection = Directions.LEFT;
-            if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
-
-            nextDirection = Directions.RIGHT;
-            if(!_level.checkCollision(++currentX, currentY, this))return Directions.RIGHT;
-            break;
-
-          case Directions.LEFT :
-            if(_previousDirection == Directions.UP)
-            {
-              nextDirection = Directions.RIGHT;
-              if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
-
-              nextDirection = Directions.DOWN;
-              if(!_level.checkCollision(currentX, ++currentY, this))return Directions.DOWN;
-            }
-            else
-            {
-              nextDirection = Directions.RIGHT;
-              if(!_level.checkCollision(++currentX, currentY, this))return Directions.RIGHT;
-
-              nextDirection = Directions.UP;
-              if(!_level.checkCollision(currentX, --currentY, this))return Directions.UP;
-            }
-            break;
-
-          default:
-            break;
-      //  }
-
-      }
-    }
-    else
-    { //if the next and previous Direction are same nothing changes
-    //  if(_previousDirection == Directions.LEFT || _previousDirection == Directions.RIGHT) {
-    //    _savePreviousDirection = _previousDirection;
-
-        //if they are different, try going UP first
-        nextDirection == _previousDirection ? nextDirection : nextDirection = Directions.UP;
-
-        //try move from above
-        switch (nextDirection)
-            {
-          case Directions.UP:
-            if(_previousDirection == Directions.DOWN){
-              nextDirection = Directions.DOWN;
-              if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
-            }
-            nextDirection = Directions.UP;
-            if(!_level.checkCollision(currentX, --currentY, this))return Directions.UP;
-
-            if(_previousDirection == Directions.RIGHT) {
-              nextDirection = Directions.RIGHT;
-              if (!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
-            }
-
-            nextDirection = Directions.LEFT;
-            if (!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
-
-            /**print("EEEEEEEINS");
-            print(nextDirection);
-            print(preferredHorDirection);
-            print(_previousDirection);
-            if(_previousDirection != Directions.LEFT) {
-              nextDirection = Directions.RIGHT;
-              if (!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
-            }
-            **/
-            break;
-
-          case Directions.LEFT:
-            if(_previousDirection == Directions.RIGHT) {
-              nextDirection = Directions.RIGHT;
-              if (!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
-            }
-
-            if(!_level.checkCollision(--currentX, currentY, this))return Directions.LEFT;
-
-            nextDirection = Directions.DOWN;
-            if(!_level.checkCollision(currentX, ++currentY, this))return Directions.DOWN;
-            print("MICH VERSUCHT IHR NICHT");
-            nextDirection = Directions.UP;
-            if(!_level.checkCollision(currentX, --currentY, this))return Directions.UP;
-
-
-            break;
-
-
-          case Directions.RIGHT:
-            if(_previousDirection == Directions.LEFT) {
-              nextDirection = Directions.LEFT;
-              if (!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
-            }
-
-            if(!_level.checkCollision(++currentX, currentY, this))return Directions.RIGHT;
-
-            nextDirection = Directions.UP;
-            if(!_level.checkCollision(currentX, --currentY, this))return Directions.UP;
-
-            nextDirection = Directions.DOWN;
-            if(!_level.checkCollision(currentX, ++currentY, this))return Directions.DOWN;
-
-            break;
-
-          case Directions.DOWN:
-            if(_previousDirection == Directions.UP) {
-              nextDirection = Directions.UP;
-              if (!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
-            }
-            if(!_level.checkCollision(currentX, ++currentY, this))return Directions.DOWN;
-
-            nextDirection = Directions.LEFT;
-            if(!_level.checkCollision(--currentX, currentY, this))return Directions.LEFT;
-
-            nextDirection = Directions.RIGHT;
-            if(!_level.checkCollision(++currentX, currentY, this))return Directions.RIGHT;
-
-            break;
-
-          default:
-            break;
-        }
-
-        /**
+      if(nextDirection == _previousDirection)
+      {
+        // NEXT UP PREVIOUS UP
         if (nextDirection == Directions.UP)
         {
-          if(_savePreviousDirection == Directions.LEFT)
-          {
-            nextDirection = Directions.DOWN;
-            if(!_level.checkCollision(currentX, ++currentY, this)){print("DOWN ZEILE 207"); return Directions.DOWN;}
+          if (!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
 
-            if (nextDirection == Directions.DOWN && preferredHorDirection == Directions.RIGHT)
-            {
-              nextDirection = Directions.RIGHT;
-              if(!_level.checkCollision(++currentX, currentY, this)) {print("RIGHT ZEILE 212"); return Directions.RIGHT;}
-            }
-          }
-          else
-          {
-            if(_savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.LEFT)
-            {
-              nextDirection = Directions.DOWN;
-              if(!_level.checkCollision(currentX, ++currentY, this)) {print("DOWN ZEILE 220"); return Directions.DOWN;}
+          nextDirection = Directions.LEFT;
+          if (!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
 
-              nextDirection = Directions.LEFT;
-              if(!_level.checkCollision(--currentX, currentY, this)) {print("LEFT ZEILE 224"); return Directions.LEFT;}
+          nextDirection = Directions.RIGHT;
+          if (!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
 
-              print("HIER VIER");
-              return Directions.NOTHING;
-            }
-
-            print("HIER FÜNF");
-            return Directions.NOTHING;
-          }
+          nextDirection = Directions.DOWN;
+          if (!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
         }
-        **/
-        //if RIGHT is not allowed try going UP
-        if(nextDirection == Directions.RIGHT && _savePreviousDirection == Directions.RIGHT && preferredHorDirection == Directions.RIGHT)
+
+        // NEXT DOWN PREVIOUS DOWN
+        if (nextDirection == Directions.DOWN)
         {
+          if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+          nextDirection = Directions.LEFT;
+          if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+
+          nextDirection = Directions.RIGHT;
+          if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+
+          nextDirection = Directions.UP;
+          if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+        }
+      }
+      // NEXT UP PREVIOUS DOWN
+      if(nextDirection == Directions.UP && _previousDirection == Directions.DOWN)
+      {
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+
+        nextDirection = Directions.UP;
+        if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+      }
+
+      // NEXT UP PREVIOUS LEFT
+      if(nextDirection == Directions.UP && _previousDirection == Directions.LEFT)
+      {
+        nextDirection = Directions.UP;
+        if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+      }
+
+      // NEXT UP PREVIOUS RIGHT
+      if(nextDirection == Directions.UP && _previousDirection == Directions.RIGHT)
+      {
+        nextDirection = Directions.UP;
+        if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+      }
+
+      // NEXT DOWN PREVIOUS UP
+      if(nextDirection == Directions.DOWN && _previousDirection == Directions.UP)
+      {
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+        nextDirection = Directions.UP;
+        if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+      }
+
+      // NEXT DOWN PREVIOUS LEFT
+      if(nextDirection == Directions.DOWN && _previousDirection == Directions.LEFT)
+      {
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+
+        nextDirection = Directions.UP;
+        if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+      }
+
+      // NEXT DOWN PREVIOUS RIGHT
+      if(nextDirection == Directions.DOWN && _previousDirection == Directions.RIGHT)
+      {
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+        nextDirection = Directions.UP;
+        if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+      }
+
+      return Directions.NOTHING;
+    }
+    else
+    {
+      if(nextDirection == _previousDirection)
+      {
+        // NEXT LEFT PREVIOUS LEFT
+        if (nextDirection == Directions.LEFT)
+        {
+          if (!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+
           nextDirection = Directions.UP;
           if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
 
-          //if UP not allowed try going DOWN
+          nextDirection = Directions.DOWN;
+          if (!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+
+        }
+
+        // NEXT RIGHT PREVIOUS RIGHT
+        if (nextDirection == Directions.RIGHT)
+        {
+          if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+
+          nextDirection = Directions.UP;
+          if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+
           nextDirection = Directions.DOWN;
           if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
 
-          return Directions.NOTHING;
+          nextDirection = Directions.LEFT;
+          if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
         }
+      }
 
-        //if going LEFT ist not allowed try going DOWN
-        nextDirection == Directions.LEFT ? nextDirection = Directions.DOWN : Directions.UP;
-        if(!_level.checkCollision(currentX, ++currentY, this))  return Directions.DOWN;
+      // NEXT LEFT PREVIOUS UP
+      if(nextDirection == Directions.LEFT && _previousDirection == Directions.UP)
+      {
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+
+        nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
 
-        //if going DOWN is not allowed try going UP
-        if(nextDirection == Directions.DOWN) nextDirection = Directions.UP;
-        if(!_level.checkCollision(currentX, --currentY, this))  return Directions.UP;
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
 
-        /**
-        print("HIER SIEBEN");
-        print(_previousDirection);
-        print("PREF H:");
-        print(preferredHorDirection);
-        print("PREF V:");
-        print(preferredVerDirection);
-        print("NEXT");
-        print(nextDirection);
-        print("X" + currentX.toString());
-        print("Y" + currentY.toString());
-        print("TY" + targetX.toString());
-        print("TX" + targetY.toString());
-    **/    return Directions.NOTHING;
-    //  }
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+      }
+
+      // NEXT LEFT PREVIOUS DOWN
+      if(nextDirection == Directions.LEFT && _previousDirection == Directions.DOWN)
+      {
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+
+        nextDirection = Directions.UP;
+        if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+      }
+
+      // NEXT LEFT PREVIOUS RIGHT
+      if(nextDirection == Directions.LEFT && _previousDirection == Directions.RIGHT)
+      {
+        nextDirection = Directions.UP;
+        if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+      }
+
+      // NEXT RIGHT PREVIOUS UP
+      if(nextDirection == Directions.RIGHT && _previousDirection == Directions.UP)
+      {
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) {print("ICH WILL NCIHT");return Directions.RIGHT;}
+
+        nextDirection = Directions.UP;
+        if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+      }
+
+      // NEXT RIGHT PREVIOUS DOWN
+      if(nextDirection == Directions.RIGHT && _previousDirection == Directions.DOWN)
+      {
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+
+        nextDirection = Directions.UP;
+        if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+      }
+
+      // NEXT RIGHT PREVIOUS LEFT
+      if(nextDirection == Directions.RIGHT && _previousDirection == Directions.LEFT)
+      {
+        nextDirection = Directions.UP;
+        if(!_level.checkCollision(currentX, --currentY, this)) return Directions.UP;
+
+        nextDirection = Directions.DOWN;
+        if(!_level.checkCollision(currentX, ++currentY, this)) return Directions.DOWN;
+
+        nextDirection = Directions.LEFT;
+        if(!_level.checkCollision(--currentX, currentY, this)) return Directions.LEFT;
+
+        nextDirection = Directions.RIGHT;
+        if(!_level.checkCollision(++currentX, currentY, this)) return Directions.RIGHT;
+      }
+
+      return Directions.NOTHING;
     }
-    print("HIER SIEBEN");
-    return Directions.NOTHING;
   }
 }
 
