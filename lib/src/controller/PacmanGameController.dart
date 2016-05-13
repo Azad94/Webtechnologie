@@ -1,7 +1,7 @@
 part of pacmanLib;
 
 //the refreshrate of the view
-const speed = const Duration(milliseconds: 1000);
+const speed = const Duration(milliseconds: 200);
 
 class PacmanGameController{
 
@@ -64,15 +64,25 @@ class PacmanGameController{
     var labyrinth = _pacmanModel.getMap();
     refreshField2(labyrinth);
     gameOver(_pacmanModel.gameEnd);
+    gameWon(_pacmanModel.gameVic);
   }
 
   void gameOver(bool b) {
     if(b){
-    _keyListener.cancel();
-    _timer.cancel();
-    _pacmanView.updateOverlay("GAME OVER");}
+      stopGame();
+      _pacmanView.updateOverlay("GAME OVER");}
   }
 
+  void gameWon(bool b) {
+    if(b) {
+      stopGame();
+      _pacmanView.updateOverlay("Stage cleared");
+    }
+  }
+  void stopGame(){
+    _keyListener.cancel();
+    _timer.cancel();
+  }
   void updateListen() {
 
   }

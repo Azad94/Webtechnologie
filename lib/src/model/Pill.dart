@@ -14,7 +14,7 @@ class Pill extends Item {
     if (_visible) {
       Item._scoreCounter += _score;
       _visible = false;
-      if (++_pickedUpPills == _pills) _model.gameOver();
+      if (++_pickedUpPills == _pills) _model.gameWon();
     }
   }
 }

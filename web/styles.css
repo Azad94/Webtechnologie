@@ -58,7 +58,7 @@ html, body {
     height: 100%;
     text-align: center;
     color: red;
-    font-family: Calibri;
+    font-family: Calibri bold;
     font-size: 2rem;
     z-index: +1;
 }
