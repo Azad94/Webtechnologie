@@ -1,9 +1,10 @@
+
 html, body {
     margin: 0;
     height: 100%;
     color: white;
-    width:100%;
-    text-align:center;
+    background-color: black;
+    font-family: Calibri;
 }
 
 .start {
@@ -45,14 +46,44 @@ html, body {
     bottom: 60px;
     font-size: 30px;
 }
+#overlay:empty {
+    display: none;
+}
+#overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: rgba(0,0,0,0.50);
+    height: 100%;
+    text-align: center;
+    color: red;
+    font-family: Calibri;
+    font-size: 2rem;
+    z-index: +1;
+}
+span {
+    margin-top: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+.header {
+    margin-top: 20px;
+    min-height: 100px;
+    min-width:900px;
+    background-image: url("resc/PacmanHeader.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: black;
+}
 
 .game.show { display: block }
 .game {
-    position: static;
+    position: relative;
     height: 100%;
     width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     display: none;
 }
 
@@ -60,38 +91,37 @@ html, body {
     background-color: black;
     width: 32px;
     height: 32px;
-
 }
 
 #labyrinth {
-    position: static;
     border-collapse: separate;
     border: 5px solid gray;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 
 #information {
-    position: static;
-    top: 50%;
-    right: 15%;
-    font-size: 200%;
-    background-color: #333333;
+    border-collapse: separate;
+    border: 5px solid gray;
+    font-family: Calibri;
+    font-size: 2rem;
 }
-
-.messages.show { display: block; }
+#information td {
+    background-color: black;
+    width: 450px;
+}
+.messages.show { visibility: visible; }
 .messages {
-    background-color: rgba(255, 0, 255, 0.1);
-    position: static;
-    margin: 0;
-    width: 100%;
-    text-align: center;
-    display: none;
+    background-color: white;
+    color:red;
+    visibility: hidden;
 }
 
 .messages #msg {
     font-size: 22px;
     line-height: 8%;
+}
+
+#footer{
+    text-align: center;
+    color: white;
 }

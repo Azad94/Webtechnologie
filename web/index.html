@@ -22,21 +22,30 @@
     <p id="startButton">START</p>
 </div>
 
-<!-- Container für die Nachrichten -->
-<div class="messages">
-    <p id="msg"></p>
-</div>
-
 <div class="game">
+    <div id="overlay"></div>
+    <div class="header"></div>
+
     <!-- das Spielfeld -->
     <div id="labyrinth"></div>
 
     <!-- Spielinformationen -->
     <div id="information">
-        <p id="level">Level: </p>
-        <p id="score">Score: </p>
-        <p id="lives">Lives: </p>
+        <table id="infos">
+            <tbody><tr>
+                <td><div id="level">Level: </div></td>
+                <td><div id="score">Score: </div></td>
+                <td><div id="lives">Lives: </div></td>
+            </tr></tbody>
+        </table>
     </div>
+    <div class="messages"></div>
+    <p id="footer">
+        <small>
+            &copy; Sheraz Azad, Malte Grebe, Niklas Klatt & Juliane Steglich, 2016<br>
+        </small>
+    </p>
+
 </div>
 
 <script defer src="main.dart" type="application/dart"></script>

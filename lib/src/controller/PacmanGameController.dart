@@ -54,13 +54,25 @@ class PacmanGameController{
   //let the view load the current game elements and graphis into the table
   void refreshField2(List<List<Types>> l) {
     _pacmanView._labyrinthFill(l);
+    //_pacmanView.updateMessages(l[0].toString());
   }
   //updates the current view
   void updateGameStatus() {
     updateScore();
+    updateLevel();
+    updateLives();
     var labyrinth = _pacmanModel.getMap();
     refreshField2(labyrinth);
+    gameOver(_pacmanModel.gameEnd);
   }
+
+  void gameOver(bool b) {
+    if(b){
+    _keyListener.cancel();
+    _timer.cancel();
+    _pacmanView.updateOverlay("GAME OVER");}
+  }
+
   void updateListen() {
 
   }
@@ -73,9 +85,9 @@ class PacmanGameController{
       _pacmanView.updateScore(_pacmanModel.score);
   }
   void updateLevel() {
-    //_pacmanView.updateLevel();
+    _pacmanView.updateLevel(_pacmanModel.level);
   }
   void updateLives() {
-   // _pacmanView.updateLives(_pacmanModel.lives);
+    _pacmanView.updateLives(_pacmanModel.lives);
   }
 }
