@@ -112,16 +112,16 @@ class PacmanGameView {
             kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/ghosts/clyde/clyde_r32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.PACMAN_RIGHT :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/pacman/a_pacman_r32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/pacman/pacman_r32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.PACMAN_LEFT :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/pacman/a_pacman_l32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/pacman/pacman_l32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.PACMAN_UP :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/pacman/a_pacman_t32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/pacman/pacman_u32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.PACMAN_DOWN :
-            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/pacman/a_pacman_d32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
+            kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/pacman/pacman_d32.gif);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
             break;
           case Types.PILL :
             kl.children[_row].children[_col].setAttribute("style", "background-image:url(../web/resc/items/pill32.png);background-repeat:no-repeat;background-size:32px 32px;   width: 32px; height: 32px;");
