@@ -18,18 +18,15 @@ class Blinky extends Ghost {
   int _alternativeTargetY = 17;
 
   int _directionsChanged = 0;
+  
 
-/*  List getRouteRecursive;
-
-//  void calcRoute() {
   //gibt die bisher beste Liste zurück
   List<Directions> getRoute() {
     List<Directions> route = new List();
     return getRouteRecursive(route, _x, _y);
   }
 
-  List<Directions> getRouteRecursive(List<Directions> prev, int routeX,
-      int routeY) {
+  List<Directions> getRouteRecursive(List<Directions> prev, int routeX, int routeY) {
     if (prev.length > 10) {
       return prev;
     }
@@ -40,40 +37,40 @@ class Blinky extends Ghost {
     List<Directions> down;
     List<Directions> best = new List();
 
+
     // requires better interface to differentiate collisions from finding pacman
-    if ((prev.length == 0 || prev.last != Directions.RIGHT) &&
-        !_level.checkCollision(routeX ++, routeY, this)) {
-      if (routeX ++ == _targetX && routeY == _targetY) {
+    if ((prev.length == 0 || prev.last != Directions.RIGHT) && !_level.checkCollision(++routeX, routeY, this)) {
+      if (++routeX == _targetX && routeY == _targetY) {
         prev.add(Directions.RIGHT);
         right = prev;
       } else {
         prev.add(Directions.RIGHT);
-        right = getRouteRecursive(prev, routeX ++, routeY);
+        right = getRouteRecursive(prev, ++routeX , routeY);
       }
     }
     if ((prev.length == 0 || prev.last != Directions.UP) &&
-        !_level.checkCollision(routeX, routeY ++, this)) {
-      if (routeX == _targetX && routeY ++ == _targetY) {
+        !_level.checkCollision(routeX, ++routeY, this)) {
+      if (routeX == _targetX && ++routeY == _targetY) {
         prev.add(Directions.UP);
         up = prev;
       } else {
         prev.add(Directions.UP);
-        up = getRouteRecursive(prev, routeX, routeY ++);
+        up = getRouteRecursive(prev, routeX, ++routeY);
       }
     }
     if ((prev.length == 0 || prev.last != Directions.LEFT) &&
-        !_level.checkCollision(routeX --, routeY, this)) {
-      if (routeX -- == _targetX && routeY == _targetY) {
+        !_level.checkCollision(--routeX, routeY, this)) {
+      if (--routeX == _targetX && routeY == _targetY) {
         prev.add(Directions.LEFT);
         left = prev;
       } else {
         prev.add(Directions.LEFT);
-        left = getRouteRecursive(prev, routeX --, routeY);
+        left = getRouteRecursive(prev, --routeX, routeY);
       }
     }
     if ((prev.length == 0 || prev.last != Directions.DOWN) &&
-        !_level.checkCollision(routeX, routeY --, this)) {
-      if (routeX ++ == _targetX && routeY == _targetY) {
+        !_level.checkCollision(routeX, --routeY, this)) {
+      if (routeY-- == _targetX && routeY == _targetY) {
         prev.add(Directions.DOWN);
         down = prev;
       } else {
@@ -96,16 +93,16 @@ class Blinky extends Ghost {
     }
     return best;
   }
-//}
 
   // @override
-  // bool getNextMove(_x, _y, _targetX, _targetY, this) {  }
 
 
-*/
 
 
   void move() {
+
+    nextDirection = route.first;
+
  //   if(_x == _targetX && _y == _targetY) _directionsChanged++;
 
  /*   switch(_directionsChanged)
@@ -132,26 +129,22 @@ class Blinky extends Ghost {
         break;
     }*/
 
-    switch(getNextMove(_x, _y, 30, 17, this))
+    switch(getNextMove(_x, _y, _targetX, _targetY, this))
     {
      case Directions.UP:
- //      if (!_level.checkCollision(_x, _y - 1, this))
          _level.registerElement(_x, _y, _x, --_y, this);
        break;
      case Directions.DOWN:
- //        if (!_level.checkCollision(_x, _y + 1, this))
          _level.registerElement(_x, _y, _x, ++_y, this);
        break;
      case Directions.LEFT:
- //      if (!_level.checkCollision(_x - 1, _y, this))
          _level.registerElement(_x, _y, --_x, _y, this);
        break;
      case Directions.RIGHT:
-  //     if (!_level.checkCollision(_x + 1, _y, this))
          _level.registerElement(_x, _y, ++_x, _y, this);
        break;
       case Directions.NOTHING:
-        _level.registerElement(_x,_y,1,1,this);
+        _level.registerElement(_x,_y,_x,_y,this);
         break;
    }
   }
