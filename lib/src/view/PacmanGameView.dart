@@ -103,19 +103,6 @@ class PacmanGameView {
     _message.classes.toggle('show');
   }
 
-
-  void updateEnvironmentMap() {
-
-  }
-
-  void updateDynamicMap() {
-
-  }
-
-  void updateItemMap() {
-
-  }
-
   void updateGameStatus() {}
 
   //see _labyrinthToHTMLTable

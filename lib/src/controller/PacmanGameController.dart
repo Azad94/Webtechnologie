@@ -54,7 +54,6 @@ class PacmanGameController{
   //let the view load the current game elements and graphis into the table
   void refreshField2(List<List<Types>> l) {
     _pacmanView._labyrinthFill(l);
-    //_pacmanView.updateMessages(l[0].toString());
   }
   //updates the current view
   void updateGameStatus() {
