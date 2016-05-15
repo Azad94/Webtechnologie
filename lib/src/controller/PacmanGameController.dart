@@ -37,6 +37,7 @@ class PacmanGameController{
     _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
 
     _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
+      ev.preventDefault();
       switch (ev.keyCode) {
         case KeyCode.LEFT:  _pacmanModel.moveLeft(); break;
         case KeyCode.RIGHT:  _pacmanModel.moveRight(); break;
@@ -69,13 +70,14 @@ class PacmanGameController{
   void gameOver(bool b) {
     if(b){
       stopGame();
-      _pacmanView.updateOverlay("GAME OVER");}
+      _pacmanView.updateOverlay("GAME OVER");
+    }
   }
 
   void gameWon(bool b) {
     if(b) {
       stopGame();
-      _pacmanView.updateOverlay("Stage cleared");
+      _pacmanView.updateOverlay("STAGE CLEARED");
     }
   }
   void stopGame(){

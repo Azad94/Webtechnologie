@@ -89,9 +89,9 @@ class PacmanGameView {
   final _labyrinth = querySelector("#labyrinth");
 
   final _information = querySelector("#information");
-  final _level = querySelector("#level");
-  final _score = querySelector("#score");
-  final _lives = querySelector("#lives");
+  final _level = querySelector("#value1");
+  final _score = querySelector("#value2");
+  final _lives = querySelector("#value3");
 
   //constructor
   PacmanGameView(_con);
@@ -111,13 +111,13 @@ class PacmanGameView {
   }
   //displays the current score
   void updateScore(int score) {
-    _score.innerHtml = "Score: $score";
+    _score.innerHtml = " $score";
   }
   void updateLevel(int level){
-    _level.innerHtml = "Level: $level";
+    _level.innerHtml = " $level";
   }
   void updateLives(int lives){
-    _lives.innerHtml = "Lives: $lives";
+    _lives.innerHtml = " $lives";
   }
   void updateMessages(String str) {
     _message.innerHtml = "Msg: $str"; }
