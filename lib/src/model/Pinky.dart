@@ -138,7 +138,7 @@ class Pinky extends Ghost {
     }*/
 //getNextMove(_x, _y, _targetX, _targetY, this)
 
-    if(i<=10){
+    if(i<=100){
       switch(nextMove) {
         case 1:
 //          (!_level.checkCollision(_x, _y --, this))
