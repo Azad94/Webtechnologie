@@ -98,10 +98,6 @@ abstract class Ghost extends GameElement{
     //sets next preferred direction
     verticalMoreImportant ? nextDirection = preferredVerDirection : nextDirection = preferredHorDirection;
 
-    print("--- PH : "+preferredHorDirection.toString());
-    print("--- PV : "+preferredVerDirection.toString());
-    print("--- NEXT : "+nextDirection.toString());
-    print("--- PREV : "+ _previousDirection.toString());
 
     if(verticalMoreImportant)
     {
@@ -111,28 +107,24 @@ abstract class Ghost extends GameElement{
         if (nextDirection == Directions.UP)
         {
           if (!_level.checkCollision(currentX, --currentY, this)){
-            print("-------------------------------------UP EINS");
             _previousDirection = Directions.UP;
             return Directions.UP;
           }
 
           nextDirection = Directions.LEFT;
           if (!_level.checkCollision(--currentX, currentY, this)) {
-            print("-------------------------------------LEFT EINS");
             _previousDirection = Directions.LEFT;
             return Directions.LEFT;
           }
 
           nextDirection = Directions.RIGHT;
           if (!_level.checkCollision(++currentX, currentY, this))  {
-            print("-------------------------------------RIGHT EINS");
             _previousDirection = Directions.RIGHT;
             return Directions.RIGHT;
           }
 
           nextDirection = Directions.DOWN;
           if (!_level.checkCollision(currentX, ++currentY, this)){
-            print("-------------------------------------DOWN EINS");
             _previousDirection = Directions.DOWN;
             return Directions.DOWN;
           }
@@ -142,28 +134,24 @@ abstract class Ghost extends GameElement{
         if (nextDirection == Directions.DOWN)
         {
           if(!_level.checkCollision(currentX, ++currentY, this)) {
-            print("-------------------------------------DOWN ZWEI");
             _previousDirection = Directions.DOWN;
             return Directions.DOWN;
           }
 
           nextDirection = Directions.LEFT;
           if(!_level.checkCollision(--currentX, currentY, this)) {
-            print("-------------------------------------LEFT ZWEI");
             _previousDirection = Directions.LEFT;
             return Directions.LEFT;
           }
 
           nextDirection = Directions.RIGHT;
           if(!_level.checkCollision(++currentX, currentY, this)) {
-            print("-------------------------------------RIGHT ZWEI");
             _previousDirection = Directions.RIGHT;
             return Directions.RIGHT;
           }
 
           nextDirection = Directions.UP;
           if(!_level.checkCollision(currentX, --currentY, this)){
-            print("-------------------------------------UP ZWEI");
             _previousDirection = Directions.UP;
             return Directions.UP;
           }
@@ -174,28 +162,24 @@ abstract class Ghost extends GameElement{
       {
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this))  {
-          print("-------------------------------------LEFT DREI");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
 
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)){
-          print("-------------------------------------DOWN DREI");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
 
         nextDirection = Directions.RIGHT;
         if(!_level.checkCollision(++currentX, currentY, this)){
-          print("-------------------------------------RIGHT DREI");
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
 
         nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)){
-          print("-------------------------------------UP DREI");
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
@@ -206,7 +190,6 @@ abstract class Ghost extends GameElement{
       {
         nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)){
-          print("-------------------------------------UP VIER");
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
@@ -214,21 +197,18 @@ abstract class Ghost extends GameElement{
         //TODO er geht nach Oben obwohl er das nicht darf bzw obwohl da eine Kollision ist
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this)) {
-          print("-------------------------------------LEFT VIER");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
 
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)) {
-          print("-------------------------------------DOWN VIER");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
 
         nextDirection = Directions.RIGHT;
         if(!_level.checkCollision(++currentX, currentY, this)) {
-          print("-------------------------------------RIGHT VIER");
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
@@ -239,28 +219,24 @@ abstract class Ghost extends GameElement{
       {
         nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)) {
-          print("-------------------------------------UP FÜNF");
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
 
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)) {
-          print("-------------------------------------DOWN FÜNF");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
 
         nextDirection = Directions.RIGHT;
         if(!_level.checkCollision(++currentX, currentY, this)) {
-          print("-------------------------------------RIGHT FÜNF");
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
 
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this))  {
-          print("-------------------------------------LEFT FÜNF");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
@@ -271,28 +247,24 @@ abstract class Ghost extends GameElement{
       {
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this))  {
-          print("-------------------------------------LEFT SECHS");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
 
         nextDirection = Directions.RIGHT;
         if(!_level.checkCollision(++currentX, currentY, this)){
-          print("-------------------------------------RIGHT SECHS");
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
 
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)) {
-          print("-------------------------------------DOWN SECHS");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
 
         nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)) {
-          print("-------------------------------------UP SECHS");
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
@@ -303,21 +275,18 @@ abstract class Ghost extends GameElement{
       {
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)) {
-          print("-------------------------------------DOWN SIEBEN");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
 
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this)) {
-          print("-------------------------------------LEFT SIEBEN");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
 
         nextDirection = Directions.RIGHT;
         if(!_level.checkCollision(++currentX, currentY, this)) {
-          print("-------------------------------------RIGHT SIEBEN");
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
@@ -326,7 +295,6 @@ abstract class Ghost extends GameElement{
         return Directions.NOTHING;
         /**nextDirection = Directions.UP;
             if(!_level.checkCollision(currentX, --currentY, this)) {
-            print("-------------------------------------UP SIEBEN");
             return Directions.UP;
 
             }**/
@@ -337,28 +305,24 @@ abstract class Ghost extends GameElement{
       {
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)) {
-          print("-------------------------------------DOWN ACHT");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
 
         nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)){
-          print("-------------------------------------UP ACHT");
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
 
         nextDirection = Directions.RIGHT;
         if(!_level.checkCollision(++currentX, currentY, this)) {
-          print("-------------------------------------RIGHT ACHT");
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
 
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this)) {
-          print("-------------------------------------LEFT ACHT");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
@@ -374,7 +338,6 @@ abstract class Ghost extends GameElement{
         if (nextDirection == Directions.LEFT)
         {
           if (!_level.checkCollision(--currentX, currentY, this)) {
-            print("-------------------------------------LEFT NEUN");
             _previousDirection = Directions.LEFT;
             return Directions.LEFT;
           }
@@ -382,14 +345,12 @@ abstract class Ghost extends GameElement{
           //TODO hier geht er nach oben obwohl er nicht darf wegen Kollision
           nextDirection = Directions.UP;
           if(!_level.checkCollision(currentX, --currentY, this)) {
-            print("-------------------------------------UP NEUN");
             _previousDirection = Directions.UP;
             return Directions.UP;
           }
 
           nextDirection = Directions.DOWN;
           if (!_level.checkCollision(currentX, ++currentY, this)){
-            print("-------------------------------------DOWN NEUN");
             _previousDirection = Directions.DOWN;
             return Directions.DOWN;
           }
@@ -399,28 +360,24 @@ abstract class Ghost extends GameElement{
         if (nextDirection == Directions.RIGHT)
         {
           if(!_level.checkCollision(++currentX, currentY, this)) {
-            print("-------------------------------------RIGHT NEUN");
             _previousDirection = Directions.RIGHT;
             return Directions.RIGHT;
           }
 
           nextDirection = Directions.UP;
           if(!_level.checkCollision(currentX, --currentY, this)){
-            print("-------------------------------------UP ZEHN");
             _previousDirection = Directions.UP;
             return Directions.UP;
           }
 
           nextDirection = Directions.DOWN;
           if(!_level.checkCollision(currentX, ++currentY, this)){
-            print("-------------------------------------DOWN ZEHN");
             _previousDirection = Directions.DOWN;
             return Directions.DOWN;
           }
 
           nextDirection = Directions.LEFT;
           if(!_level.checkCollision(--currentX, currentY, this)) {
-            print("-------------------------------------LEFT ZEHN");
             _previousDirection = Directions.LEFT;
             return Directions.LEFT;
           }
@@ -432,28 +389,24 @@ abstract class Ghost extends GameElement{
       {
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this))  {
-          print("-------------------------------------LEFT ELF");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
 
         nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)) {
-          print("-------------------------------------UP ELF");
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
 
         nextDirection = Directions.RIGHT;
         if(!_level.checkCollision(++currentX, currentY, this)) {
-          print("-------------------------------------RIGHT ZEHN");
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
 
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)){
-          print("-------------------------------------DOWN ELF");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
@@ -464,28 +417,24 @@ abstract class Ghost extends GameElement{
       {
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this)) {
-          print("-------------------------------------LEFT ZWÖLF");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
 
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)){
-          print("-------------------------------------DOWN ZWÖLF");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
 
         nextDirection = Directions.RIGHT;
         if(!_level.checkCollision(++currentX, currentY, this)) {
-          print("-------------------------------------RIGHT ELF");
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
 
         nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)) {
-          print("-------------------------------------UP ZWÖLF");
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
@@ -496,27 +445,23 @@ abstract class Ghost extends GameElement{
       {
         nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)){
-          print("-------------------------------------UP DREIZEHN");
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
 
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)) {
-          print("-------------------------------------DOWN DREIZEHN");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
         nextDirection = Directions.RIGHT;
         if(!_level.checkCollision(++currentX, currentY, this)) {
-          print("-------------------------------------RIGHT ZWÖLF");
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
 
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this))  {
-          print("-------------------------------------LEFT DREIZEHN");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
@@ -533,21 +478,18 @@ abstract class Ghost extends GameElement{
 
         nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)) {
-          print("-------------------------------------UP VIERZEHN");
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
 
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this))  {
-          print("-------------------------------------LEFT VIERZEHN");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
 
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)) {
-          print("-------------------------------------DOWN FÜNZEHN");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
@@ -558,28 +500,24 @@ abstract class Ghost extends GameElement{
       {
         nextDirection = Directions.RIGHT;
         if(!_level.checkCollision(++currentX, currentY, this)) {
-          print("-------------------------------------RIGHT DREIZEHN");
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
 
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)){
-          print("-------------------------------------DOWN SECHSZEHN");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
 
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this))  {
-          print("-------------------------------------LEFT SECHSZEHN");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
 
         nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)){
-          print("-------------------------------------UP FÜNFZEHN");
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
@@ -590,7 +528,6 @@ abstract class Ghost extends GameElement{
       {
         nextDirection = Directions.UP;
         if(!_level.checkCollision(currentX, --currentY, this)) {
-          print("-------------------------------------UP SECHSZEHN");
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
@@ -598,21 +535,18 @@ abstract class Ghost extends GameElement{
         //TODO er geht runter obwohl hier eine Kollision besteht
         nextDirection = Directions.DOWN;
         if(!_level.checkCollision(currentX, ++currentY, this)) {
-          print("-------------------------------------DOWN SIEBZEHN");
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
 
         nextDirection = Directions.LEFT;
         if(!_level.checkCollision(--currentX, currentY, this))  {
-          print("-------------------------------------LEFT SIEBZEHN");
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
 
         nextDirection = Directions.RIGHT;
         if(!_level.checkCollision(++currentX, currentY, this)) {
-          print("-------------------------------------RIGHT VIERZEHN");
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }

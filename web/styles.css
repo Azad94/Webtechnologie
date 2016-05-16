@@ -50,6 +50,36 @@ html, body {
     bottom: 60px;
     font-size: 30px;
 }
+#startNext{
+    position: absolute;
+    border: 5px solid gray;
+    border-radius: 17px;
+    cursor: pointer;  width: 150px;
+    margin-left: -75px;
+    left: 50%;
+    bottom: 60px;
+    font-size: 30px;
+}
+#nextLevel.show{
+    display: block;
+}
+#nextLevel{
+    display:none;
+    margin: auto;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.50);
+    text-align: center;
+    color: red;
+    font-family: PacMan;
+    font-weight: bold;
+    font-size: 2rem;
+    z-index: +2;
+}
+
 #overlay:empty {
     display: none;
 }
@@ -117,6 +147,7 @@ span {
 }
 #value1, #value2, #value3 {
     font-family: "Calibri Light";
+    font-weight: bold;
 }
 .messages.show { visibility: visible; }
 .messages {

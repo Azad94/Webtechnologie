@@ -78,6 +78,7 @@ class PacmanGameController{
     if(b) {
       stopGame();
       _pacmanView.updateOverlay("STAGE CLEARED");
+      _pacmanView._nextLevel.classes.toggle('show');
     }
   }
   void stopGame(){

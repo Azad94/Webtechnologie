@@ -84,7 +84,7 @@ class PacmanGameView {
   //different elements from the html-document
   final _startText = querySelector("#startText");
   final startButton = querySelector("#startButton");
-
+  final _nextLevel = querySelector("#nextLevel");
   final _overlay = querySelector("#overlay");
   final _labyrinth = querySelector("#labyrinth");
 
