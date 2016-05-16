@@ -2,13 +2,16 @@ part of pacmanLib;
 
 class Blinky extends Ghost {
 
-  Blinky(int x, int y, bool collPlayer, bool collGhost, Level l)
-      : super(x, y, collPlayer, collGhost, l);
+  Blinky(int x, int y, bool collPlayer, bool collGhost, Level l) : super(x, y, collPlayer, collGhost, l);
 
-  int _targetX=1;
-  int _targetY=1;
 
-  int _doorTargetX = 14;
+//  int targetX=7;
+//  int targetY=1;
+
+  int routeX=11;
+  int routeY=10;
+
+/*  int _doorTargetX = 14;
   int _doorTargetY = 9;
 
   int _scatterTargetX = 2;
@@ -18,7 +21,7 @@ class Blinky extends Ghost {
   int _alternativeTargetY = 17;
 
   int _directionsChanged = 0;
-  
+*/
 
   //gibt die bisher beste Liste zurück
   List<Directions> getRoute() {
@@ -26,8 +29,11 @@ class Blinky extends Ghost {
     return getRouteRecursive(route, _x, _y);
   }
 
-  List<Directions> getRouteRecursive(List<Directions> prev, int routeX, int routeY) {
-    if (prev.length > 10) {
+
+  List<Directions> getRouteRecursive(List<Directions> prev, routeX, routeY) {
+
+
+    if (prev.length > 5) {
       return prev;
     }
 
@@ -35,49 +41,29 @@ class Blinky extends Ghost {
     List<Directions> up;
     List<Directions> right;
     List<Directions> down;
+    List<Directions> nothing;
     List<Directions> best = new List();
 
 
     // requires better interface to differentiate collisions from finding pacman
-    if ((prev.length == 0 || prev.last != Directions.RIGHT) && !_level.checkCollision(++routeX, routeY, this)) {
-      if (++routeX == _targetX && routeY == _targetY) {
-        prev.add(Directions.RIGHT);
-        right = prev;
-      } else {
+    //Abbruchbedingungen für Abfrage fehlt
+    if (!_level.checkCollision(routeX++, routeY, this) && (routeX < 1) ) {
         prev.add(Directions.RIGHT);
         right = getRouteRecursive(prev, ++routeX , routeY);
-      }
     }
-    if ((prev.length == 0 || prev.last != Directions.UP) &&
-        !_level.checkCollision(routeX, ++routeY, this)) {
-      if (routeX == _targetX && ++routeY == _targetY) {
-        prev.add(Directions.UP);
-        up = prev;
-      } else {
-        prev.add(Directions.UP);
-        up = getRouteRecursive(prev, routeX, ++routeY);
-      }
-    }
-    if ((prev.length == 0 || prev.last != Directions.LEFT) &&
-        !_level.checkCollision(--routeX, routeY, this)) {
-      if (--routeX == _targetX && routeY == _targetY) {
-        prev.add(Directions.LEFT);
-        left = prev;
-      } else {
+    if (!_level.checkCollision(routeX--, routeY, this) && (routeX > 1)) {
         prev.add(Directions.LEFT);
         left = getRouteRecursive(prev, --routeX, routeY);
-      }
     }
-    if ((prev.length == 0 || prev.last != Directions.DOWN) &&
-        !_level.checkCollision(routeX, --routeY, this)) {
-      if (routeY-- == _targetX && routeY == _targetY) {
-        prev.add(Directions.DOWN);
-        down = prev;
-      } else {
-        prev.add(Directions.DOWN);
-        down = getRouteRecursive(prev, routeX, routeY --);
-      }
+    if (!_level.checkCollision(routeX, routeY-1, this) && (routeY > 1)) {
+      prev.add(Directions.UP);
+      up = getRouteRecursive(prev, routeX, --routeY);
     }
+    if (!_level.checkCollision(routeX, routeY+1, this) && (routeY < 1)) {
+      prev.add(Directions.DOWN);
+      down = getRouteRecursive(prev, routeX, ++routeY);
+    }
+
 //Vergleich der Listen um den kürzesten Weg zu finden
     if (left != null) {
       best = left;
@@ -91,21 +77,39 @@ class Blinky extends Ghost {
     if (down != null && (best.length == 0 || down.length < best.length)) {
       best = down;
     }
+
     return best;
   }
 
+
+
+
   // @override
 
-
+//NextDirection should be the first element from best
 
 
   void move() {
+  // nextDirection = getRoute().first;
+    print(getRoute());
+   // print(nextDirection);
 
-    nextDirection = route.first;
+ //   var route = ['apples', 'pears', 'oranges'];
 
- //   if(_x == _targetX && _y == _targetY) _directionsChanged++;
+ /*   var iterator = fruits.iterator;
+    while (iterator.moveNext()) {
+      var fruit = iterator.current;
+      print(fruit);}*/
 
- /*   switch(_directionsChanged)
+  var iterator = getRoute().iterator;
+   while (iterator.moveNext()) {
+     nextDirection = iterator.current;
+      print(nextDirection);
+
+
+      //   if(_x == _targetX && _y == _targetY) _directionsChanged++;
+
+      /*   switch(_directionsChanged)
     {
       case 0:
         _targetX = _doorTargetX;
@@ -128,25 +132,28 @@ class Blinky extends Ghost {
         _directionsChanged = 0;
         break;
     }*/
-
-    switch(getNextMove(_x, _y, _targetX, _targetY, this))
-    {
-     case Directions.UP:
-         _level.registerElement(_x, _y, _x, --_y, this);
-       break;
-     case Directions.DOWN:
-         _level.registerElement(_x, _y, _x, ++_y, this);
-       break;
-     case Directions.LEFT:
-         _level.registerElement(_x, _y, --_x, _y, this);
-       break;
-     case Directions.RIGHT:
-         _level.registerElement(_x, _y, ++_x, _y, this);
-       break;
-      case Directions.NOTHING:
-        _level.registerElement(_x,_y,_x,_y,this);
-        break;
-   }
+//getNextMove(_x, _y, _targetX, _targetY, this)
+      switch(nextDirection) {
+        case Directions.UP:
+//          if (!_level.checkCollision(_x, _y --, this))
+            _level.registerElement(_x, _y, _x, --_y, this);
+          break;
+        case Directions.DOWN:
+//          if (!_level.checkCollision(_x, _y ++, this))
+            _level.registerElement(_x, _y, _x, ++_y, this);
+          break;
+        case Directions.LEFT:
+//          if (!_level.checkCollision(_x --, _y, this))
+            _level.registerElement(_x, _y, _x--, _y, this);
+          break;
+        case Directions.RIGHT:
+//          if (!_level.checkCollision(_x ++, _y, this))
+            _level.registerElement(_x, _y, _x++, _y, this);
+          break;
+        default:
+          break;
+      }
+      }
   }
 
   void eatableMode() {
