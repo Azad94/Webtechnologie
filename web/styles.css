@@ -62,9 +62,19 @@ html, body {
     bottom: 60px;
     font-size: 30px;
 }
+#startNext.hide{
+    display:none;
+}
+#startNext.show{
+    display:block;
+}
+#nextLevel.hide {
+    display: none;
+}
 #nextLevel.show{
     display: block;
 }
+
 #nextLevel{
     display:none;
     margin: auto;

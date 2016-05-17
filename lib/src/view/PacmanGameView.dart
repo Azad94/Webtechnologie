@@ -85,6 +85,7 @@ class PacmanGameView {
   final _startText = querySelector("#startText");
   final startButton = querySelector("#startButton");
   final _nextLevel = querySelector("#nextLevel");
+  final startNext = querySelector("#startNext");
   final _overlay = querySelector("#overlay");
   final _labyrinth = querySelector("#labyrinth");
 
@@ -102,7 +103,13 @@ class PacmanGameView {
     _game.classes.toggle('show');
     _message.classes.toggle('show');
   }
-
+  //TODO: NextLevel
+  /*
+  void nextLevel() {
+    _overlay.innerHtml="";
+    _nextLevel.classes.toggle('hide');
+    startNext.classes.toggle('hide');
+  }*/
   void updateGameStatus() {}
 
   //see _labyrinthToHTMLTable
