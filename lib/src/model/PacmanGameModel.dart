@@ -39,6 +39,7 @@ class PacmanGameModel {
         LevelLoader.SCORE_CHERRY,
         LevelLoader.SCORE_POWERPILL,
         this);
+    print("LEVELLOADER" + LevelLoader.sizeY.toString());
   }
 
   /**

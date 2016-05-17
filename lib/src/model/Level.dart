@@ -47,7 +47,8 @@ class Level {
     if (_tiles[y][x]._environment == null) return false;
     // ghosts collides
     if (_tiles[y][x]._environment._collisionGhost == true && g is Ghost)
-      return true;
+    {print("GHOST COLLIDES AT " + x.toString() + " " + y.toString());
+          return true;}
     // pacman collides
     if (_tiles[y][x]._environment._collisionPlayer == true && g is Pacman)
       return true;
@@ -330,6 +331,7 @@ class Level {
   }
 
   void initTiles() {
+    print(_sizeY.toString());
     for (int i = 0; i < _sizeY; i++) {
       List<Tile> list = new List();
       for (int j = 0; j < _sizeX; j++) {

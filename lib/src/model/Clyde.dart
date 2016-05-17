@@ -26,6 +26,9 @@ class Clyde extends Ghost {
 
   int _directionsChanged = 0;
 
+  var p = new Random();
+
+
   void move() {
 
     switch(_directionsChanged)
@@ -149,6 +152,8 @@ class Clyde extends Ghost {
 
   void eatableMode() {
   }
+
+
 }
 /**  * Wenn i.wann mal die Werte für die Map übergeben werden sind folgende
  * Berechnungen für die Scatter Position einmal notwendig 
