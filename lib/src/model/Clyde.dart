@@ -137,7 +137,7 @@ class Clyde extends Ghost {
 
     if(_x == _targetX && _y == _targetY)
     {
-      print("POSITION ERREICHT");
+      //print("POSITION ERREICHT");
       if(_directionsChanged == 13){
         _directionsChanged = 0;
       }

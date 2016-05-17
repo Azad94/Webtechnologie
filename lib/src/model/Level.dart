@@ -71,7 +71,7 @@ class Level {
     }
     // ghost chance position
     if (g is Ghost) {
-      print("von $xOld : $yOld nach $xNew : $yNew by ${g is Inky ? "Inky" : ""}");
+      //print("von $xOld : $yOld nach $xNew : $yNew by ${g is Inky ? "Inky" : ""}");
       _tiles[yOld][xOld]._ghosts.remove(g);
       _tiles[yNew][xNew]._ghosts.add(g);
       this.collisionDetectionGhost(xNew, yNew);
