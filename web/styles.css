@@ -42,8 +42,9 @@ html, body {
 
 #startButton {
     position: absolute;
-    border: 5px solid gray;
-    border-radius: 17px;
+    border: 5px solid yellow;
+    border-radius: 20px;
+    padding: 2px 2px 2px 2px;
     cursor: pointer;  width: 150px;
     margin-left: -75px;
     left: 50%;
@@ -52,7 +53,8 @@ html, body {
 }
 #startNext{
     position: absolute;
-    border: 5px solid gray;
+    border: 5px yellow;
+    padding: 1px;
     border-radius: 17px;
     cursor: pointer;  width: 150px;
     margin-left: -75px;
@@ -131,13 +133,13 @@ span {
 
 #labyrinth {
     border-collapse: separate;
-    border: 5px solid gray;
+    border: 5px solid yellow;
 }
 
 
 #information {
     border-collapse: separate;
-    border: 5px solid gray;
+    border: 5px solid yellow;
     font-family: PacMan;
     font-size: 2rem;
 }

@@ -106,8 +106,8 @@ class PacmanGameView {
   void updateGameStatus() {}
 
   //see _labyrinthToHTMLTable
-  void initField(List<List<Types>> l) {
-    _labyrinth.innerHtml = _labyrinthToHTMLTable(l);
+  void initTable(List<List<Types>> l) {
+    _labyrinth.innerHtml = _createLabyrinth(l);
   }
   //displays the current score
   void updateScore(int score) {
@@ -126,19 +126,19 @@ class PacmanGameView {
     _overlay.innerHtml = "<span> $s </span>";
   }
   //creates the table in the html-document
-  String _labyrinthToHTMLTable(List<List<Types>> l) {
+  String _createLabyrinth(List<List<Types>> l) {
 
-    String htmlTable = "<table>";
+    String labyrinthTable = "<table>";
     for (List<Types> row in l) {
-      htmlTable += "<tr>";
+      labyrinthTable += "<tr>";
 
       for (Types s in row) {
-          htmlTable += "<td></td>";
+        labyrinthTable += "<td></td>";
         }
 
-      htmlTable += "</tr>";
+      labyrinthTable += "</tr>";
     }
-    return htmlTable += "</table>";
+    return labyrinthTable += "</table>";
   }
 
   //loads the different game elements and their graphical representation into the table
