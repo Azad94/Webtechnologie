@@ -7,6 +7,7 @@ class PacmanGameModel {
   Directions _pac_dir = Directions.NOTHING;
 
   bool _gameOver = false;
+  bool _gameWon = false;
   int _sizeX;
   int _sizeY;
 
@@ -21,6 +22,7 @@ class PacmanGameModel {
   }
 
   bool getGameOver() => false;
+  bool getGameWone() => false;
 
   int getCurrentLevel() => _currentLevel;
 
@@ -86,7 +88,9 @@ class PacmanGameModel {
   void gameOver() {
     _gameOver = true;
   }
-
+  void gameWon() {
+    _gameWon = true;
+  }
   /**
    * enable the power mode, means that ghosts are eatable
    */
@@ -147,6 +151,7 @@ class PacmanGameModel {
    * return true if the game is game over, else false
    */
   bool get gameEnd => _gameOver;
+  bool get gameVic => _gameWon;
 
   int get level => LevelLoader.levelNumber;
 

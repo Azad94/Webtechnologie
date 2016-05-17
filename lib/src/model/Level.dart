@@ -61,6 +61,8 @@ class Level {
    * xOld and yOld is the old position and xNew and yNew the new one. g is a reference on the moving objekt.
    */
   void registerElement(int xOld, int yOld, int xNew, int yNew, GameElement g) {
+    // position not correct
+    assert(!this.checkCollision(xNew, yNew, g));
     // pacman chance position
     if (g is Pacman) {
       _tiles[yOld][xOld]._pacman = null;

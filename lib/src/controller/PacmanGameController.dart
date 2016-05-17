@@ -1,7 +1,7 @@
 part of pacmanLib;
 
 //the refreshrate of the view
-const speed = const Duration(milliseconds: 500);
+const speed = const Duration(milliseconds: 200);
 
 class PacmanGameController{
 
@@ -32,11 +32,12 @@ class PacmanGameController{
 
     var labyrinth = _pacmanModel.getMap();
     initField(labyrinth);
-    refreshField2(labyrinth);
+    refreshLabyrinth(labyrinth);
 
     _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
 
     _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
+      ev.preventDefault();
       switch (ev.keyCode) {
         case KeyCode.LEFT:  _pacmanModel.moveLeft(); break;
         case KeyCode.RIGHT:  _pacmanModel.moveRight(); break;
@@ -47,14 +48,13 @@ class PacmanGameController{
 
   }
 
-  //let the view create the table
+  //create the table in the view
   void initField(List<List<Types>> l ) {
-      _pacmanView.initField(l);
+      _pacmanView.initTable(l);
   }
-  //let the view load the current game elements and graphis into the table
-  void refreshField2(List<List<Types>> l) {
+  //load the current game elements and graphis into the table
+  void refreshLabyrinth(List<List<Types>> l) {
     _pacmanView._labyrinthFill(l);
-    //_pacmanView.updateMessages(l[0].toString());
   }
   //updates the current view
   void updateGameStatus() {
@@ -62,20 +62,32 @@ class PacmanGameController{
     updateLevel();
     updateLives();
     var labyrinth = _pacmanModel.getMap();
-    refreshField2(labyrinth);
+    refreshLabyrinth(labyrinth);
     gameOver(_pacmanModel.gameEnd);
+    gameWon(_pacmanModel.gameVic);
   }
 
+  //ends the game, lost
   void gameOver(bool b) {
     if(b){
+      stopGame();
+      _pacmanView.updateOverlay("GAME OVER");
+    }
+  }
+  //ends the game, won
+  void gameWon(bool b) {
+    if(b) {
+      stopGame();
+      _pacmanView.updateOverlay("STAGE CLEARED");
+      _pacmanView._nextLevel.classes.toggle('show');
+    }
+  }
+  //stops interaction
+  void stopGame(){
     _keyListener.cancel();
     _timer.cancel();
-    _pacmanView.updateOverlay("GAME OVER");}
   }
 
-  void updateListen() {
-
-  }
   //set the direction for pacman to choose the right graphic
   void setPacmanDir(Directions p){
     this.pacmanDir = p;
@@ -89,5 +101,8 @@ class PacmanGameController{
   }
   void updateLives() {
     _pacmanView.updateLives(_pacmanModel.lives);
+  }
+  void _updateMessage(String str) {
+    _pacmanView.updateMessages(str);
   }
 }
