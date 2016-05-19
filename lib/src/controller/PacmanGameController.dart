@@ -1,7 +1,7 @@
 part of pacmanLib;
 
 //the refreshrate of the view
-const speed = const Duration(milliseconds: 200);
+const speed = const Duration(milliseconds:700);
 
 class PacmanGameController{
 
@@ -16,6 +16,11 @@ class PacmanGameController{
   var _keyListener;
   Timer _timer;
 
+  //mobile Keys
+  var up;
+  var down;
+  var left;
+  var right;
   //constructor
   PacmanGameController() {
 
@@ -55,25 +60,39 @@ class PacmanGameController{
     _pacmanView.showGameview();
 
     var labyrinth = _pacmanModel.getMap();
-    initField(labyrinth);
+    createTable(labyrinth);
     refreshLabyrinth(labyrinth);
 
     _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
 
-    _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
-      ev.preventDefault();
-      switch (ev.keyCode) {
-        case KeyCode.LEFT:  _pacmanModel.moveLeft(); break;
-        case KeyCode.RIGHT:  _pacmanModel.moveRight(); break;
-        case KeyCode.DOWN: _pacmanModel.moveDown(); break;
-        case KeyCode.UP: _pacmanModel.moveUp(); break;
-      }
-    });
-
+    if(_pacmanView.mql.matches){
+     up = _pacmanView.mobileUp.onClick.listen((_) {_pacmanModel.moveUp();});
+     down = _pacmanView.mobileDown.onClick.listen((_) {_pacmanModel.moveDown();});
+     left = _pacmanView.mobileLeft.onClick.listen((_) {_pacmanModel.moveLeft();});
+     right = _pacmanView.mobileRight.onClick.listen((_) {_pacmanModel.moveRight();});
+    } else {
+      _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
+        ev.preventDefault();
+        switch (ev.keyCode) {
+          case KeyCode.LEFT:
+            _pacmanModel.moveLeft();
+            break;
+          case KeyCode.RIGHT:
+            _pacmanModel.moveRight();
+            break;
+          case KeyCode.DOWN:
+            _pacmanModel.moveDown();
+            break;
+          case KeyCode.UP:
+            _pacmanModel.moveUp();
+            break;
+        }
+      });
+    }
   }
 
   //create the table in the view
-  void initField(List<List<Types>> l ) {
+  void createTable(List<List<Types>> l ) {
       _pacmanView.initTable(l);
   }
   //load the current game elements and graphis into the table
@@ -111,9 +130,16 @@ class PacmanGameController{
     }
   }
   //stops interaction
-  void stopGame(){
-    _keyListener.cancel();
-    _timer.cancel();
+  void stopGame() {
+    if (_pacmanView.mql.matches) {
+      up.cancel();
+      down.cancel();
+      left.cancel();
+      right.cancel();
+    } else {
+      _keyListener.cancel();
+    }
+      _timer.cancel();
   }
 
   //set the direction for pacman to choose the right graphic

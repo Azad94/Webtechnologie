@@ -8,7 +8,8 @@ html, body {
     height: 100%;
     color: yellow;
     background-color: black;
-    font-family: PacMan;
+    font-family: PacMan, serif;
+    text-align: center;
 }
 
 .start {
@@ -31,13 +32,13 @@ html, body {
 
 #startText {
     position:absolute;
-    width: 1000px;
-    margin-left:-500px;
-    left:50%;
-    bottom: 150px;
+    width: auto;
+    margin: 0 auto;
+    left: 45%;
+    bottom: 25%;
     letter-spacing: 3px;
     font-family: PacMan;
-    font-size: 50px;
+    font-size: 2rem;
 }
 
 #startButton {
@@ -46,10 +47,10 @@ html, body {
     border-radius: 20px;
     padding: 2px 2px 2px 2px;
     cursor: pointer;  width: 150px;
-    margin-left: -75px;
+    margin: 0 auto;
     left: 50%;
-    bottom: 60px;
-    font-size: 30px;
+    bottom: 5%;
+    font-size: 2rem;
 }
 #startNext{
     position: absolute;
@@ -134,11 +135,12 @@ span {
     margin: 0 auto;
     display: none;
 }
-
 #labyrinth td {
     background-color: black;
     width: 32px;
     height: 32px;
+    background-repeat:no-repeat;
+    background-size:32px 32px;
 }
 
 #labyrinth {
@@ -153,6 +155,36 @@ span {
     font-family: PacMan;
     font-size: 2rem;
 }
+#keylayout{
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.mobile{
+    display: none;
+}
+.mobile td{
+    background-color: black;
+    width: 160px;
+    height: 160px;
+    background-repeat:no-repeat;
+    background-size:160px 160px;
+}
+.mobileBlank{
+    background-image:url(../web/resc/mobileBlank.png);
+}
+#mobileUp {
+    background-image:url(../web/resc/mobileUp.png);
+}
+#mobileDown{
+    background-image:url(../web/resc/mobileDown.png);
+}
+#mobileLeft {
+    background-image:url(../web/resc/mobileLeft.png);
+}
+#mobileRight{
+    background-image:url(../web/resc/mobileRight.png);
+}
 #information td {
     background-color: black;
     width: 450px;
@@ -165,6 +197,7 @@ span {
 .messages {
     background-color: white;
     color:red;
+    font-family: "Calibri Light";
     visibility: hidden;
 }
 
