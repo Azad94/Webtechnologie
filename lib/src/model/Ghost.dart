@@ -81,9 +81,26 @@ abstract class Ghost extends GameElement{
     _ghostsEaten = 0;
   }
 
+  int _possibleDirections;
+  int _possibleUp;
+  int _possibleDown;
+  int _possibleLeft;
+  int _possibleRight;
+
   Directions getNextMove(int currentX, int currentY, int targetX, int targetY, GameElement g)
   {
     if(currentX == targetX && currentY == targetY) return Directions.NOTHING;
+
+    int _currentDistanceX = targetX - currentX;
+    int _currentDistanceY = targetY - currentY;
+    int _checkX = currentX;
+    int _checkY = currentY;
+
+    _possibleDirections = 0;
+    _possibleUp = 0;
+    _possibleDown = 0;
+    _possibleLeft = 0;
+    _possibleRight = 0;
     //horizontal difference from currentPosition to targetPosition
     int horDifference = currentX-targetX;
     int verDifference = currentY-targetY;
@@ -98,7 +115,547 @@ abstract class Ghost extends GameElement{
     //sets next preferred direction
     verticalMoreImportant ? nextDirection = preferredVerDirection : nextDirection = preferredHorDirection;
 
+    //                             UP
+    if(!_level.checkCollision(currentX, --currentY, this))
+    {
+      _possibleDirections++;
+      _possibleUp++;
+    }
 
+    //                             DOWN
+    if(!_level.checkCollision(currentX, ++currentY, this))
+    {
+      _possibleDirections++;
+      _possibleDown++;
+    }
+
+    //                             LEFT
+    if(!_level.checkCollision(--currentX, currentY, this))
+    {
+      _possibleDirections++;
+      _possibleLeft++;
+    }
+
+    //                             RIGHT
+    if(!_level.checkCollision(++currentX, currentY, this))
+    {
+      _possibleDirections++;
+      _possibleRight++;
+    }
+
+    if(_possibleDirections > 1)
+    {
+      // go up
+      if(_previousDirection != Directions.DOWN && _possibleUp == 1)
+      {
+        if(--_checkY < _currentDistanceY) return Directions.UP;
+        _checkX = currentX;
+        _checkY = currentY;
+        if(--_checkX < _currentDistanceX) return Directions.LEFT;
+        _checkX = currentX;
+        _checkY = currentY;
+        if(++_checkX < _currentDistanceX) return Directions.RIGHT;
+        _checkX = currentX;
+        _checkY = currentY;
+      }
+
+      // go down
+      if(_previousDirection != Directions.UP && _possibleDown == 1)
+      {
+        if(++_checkY < _currentDistanceY) return Directions.DOWN;
+        _checkX = currentX;
+        _checkY = currentY;
+        if(--_checkX < _currentDistanceX) return Directions.LEFT;
+        _checkX = currentX;
+        _checkY = currentY;
+        if(++_checkX < _currentDistanceX) return Directions.RIGHT;
+        _checkX = currentX;
+        _checkY = currentY;
+      }
+
+      // go left
+      if(_previousDirection != Directions.RIGHT && _possibleLeft == 1)
+      {
+        if(--_checkX < _currentDistanceX) return Directions.LEFT;
+        _checkX = currentX;
+        _checkY = currentY;
+        if(++_checkY < _currentDistanceY) return Directions.DOWN;
+        _checkX = currentX;
+        _checkY = currentY;
+        if(--_checkY < _currentDistanceY) return Directions.UP;
+        _checkX = currentX;
+        _checkY = currentY;
+      }
+
+      // go right
+      if(_previousDirection != Directions.LEFT && _possibleRight == 1)
+      {
+        if(++_checkX < _currentDistanceX) return Directions.RIGHT;
+        _checkX = currentX;
+        _checkY = currentY;
+        if(--_checkY < _currentDistanceY) return Directions.UP;
+        _checkX = currentX;
+        _checkY = currentY;
+        if(++_checkY < _currentDistanceY) return Directions.DOWN;
+        _checkX = currentX;
+        _checkY = currentY;
+      }
+    }
+
+    if(nextDirection == _previousDirection)
+    {
+      //TODO UP OBEN
+      if (nextDirection == Directions.UP)
+      {
+        // UP OBEN
+        if (!_level.checkCollision(_checkX, --_checkY, this))
+        {
+          _previousDirection = Directions.UP;
+          return Directions.UP;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        // LEFT LINKS
+        if (!_level.checkCollision(--_checkX, _checkY, this))
+        {
+          _previousDirection = Directions.LEFT;
+          return Directions.LEFT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        // RIGHT RECHTS
+        if (!_level.checkCollision(++_checkX, _checkY, this))
+        {
+          _previousDirection = Directions.RIGHT;
+          return Directions.RIGHT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+        return Directions.NOTHING;
+      }
+
+      // TODO DOWN UNTEN
+      if (nextDirection == Directions.DOWN)
+      {
+        // DOWN UNTEN
+        if (!_level.checkCollision(_checkX, ++_checkY, this))
+        {
+          _previousDirection = Directions.DOWN;
+          return Directions.DOWN;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        // LEFT LINKS
+        if (!_level.checkCollision(--_checkX, _checkY, this))
+        {
+          _previousDirection = Directions.LEFT;
+          return Directions.LEFT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        // RIGHT RECHTS
+        if (!_level.checkCollision(++_checkX, _checkY, this))
+        {
+          _previousDirection = Directions.RIGHT;
+          return Directions.RIGHT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        return Directions.NOTHING;
+      }
+
+      // TODO LEFT LINKS
+      if (nextDirection == Directions.LEFT) {
+        // LEFT LINKS
+        if (!_level.checkCollision(--_checkX, _checkY, this))
+        {
+          _previousDirection = Directions.LEFT;
+          return Directions.LEFT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        // DOWN UNTEN
+        if (!_level.checkCollision(_checkX, ++_checkY, this))
+        {
+          _previousDirection = Directions.DOWN;
+          return Directions.DOWN;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        // UP OBEN
+        if (!_level.checkCollision(_checkX, --_checkY, this))
+        {
+          _previousDirection = Directions.UP;
+          return Directions.UP;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        return Directions.NOTHING;
+      }
+
+      // TODO RIGHT RECHTS
+      if (nextDirection == Directions.RIGHT)
+      {
+        // UP OBEN
+        if (!_level.checkCollision(_checkX, --_checkY, this))
+        {
+          _previousDirection = Directions.UP;
+          return Directions.UP;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        // LEFT LINKS
+        if (!_level.checkCollision(--_checkX, _checkY, this))
+        {
+          _previousDirection = Directions.LEFT;
+          return Directions.LEFT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        // DOWN UNTEN
+        if (!_level.checkCollision(_checkX, ++_checkY, this))
+        {
+          _previousDirection = Directions.DOWN;
+          return Directions.DOWN;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        return Directions.NOTHING;
+      }
+    }
+    //TODO --------------------------------------------------------NORMALE LOGIK
+    if(verticalMoreImportant)
+    {
+      // TODO UP OBEN
+      if(_previousDirection == Directions.UP)
+      {
+        //LEFT
+        if(!_level.checkCollision(--_checkX,_checkY,this))
+        {
+          _previousDirection = Directions.LEFT;
+          return Directions.LEFT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //UP
+        if(!_level.checkCollision(_checkX,--_checkY,this))
+        {
+          _previousDirection = Directions.UP;
+          return Directions.UP;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //RIGHT
+        if(!_level.checkCollision(++_checkX,_checkY,this))
+        {
+          _previousDirection = Directions.RIGHT;
+          return Directions.RIGHT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        return Directions.NOTHING;
+      }
+
+      // TODO DOWN UNTEN
+      if(_previousDirection == Directions.DOWN)
+      {
+        //DOWN
+        if(!_level.checkCollision(_checkX,++_checkY,this))
+        {
+          _previousDirection = Directions.DOWN;
+          return Directions.DOWN;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //LEFT
+        if(!_level.checkCollision(--_checkX,_checkY,this))
+        {
+          _previousDirection = Directions.LEFT;
+          return Directions.LEFT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //RIGHT
+        if(!_level.checkCollision(++_checkX,_checkY,this))
+        {
+          _previousDirection = Directions.RIGHT;
+          return Directions.RIGHT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+
+        return Directions.NOTHING;
+      }
+
+      // TODO LEFT LINKS
+      if(_previousDirection == Directions.LEFT)
+      {
+        //UP
+        if(!_level.checkCollision(_checkX,--_checkY,this))
+        {
+          _previousDirection = Directions.UP;
+          return Directions.UP;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //DOWN
+        if(!_level.checkCollision(_checkX,++_checkY,this))
+        {
+          _previousDirection = Directions.DOWN;
+          return Directions.DOWN;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //LEFT
+        if(!_level.checkCollision(--_checkX,_checkY,this))
+        {
+          _previousDirection = Directions.LEFT;
+          return Directions.LEFT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        return Directions.NOTHING;
+      }
+
+      // TODO RIGHT RECHTS
+      if(_previousDirection == Directions.RIGHT)
+      {
+        //UP
+        if(!_level.checkCollision(_checkX,--_checkY,this))
+        {
+          _previousDirection = Directions.UP;
+          return Directions.UP;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //DOWN
+        if(!_level.checkCollision(_checkX,++_checkY,this))
+        {
+          _previousDirection = Directions.DOWN;
+          return Directions.DOWN;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //RIGHT
+        if(!_level.checkCollision(++_checkX,_checkY,this))
+        {
+          _previousDirection = Directions.RIGHT;
+          return Directions.RIGHT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        return Directions.NOTHING;
+      }
+
+    }
+    // TODO ----------------------------------------------------------ELSE LOGIK
+    else
+    {
+      // TODO LEFT LINKS
+      if(_previousDirection == Directions.LEFT)
+      {
+        //LEFT
+        if(!_level.checkCollision(--_checkX,_checkY,this))
+        {
+          _previousDirection = Directions.LEFT;
+          return Directions.LEFT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //UP
+        if(!_level.checkCollision(_checkX,--_checkY,this))
+        {
+          _previousDirection = Directions.UP;
+          return Directions.UP;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //DOWN
+        if(!_level.checkCollision(_checkX,++_checkY,this))
+        {
+          _previousDirection = Directions.DOWN;
+          return Directions.DOWN;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+
+        return Directions.NOTHING;
+      }
+
+      // TODO RIGHT RECHTS
+      if(_previousDirection == Directions.RIGHT)
+      {
+        //RIGHT
+        if(!_level.checkCollision(++_checkX,_checkY,this))
+        {
+          _previousDirection = Directions.RIGHT;
+          return Directions.RIGHT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //UP
+        if(!_level.checkCollision(_checkX,--_checkY,this))
+        {
+          _previousDirection = Directions.UP;
+          return Directions.UP;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //DOWN
+        if(!_level.checkCollision(_checkX,++_checkY,this))
+        {
+          _previousDirection = Directions.DOWN;
+          return Directions.DOWN;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        return Directions.NOTHING;
+      }
+
+      // TODO UP OBEN
+      if(_previousDirection == Directions.UP)
+      {
+        //LEFT
+        if(!_level.checkCollision(--_checkX,_checkY,this))
+        {
+          if((--_checkX - targetY) < _currentDistanceX)
+          {
+            _previousDirection = Directions.LEFT;
+            return Directions.LEFT;
+          }
+          else nextDirection = Directions.RIGHT;
+
+          _previousDirection = Directions.LEFT;
+          return Directions.LEFT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //RIGHT
+        if(!_level.checkCollision(++_checkX,_checkY,this))
+        {
+          _previousDirection = Directions.RIGHT;
+          return Directions.RIGHT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        if(_currentDistanceY != 0)
+        {
+        //UP
+          if(!_level.checkCollision(_checkX,--_checkY,this))
+          {
+            _previousDirection = Directions.UP;
+            return Directions.UP;
+          }
+
+          _checkX = currentX;
+          _checkY = currentY;
+        }
+
+        return Directions.NOTHING;
+      }
+
+      // TODO DOWN UNTEN
+      if(_previousDirection == Directions.DOWN)
+      {
+        //LEFT
+        if(!_level.checkCollision(--_checkX,_checkY,this))
+        {
+          _previousDirection = Directions.LEFT;
+          return Directions.LEFT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //RIGHT
+        if(!_level.checkCollision(++_checkX,_checkY,this))
+        {
+          _previousDirection = Directions.RIGHT;
+          return Directions.RIGHT;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        //DOWN
+        if(!_level.checkCollision(_checkX,++_checkY,this))
+        {
+          _previousDirection = Directions.DOWN;
+          return Directions.DOWN;
+        }
+
+        _checkX = currentX;
+        _checkY = currentY;
+
+        return Directions.NOTHING;
+      }
+    }
+
+
+    /**
     if(verticalMoreImportant)
     {
       if(nextDirection == _previousDirection)
@@ -554,7 +1111,9 @@ abstract class Ghost extends GameElement{
 
       return Directions.NOTHING;
     }
+        **/
   }
+
 }
 
 /**
@@ -563,4 +1122,8 @@ abstract class Ghost extends GameElement{
  * individuelle Chase/Verfolger Methode und je nach Geist komplex
  *
  * UP -> LEFT -> DOWN
+ *
+ *
+ * WENN ES MÖGLICH SIT DAS MAN ZWEI WEGE GEHEN KANN ... DANN GUCK OB WENN ICH NACH OBEN GEHEN DER Y/X-WERT SICH VERRINGERT
+ * FALLS JA DANN GEH DAHIN
  **/
