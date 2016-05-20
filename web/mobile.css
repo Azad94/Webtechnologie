@@ -1,0 +1,356 @@
+@media screen and (orientation:portrait) {
+    @font-face {
+        font-family: PacMan; /*a name to be used later*/
+        src: url("PAC-FONT.TTF"); /*URL to font*/
+    }
+    html, body {
+        margin: 0;
+        height: 100%;
+        color: yellow;
+        background-color: black;
+        font-family: PacMan, serif;
+        text-align: center;
+    }
+
+    .start {
+        width: 100%;
+        height: 100%;
+        -webkit-background-size:cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background: black url("resc/mPortrait.png") no-repeat center;
+        position: fixed;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .start.close {
+        display: none;
+    }
+
+    #startText {
+        display:none;
+        position: absolute;
+        width: auto;
+        margin: 0 auto;
+        left: 45%;
+        bottom: 25%;
+        letter-spacing: 3px;
+        font-family: PacMan;
+        font-size: 2rem;
+    }
+
+    #startButton {
+        position: absolute;
+        border: 5px solid yellow;
+        border-radius: 20px;
+        padding: 2px 2px 2px 2px;
+        cursor: pointer;
+        width: 150px;
+        margin: 0 auto;
+        left: 45%;
+        bottom: 50%;
+        font-size: 2rem;
+    }
+
+    #startNext {
+        display:none;
+        position: absolute;
+        border: 5px yellow;
+        padding: 1px;
+        border-radius: 17px;
+        cursor: pointer;
+        width: 150px;
+        margin-left: -75px;
+        left: 50%;
+        bottom: 60px;
+        font-size: 30px;
+    }
+
+    #startNext.hide {
+        display: none;
+    }
+
+    #startNext.show {
+        display: block;
+    }
+
+    #footer, .header, .messages, #nextLevel {
+        display: none;
+    }
+
+    #overlay:empty {
+        display: none;
+    }
+
+    #overlay {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        background-color: rgba(0, 0, 0, 0.50);
+        text-align: center;
+        color: red;
+        font-family: PacMan, serif;
+        font-weight: bold;
+        font-size: 3rem;
+        z-index: +3;
+    }
+
+    span {
+        margin-top: 50%;
+        margin-bottom: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .game.show {
+        display: block
+    }
+
+    .game {
+        position: fixed;
+        height: 100%;
+        margin: 0 auto;
+        display: none;
+    }
+
+    #labyrinth td {
+        background-color: black;
+        width: 32px;
+        height: 32px;
+        background-repeat: no-repeat;
+        background-size: 32px 32px;
+    }
+
+    #labyrinth {
+        border-collapse: separate;
+        border: 5px solid green;
+    }
+
+    #information {
+        border-collapse: separate;
+        border: 5px solid green;
+        font-family: PacMan;
+        font-size: 2rem;
+    }
+
+    #information td {
+        background-color: black;
+        width: 15%;
+    }
+
+
+    #value1, #value2, #value3 {
+        font-family: "Calibri Light";
+    }
+
+    #keylayout {
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .mobile.hide {
+        visibility: hidden;
+    }
+
+    .mobile {
+        display: block;
+    }
+
+    .mobile td {
+        background-color: black;
+        width: 80px;
+        height: 80px;
+        background-repeat: no-repeat;
+        background-size: 80px 80px;
+    }
+
+    .mobileBlank {
+        background-image: url(../web/resc/mobileBlank.png);
+    }
+
+    #mobileUp {
+        background-image: url(../web/resc/mobileUp.png);
+    }
+
+    #mobileDown {
+        background-image: url(../web/resc/mobileDown.png);
+    }
+
+    #mobileLeft {
+        background-image: url(../web/resc/mobileLeft.png);
+    }
+
+    #mobileRight {
+        background-image: url(../web/resc/mobileRight.png);
+    }
+}
+
+
+@media screen and (orientation:landscape) {
+    @font-face {
+        font-family: PacMan; /*a name to be used later*/
+        src: url("PAC-FONT.TTF"); /*URL to font*/
+    }
+    html, body {
+        margin: 0;
+        height: 100%;
+        color: yellow;
+        background-color: black;
+        font-family: PacMan, serif;
+        text-align: center;
+    }
+
+    .start {
+        width: 100%;
+        height: 100%;
+        -webkit-background-size:cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background: black url("resc/mLandscape.png") no-repeat center;
+        position: fixed;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .start.close {
+        display: none;
+    }
+
+    #startText {
+        display: none;
+        position: absolute;
+        width: auto;
+        margin: 0 auto;
+        left: 45%;
+        bottom: 25%;
+        letter-spacing: 3px;
+        font-family: PacMan;
+        font-size: 2rem;
+    }
+
+    #startButton {
+        position: absolute;
+        border: 5px solid yellow;
+        border-radius: 20px;
+        padding: 2px 2px 2px 2px;
+        cursor: pointer;
+        width: 150px;
+        margin: 0 auto;
+        left: 40%;
+        bottom: 50%;
+        font-size: 2rem;
+    }
+
+    #footer, .header, .messages, #nextLevel {
+        display: none;
+    }
+
+    #overlay:empty {
+        display: none;
+    }
+
+    #overlay {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        height:100%;
+        background-color: rgba(0, 0, 0, 0.50);
+        text-align: center;
+        color: red;
+        font-family: PacMan, serif;
+        font-weight: bold;
+        font-size: 3rem;
+        z-index: +3;
+    }
+
+    span {
+        margin-top: 50%;
+        margin-bottom: 50%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .game.show {
+        display: block
+    }
+
+    .game {
+        position: fixed;
+        height: 100%;
+        margin: 0 auto;
+        display: none;
+    }
+
+    #labyrinth td {
+        background-color: black;
+        width: 16px;
+        height: 16px;
+        background-repeat: no-repeat;
+        background-size: 16px 16px;
+    }
+
+    #labyrinth {
+        border-collapse: separate;
+        border: 5px solid yellow;
+        float:left;
+    }
+
+    #information {
+        border-collapse: separate;
+        border: 5px solid yellow;
+        font-family: PacMan;
+        font-size: 2rem;
+        float:left;
+    }
+    #information td {
+        background-color: black;
+        width: 15%;
+    }
+    #value1, #value2, #value3 {
+        font-family: "Calibri Light";
+    }
+
+    #keylayout {
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .mobile {
+        position:fixed;
+        height: 0;
+        right: 5%;
+        top: 5%;
+        display: block;
+    }
+
+    .mobile td {
+        background-color: black;
+        width: 80px;
+        height: 80px;
+        background-repeat: no-repeat;
+        background-size: 80px 80px;
+    }
+
+    .mobileBlank {
+        background-image: url(../web/resc/mobileBlank.png);
+    }
+
+    #mobileUp {
+        background-image: url(../web/resc/mobileUp.png);
+    }
+
+    #mobileDown {
+        background-image: url(../web/resc/mobileDown.png);
+    }
+
+    #mobileLeft {
+        background-image: url(../web/resc/mobileLeft.png);
+    }
+
+    #mobileRight {
+        background-image: url(../web/resc/mobileRight.png);
+    }
+}

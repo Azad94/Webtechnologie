@@ -1,7 +1,7 @@
 part of pacmanLib;
 
 //the refreshrate of the view
-const speed = const Duration(milliseconds: 200);
+const speed = const Duration(milliseconds:700);
 
 class PacmanGameController{
 
@@ -16,6 +16,11 @@ class PacmanGameController{
   var _keyListener;
   Timer _timer;
 
+  //mobile Keys
+  var up;
+  var down;
+  var left;
+  var right;
   //constructor
   PacmanGameController() {
 
@@ -23,13 +28,16 @@ class PacmanGameController{
     _pacmanView = new PacmanGameView(this);
 
     _pacmanView.startButton.onClick.listen((_) {_pacmanModel.loadLevel(1);  startGame();});
+    //TODO: NextLevel
+   // _pacmanView.startNext.onClick.listen((_) {resetGame(this); _pacmanModel.loadLevel(2); startNextLevel();});
   }
-
-
-  //starts a new game
-  void startGame() {
-    _pacmanView.showGameview();
-
+  //TODO: Reset GameStatus to Play nextLevel
+  /*void resetGame(PacmanGameController con){
+      _pacmanModel = new PacmanGameModel(con);
+      _pacmanView = new PacmanGameView(con);
+  }
+  //TODO: init new Game
+  void startNextLevel() {
     var labyrinth = _pacmanModel.getMap();
     initField(labyrinth);
     refreshLabyrinth(labyrinth);
@@ -46,10 +54,45 @@ class PacmanGameController{
       }
     });
 
+  }*/
+  //starts a new game
+  void startGame() {
+    _pacmanView.showGameview();
+
+    var labyrinth = _pacmanModel.getMap();
+    createTable(labyrinth);
+    refreshLabyrinth(labyrinth);
+
+    _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
+
+    if(_pacmanView.mql.matches){
+     up = _pacmanView.mobileUp.onClick.listen((_) {_pacmanModel.moveUp();});
+     down = _pacmanView.mobileDown.onClick.listen((_) {_pacmanModel.moveDown();});
+     left = _pacmanView.mobileLeft.onClick.listen((_) {_pacmanModel.moveLeft();});
+     right = _pacmanView.mobileRight.onClick.listen((_) {_pacmanModel.moveRight();});
+    } else {
+      _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
+        ev.preventDefault();
+        switch (ev.keyCode) {
+          case KeyCode.LEFT:
+            _pacmanModel.moveLeft();
+            break;
+          case KeyCode.RIGHT:
+            _pacmanModel.moveRight();
+            break;
+          case KeyCode.DOWN:
+            _pacmanModel.moveDown();
+            break;
+          case KeyCode.UP:
+            _pacmanModel.moveUp();
+            break;
+        }
+      });
+    }
   }
 
   //create the table in the view
-  void initField(List<List<Types>> l ) {
+  void createTable(List<List<Types>> l ) {
       _pacmanView.initTable(l);
   }
   //load the current game elements and graphis into the table
@@ -72,6 +115,9 @@ class PacmanGameController{
     if(b){
       stopGame();
       _pacmanView.updateOverlay("GAME OVER");
+      //TODO: NextLevel
+     /* _pacmanView._nextLevel.classes.toggle('show');
+      _pacmanView.startNext.classes.toggle('show');*/
     }
   }
   //ends the game, won
@@ -79,13 +125,21 @@ class PacmanGameController{
     if(b) {
       stopGame();
       _pacmanView.updateOverlay("STAGE CLEARED");
-      _pacmanView._nextLevel.classes.toggle('show');
+      //TODO: NextLevel
+     /* _pacmanView._nextLevel.classes.toggle('show');*/
     }
   }
   //stops interaction
-  void stopGame(){
-    _keyListener.cancel();
-    _timer.cancel();
+  void stopGame() {
+    if (_pacmanView.mql.matches) {
+      up.cancel();
+      down.cancel();
+      left.cancel();
+      right.cancel();
+    } else {
+      _keyListener.cancel();
+    }
+      _timer.cancel();
   }
 
   //set the direction for pacman to choose the right graphic
