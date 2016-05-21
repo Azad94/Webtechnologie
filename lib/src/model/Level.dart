@@ -47,8 +47,8 @@ class Level {
     if (_tiles[y][x]._environment == null) return false;
     // ghosts collides
     if (_tiles[y][x]._environment._collisionGhost == true && g is Ghost)
-    {print("GHOST COLLIDES AT " + x.toString() + " " + y.toString());
-          return true;}
+    //{print("GHOST COLLIDES AT " + x.toString() + " " + y.toString());
+          return true;//}
     // pacman collides
     if (_tiles[y][x]._environment._collisionPlayer == true && g is Pacman)
       return true;

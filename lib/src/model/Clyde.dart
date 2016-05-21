@@ -5,35 +5,18 @@ class Clyde extends Ghost {
 
   int _doorTargetX = 14;
   int _doorTargetY = 8;
-  // 13/4   1/10    13/12   6/1   6/4   13/1    1/1   1/6
-  int _firsttargetX = 1;
-  int _firsttargetY = 6;
 
-  int _secondTargetX = 20;
-  int _secondTargetY = 10;
+  int _firsttargetX = 27;
+  int _firsttargetY = 1;
 
-  int _targetX = 14;
-  int _targetY = 8;
+  int _secondTargetX = 1;
+  int _secondTargetY = 16;
 
-  int _thirdX=27;
-  int _thirdY=10;
-
-  int _fourthX=27;
-  int _fourthY=12;
-
-  int _fifthX=24;
-  int _fifthY=12;
-
-  int pacmanPositionX;
-  int pacmanPositionY;
+  int _targetX;
+  int _targetY;
 
   bool outOfDoor = false;
-  int _possiblieDirections = 0;
-
-  int _directionsChanged = 0;
-
-  var p = new Random();
-
+  int _targetsReached = 8;
 
   void move() {
 
@@ -44,7 +27,7 @@ class Clyde extends Ghost {
     }
 
 
-    switch(_directionsChanged)
+    switch(_targetsReached)
     {
       case 0:
         _targetX = _doorTargetX;
@@ -54,6 +37,11 @@ class Clyde extends Ghost {
       case 1:
         _targetX = _firsttargetX;
         _targetY = _firsttargetY;
+        break;
+
+      case 2:
+        _targetX = _secondTargetX;
+        _targetY = _secondTargetY;
         break;
 
       default:
@@ -68,7 +56,13 @@ class Clyde extends Ghost {
         break;
 
       case Directions.DOWN:
-        _level.registerElement(_x,_y,_x,++_y,this);
+        // TODO PROVISORISCH MUSS RAUS
+        if(_x == 14 && _y == 8)
+        {
+          _level.registerElement(_x, _y, ++_x, _y, this);
+          break;
+        }
+        _level.registerElement(_x, _y, _x, ++_y, this);
         break;
 
       case Directions.LEFT:
@@ -88,16 +82,10 @@ class Clyde extends Ghost {
     if(_x == _targetX && _y == _targetY)
     {
       if(outOfDoor == false)outOfDoor = true;
-      _directionsChanged++;
+      _targetsReached++;
     }
-
   }
 
   void eatableMode() {
   }
-
 }
-/**  * Wenn i.wann mal die Werte für die Map übergeben werden sind folgende
- * Berechnungen für die Scatter Position einmal notwendig 
- * * für die X-Koordinate  *    (x - x) + 2  *
- * für die Y-Koordinate  *    y - 1  **/
