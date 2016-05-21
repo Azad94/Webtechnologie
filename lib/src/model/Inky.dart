@@ -28,7 +28,8 @@ class Inky extends Ghost{
   int _directionsChanged = 0;
 
   void move() {
-
+    _level.registerElement(_x,_y,_x,_y,this);
+    /**
     switch(_directionsChanged)
     {
       case 0:
@@ -145,7 +146,7 @@ class Inky extends Ghost{
      else
       _directionsChanged++;
     }
-
+**/
   }
 
   void eatableMode() {

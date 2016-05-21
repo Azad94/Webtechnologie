@@ -5,15 +5,15 @@ class Clyde extends Ghost {
 
   int _doorTargetX = 14;
   int _doorTargetY = 8;
-
-  int _firsttargetX = 20;
-  int _firsttargetY = 8;
+  // 13/4   1/10    13/12   6/1   6/4   13/1    1/1   1/6
+  int _firsttargetX = 1;
+  int _firsttargetY = 6;
 
   int _secondTargetX = 20;
   int _secondTargetY = 10;
 
-  int _targetX;
-  int _targetY;
+  int _targetX = 14;
+  int _targetY = 8;
 
   int _thirdX=27;
   int _thirdY=10;
@@ -24,12 +24,25 @@ class Clyde extends Ghost {
   int _fifthX=24;
   int _fifthY=12;
 
+  int pacmanPositionX;
+  int pacmanPositionY;
+
+  bool outOfDoor = false;
+  int _possiblieDirections = 0;
+
   int _directionsChanged = 0;
 
   var p = new Random();
 
 
   void move() {
+
+    if(outOfDoor == false)
+    {
+      _targetX = _doorTargetX;
+      _targetY = _doorTargetY;
+    }
+
 
     switch(_directionsChanged)
     {
@@ -43,75 +56,9 @@ class Clyde extends Ghost {
         _targetY = _firsttargetY;
         break;
 
-      case 2:
-        _targetX = _secondTargetX;
-        _targetY = _secondTargetY;
-        break;
-
-      case 3:
-        _targetX = _thirdX;
-        _targetY = _thirdY;
-        break;
-
-      case 4:
-        _targetX = _fourthX;
-        _targetY = _fourthY;
-        break;
-
-      case 5:
-        _targetX = _fifthX;
-        _targetY = _fifthY;
-        break;
-
-      case 6:
-        _targetX = 24;
-        _targetY = 15;
-        break;
-
-      case 7:
-        _targetX = 21;
-        _targetY = 16;
-        break;
-
-      case 8:
-        _targetX = 7;
-        _targetY = 15;
-        break;
-
-      case 9:
-        _targetX = 4;
-        _targetY = 15;
-        break;
-
-      case 10:
-        _targetX = 4;
-        _targetY = 12;
-        break;
-
-      case 11:
-        _targetX = 1;
-        _targetY = 10;
-        break;
-
-      case 12:
-        _targetX = 8;
-        _targetY = 10;
-        break;
-
-      case 13:
-        _targetX = 8;
-        _targetY = 8;
-        break;
-
-      case 14:
-        _targetX = 20;
-        _targetY = 10;
-        break;
-
-      case 15:
-        _targetX = 20;
-        _targetY = 8;
-        break;
+      default:
+        _targetX = _x;
+        _targetY = _y;
     }
 
     switch(getNextMove(_x, _y, _targetX, _targetY, this))
@@ -140,19 +87,14 @@ class Clyde extends Ghost {
 
     if(_x == _targetX && _y == _targetY)
     {
-      //print("POSITION ERREICHT");
-      if(_directionsChanged == 13){
-        _directionsChanged = 0;
-      }
-      else
-        _directionsChanged++;
+      if(outOfDoor == false)outOfDoor = true;
+      _directionsChanged++;
     }
 
   }
 
   void eatableMode() {
   }
-
 
 }
 /**  * Wenn i.wann mal die Werte für die Map übergeben werden sind folgende

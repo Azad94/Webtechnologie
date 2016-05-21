@@ -94,6 +94,8 @@ class Pinky extends Ghost {
 
 
   void move() {
+
+    _level.registerElement(_x,_y,_x,_y,this);
     // nextDirection = getRoute().first;
     //  print(getRoute());
     // print(nextDirection);
@@ -135,7 +137,7 @@ class Pinky extends Ghost {
         _targetY = _doorTargetY;
         _directionsChanged = 0;
         break;
-    }*/
+    }
 //getNextMove(_x, _y, _targetX, _targetY, this)
 
     if(i<=100){
@@ -296,7 +298,7 @@ class Pinky extends Ghost {
           nextMove=6;
           i++;
           break;
-      /*  case 32:
+        case 32:
 //           (!_level.checkCollision(_x, _y ++, this))
           _level.registerElement(20,8, 19, 8, this);
           nextMove++;
@@ -326,12 +328,12 @@ class Pinky extends Ghost {
           _level.registerElement(15, 8, 14, 8, this);
           nextMove=6;
           i++;
-          break;*/
+          break;
         default:
           break;
       }
     }
-
+  **/
   }
 
   void eatableMode() {

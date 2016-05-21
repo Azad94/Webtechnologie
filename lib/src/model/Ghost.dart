@@ -91,12 +91,13 @@ abstract class Ghost extends GameElement{
   {
     if(currentX == targetX && currentY == targetY) return Directions.NOTHING;
 
-    int _currentDistanceX = targetX - currentX;
-    int _currentDistanceY = targetY - currentY;
+    int _currentDistanceX = (targetX - currentX).abs();
+    int _currentDistanceY = (targetY - currentY).abs();
     int _checkX = currentX;
     int _checkY = currentY;
 
     _possibleDirections = 0;
+    _possibleDirections != 0 ? _possibleDirections = 0 : _possibleDirections = 0;
     _possibleUp = 0;
     _possibleDown = 0;
     _possibleLeft = 0;
@@ -105,103 +106,212 @@ abstract class Ghost extends GameElement{
     int horDifference = currentX-targetX;
     int verDifference = currentY-targetY;
 
-    //preferred direction considering the difference     UP-> LEFT-> DOWN
-    Directions preferredHorDirection = horDifference > 0 ? Directions.LEFT : Directions.RIGHT;
-    Directions preferredVerDirection = verDifference > 0 ? Directions.UP : Directions.DOWN;
-
+    //preferred direction considering the difference
+    Directions preferredHorDirection; //= horDifference > 0 ? Directions.LEFT : Directions.RIGHT;
+    if((targetX - --_checkX).abs() < _currentDistanceX)
+    {
+      preferredHorDirection = Directions.LEFT;
+    }
+    else preferredHorDirection = Directions.RIGHT;
+    _checkX = currentX;
+    Directions preferredVerDirection;// = verDifference > 0 ? Directions.UP : Directions.DOWN;
+    if((targetY - --_checkY).abs() < _currentDistanceY)
+    {
+      preferredVerDirection = Directions.UP;
+    }
+    else preferredVerDirection = Directions.DOWN;
+    _checkY = currentY;
     //checks if the vertical difference is greater than the horizontal
-    bool verticalMoreImportant = verDifference.abs() > horDifference.abs();
+    bool verticalMoreImportant = _currentDistanceY > _currentDistanceX;
 
     //sets next preferred direction
     verticalMoreImportant ? nextDirection = preferredVerDirection : nextDirection = preferredHorDirection;
 
     //                             UP
-    if(!_level.checkCollision(currentX, --currentY, this))
+    print("---- START CUR " + currentX.toString() + " " + currentY.toString());
+    print("---- START CHECK " + _checkX.toString() + " " + _checkY.toString());
+    if(!_level.checkCollision(_checkX, --_checkY, this))
     {
+      if(_previousDirection != Directions.DOWN)
+      {print("HIER GEHT ES HOCH PossibleUP: " + _possibleUp.toString() + " X: " + _checkX.toString() + " Y: " + _checkY.toString());
       _possibleDirections++;
       _possibleUp++;
+      }
     }
+    _checkY = currentY;
+    print("---- ENDE CUR " + currentX.toString() + " " + currentY.toString());
+    print("---- ENDE CHECK " + _checkX.toString() + " " + _checkY.toString());
 
     //                             DOWN
-    if(!_level.checkCollision(currentX, ++currentY, this))
-    {
-      _possibleDirections++;
-      _possibleDown++;
+    print("------ BEFORE DOWN CHECK " + currentX.toString() + " " + currentY.toString());
+    if(!_level.checkCollision(_checkX, ++_checkY, this))
+    {print("DOWN CHECK " + _checkX.toString() + " " + _checkY.toString());
+      if(_previousDirection != Directions.UP) {
+        _possibleDirections++;
+        _possibleDown++;
+      }
     }
+    _checkY = currentY;
 
     //                             LEFT
-    if(!_level.checkCollision(--currentX, currentY, this))
+    if(!_level.checkCollision(--_checkX, _checkY, this))
     {
-      _possibleDirections++;
-      _possibleLeft++;
+      if(_previousDirection != Directions.RIGHT) {
+        _possibleDirections++;
+        _possibleLeft++;
+      }
     }
+    _checkX = currentX;
 
     //                             RIGHT
-    if(!_level.checkCollision(++currentX, currentY, this))
+    if(!_level.checkCollision(++_checkX, _checkY, this))
     {
-      _possibleDirections++;
-      _possibleRight++;
+      if(_previousDirection != Directions.LEFT) {
+        _possibleDirections++;
+        _possibleRight++;
+      }
     }
+    _checkX = currentX;
 
-    if(_possibleDirections > 1)
-    {
+    if(_possibleDirections > 1) {
       // go up
-      if(_previousDirection != Directions.DOWN && _possibleUp == 1)
-      {
-        if(--_checkY < _currentDistanceY) return Directions.UP;
-        _checkX = currentX;
+      if (_previousDirection != Directions.DOWN && _possibleUp == 1) {
+        if (!_level.checkCollision(_checkX, --_checkY, this)) {
+          _checkY = currentY;
+          if ((targetY - --_checkY).abs() < _currentDistanceY) {
+            _previousDirection = Directions.UP;
+            print("--- UP --- 169");
+            return Directions.UP;
+          }
+        }
         _checkY = currentY;
-        if(--_checkX < _currentDistanceX) return Directions.LEFT;
+        print(_possibleUp);
+        if (!_level.checkCollision(--_checkX, _checkY, this)) {
+          _checkX = currentX;
+          //if ((targetX - --_checkX).abs() < _currentDistanceX) {
+            _previousDirection = Directions.LEFT;
+            print("--- LEFT --- 179");
+            return Directions.LEFT;
+          //}
+        }
         _checkX = currentX;
-        _checkY = currentY;
-        if(++_checkX < _currentDistanceX) return Directions.RIGHT;
+
+        if (!_level.checkCollision(++_checkX, _checkY, this)) {
+          _checkX = currentX;
+          if ((targetX - ++_checkX).abs() < _currentDistanceX) {
+            _previousDirection = Directions.RIGHT;
+            print("--- RIGHT --- 185");
+            print("---- PossibleUP: " + _possibleUp.toString() + " X: " + _checkX.toString() + " Y: " + _checkY.toString());
+            return Directions.RIGHT;
+          }
+        }
         _checkX = currentX;
-        _checkY = currentY;
       }
 
       // go down
-      if(_previousDirection != Directions.UP && _possibleDown == 1)
-      {
-        if(++_checkY < _currentDistanceY) return Directions.DOWN;
-        _checkX = currentX;
+      if (_previousDirection != Directions.UP && _possibleDown == 1) {
+        if (!_level.checkCollision(_checkX, ++_checkY, this)) {
+          _checkY = currentY;
+          if ((targetY - ++_checkY).abs() < _currentDistanceY) {
+            _previousDirection = Directions.DOWN;
+            print("--- DOWN --- 189");
+            return Directions.DOWN;
+          }
+        }
         _checkY = currentY;
-        if(--_checkX < _currentDistanceX) return Directions.LEFT;
+
+        if (!_level.checkCollision(--_checkX, _checkY, this)) {
+          _checkX = currentX;
+          if ((targetX - --_checkX).abs() < _currentDistanceX) {
+            _previousDirection = Directions.LEFT;
+            print("--- LEFT --- 195");
+            return Directions.LEFT;
+          }
+        }
         _checkX = currentX;
-        _checkY = currentY;
-        if(++_checkX < _currentDistanceX) return Directions.RIGHT;
+
+        if (!_level.checkCollision(++_checkX, _checkY, this)) {
+          _checkX = currentX;
+          if ((targetX - ++_checkX) < _currentDistanceX) {
+            _previousDirection = Directions.RIGHT;
+            print("--- DOWN PossibleUP: " + _possibleDown.toString() + " X: " + _checkX.toString() + " Y: " + _checkY.toString());
+            print("--- RIGHT --- 201");
+            return Directions.RIGHT;
+          }
+        }
         _checkX = currentX;
-        _checkY = currentY;
       }
 
       // go left
-      if(_previousDirection != Directions.RIGHT && _possibleLeft == 1)
-      {
-        if(--_checkX < _currentDistanceX) return Directions.LEFT;
+      if (_previousDirection != Directions.RIGHT && _possibleLeft == 1) {
+
+        if(!_level.checkCollision(--_checkX,_checkY, this)) {
+          _checkX = currentX;
+          if ((targetX - --_checkX).abs() < _currentDistanceX) {
+            //preferredHorDirection = Directions.LEFT;
+            _previousDirection = Directions.LEFT;
+            print("--- LEFT --- 214");
+            return Directions.LEFT;
+          }
+        }
         _checkX = currentX;
+
+        if(!_level.checkCollision(_checkX,++_checkY, this)) {
+          _checkY = currentY;
+          if ((targetY - ++_checkY).abs() < _currentDistanceY) {
+            print("--- DOWN --- 220");
+            _previousDirection = Directions.DOWN;
+            return Directions.DOWN;
+          }
+        }
         _checkY = currentY;
-        if(++_checkY < _currentDistanceY) return Directions.DOWN;
-        _checkX = currentX;
-        _checkY = currentY;
-        if(--_checkY < _currentDistanceY) return Directions.UP;
-        _checkX = currentX;
+
+        if(!_level.checkCollision(_checkX,--_checkY, this)) {
+          _checkY = currentY;
+          if ((targetY - --_checkY).abs() < _currentDistanceY) {
+            print("--- UP --- 226");
+            _previousDirection = Directions.UP;
+            return Directions.UP;
+          }
+        }
         _checkY = currentY;
       }
 
       // go right
-      if(_previousDirection != Directions.LEFT && _possibleRight == 1)
-      {
-        if(++_checkX < _currentDistanceX) return Directions.RIGHT;
+      if (_previousDirection != Directions.LEFT && _possibleRight == 1) {
+        print(_previousDirection.toString() + "----------DRIN");
+        if(!_level.checkCollision(++_checkX,_checkY, this)) {
+          _checkX = currentX;
+          if ((targetX - ++_checkX) < _currentDistanceX) {
+            print("--- RIGHT --- 236");
+            _previousDirection= Directions.RIGHT;
+            return Directions.RIGHT;
+          }
+        }
         _checkX = currentX;
+
+        if(!_level.checkCollision(_checkX,--_checkY, this)) {
+          _checkY = currentY;
+          if ((targetY - --_checkY).abs() < _currentDistanceY) {
+            print("--- UP --- 242");
+            _previousDirection = Directions.UP;
+            return Directions.UP;
+          }
+        }
         _checkY = currentY;
-        if(--_checkY < _currentDistanceY) return Directions.UP;
-        _checkX = currentX;
-        _checkY = currentY;
-        if(++_checkY < _currentDistanceY) return Directions.DOWN;
-        _checkX = currentX;
+
+        if(!_level.checkCollision(_checkX,++_checkY, this)) {
+          _checkY = currentY;
+          if ((targetY - ++_checkY).abs() < _currentDistanceY) {
+            print("--- DOWN --- 248");
+            _previousDirection = Directions.DOWN;
+            return Directions.DOWN;
+          }
+        }
         _checkY = currentY;
       }
     }
-
+    /**TODO ---------------------------------------------------------------------
     if(nextDirection == _previousDirection)
     {
       //TODO UP OBEN
@@ -211,6 +321,7 @@ abstract class Ghost extends GameElement{
         if (!_level.checkCollision(_checkX, --_checkY, this))
         {
           _previousDirection = Directions.UP;
+          print("--- UP --- 281");
           return Directions.UP;
         }
 
@@ -221,6 +332,7 @@ abstract class Ghost extends GameElement{
         if (!_level.checkCollision(--_checkX, _checkY, this))
         {
           _previousDirection = Directions.LEFT;
+          print("--- LEFT --- 292");
           return Directions.LEFT;
         }
 
@@ -231,6 +343,7 @@ abstract class Ghost extends GameElement{
         if (!_level.checkCollision(++_checkX, _checkY, this))
         {
           _previousDirection = Directions.RIGHT;
+          print("--- RIGHT --- 303");
           return Directions.RIGHT;
         }
 
@@ -246,6 +359,7 @@ abstract class Ghost extends GameElement{
         if (!_level.checkCollision(_checkX, ++_checkY, this))
         {
           _previousDirection = Directions.DOWN;
+          print("--- DOWN --- 319");
           return Directions.DOWN;
         }
 
@@ -256,6 +370,7 @@ abstract class Ghost extends GameElement{
         if (!_level.checkCollision(--_checkX, _checkY, this))
         {
           _previousDirection = Directions.LEFT;
+          print("--- LEFT --- 330");
           return Directions.LEFT;
         }
 
@@ -266,6 +381,7 @@ abstract class Ghost extends GameElement{
         if (!_level.checkCollision(++_checkX, _checkY, this))
         {
           _previousDirection = Directions.RIGHT;
+          print("--- RIGHT --- 341");
           return Directions.RIGHT;
         }
 
@@ -281,6 +397,7 @@ abstract class Ghost extends GameElement{
         if (!_level.checkCollision(--_checkX, _checkY, this))
         {
           _previousDirection = Directions.LEFT;
+          print("--- LEFT --- 357");
           return Directions.LEFT;
         }
 
@@ -291,6 +408,7 @@ abstract class Ghost extends GameElement{
         if (!_level.checkCollision(_checkX, ++_checkY, this))
         {
           _previousDirection = Directions.DOWN;
+          print("--- DOWN --- 368");
           return Directions.DOWN;
         }
 
@@ -301,6 +419,7 @@ abstract class Ghost extends GameElement{
         if (!_level.checkCollision(_checkX, --_checkY, this))
         {
           _previousDirection = Directions.UP;
+          print("--- UP --- 379");
           return Directions.UP;
         }
 
@@ -313,21 +432,23 @@ abstract class Ghost extends GameElement{
       // TODO RIGHT RECHTS
       if (nextDirection == Directions.RIGHT)
       {
-        // UP OBEN
-        if (!_level.checkCollision(_checkX, --_checkY, this))
+        // RIGHT RECHTS
+        if (!_level.checkCollision(++_checkX, _checkY, this))
         {
-          _previousDirection = Directions.UP;
-          return Directions.UP;
+          _previousDirection = Directions.RIGHT;
+          print("--- RIGHT --- 396");
+          return Directions.RIGHT;
         }
 
         _checkX = currentX;
         _checkY = currentY;
 
-        // LEFT LINKS
-        if (!_level.checkCollision(--_checkX, _checkY, this))
+        // UP OBEN
+        if (!_level.checkCollision(_checkX, --_checkY, this))
         {
-          _previousDirection = Directions.LEFT;
-          return Directions.LEFT;
+          _previousDirection = Directions.UP;
+          print("--- UP --- 407");
+          return Directions.UP;
         }
 
         _checkX = currentX;
@@ -337,6 +458,7 @@ abstract class Ghost extends GameElement{
         if (!_level.checkCollision(_checkX, ++_checkY, this))
         {
           _previousDirection = Directions.DOWN;
+          print("--- DOWN --- 418");
           return Directions.DOWN;
         }
 
@@ -346,7 +468,8 @@ abstract class Ghost extends GameElement{
         return Directions.NOTHING;
       }
     }
-    //TODO --------------------------------------------------------NORMALE LOGIK
+    **/
+    //TODO --------------------------------------------------------NORMALE LOGIK LOGIK ÜBER DEM STIMMT NOCH NICHT GANZ
     if(verticalMoreImportant)
     {
       // TODO UP OBEN
@@ -355,33 +478,37 @@ abstract class Ghost extends GameElement{
         //LEFT
         if(!_level.checkCollision(--_checkX,_checkY,this))
         {
+          _checkX = currentX;
+        //  if((targetX - --_checkX).abs() < _currentDistanceX)
+        //  {
           _previousDirection = Directions.LEFT;
+          print("--- LEFT --- 441");
           return Directions.LEFT;
+        //  }
         }
-
         _checkX = currentX;
-        _checkY = currentY;
 
         //UP
         if(!_level.checkCollision(_checkX,--_checkY,this))
         {
+          _checkY = currentY;
+          if((targetY - --_checkY).abs() < _currentDistanceY)
+          {
           _previousDirection = Directions.UP;
+          print("--- UP --- 454");
           return Directions.UP;
+          }
         }
-
-        _checkX = currentX;
         _checkY = currentY;
 
         //RIGHT
         if(!_level.checkCollision(++_checkX,_checkY,this))
         {
           _previousDirection = Directions.RIGHT;
+          print("--- RIGHT --- 464");
           return Directions.RIGHT;
         }
-
         _checkX = currentX;
-        _checkY = currentY;
-
         return Directions.NOTHING;
       }
 
@@ -391,70 +518,78 @@ abstract class Ghost extends GameElement{
         //DOWN
         if(!_level.checkCollision(_checkX,++_checkY,this))
         {
+          _checkY = currentY;
+          if((targetY - ++_checkY).abs() < _currentDistanceY)
+          {
           _previousDirection = Directions.DOWN;
+          print("--- DOWN --- 481");
           return Directions.DOWN;
+          }
         }
-
-        _checkX = currentX;
         _checkY = currentY;
 
         //LEFT
         if(!_level.checkCollision(--_checkX,_checkY,this))
         {
-          _previousDirection = Directions.LEFT;
-          return Directions.LEFT;
+          _checkX = currentX;
+          if((targetX - --_checkX).abs() < _currentDistanceX)
+          {
+            _previousDirection = Directions.LEFT;
+            print("--- LEFT --- 494");
+            return Directions.LEFT;
+          }
         }
-
         _checkX = currentX;
-        _checkY = currentY;
 
         //RIGHT
         if(!_level.checkCollision(++_checkX,_checkY,this))
         {
           _previousDirection = Directions.RIGHT;
+          print("--- RIGHT --- 460");
           return Directions.RIGHT;
         }
-
         _checkX = currentX;
-        _checkY = currentY;
-
-
         return Directions.NOTHING;
       }
 
       // TODO LEFT LINKS
       if(_previousDirection == Directions.LEFT)
-      {
+      {print("hier geh ich durch");
         //UP
         if(!_level.checkCollision(_checkX,--_checkY,this))
         {
-          _previousDirection = Directions.UP;
-          return Directions.UP;
+          _checkY = currentY;
+          if((targetY - --_checkY).abs() < _currentDistanceY)
+          {
+            _previousDirection = Directions.UP;
+            print("--- UP --- 521");
+            return Directions.UP;
+          }
         }
-
-        _checkX = currentX;
         _checkY = currentY;
 
         //DOWN
         if(!_level.checkCollision(_checkX,++_checkY,this))
         {
-          _previousDirection = Directions.DOWN;
-          return Directions.DOWN;
+          _checkY = currentY;
+          if((targetY - ++_checkY).abs() < _currentDistanceY)
+          {
+            _previousDirection = Directions.DOWN;
+            print("--- DOWN --- 534");
+            return Directions.DOWN;
+          }
         }
-
-        _checkX = currentX;
         _checkY = currentY;
-
+        print("hier left");
         //LEFT
         if(!_level.checkCollision(--_checkX,_checkY,this))
-        {
+        {print("check");
           _previousDirection = Directions.LEFT;
+          print("--- LEFT --- 544");
           return Directions.LEFT;
         }
-
         _checkX = currentX;
-        _checkY = currentY;
-
+        print("gammel");
         return Directions.NOTHING;
       }
 
@@ -464,33 +599,37 @@ abstract class Ghost extends GameElement{
         //UP
         if(!_level.checkCollision(_checkX,--_checkY,this))
         {
-          _previousDirection = Directions.UP;
-          return Directions.UP;
+          _checkY = currentY;
+          if((targetY - --_checkY).abs() < _currentDistanceY)
+          {
+            _previousDirection = Directions.UP;
+            print("--- UP --- 566");
+            return Directions.UP;
+          }
         }
-
-        _checkX = currentX;
         _checkY = currentY;
 
         //DOWN
         if(!_level.checkCollision(_checkX,++_checkY,this))
         {
-          _previousDirection = Directions.DOWN;
-          return Directions.DOWN;
+          _checkY = currentY;
+          if((targetY - ++_checkY).abs() < _currentDistanceY)
+          {
+            _previousDirection = Directions.DOWN;
+            print("--- DOWN --- 579");
+            return Directions.DOWN;
+          }
         }
-
-        _checkX = currentX;
         _checkY = currentY;
 
         //RIGHT
         if(!_level.checkCollision(++_checkX,_checkY,this))
         {
           _previousDirection = Directions.RIGHT;
+          print("--- RIGHT --- 578");
           return Directions.RIGHT;
         }
-
         _checkX = currentX;
-        _checkY = currentY;
-
         return Directions.NOTHING;
       }
 
@@ -500,156 +639,162 @@ abstract class Ghost extends GameElement{
     {
       // TODO LEFT LINKS
       if(_previousDirection == Directions.LEFT)
-      {
+      {print("ELSE LEFT");
         //LEFT
         if(!_level.checkCollision(--_checkX,_checkY,this))
-        {
-          _previousDirection = Directions.LEFT;
-          return Directions.LEFT;
+        {print("eig hier");
+          _checkX = currentX;
+        //  if((targetX - --_checkX).abs() < _currentDistanceX)
+        //  {
+            _previousDirection = Directions.LEFT;
+            print("--- LEFT --- 606");
+            return Directions.LEFT;
+         // }
         }
-
         _checkX = currentX;
-        _checkY = currentY;
 
         //UP
         if(!_level.checkCollision(_checkX,--_checkY,this))
-        {
-          _previousDirection = Directions.UP;
-          return Directions.UP;
+        {print("warum hier");
+          _checkY = currentY;
+          if((targetY - --_checkY).abs() < _currentDistanceY)
+          {
+            _previousDirection = Directions.UP;
+            print("--- UP --- 619");
+            return Directions.UP;
+          }
         }
-
-        _checkX = currentX;
         _checkY = currentY;
 
         //DOWN
         if(!_level.checkCollision(_checkX,++_checkY,this))
-        {
+        {print("oder hier?");
           _previousDirection = Directions.DOWN;
+          print("--- DOWN --- 621");
           return Directions.DOWN;
         }
-
-        _checkX = currentX;
         _checkY = currentY;
-
-
         return Directions.NOTHING;
       }
 
       // TODO RIGHT RECHTS
       if(_previousDirection == Directions.RIGHT)
-      {
+      {print("ELSE RECHTS");
         //RIGHT
         if(!_level.checkCollision(++_checkX,_checkY,this))
         {
+          _checkX = currentX;
+          if((targetX - ++_checkX).abs() < _currentDistanceX)
+          {
           _previousDirection = Directions.RIGHT;
+          print("--- RIGHT --- 646");
           return Directions.RIGHT;
+          }
         }
-
         _checkX = currentX;
-        _checkY = currentY;
 
         //UP
         if(!_level.checkCollision(_checkX,--_checkY,this))
         {
-          _previousDirection = Directions.UP;
-          return Directions.UP;
+          _checkY = currentY;
+          if((targetY - --_checkY).abs() < _currentDistanceY)
+          {
+            _previousDirection = Directions.UP;
+            print("--- UP --- 659");
+            return Directions.UP;
+          }
         }
-
         _checkX = currentX;
-        _checkY = currentY;
 
         //DOWN
         if(!_level.checkCollision(_checkX,++_checkY,this))
         {
           _previousDirection = Directions.DOWN;
+          print("--- DOWN --- 661");
           return Directions.DOWN;
         }
-
-        _checkX = currentX;
         _checkY = currentY;
-
         return Directions.NOTHING;
       }
 
       // TODO UP OBEN
       if(_previousDirection == Directions.UP)
-      {
+      {print("ELSE UP");
         //LEFT
         if(!_level.checkCollision(--_checkX,_checkY,this))
         {
-          if((--_checkX - targetY) < _currentDistanceX)
+          _checkX = currentX;
+          if((targetX - --_checkX).abs() < _currentDistanceX)
           {
             _previousDirection = Directions.LEFT;
+            print("--- LEFT --- 686");
             return Directions.LEFT;
           }
-          else nextDirection = Directions.RIGHT;
-
-          _previousDirection = Directions.LEFT;
-          return Directions.LEFT;
+          //print("LOGIK FEHLER " + (targetX - --_checkX).abs().toString() + " und " +_currentDistanceX.toString());
         }
-
         _checkX = currentX;
-        _checkY = currentY;
 
         //RIGHT
         if(!_level.checkCollision(++_checkX,_checkY,this))
         {
-          _previousDirection = Directions.RIGHT;
-          return Directions.RIGHT;
-        }
-
-        _checkX = currentX;
-        _checkY = currentY;
-
-        if(_currentDistanceY != 0)
-        {
-        //UP
-          if(!_level.checkCollision(_checkX,--_checkY,this))
-          {
-            _previousDirection = Directions.UP;
-            return Directions.UP;
-          }
-
           _checkX = currentX;
-          _checkY = currentY;
+          if((targetX - ++_checkX).abs() < _currentDistanceX)
+          {
+            _previousDirection = Directions.RIGHT;
+            print("--- RIGHT --- 700");
+            return Directions.RIGHT;
+          }
         }
+        _checkX = currentX;
 
+        // UP
+        if(!_level.checkCollision(_checkX,--_checkY,this))
+        {
+          _previousDirection = Directions.UP;
+          print("--- UP --- 710");
+          return Directions.UP;
+        }
+        _checkY = currentY;
         return Directions.NOTHING;
       }
 
       // TODO DOWN UNTEN
       if(_previousDirection == Directions.DOWN)
-      {
+      {print("ELSE DOWN");
         //LEFT
         if(!_level.checkCollision(--_checkX,_checkY,this))
         {
-          _previousDirection = Directions.LEFT;
-          return Directions.LEFT;
+          _checkX = currentX;
+          if((targetX - --_checkX).abs() < _currentDistanceX)
+          {
+            _previousDirection = Directions.LEFT;
+            print("--- LEFT --- 727");
+            return Directions.LEFT;
+          }
         }
-
         _checkX = currentX;
-        _checkY = currentY;
 
         //RIGHT
         if(!_level.checkCollision(++_checkX,_checkY,this))
         {
-          _previousDirection = Directions.RIGHT;
-          return Directions.RIGHT;
+          _checkX = currentX;
+          if((targetX - ++_checkX).abs() < _currentDistanceX)
+          {
+            _previousDirection = Directions.RIGHT;
+            print("--- RIGHT --- 740");
+            return Directions.RIGHT;
+          }
         }
-
         _checkX = currentX;
-        _checkY = currentY;
 
         //DOWN
         if(!_level.checkCollision(_checkX,++_checkY,this))
         {
           _previousDirection = Directions.DOWN;
+          print("--- DOWN --- 748");
           return Directions.DOWN;
         }
-
-        _checkX = currentX;
         _checkY = currentY;
-
         return Directions.NOTHING;
       }
     }

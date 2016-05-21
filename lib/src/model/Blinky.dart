@@ -94,6 +94,9 @@ int nextMove=1;
 
 
   void move() {
+
+    _level.registerElement(_x,_y,_x,_y,this);
+
   // nextDirection = getRoute().first;
   //  print(getRoute());
    // print(nextDirection);
@@ -135,7 +138,7 @@ int nextMove=1;
         _targetY = _doorTargetY;
         _directionsChanged = 0;
         break;
-    }*/
+    }
 //getNextMove(_x, _y, _targetX, _targetY, this)
 
   if(i<=100){
@@ -330,7 +333,7 @@ int nextMove=1;
           break;
       }
   }
-
+**/
   }
 
   void eatableMode() {
