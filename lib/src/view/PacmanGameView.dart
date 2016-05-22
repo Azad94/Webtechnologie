@@ -71,10 +71,10 @@ const String scared_d16 = "background-image:url(../web/resc/16px/ghosts/scared/a
 /**
  * Pacman normal state resources
  */
-const String pacman_r = "background-image:url(../web/resc/klatt_r.gif);";
-const String pacman_l = "background-image:url(../web/resc/klatt_l.gif);";
-const String pacman_u = "background-image:url(../web/resc/klatt_u.gif);";
-const String pacman_d = "background-image:url(../web/resc/klatt_d.gif);";
+const String pacman_r = "background-image:url(../web/resc/pacman/pacman_r32.gif);";
+const String pacman_l = "background-image:url(../web/resc/pacman/pacman_l32.gif);";
+const String pacman_u = "background-image:url(../web/resc/pacman/pacman_u32.gif);";
+const String pacman_d = "background-image:url(../web/resc/pacman/pacman_d32.gif);";
 const String pacman_r16 = "background-image:url(../web/resc/16px/pacman/pacman_r16.gif);";
 const String pacman_l16 = "background-image:url(../web/resc/16px/pacman/pacman_l16.gif);";
 const String pacman_u16 = "background-image:url(../web/resc/16px/pacman/pacman_u16.gif);";
