@@ -2,7 +2,7 @@ part of pacmanLib;
 
 class Inky extends Ghost{
 
-  Inky(int x, int y, bool collPlayer, bool collGhost, Level l) : super(x,y,collPlayer, collGhost, l);
+  Inky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime) : super(x,y,collPlayer, collGhost, l, eatTime);
 
   int _doorTargetX = 14;
   int _doorTargetY = 8;
@@ -27,8 +27,9 @@ class Inky extends Ghost{
 
   int _directionsChanged = 0;
 
+  @override
   void move() {
-
+    super.move();
     switch(_directionsChanged)
     {
       case 0:

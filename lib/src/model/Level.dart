@@ -4,6 +4,7 @@ class Level {
   num _sizeX;
   num _sizeY;
   num _lives;
+  num _eatTime;
   num _scorePill;
   num _scoreCherry;
   num _scorePowerPill;
@@ -19,11 +20,12 @@ class Level {
    * Creates a level by given parameters
    */
   Level(String environmentCode, num sizeX, num sizeY, int lives, num scorePill,
-      num scoreCherry, num scorePowerPill, PacmanGameModel model) {
+      num scoreCherry, num scorePowerPill, num eatTime, PacmanGameModel model) {
     this._sizeX = sizeX;
     this._sizeY = sizeY;
     this._model = model;
     this._lives = lives;
+    this._eatTime = eatTime;
     this._scorePill = scorePill;
     this._scoreCherry = scoreCherry;
     this._scorePowerPill = scorePowerPill;
@@ -214,26 +216,26 @@ class Level {
             break;
 
           case LevelLoader.INKY:
-            Ghost g = new Inky(x, y, false, false, this);
+            Ghost g = new Inky(x, y, false, false, this, _eatTime);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
 
             break;
 
           case LevelLoader.PINKY:
-            Ghost g = new Pinky(x, y, false, false, this);
+            Ghost g = new Pinky(x, y, false, false, this, _eatTime);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
             break;
 
           case LevelLoader.CLYDE:
-            Ghost g = new Clyde(x, y, false, false, this);
+            Ghost g = new Clyde(x, y, false, false, this, _eatTime);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
             break;
 
           case LevelLoader.BLINKY:
-            Ghost g = new Blinky(x, y, false, false, this);
+            Ghost g = new Blinky(x, y, false, false, this, _eatTime);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
             break;

@@ -2,7 +2,7 @@ part of pacmanLib;
 
 class Blinky extends Ghost {
 
-  Blinky(int x, int y, bool collPlayer, bool collGhost, Level l) : super(x, y, collPlayer, collGhost, l);
+  Blinky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime) : super(x, y, collPlayer, collGhost, l, eatTime);
 
 int nextMove=1;
   int i=1;
@@ -92,8 +92,9 @@ int nextMove=1;
 
 //NextDirection should be the first element from best
 
-
+  @override
   void move() {
+    super.move();
   // nextDirection = getRoute().first;
   //  print(getRoute());
    // print(nextDirection);

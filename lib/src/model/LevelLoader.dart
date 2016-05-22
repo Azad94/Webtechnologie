@@ -18,6 +18,11 @@ class LevelLoader {
   static num _lives = -1;
 
   /**
+   * time(frames) where ghosts are eatable
+   */
+  static num _eatTime = 0;
+
+  /**
    * current level number
    */
   static num levelNumber = -1;
@@ -132,6 +137,7 @@ class LevelLoader {
       sizeY = data["sizeY"];
       _map = data["map"];
       _lives = data["lives"];
+      _eatTime = data["ghostEatTime"];
     });
     _loaded = true;
     return true;
