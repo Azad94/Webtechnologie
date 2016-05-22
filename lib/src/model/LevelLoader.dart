@@ -18,6 +18,11 @@ class LevelLoader {
   static num _lives = -1;
 
   /**
+   * time(frames) where ghosts are eatable
+   */
+  static num _eatTime = 0;
+
+  /**
    * current level number
    */
   static num levelNumber = -1;
@@ -48,6 +53,8 @@ class LevelLoader {
    * score of one cherry
    */
   static num SCORE_CHERRY = -1;
+
+  static num SCORE_GHOST = -1;
 
   /*
   MapCode
@@ -132,6 +139,7 @@ class LevelLoader {
       sizeY = data["sizeY"];
       _map = data["map"];
       _lives = data["lives"];
+      _eatTime = data["ghostEatTime"];
     });
     _loaded = true;
     return true;
@@ -143,6 +151,7 @@ class LevelLoader {
       SCORE_PILL = data["scorePill"];
       SCORE_POWERPILL = data["scorePowerPill"];
       SCORE_CHERRY = data["scoreCherry"];
+      SCORE_GHOST = data["scoreSingleGhost"];
     });
 
     return true;

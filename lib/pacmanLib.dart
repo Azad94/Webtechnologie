@@ -1,7 +1,6 @@
 library pacmanLib;
 
 // Imports
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:html';
 import 'dart:async';
@@ -14,9 +13,7 @@ part 'src/model/Cherry.dart';
 
 // Enums
 part 'src/model/Directions.dart';
-part 'src/model/Items.dart';
-part 'src/model/Dynamics.dart';
-part 'src/model/Statics.dart';
+part 'src/model/Types.dart';
 
 // Ghosts
 part 'src/model/Ghost.dart';
@@ -36,7 +33,7 @@ part 'src/model/Level.dart';
 part 'src/model/Pacman.dart';
 part 'src/model/Tile.dart';
 part 'src/model/PacmanGameModel.dart';
-part 'src/model/Types.dart';
+part 'src/model/Score.dart';
 
 // View
 part 'src/view/PacmanGameView.dart';

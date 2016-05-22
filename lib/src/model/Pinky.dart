@@ -2,7 +2,7 @@ part of pacmanLib;
 
 class Pinky extends Ghost {
 
-  Pinky(int x, int y, bool collPlayer, bool collGhost, Level l) : super(x, y, collPlayer, collGhost, l);
+  Pinky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime, num score) : super(x, y, collPlayer, collGhost, l, eatTime, score);
 
   int nextMove=1;
   int i=1;
@@ -92,8 +92,9 @@ class Pinky extends Ghost {
 
 //NextDirection should be the first element from best
 
-
+  @override
   void move() {
+    super.move();
     // nextDirection = getRoute().first;
     //  print(getRoute());
     // print(nextDirection);
@@ -332,8 +333,5 @@ class Pinky extends Ghost {
       }
     }
 
-  }
-
-  void eatableMode() {
   }
 }
