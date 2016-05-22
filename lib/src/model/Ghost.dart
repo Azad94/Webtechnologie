@@ -126,7 +126,7 @@ abstract class Ghost extends GameElement{
 
     //sets next preferred direction
     verticalMoreImportant ? nextDirection = preferredVerDirection : nextDirection = preferredHorDirection;
-
+    print(nextDirection.toString() + " H " + preferredHorDirection.toString() + " V " + preferredVerDirection.toString() + " " + verticalMoreImportant.toString() );
     //                             UP
    // print("---- START CUR " + currentX.toString() + " " + currentY.toString());
     //print("---- START CHECK " + _checkX.toString() + " " + _checkY.toString());
@@ -143,7 +143,7 @@ abstract class Ghost extends GameElement{
     //print("---- ENDE CHECK " + _checkX.toString() + " " + _checkY.toString());
 
     //                             DOWN
-    print("------ BEFORE DOWN CHECK " + currentX.toString() + " " + currentY.toString());
+    //print("------ BEFORE DOWN CHECK " + currentX.toString() + " " + currentY.toString());
     if(!_level.checkCollision(_checkX, ++_checkY, this))
     {print("DOWN CHECK " + _checkX.toString() + " " + _checkY.toString());
       if(_previousDirection != Directions.UP) {
@@ -651,6 +651,8 @@ abstract class Ghost extends GameElement{
     // TODO ----------------------------------------------------------ELSE LOGIK
     else
     {
+    //  if(g is Blinky || g is Inky //TODO    WIE SOLL ICH SAGEN EINMALIG DAS BLINKY UND INKY VON RECHTS KAMEN)
+
       // TODO LEFT LINKS
       if(_previousDirection == Directions.LEFT)
       {//print("ELSE LEFT");
