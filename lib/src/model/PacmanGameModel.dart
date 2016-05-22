@@ -43,6 +43,7 @@ class PacmanGameModel {
         LevelLoader.SCORE_GHOST,
         LevelLoader._eatTime,
         this);
+    print("LEVELLOADER" + LevelLoader.sizeY.toString());
   }
 
   /**
@@ -79,6 +80,7 @@ class PacmanGameModel {
   void triggerFrame() {
     _level.pacmanDir = _pac_dir;
     _pacman.move(_pac_dir);
+    _pac_dir = Directions.NOTHING;
     this.moveGhost();
     this.updateView();
   }
