@@ -45,6 +45,11 @@ class Level {
   Pacman _pacman;
 
   /**
+   * score of the level
+   */
+  Score _score;
+
+  /**
    * [Pacman]s next [Directions]
    */
   Directions _pacmanDir = Directions.RIGHT;
@@ -73,6 +78,7 @@ class Level {
     this._scorePill = scorePill;
     this._scoreCherry = scoreCherry;
     this._scorePowerPill = scorePowerPill;
+    _score = new Score();
     initTiles();
     createObjects(environmentCode);
   }
@@ -86,6 +92,11 @@ class Level {
    * Getter for [Pacman]s y position
    */
   int get pacmanY => _pacman._y;
+
+  /**
+   * Getter for current score
+   */
+  int get score => _score.totalScore;
 
   /**
    * Setter to chance [Pacman]s next direction
@@ -343,6 +354,7 @@ class Level {
     // pacman collides with item
     if (_tiles[y][x]._item != null) {
       _tiles[y][x]._item.pickUp();
+      _score.addScore(_tiles[y][x]._item._score, _tiles[y][x]._item);
     }
   }
 

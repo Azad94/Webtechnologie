@@ -36,6 +36,7 @@ part 'src/model/Pacman.dart';
 part 'src/model/Tile.dart';
 part 'src/model/PacmanGameModel.dart';
 part 'src/model/Types.dart';
+part 'src/model/Score.dart';
 
 // View
 part 'src/view/PacmanGameView.dart';

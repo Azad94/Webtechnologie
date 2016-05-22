@@ -12,7 +12,6 @@ class Pill extends Item {
   @override
   void pickUp() {
     if (_visible) {
-      Item._scoreCounter += _score;
       _visible = false;
       if (++_pickedUpPills == _pills) _model.gameWon();
     }

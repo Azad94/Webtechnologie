@@ -116,7 +116,7 @@ class PacmanGameModel {
   /**
    * return the current score
    */
-  int get score => Item._scoreCounter;
+  int get score => _level.score;
 
   /**
    * return the lives of [Pacman]
