@@ -13,22 +13,10 @@ abstract class Ghost extends GameElement{
   Ghost(int x, int y, bool collPlayer, bool collGhost, Level l) : super(x, y, collPlayer, collGhost), this._level = l;
 
   void move();
-  void eatableMode();
-
-  /**
-   * if the ghosts are eatable, return value is set to false
-   * if the ghosts are not eatable, return value is set to true
-   **/
-  void setEatable()
-  {
-    _eatable ? _eatable = true : _eatable = false;
+  void eatableMode() {
+    _eatable = true;
   }
 
-  //return's true if the ghosts are eatable else false
-  bool isEatable()
-  {
-    return _eatable;
-  }
 
   /**
       void setDirection(Directions dir)

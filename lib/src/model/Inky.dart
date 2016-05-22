@@ -147,7 +147,4 @@ class Inky extends Ghost{
     }
 
   }
-
-  void eatableMode() {
-  }
 }

@@ -332,7 +332,4 @@ int nextMove=1;
   }
 
   }
-
-  void eatableMode() {
-  }
 }

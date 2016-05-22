@@ -333,7 +333,4 @@ class Pinky extends Ghost {
     }
 
   }
-
-  void eatableMode() {
-  }
 }

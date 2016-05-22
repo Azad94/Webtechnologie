@@ -119,16 +119,36 @@ class Level {
         // ghosts
         else if (tile._ghosts.length != 0) {
           // blinky
-          if (tile._ghosts[0] is Blinky)
-            ret[y].add(Types.BLINKY);
+          if (tile._ghosts[0] is Blinky) {
+            if(tile._ghosts[0]._eatable)
+              ret[y].add(Types.BLINKY_EATABLE);
+            else
+              ret[y].add(Types.BLINKY);
+          }
+
           // pinky
-          else if (tile._ghosts[0] is Pinky)
-            ret[y].add(Types.PINKY);
+          else if (tile._ghosts[0] is Pinky) {
+            if(tile._ghosts[0]._eatable)
+              ret[y].add(Types.PINKY_EATABLE);
+            else
+              ret[y].add(Types.PINKY);
+          }
+
           // inky
-          else if (tile._ghosts[0] is Inky)
-            ret[y].add(Types.INKY);
+          else if (tile._ghosts[0] is Inky) {
+            if(tile._ghosts[0]._eatable)
+              ret[y].add(Types.INKY_EATABLE);
+            else
+              ret[y].add(Types.INKY);
+          }
+
           // clyde
-          else if (tile._ghosts[0] is Clyde) ret[y].add(Types.CLYDE);
+          else if (tile._ghosts[0] is Clyde) {
+            if(tile._ghosts[0]._eatable)
+              ret[y].add(Types.CLYDE_EATABLE);
+            else
+              ret[y].add(Types.CLYDE);
+          }
         }
         // items
         else if (tile._item != null) {
