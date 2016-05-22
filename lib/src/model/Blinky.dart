@@ -2,7 +2,7 @@ part of pacmanLib;
 
 class Blinky extends Ghost {
 
-  Blinky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime) : super(x, y, collPlayer, collGhost, l, eatTime);
+  Blinky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime, num score) : super(x, y, collPlayer, collGhost, l, eatTime, score);
 
 int nextMove=1;
   int i=1;

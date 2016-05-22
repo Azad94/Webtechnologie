@@ -1,8 +1,8 @@
 part of pacmanLib;
 
 class Clyde extends Ghost {
-  Clyde(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime)
-      : super(x, y, collPlayer, collGhost, l, eatTime);
+  Clyde(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime, num score)
+      : super(x, y, collPlayer, collGhost, l, eatTime, score);
 
   int _doorTargetX = 14;
   int _doorTargetY = 8;

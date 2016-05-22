@@ -40,6 +40,11 @@ class Level {
   num _scorePowerPill;
 
   /**
+   * score for on single [Ghost]
+   */
+  num _scoreGhost;
+
+  /**
    * reference to [Pacman]
    */
   Pacman _pacman;
@@ -69,7 +74,7 @@ class Level {
    * Creates a level by given parameters
    */
   Level(String environmentCode, num sizeX, num sizeY, int lives, num scorePill,
-      num scoreCherry, num scorePowerPill, num eatTime, PacmanGameModel model) {
+      num scoreCherry, num scorePowerPill, num scoreGhost, num eatTime, PacmanGameModel model) {
     this._sizeX = sizeX;
     this._sizeY = sizeY;
     this._model = model;
@@ -78,6 +83,7 @@ class Level {
     this._scorePill = scorePill;
     this._scoreCherry = scoreCherry;
     this._scorePowerPill = scorePowerPill;
+    this._scoreGhost = scoreGhost;
     _score = new Score();
     initTiles();
     createObjects(environmentCode);
@@ -286,26 +292,26 @@ class Level {
             break;
 
           case LevelLoader.INKY:
-            Ghost g = new Inky(x, y, false, false, this, _eatTime);
+            Ghost g = new Inky(x, y, false, false, this, _eatTime, _scoreGhost);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
 
             break;
 
           case LevelLoader.PINKY:
-            Ghost g = new Pinky(x, y, false, false, this, _eatTime);
+            Ghost g = new Pinky(x, y, false, false, this, _eatTime, _scoreGhost);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
             break;
 
           case LevelLoader.CLYDE:
-            Ghost g = new Clyde(x, y, false, false, this, _eatTime);
+            Ghost g = new Clyde(x, y, false, false, this, _eatTime, _scoreGhost);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
             break;
 
           case LevelLoader.BLINKY:
-            Ghost g = new Blinky(x, y, false, false, this, _eatTime);
+            Ghost g = new Blinky(x, y, false, false, this, _eatTime, _scoreGhost);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
             break;
@@ -353,8 +359,9 @@ class Level {
     if (_tiles[y][x]._pacman == null) return;
     // pacman collides with item
     if (_tiles[y][x]._item != null) {
+        if(_tiles[y][x]._item._visible)
+          _score.addScore(_tiles[y][x]._item._score, _tiles[y][x]._item);
       _tiles[y][x]._item.pickUp();
-      _score.addScore(_tiles[y][x]._item._score, _tiles[y][x]._item);
     }
   }
 
@@ -369,8 +376,12 @@ class Level {
         _tiles[y][x]._ghosts.remove(g);
         g.respwan();
         _tiles[g._y][g._x]._ghosts.add(g);
-      } else
+        _score.addScore(g._score, g);
+        _score.incGhostMultiplier();
+      } else {
+        _score.resetGhostMultiplier();
         _tiles[y][x]._pacman.decreaseLife();
+      }
     }
   }
 }

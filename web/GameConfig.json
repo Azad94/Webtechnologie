@@ -1,5 +1,6 @@
 {
   "scoreCherry": 200,
   "scorePill": 50,
-  "scorePowerPill" : 100
+  "scorePowerPill" : 100,
+  "scoreSingleGhost" : 200
 }

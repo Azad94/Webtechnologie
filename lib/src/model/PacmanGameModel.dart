@@ -40,6 +40,7 @@ class PacmanGameModel {
         LevelLoader.SCORE_PILL,
         LevelLoader.SCORE_CHERRY,
         LevelLoader.SCORE_POWERPILL,
+        LevelLoader.SCORE_GHOST,
         LevelLoader._eatTime,
         this);
   }

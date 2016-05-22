@@ -54,6 +54,8 @@ class LevelLoader {
    */
   static num SCORE_CHERRY = -1;
 
+  static num SCORE_GHOST = -1;
+
   /*
   MapCode
    */
@@ -149,6 +151,7 @@ class LevelLoader {
       SCORE_PILL = data["scorePill"];
       SCORE_POWERPILL = data["scorePowerPill"];
       SCORE_CHERRY = data["scoreCherry"];
+      SCORE_GHOST = data["scoreSingleGhost"];
     });
 
     return true;

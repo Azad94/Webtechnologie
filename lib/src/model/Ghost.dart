@@ -10,11 +10,17 @@ abstract class Ghost extends GameElement {
    * true if ghost is eatable, else false
    */
   bool _eatable = false;
+
+  /**
+   * score of the ghost
+   */
+  int _score;
   bool scatter;
   Directions nextDirection;
   Directions _previousDirection = Directions.LEFT;
   Directions _savePreviousDirection = Directions.LEFT;
   int _ghostsEaten = 0;
+
 
   /**
    * the time(frames) who long a ghost is in eatable mode
@@ -31,12 +37,13 @@ abstract class Ghost extends GameElement {
    */
   Level _level;
 
-  Ghost(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime)
+  Ghost(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime, num score)
       : super(x, y, collPlayer, collGhost),
         this._level = l,
         this._eatTime = eatTime,
         this._x_start = x,
-        this._y_start = y;
+        this._y_start = y,
+        this._score = score;
 
   /**
    * moves a ghost on step
