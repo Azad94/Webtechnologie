@@ -104,11 +104,6 @@ abstract class Ghost extends GameElement {
     scatter = false;
   }
 
-  //as param give the ghost to be respawned
-  void respawn(Dynamics ghost) {
-    //TODO muss noch geklärt werden auf wessen seite das passiert auf meiner oder der von niklas
-  }
-
   //abhängig davon wieviele Ghosts schon gefressen wurden
   int getScoreValue() {
     _ghostsEaten++;
