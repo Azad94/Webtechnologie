@@ -79,7 +79,6 @@ class PacmanGameModel {
   void triggerFrame() {
     _level.pacmanDir = _pac_dir;
     _pacman.move(_pac_dir);
-    _pac_dir = Directions.NOTHING;
     this.moveGhost();
     this.updateView();
   }
