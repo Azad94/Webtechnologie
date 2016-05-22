@@ -1,15 +1,34 @@
 part of pacmanLib;
 
 abstract class Ghost extends GameElement {
+  /**
+   * start position of ghost
+   */
   final _x_start, _y_start;
+
+  /**
+   * true if ghost is eatable, else false
+   */
   bool _eatable = false;
   bool scatter;
   Directions nextDirection;
   Directions _previousDirection = Directions.LEFT;
   Directions _savePreviousDirection = Directions.LEFT;
   int _ghostsEaten = 0;
+
+  /**
+   * the time(frames) who long a ghost is in eatable mode
+   */
   int _eatTime;
+
+  /**
+   * counter to count frames for exit eatable mode
+   */
   int _eatTimeCounter = 0;
+
+  /**
+   * reference to the level
+   */
   Level _level;
 
   Ghost(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime)
@@ -19,19 +38,31 @@ abstract class Ghost extends GameElement {
         this._x_start = x,
         this._y_start = y;
 
+  /**
+   * moves a ghost on step
+   */
   void move() {
+    // only if eatable mode is on
     if(_eatable) {
       _eatTimeCounter++;
+      // check if the eatable mode is over
       if (_eatTimeCounter == _eatTime) {
         _eatable = false;
         _eatTimeCounter = 0;
       }
     }
   }
+
+  /**
+   * enable the eatable mode
+   */
   void eatableMode() {
     _eatable = true;
   }
 
+  /**
+   * respawn the ghost to start position
+   */
   void respwan() {
     _eatable = false;
     _x = _x_start;

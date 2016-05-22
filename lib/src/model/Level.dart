@@ -1,18 +1,62 @@
 part of pacmanLib;
 
+/**
+ * // TODO
+ */
 class Level {
+  /**
+   * field size X
+   */
   num _sizeX;
+
+  /**
+   * field size Y
+   */
   num _sizeY;
+
+  /**
+   * number of lives for [Pacman]
+   */
   num _lives;
+
+  /**
+   * time (frames) who long the [Ghost]s are in eatable mode
+   */
   num _eatTime;
+
+  /**
+   * score for one single [Pill]
+   */
   num _scorePill;
+
+  /**
+   * score for one single [Cherry]
+   */
   num _scoreCherry;
+
+  /**
+   * score for one single [PowerPill]
+   */
   num _scorePowerPill;
 
+  /**
+   * reference to [Pacman]
+   */
   Pacman _pacman;
+
+  /**
+   * [Pacman]s next [Directions]
+   */
   Directions _pacmanDir = Directions.RIGHT;
+
+  /**
+   * [Pacman]s previous direction
+   */
   Types _pacmanPre = Types.PACMAN_RIGHT;
 
+  /**
+   * gamefiled as [List] over [List] of [Tile]s
+   */
   List<List<Tile>> _tiles = new List<List<Tile>>();
   PacmanGameModel _model;
 
@@ -33,15 +77,25 @@ class Level {
     createObjects(environmentCode);
   }
 
+  /**
+   * Getter for [Pacman]s x position
+   */
   int get pacmanX => _pacman._x;
+
+  /**
+   * Getter for [Pacman]s y position
+   */
   int get pacmanY => _pacman._y;
 
+  /**
+   * Setter to chance [Pacman]s next direction
+   */
   void set pacmanDir(Directions dir) {
     this._pacmanDir = dir;
   }
 
   /**
-   * checks if the given [GameElement] collides with another [GameElement]
+   * checks if the given [GameElement] collides on a given position with another [GameElement]
    * return true if the object collides with another one, else false
    */
   bool checkCollision(int x, int y, GameElement g) {
@@ -122,7 +176,7 @@ class Level {
         else if (tile._ghosts.length != 0) {
           // blinky
           if (tile._ghosts[0] is Blinky) {
-            if(tile._ghosts[0]._eatable)
+            if (tile._ghosts[0]._eatable)
               ret[y].add(Types.BLINKY_EATABLE);
             else
               ret[y].add(Types.BLINKY);
@@ -130,7 +184,7 @@ class Level {
 
           // pinky
           else if (tile._ghosts[0] is Pinky) {
-            if(tile._ghosts[0]._eatable)
+            if (tile._ghosts[0]._eatable)
               ret[y].add(Types.PINKY_EATABLE);
             else
               ret[y].add(Types.PINKY);
@@ -138,7 +192,7 @@ class Level {
 
           // inky
           else if (tile._ghosts[0] is Inky) {
-            if(tile._ghosts[0]._eatable)
+            if (tile._ghosts[0]._eatable)
               ret[y].add(Types.INKY_EATABLE);
             else
               ret[y].add(Types.INKY);
@@ -146,7 +200,7 @@ class Level {
 
           // clyde
           else if (tile._ghosts[0] is Clyde) {
-            if(tile._ghosts[0]._eatable)
+            if (tile._ghosts[0]._eatable)
               ret[y].add(Types.CLYDE_EATABLE);
             else
               ret[y].add(Types.CLYDE);
@@ -183,6 +237,11 @@ class Level {
   Helper methods
    */
 
+  /**
+   * creates all game objects and put them into the game field (_tiles).
+   * Needs a [String] with the map coding
+   *
+   */
   void createObjects(String environmentCode) {
     // Split string in lines
     List<String> lines = environmentCode.split(LevelLoader.NEWLINE);
@@ -258,7 +317,14 @@ class Level {
     }
   }
 
+  /**
+   * initialize the _tiles
+   */
   void initTiles() {
+    if (_sizeX == null || _sizeY == null) {
+      // TODO log
+      return;
+    }
     for (int i = 0; i < _sizeY; i++) {
       List<Tile> list = new List();
       for (int j = 0; j < _sizeX; j++) {
@@ -268,6 +334,9 @@ class Level {
     }
   }
 
+  /**
+   * checks if [Pacman] collides with a Item on the given position
+   */
   void collisionDetectionItem(int x, int y) {
     // no collision possible, pacman is not here
     if (_tiles[y][x]._pacman == null) return;
@@ -277,17 +346,19 @@ class Level {
     }
   }
 
+  /**
+   * checks if [Pacman] collides with a ghost on the given position
+   */
   void collisionDetectionGhost(int x, int y) {
     // ghost collides with pacman
     if (_tiles[y][x]._pacman != null && _tiles[y][x]._ghosts.length != 0) {
-      if(_tiles[y][x]._ghosts[0]._eatable) {
+      if (_tiles[y][x]._ghosts[0]._eatable) {
         final g = _tiles[y][x]._ghosts[0];
         _tiles[y][x]._ghosts.remove(g);
         g.respwan();
         _tiles[g._y][g._x]._ghosts.add(g);
-      }
-      else
-      _tiles[y][x]._pacman.decreaseLife();
+      } else
+        _tiles[y][x]._pacman.decreaseLife();
     }
   }
 }
