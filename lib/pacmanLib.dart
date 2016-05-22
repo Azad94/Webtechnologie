@@ -1,7 +1,6 @@
 library pacmanLib;
 
 // Imports
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:html';
 import 'dart:async';
