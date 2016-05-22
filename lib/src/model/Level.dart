@@ -280,6 +280,13 @@ class Level {
   void collisionDetectionGhost(int x, int y) {
     // ghost collides with pacman
     if (_tiles[y][x]._pacman != null && _tiles[y][x]._ghosts.length != 0) {
+      if(_tiles[y][x]._ghosts[0]._eatable) {
+        final g = _tiles[y][x]._ghosts[0];
+        _tiles[y][x]._ghosts.remove(g);
+        g.respwan();
+        _tiles[g._y][g._x]._ghosts.add(g);
+      }
+      else
       _tiles[y][x]._pacman.decreaseLife();
     }
   }

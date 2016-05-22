@@ -1,6 +1,7 @@
 part of pacmanLib;
 
 abstract class Ghost extends GameElement {
+  final _x_start, _y_start;
   bool _eatable = false;
   bool scatter;
   Directions nextDirection;
@@ -14,7 +15,9 @@ abstract class Ghost extends GameElement {
   Ghost(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime)
       : super(x, y, collPlayer, collGhost),
         this._level = l,
-        this._eatTime = eatTime;
+        this._eatTime = eatTime,
+        this._x_start = x,
+        this._y_start = y;
 
   void move() {
     if(_eatable) {
@@ -27,6 +30,12 @@ abstract class Ghost extends GameElement {
   }
   void eatableMode() {
     _eatable = true;
+  }
+
+  void respwan() {
+    _eatable = false;
+    _x = _x_start;
+    _y = _y_start;
   }
 
   /**
