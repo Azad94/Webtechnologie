@@ -43,6 +43,7 @@ class PacmanGameModel {
         LevelLoader.SCORE_GHOST,
         LevelLoader._eatTime,
         this);
+    print("LEVELLOADER" + LevelLoader.sizeY.toString());
   }
 
   /**
