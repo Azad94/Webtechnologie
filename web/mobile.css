@@ -37,7 +37,7 @@
         left: 45%;
         bottom: 25%;
         letter-spacing: 3px;
-        font-family: PacMan;
+        font-family: PacMan, serif;
         font-size: 2rem;
     }
 
@@ -267,8 +267,8 @@
     }
 
     span {
-        margin-top: 50%;
-        margin-bottom: 50%;
+        margin-top: 20%;
+        margin-bottom: auto;
         margin-right: auto;
         margin-left: auto;
     }
