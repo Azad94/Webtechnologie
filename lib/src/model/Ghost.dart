@@ -67,6 +67,7 @@ abstract class Ghost extends GameElement {
         _started = true;
       }
     }
+
     // only if eatable mode is on
     if (_eatable) {
       timeCounter++;
@@ -184,8 +185,6 @@ abstract class Ghost extends GameElement {
         " " +
         verticalMoreImportant.toString());
     //                             UP
-    // print("---- START CUR " + currentX.toString() + " " + currentY.toString());
-    //print("---- START CHECK " + _checkX.toString() + " " + _checkY.toString());
     if (!_level.checkCollision(_checkX, --_checkY, this)) {
       if (_previousDirection != Directions.DOWN) {
         print("HIER GEHT ES HOCH PossibleUP: " +
@@ -199,11 +198,8 @@ abstract class Ghost extends GameElement {
       }
     }
     _checkY = currentY;
-    //print("---- ENDE CUR " + currentX.toString() + " " + currentY.toString());
-    //print("---- ENDE CHECK " + _checkX.toString() + " " + _checkY.toString());
 
     //                             DOWN
-    //print("------ BEFORE DOWN CHECK " + currentX.toString() + " " + currentY.toString());
     if (!_level.checkCollision(_checkX, ++_checkY, this)) {
       print("DOWN CHECK " + _checkX.toString() + " " + _checkY.toString());
       if (_previousDirection != Directions.UP) {
@@ -259,7 +255,6 @@ abstract class Ghost extends GameElement {
           if ((targetX - ++_checkX).abs() < _currentDistanceX) {
             _previousDirection = Directions.RIGHT;
             print("--- RIGHT --- 185");
-            // print("---- PossibleUP: " + _possibleUp.toString() + " X: " + _checkX.toString() + " Y: " + _checkY.toString());
             return Directions.RIGHT;
           }
         }
