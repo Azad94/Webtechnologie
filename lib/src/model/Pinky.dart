@@ -2,7 +2,7 @@ part of pacmanLib;
 
 class Pinky extends Ghost {
   Pinky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
-      num startTime, num score)
+      num startTime, num score, num modeSwitchTimer)
       : super(x, y, collPlayer, collGhost, l, eatTime, startTime, score);
 
   int _doorTargetX = 14;

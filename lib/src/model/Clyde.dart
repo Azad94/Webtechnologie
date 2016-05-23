@@ -2,7 +2,7 @@ part of pacmanLib;
 
 class Clyde extends Ghost {
   Clyde(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
-      num startTime, num score)
+      num startTime, num score, num modeSwitchTimer)
       : super(x, y, collPlayer, collGhost, l, eatTime, startTime, score);
   int _doorTargetX = 14;
   int _doorTargetY = 8;
@@ -29,6 +29,8 @@ class Clyde extends Ghost {
         outOfDoor = false;
         _targetsReached = 0;
       }
+
+      //print(timeCounter.toString() + "__" + _modeSwitchTimer.toString());
 
       switch (_targetsReached) {
         case 0:
@@ -82,6 +84,22 @@ class Clyde extends Ghost {
         if (outOfDoor == false) outOfDoor = true;
         _targetsReached++;
       }
+    }
+  }
+
+  void changeMode()
+  {
+    bool _scatterMode = true;
+
+    if(_scatterMode)
+    {
+      _targetX = 1;
+      _targetY = 16;
+    }
+    else
+    {
+      _targetX = _level.pacmanX;
+      _targetY = _level.pacmanY;
     }
   }
 }

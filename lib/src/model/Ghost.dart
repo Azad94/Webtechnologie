@@ -17,6 +17,11 @@ abstract class Ghost extends GameElement {
   bool _started = false;
 
   /**
+   *
+   */
+  bool f = false;
+
+  /**
    * score of the ghost
    */
   int _score;
@@ -66,6 +71,8 @@ abstract class Ghost extends GameElement {
         timeCounter = 0;
         _started = true;
       }
+
+     // if(timerCounter == modeSwitch)
     }
 
     // only if eatable mode is on
