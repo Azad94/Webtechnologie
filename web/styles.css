@@ -87,7 +87,7 @@ html, body {
     background-color: rgba(0,0,0,0.50);
     text-align: center;
     color: red;
-    font-family: PacMan;
+    font-family: PacMan, serif;
     font-weight: bold;
     font-size: 2rem;
     z-index: +2;
@@ -105,7 +105,7 @@ html, body {
     background-color: rgba(0,0,0,0.50);
     text-align: center;
     color: red;
-    font-family: PacMan;
+    font-family: PacMan, serif;
     font-weight: bold;
     font-size: 2rem;
     z-index: +1;
@@ -152,7 +152,7 @@ span {
 #information {
     border-collapse: separate;
     border: 5px solid yellow;
-    font-family: PacMan;
+    font-family: PacMan, serif;
     font-size: 2rem;
 }
 #keylayout{
