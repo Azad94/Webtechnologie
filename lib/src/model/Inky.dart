@@ -4,52 +4,63 @@ class Inky extends Ghost {
   Inky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
       num startTime, num score)
       : super(x, y, collPlayer, collGhost, l, eatTime, startTime, score);
-  int _doorTargetX = 14;
-  int _doorTargetY = 8;
 
-  int _firsttargetX = 1;
-  int _firsttargetY = 1;
+  int _doorX = 14;
+  int _doorY = 8;
 
-  int _secondTargetX = 27;
-  int _secondTargetY = 16;
+  int _targetX = 14;
+  int _targetY = 8;
 
-  int _targetX;
-  int _targetY;
+  int _scatterX = 27;
+  int _scatterY = 16;
 
-  bool outOfDoor = false;
-  int _targetsReached = 0;
+  int _switchMode = 40;
+  bool _scatterModeOn = false;
+  bool _scat = true;
+  bool _chase = false;
+  bool _outOfDoor = false;
+  int _scatTimer = 0;
+  bool _te = false;
 
-  @override
-  void move() {
+  void move()
+  {
     super.move();
-    if(_started) {
-      if (outOfDoor == false) {
-        _targetX = _doorTargetX;
-        _targetY = _doorTargetY;
+    if(_started)
+    {
+      if(_x == _x_start && _y == _y_start)
+      {
+        _targetX = _doorX;
+        _targetY = _doorY;
+        _scat = false;
+        _chase = false;
       }
 
-      switch (_targetsReached) {
-        case 0:
-          _targetX = _doorTargetX;
-          _targetY = _doorTargetY;
-          break;
-
-        case 1:
-          _targetX = _level.pacmanX;
-          _targetY = _level.pacmanY;
-          break;
-
-        case 2:
-          _targetX = _secondTargetX;
-          _targetY = _secondTargetY;
-          break;
-
-        default:
-          _targetX = _x;
-          _targetY = _y;
+      if(_outOfDoor == true && _scat == false && _chase == false && _scatTimer == 40)
+      {
+        _scatTimer = 0;
+        _chase = false;
+        _te = false;
+        _targetX = _scatterX;
+        _targetY = _scatterY;
       }
 
-      switch (getNextMove(_x, _y, _targetX, _targetY, this)) {
+      if(_outOfDoor == true && _scat == true && _chase == false && _scatTimer == 15)
+      {
+        _scat = false;
+        _scatTimer = 0;
+        _te = true;
+      }
+
+      if(_te == true && _scatTimer % 5 == 0)
+      {
+        _targetX = _level.pacmanX;
+        _targetY = _level.pacmanY;
+      }
+
+      print("INKY ZIEL         X " + _targetX.toString() + " Y: " + _targetY.toString());
+
+      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfDoor, this)) {
+
         case Directions.UP:
           _level.registerElement(_x, _y, _x, --_y, this);
           break;
@@ -76,10 +87,47 @@ class Inky extends Ghost {
           break;
       }
 
-      if (_x == _targetX && _y == _targetY) {
-        if (outOfDoor == false) outOfDoor = true;
-        _targetsReached++;
+      if(_x == _targetX && _y == _targetY)
+      {
+        if(_x == _doorX && _y == _doorY)
+        {
+          _outOfDoor = true;
+          _scat = true;
+          _chase = false;
+          changeMode();
+        }
+
+        if(_x == _scatterX && _y == _scatterY)
+        {
+          _scat = false;
+          _chase = true;
+          changeMode();
+        }
+
+        if(_x == _targetX && _y == _targetY)
+        {
+          _scat = false;
+          _chase = true;
+         changeMode();
+        }
       }
+      ++_scatTimer;
+    }
+  }
+
+  void changeMode()
+  {
+    if(_scat == true)
+    {
+      _targetX = _scatterX;
+      _targetY = _scatterY;
+      _scatTimer = 0;
+    }
+    else
+    {
+      _targetX = _level.pacmanX;
+      _targetY = _level.pacmanY;
+      _scatTimer = 0;
     }
   }
 }
