@@ -40,7 +40,14 @@ class PacmanGameModel {
         LevelLoader.SCORE_PILL,
         LevelLoader.SCORE_CHERRY,
         LevelLoader.SCORE_POWERPILL,
+        LevelLoader.SCORE_GHOST,
+        LevelLoader._eatTime,
+        LevelLoader._startBlinky,
+        LevelLoader._startClyde,
+        LevelLoader._startInky,
+        LevelLoader._startPinky,
         this);
+    print("LEVELLOADER" + LevelLoader.sizeY.toString());
   }
 
   /**
@@ -79,6 +86,7 @@ class PacmanGameModel {
     _pacman.move(_pac_dir);
     _pac_dir = Directions.NOTHING;
     this.moveGhost();
+    this.updateView();
   }
 
   /**
@@ -87,9 +95,11 @@ class PacmanGameModel {
   void gameOver() {
     _gameOver = true;
   }
+
   void gameWon() {
     _gameWon = true;
   }
+
   /**
    * enable the power mode, means that ghosts are eatable
    */
@@ -107,31 +117,6 @@ class PacmanGameModel {
   }
 
   /**
-   * DEPRECATED
-   */
-  List<List<Statics>> getStaticMap() {
-    if (_level == null) return null;
-    return _level.getStaticMap();
-  }
-
-  /**
-   *DEPRECATED
-   */
-  List<List<Dynamics>> getDynamicMap() {
-    if (_level == null) return null;
-    return _level.getDynamicMap();
-  }
-
-  /**
-   *DEPRECATED
-   */
-  List<List<Items>> getItemMap() {
-    if (_level == null) return null;
-
-    return _level.getIemMap();
-  }
-
-  /**
    * return the full gameField as list over list with enum [Type]
    */
   List<List<Types>> getMap() => _level.getMap();
@@ -139,7 +124,7 @@ class PacmanGameModel {
   /**
    * return the current score
    */
-  int get score => Item._scoreCounter;
+  int get score => _level.score;
 
   /**
    * return the lives of [Pacman]
