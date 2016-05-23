@@ -43,7 +43,7 @@ class PacmanGameModel {
         LevelLoader.SCORE_GHOST,
         LevelLoader._eatTime,
         this);
-    print("LEVELLOADER" + LevelLoader.sizeY.toString());
+    //print("LEVELLOADER" + LevelLoader.sizeY.toString());
   }
 
   /**
@@ -93,6 +93,9 @@ class PacmanGameModel {
   }
   void gameWon() {
     _gameWon = true;
+  }
+  void newGame() {
+    _gameOver = false;
   }
   /**
    * enable the power mode, means that ghosts are eatable

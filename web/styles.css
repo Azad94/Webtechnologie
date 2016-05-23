@@ -53,22 +53,13 @@ html, body {
     font-size: 2rem;
 }
 #startNext{
-    position: absolute;
-    border: 5px yellow;
-    padding: 1px;
-    border-radius: 17px;
-    cursor: pointer;  width: 150px;
-    margin-left: -75px;
-    left: 50%;
-    bottom: 60px;
-    font-size: 30px;
+    color: yellow;
+    cursor: pointer;  width: auto;
+    border: 5px solid yellow;
+    border-radius: 10px;
+    padding: 2px 2px 2px 2px;
 }
-#startNext.hide{
-    display:none;
-}
-#startNext.show{
-    display:block;
-}
+
 #nextLevel.hide {
     display: none;
 }
@@ -92,11 +83,14 @@ html, body {
     font-size: 2rem;
     z-index: +2;
 }
-
-#overlay:empty {
-    display: none;
+#overlay.hide{
+    display:none;
+}
+#overlay.show {
+    display: block;
 }
 #overlay {
+    display: none;
     position: absolute;
     top: 0;
     left: 0;

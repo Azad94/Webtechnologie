@@ -117,9 +117,10 @@ class PacmanGameView {
   //different elements from the html-document
   final _startText = querySelector("#startText");
   final startButton = querySelector("#startButton");
-  final _nextLevel = querySelector("#nextLevel");
   final startNext = querySelector("#startNext");
   final _overlay = querySelector("#overlay");
+  final _gameend = querySelector("#gameend");
+  final nextLevel = querySelector("#startNext");
   final _labyrinth = querySelector("#labyrinth");
 
   final _information = querySelector("#information");
@@ -144,13 +145,11 @@ class PacmanGameView {
     _startScreen.classes.toggle('close');
     _game.classes.toggle('show');
   }
-  /*
+
   //TODO: NextLevel
-  void nextLevel() {
-    _overlay.innerHtml="";
-    _nextLevel.classes.toggle('hide');
-    startNext.classes.toggle('hide');
-  }*/
+  void showNextLevel() {
+   _overlay.classes.toggle('hide');
+  }
   void updateGameStatus() {}
 
   //see _labyrinthToHTMLTable
@@ -171,7 +170,8 @@ class PacmanGameView {
     _message.innerHtml = "Msg: $str"; }
 
   void updateOverlay(String s) {
-    _overlay.innerHtml = "<span>$s</span>";
+    _gameend.innerHtml = s;
+    _overlay.classes.toggle('show');
   }
   //creates the table in the html-document
   String _createLabyrinth(List<List<Types>> l) {
