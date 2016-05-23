@@ -42,8 +42,12 @@ class PacmanGameModel {
         LevelLoader.SCORE_POWERPILL,
         LevelLoader.SCORE_GHOST,
         LevelLoader._eatTime,
+        LevelLoader._startBlinky,
+        LevelLoader._startClyde,
+        LevelLoader._startInky,
+        LevelLoader._startPinky,
         this);
-    //print("LEVELLOADER" + LevelLoader.sizeY.toString());
+    print("LEVELLOADER" + LevelLoader.sizeY.toString());
   }
 
   /**
@@ -91,12 +95,11 @@ class PacmanGameModel {
   void gameOver() {
     _gameOver = true;
   }
+
   void gameWon() {
     _gameWon = true;
   }
-  void newGame() {
-    _gameOver = false;
-  }
+
   /**
    * enable the power mode, means that ghosts are eatable
    */

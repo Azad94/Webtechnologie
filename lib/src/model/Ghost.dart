@@ -12,6 +12,11 @@ abstract class Ghost extends GameElement {
   bool _eatable = false;
 
   /**
+   * shows if the ghost is moving
+   */
+  bool _started = false;
+
+  /**
    * score of the ghost
    */
   int _score;
@@ -27,20 +32,26 @@ abstract class Ghost extends GameElement {
   int _eatTime;
 
   /**
-   * counter to count frames for exit eatable mode
+   * time(frames) when ghost starts moving
    */
-  int _eatTimeCounter = 0;
+  int _startTime;
+
+  /**
+   * counter to count frames
+   */
+  int timeCounter = 0;
 
   /**
    * reference to the level
    */
   Level _level;
 
-  Ghost(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
+  Ghost(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime, num startTime,
       num score)
       : super(x, y, collPlayer, collGhost),
         this._level = l,
         this._eatTime = eatTime,
+        this._startTime = startTime,
         this._x_start = x,
         this._y_start = y,
         this._score = score;
@@ -49,13 +60,21 @@ abstract class Ghost extends GameElement {
    * moves a ghost on step
    */
   void move() {
+    if(!_started) {
+      timeCounter++;
+      if(timeCounter == _startTime) {
+        timeCounter = 0;
+        _started = true;
+      }
+    }
+
     // only if eatable mode is on
     if (_eatable) {
-      _eatTimeCounter++;
+      timeCounter++;
       // check if the eatable mode is over
-      if (_eatTimeCounter == _eatTime) {
+      if (timeCounter == _eatTime) {
         _eatable = false;
-        _eatTimeCounter = 0;
+        timeCounter = 0;
       }
     }
   }
@@ -72,6 +91,8 @@ abstract class Ghost extends GameElement {
    */
   void respwan() {
     _eatable = false;
+    _started = false;
+    timeCounter = 0;
     _x = _x_start;
     _y = _y_start;
   }
@@ -164,8 +185,6 @@ abstract class Ghost extends GameElement {
         " " +
         verticalMoreImportant.toString());*/
     //                             UP
-    // print("---- START CUR " + currentX.toString() + " " + currentY.toString());
-    //print("---- START CHECK " + _checkX.toString() + " " + _checkY.toString());
     if (!_level.checkCollision(_checkX, --_checkY, this)) {
       if (_previousDirection != Directions.DOWN) {
        /* print("HIER GEHT ES HOCH PossibleUP: " +
@@ -179,11 +198,8 @@ abstract class Ghost extends GameElement {
       }
     }
     _checkY = currentY;
-    //print("---- ENDE CUR " + currentX.toString() + " " + currentY.toString());
-    //print("---- ENDE CHECK " + _checkX.toString() + " " + _checkY.toString());
 
     //                             DOWN
-    //print("------ BEFORE DOWN CHECK " + currentX.toString() + " " + currentY.toString());
     if (!_level.checkCollision(_checkX, ++_checkY, this)) {
     //  print("DOWN CHECK " + _checkX.toString() + " " + _checkY.toString());
       if (_previousDirection != Directions.UP) {

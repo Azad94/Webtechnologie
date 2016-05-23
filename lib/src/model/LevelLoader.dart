@@ -23,6 +23,26 @@ class LevelLoader {
   static num _eatTime = 0;
 
   /**
+   * time(frames) when Blinky starts moving
+   */
+  static num _startBlinky = 0;
+
+  /**
+   * time(frames) when Clyde starts moving
+   */
+  static num _startClyde = 0;
+
+  /**
+   * time(frames) when Inky starts moving
+   */
+  static num _startInky = 0;
+
+  /**
+   * time(frames) when Pinky starts moving
+   */
+  static num _startPinky = 0;
+
+  /**
    * current level number
    */
   static num levelNumber = -1;
@@ -126,7 +146,6 @@ class LevelLoader {
 
   static const _CONFIGJSON = "GameConfig.json";
 
-
   /**
    * Loads a level from json file by given level number.
    * Return true if file is loaded, else false
@@ -140,6 +159,10 @@ class LevelLoader {
       _map = data["map"];
       _lives = data["lives"];
       _eatTime = data["ghostEatTime"];
+      _startBlinky = data["startBlinky"];
+      _startClyde = data["startClyde"];
+      _startInky = data["startInky"];
+      _startPinky = data["startPinky"];
     });
     _loaded = true;
     return true;
