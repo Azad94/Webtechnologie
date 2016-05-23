@@ -25,6 +25,26 @@ class Level {
   num _eatTime;
 
   /**
+   * time(frames) when Blinky starts moving
+   */
+  num _startBlinky;
+
+  /**
+   * time(frames) when Clyde starts moving
+   */
+  num _startClyde;
+
+  /**
+   * time(frames) when Inky starts moving
+   */
+  num _startInky;
+
+  /**
+   * time(frames) when Pinky starts moving
+   */
+  num _startPinky;
+
+  /**
    * score for one single [Pill]
    */
   num _scorePill;
@@ -73,13 +93,30 @@ class Level {
   /**
    * Creates a level by given parameters
    */
-  Level(String environmentCode, num sizeX, num sizeY, int lives, num scorePill,
-      num scoreCherry, num scorePowerPill, num scoreGhost, num eatTime, PacmanGameModel model) {
+  Level(
+      String environmentCode,
+      num sizeX,
+      num sizeY,
+      int lives,
+      num scorePill,
+      num scoreCherry,
+      num scorePowerPill,
+      num scoreGhost,
+      num eatTime,
+      num startBlinky,
+      num startClyde,
+      num startInky,
+      num startPinky,
+      PacmanGameModel model) {
     this._sizeX = sizeX;
     this._sizeY = sizeY;
     this._model = model;
     this._lives = lives;
     this._eatTime = eatTime;
+    this._startBlinky = startBlinky;
+    this._startClyde = startClyde;
+    this._startInky = startInky;
+    this._startPinky = startPinky;
     this._scorePill = scorePill;
     this._scoreCherry = scoreCherry;
     this._scorePowerPill = scorePowerPill;
@@ -292,26 +329,30 @@ class Level {
             break;
 
           case LevelLoader.INKY:
-            Ghost g = new Inky(x, y, false, false, this, _eatTime, _scoreGhost);
+            Ghost g = new Inky(
+                x, y, false, false, this, _eatTime, _startInky, _scoreGhost);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
 
             break;
 
           case LevelLoader.PINKY:
-            Ghost g = new Pinky(x, y, false, false, this, _eatTime, _scoreGhost);
+            Ghost g = new Pinky(
+                x, y, false, false, this, _eatTime, _startPinky, _scoreGhost);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
             break;
 
           case LevelLoader.CLYDE:
-            Ghost g = new Clyde(x, y, false, false, this, _eatTime, _scoreGhost);
+            Ghost g = new Clyde(
+                x, y, false, false, this, _eatTime, _startClyde, _scoreGhost);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
             break;
 
           case LevelLoader.BLINKY:
-            Ghost g = new Blinky(x, y, false, false, this, _eatTime, _scoreGhost);
+            Ghost g = new Blinky(
+                x, y, false, false, this, _eatTime, _startBlinky, _scoreGhost);
             _tiles[y][x]._ghosts.add(g);
             _model.registerGameElement(g);
             break;
@@ -359,8 +400,8 @@ class Level {
     if (_tiles[y][x]._pacman == null) return;
     // pacman collides with item
     if (_tiles[y][x]._item != null) {
-        if(_tiles[y][x]._item._visible)
-          _score.addScore(_tiles[y][x]._item._score, _tiles[y][x]._item);
+      if (_tiles[y][x]._item._visible)
+        _score.addScore(_tiles[y][x]._item._score, _tiles[y][x]._item);
       _tiles[y][x]._item.pickUp();
     }
   }
