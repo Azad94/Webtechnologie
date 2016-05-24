@@ -144,12 +144,12 @@ class PacmanGameController{
   //stops interaction
   void stopGame() {
     if (_pacmanView.mql.matches) {
-      up.cancel();
-      down.cancel();
-      left.cancel();
-      right.cancel();
+      up.stopKeylistening();
+      down.stopKeylistening();
+      left.stopKeylistening();
+      right.stopKeylistening();
     } else {
-      _keyListener.cancel();
+      _keyListener.stopKeylistening();
     }
       _timer.cancel();
   }
