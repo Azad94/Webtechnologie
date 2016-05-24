@@ -19,16 +19,16 @@ class Pinky extends Ghost {
   int _targetX = 14;
   int _targetY = 8;
 
-  int _scatterX = 27;
-  int _scatterY = 16;
+  int _scatterX = 1;
+  int _scatterY = 1;
 
-  int _switchMode = 40;
-  bool _scatterModeOn = false;
   bool _scat = true;
   bool _chase = false;
   bool _outOfDoor = false;
   int _scatTimer = 0;
   bool _te = false;
+
+  Directions _prev;
 
   void move() {
     super.move();
@@ -38,6 +38,8 @@ class Pinky extends Ghost {
         _targetY = _doorY;
         _scat = false;
         _chase = false;
+        _prev = Directions.RIGHT;
+
       }
 
       if (_outOfDoor == true && _scat == false && _chase == false &&
@@ -61,33 +63,36 @@ class Pinky extends Ghost {
         _targetY = _level.pacmanY;
       }
 
-      print("PINKY ZIEL         X " + _targetX.toString() + " Y: " +
-          _targetY.toString());
-
-      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfDoor, this)) {
+      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfDoor, _prev, this)) {
         case Directions.UP:
           _level.registerElement(_x, _y, _x, --_y, this);
+          _prev = Directions.UP;
           break;
 
         case Directions.DOWN:
         // TODO PROVISORISCH MUSS RAUS
           if (_x == 14 && _y == 8) {
             _level.registerElement(_x, _y, ++_x, _y, this);
+            _prev = Directions.LEFT;
             break;
           }
           _level.registerElement(_x, _y, _x, ++_y, this);
+          _prev = Directions.DOWN;
           break;
 
         case Directions.LEFT:
           _level.registerElement(_x, _y, --_x, _y, this);
+          _prev = Directions.LEFT;
           break;
 
         case Directions.RIGHT:
           _level.registerElement(_x, _y, ++_x, _y, this);
+          _prev = Directions.RIGHT;
           break;
 
         case Directions.NOTHING:
           _level.registerElement(_x, _y, _x, _y, this);
+          _prev = Directions.NOTHING;
           break;
       }
 

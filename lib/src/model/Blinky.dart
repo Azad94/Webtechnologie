@@ -13,13 +13,15 @@ class Blinky extends Ghost {
   int _targetY = 8;
 
   int _scatterX = 27;
-  int _scatterY = 16;
+  int _scatterY = 1;
 
   bool _scat = true;
   bool _chase = false;
   bool _outOfDoor = false;
   int _scatTimer = 0;
   bool _te = false;
+
+  Directions _prev;
 
   void move()
   {
@@ -32,6 +34,7 @@ class Blinky extends Ghost {
         _targetY = _doorY;
         _scat = false;
         _chase = false;
+        _prev = Directions.RIGHT;
       }
 
       if(_outOfDoor == true && _scat == false && _chase == false && _scatTimer == 40)
@@ -43,7 +46,7 @@ class Blinky extends Ghost {
         _targetY = _scatterY;
       }
 
-      if(_outOfDoor == true && _scat == true && _chase == false && _scatTimer == 15)
+      if(_outOfDoor == true && _scat == true && _chase == false && _scatTimer == 10)
       {
         _scat = false;
         _scatTimer = 0;
@@ -56,33 +59,38 @@ class Blinky extends Ghost {
         _targetY = _level.pacmanY;
       }
 
-     // print("BLINKY ZIEL         X " + _targetX.toString() + " Y: " + _targetY.toString());
 
-      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfDoor, this)) {
+      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfDoor, _prev, this)) {
 
         case Directions.UP:
           _level.registerElement(_x, _y, _x, --_y, this);
+          _prev = Directions.UP;
           break;
 
         case Directions.DOWN:
         // TODO PROVISORISCH MUSS RAUS
           if (_x == 14 && _y == 8) {
             _level.registerElement(_x, _y, ++_x, _y, this);
+            _prev = Directions.LEFT;
             break;
           }
           _level.registerElement(_x, _y, _x, ++_y, this);
+          _prev = Directions.DOWN;
           break;
 
         case Directions.LEFT:
           _level.registerElement(_x, _y, --_x, _y, this);
+          _prev = Directions.LEFT;
           break;
 
         case Directions.RIGHT:
           _level.registerElement(_x, _y, ++_x, _y, this);
+          _prev = Directions.RIGHT;
           break;
 
         case Directions.NOTHING:
           _level.registerElement(_x, _y, _x, _y, this);
+          _prev = Directions.NOTHING;
           break;
       }
 

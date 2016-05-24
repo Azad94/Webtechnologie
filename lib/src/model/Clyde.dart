@@ -3,15 +3,7 @@ part of pacmanLib;
 class Clyde extends Ghost {
   Clyde(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
       num startTime, num score)
-      : super(
-      x,
-      y,
-      collPlayer,
-      collGhost,
-      l,
-      eatTime,
-      startTime,
-      score);
+      : super(x, y, collPlayer, collGhost, l, eatTime, startTime, score);
 
   int _doorX = 14;
   int _doorY = 8;
@@ -22,13 +14,13 @@ class Clyde extends Ghost {
   int _scatterX = 1;
   int _scatterY = 16;
 
-  int _switchMode = 40;
-  bool _scatterModeOn = false;
   bool _scat = true;
   bool _chase = false;
   bool _outOfDoor = false;
   int _scatTimer = 0;
   bool _te = false;
+
+  Directions _prev;
 
   void move() {
     super.move();
@@ -38,76 +30,104 @@ class Clyde extends Ghost {
         _targetY = _doorY;
         _scat = false;
         _chase = false;
+        _prev = Directions.LEFT;
       }
 
-      if (_outOfDoor == true && _scat == false && _chase == false &&
-          _scatTimer == 40) {
+      if(_scatTimer > 25)
+      {
+        _scat = true;
         _scatTimer = 0;
+        changeMode();
+      }
+
+      if (_outOfDoor == true && _scat == false && _chase == true && (_scatTimer % 25) == 0) {
+        print("SCATTER");
+        _scatTimer = 0;
+        _scat = true;
         _chase = false;
         _te = false;
-        _targetX = _scatterX;
-        _targetY = _scatterY;
+        changeMode();
+
+        //_targetX = _scatterX;
+        //_targetY = _scatterY;
       }
 
-      if (_outOfDoor == true && _scat == true && _chase == false &&
-          _scatTimer == 15) {
+      if (_outOfDoor == true && _scat == true && _chase == false && (_scatTimer % 10) == 0) {
+        print("CHASE");
         _scat = false;
         _scatTimer = 0;
         _te = true;
       }
 
-      if (_te == true && _scatTimer % 5 == 0) {
+      if (_scat == false && _chase == true && _te == true && (_scatTimer % 5) == 0) {
+        print("DREI");
         _targetX = _level.pacmanX;
         _targetY = _level.pacmanY;
       }
 
-    //  print("INKY ZIEL         X " + _targetX.toString() + " Y: " +
-    //      _targetY.toString());
+      if(((_level.pacmanX - _x).abs() < 3) || ((_level.pacmanY - _y).abs() < 3))
+      {
 
-      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfDoor, this)) {
+      }
+
+      print(_scatTimer);
+
+      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfDoor, _prev, this)) {
         case Directions.UP:
           _level.registerElement(_x, _y, _x, --_y, this);
+          _prev = Directions.UP;
           break;
 
         case Directions.DOWN:
         // TODO PROVISORISCH MUSS RAUS
           if (_x == 14 && _y == 8) {
             _level.registerElement(_x, _y, ++_x, _y, this);
+            _prev = Directions.LEFT;
             break;
           }
           _level.registerElement(_x, _y, _x, ++_y, this);
+          _prev = Directions.DOWN;
           break;
 
         case Directions.LEFT:
           _level.registerElement(_x, _y, --_x, _y, this);
+          _prev = Directions.LEFT;
           break;
 
         case Directions.RIGHT:
           _level.registerElement(_x, _y, ++_x, _y, this);
+          _prev = Directions.RIGHT;
           break;
 
         case Directions.NOTHING:
           _level.registerElement(_x, _y, _x, _y, this);
+          _prev = Directions.NOTHING;
           break;
       }
 
       if (_x == _targetX && _y == _targetY) {
         if (_x == _doorX && _y == _doorY) {
+          print("AIK");
           _outOfDoor = true;
           _scat = true;
           _chase = false;
+          _scatTimer = 0;
           changeMode();
         }
 
         if (_x == _scatterX && _y == _scatterY) {
+          print("DOO");
           _scat = false;
           _chase = true;
+          _scatTimer = 0;
           changeMode();
         }
 
         if (_x == _targetX && _y == _targetY) {
+          print("TEEN");
           _scat = false;
           _chase = true;
+          _scatTimer = 0;
           changeMode();
         }
       }
@@ -117,38 +137,21 @@ class Clyde extends Ghost {
 
   void changeMode() {
     if (_scat == true) {
+      print("--------------SCATTER------------------");
+
       _targetX = _scatterX;
       _targetY = _scatterY;
-      _scatTimer = 0;
     }
     else {
+      print("--------------CHASE------------------");
       _targetX = _level.pacmanX;
       _targetY = _level.pacmanY;
-      _scatTimer = 0;
     }
   }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
+  /**
   int _doorX = 14;
   int _doorY = 8;
 
@@ -253,17 +256,9 @@ class Clyde extends Ghost {
     }
   }
 }
-
   **/
 
-
-
-
-
-
-
   /**
-
   int _doorTargetX = 14;
   int _doorTargetY = 8;
 
@@ -384,5 +379,4 @@ class Clyde extends Ghost {
       _targetY = _level.pacmanY;
     }
   }
-}
-      **/
+}**/
