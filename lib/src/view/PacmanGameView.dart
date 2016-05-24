@@ -110,13 +110,10 @@ class PacmanGameView {
   PacmanGameController _con;
 
   //the different div-classes from the html-document
-  final _startScreen = querySelector(".start");
   final _message = querySelector(".messages");
   final _game = querySelector(".game");
 
   //different elements from the html-document
-  final _startText = querySelector("#startText");
-  final startButton = querySelector("#startButton");
   final startNext = querySelector("#startNext");
   final _overlay = querySelector("#overlay");
   final _gameend = querySelector("#gameend");
@@ -139,12 +136,6 @@ class PacmanGameView {
   var mql2 = window.matchMedia("screen and (orientation: landscape)");
   //constructor
   PacmanGameView(_con);
-
-  //close start screen and show the gamefield
-  void showGameview() {
-    _startScreen.classes.toggle('close');
-    _game.classes.toggle('show');
-  }
 
   //TODO: NextLevel
   void showNextLevel() {

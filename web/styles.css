@@ -12,46 +12,6 @@ html, body {
     text-align: center;
 }
 
-.start {
-    width: 100%;
-    height: 100%;
-    background-image: url("resc/PacBack.png");
-    background-color: black;
-    -webkit-background-size:cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: fixed;
-    font-weight: bold;
-    text-align: center;
-}
-.start.close { display: none;
-}
-
-#startText {
-    position:absolute;
-    width: auto;
-    margin: 0 auto;
-    left: 45%;
-    bottom: 25%;
-    letter-spacing: 3px;
-    font-family: PacMan;
-    font-size: 2rem;
-}
-
-#startButton {
-    position: absolute;
-    border: 5px solid yellow;
-    border-radius: 20px;
-    padding: 2px 2px 2px 2px;
-    cursor: pointer;  width: 150px;
-    margin: 0 auto;
-    left: 50%;
-    bottom: 5%;
-    font-size: 2rem;
-}
 #startNext{
     color: yellow;
     cursor: pointer;  width: auto;
@@ -127,7 +87,7 @@ span {
     height: 100%;
     width: 1000px;
     margin: 0 auto;
-    display: none;
+    display: block;
 }
 #labyrinth td {
     background-color: black;

@@ -57,7 +57,7 @@ class Inky extends Ghost {
         _targetY = _level.pacmanY;
       }
 
-      print("INKY ZIEL         X " + _targetX.toString() + " Y: " + _targetY.toString());
+    //  print("INKY ZIEL         X " + _targetX.toString() + " Y: " + _targetY.toString());
 
       switch (getNextMove(_x, _y, _targetX, _targetY, _outOfDoor, this)) {
 

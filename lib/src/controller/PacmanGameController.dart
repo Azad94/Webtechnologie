@@ -14,9 +14,8 @@ class PacmanGameController{
 
   //keyListener for User interaction and timer for the refreshrate
   var _keyListener;
-  var _keyListener2;
   Timer _timer;
-  Timer _timer2;
+
 
   var labyrinth;
   //mobile Keys
@@ -30,12 +29,12 @@ class PacmanGameController{
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
 
-    _pacmanView.startButton.onClick.listen((_) {_pacmanModel.loadLevel(1);  startGame();});
-    _pacmanView.startNext.onClick.listen((_) { _pacmanModel.loadLevel(2); startNextLevel();});
+    _pacmanModel.loadLevel(1);
+    //_pacmanView.startNext.onClick.listen((_) { _pacmanModel.loadLevel(2); startNextLevel();});
   }
 
   //TODO: init new Game
-  void startNextLevel() {
+/*  void startNextLevel() {
     //_pacmanModel.newGame();
     print(_pacmanModel._gameOver);
     _pacmanView.showNextLevel();
@@ -71,11 +70,9 @@ class PacmanGameController{
       });
     }
 
-  }
+  }*/
   //starts a new game
   void startGame() {
-    _pacmanView.showGameview();
-
     labyrinth = _pacmanModel.getMap();
     createTable(labyrinth);
     refreshLabyrinth(labyrinth);
@@ -144,12 +141,12 @@ class PacmanGameController{
   //stops interaction
   void stopGame() {
     if (_pacmanView.mql.matches) {
-      up.stopKeylistening();
-      down.stopKeylistening();
-      left.stopKeylistening();
-      right.stopKeylistening();
+      up.cancel();
+      down.cancel();
+      left.cancel();
+      right.cancel();
     } else {
-      _keyListener.stopKeylistening();
+      _keyListener.cancel();
     }
       _timer.cancel();
   }

@@ -125,7 +125,11 @@ abstract class Ghost extends GameElement {
   Directions getNextMove(
       int currentX, int currentY, int targetX, int targetY, bool _outOfDoor, GameElement g)
   {
-    if (currentX == targetX && currentY == targetY)    {if(g is Blinky)print("ICH 128"); return Directions.NOTHING;}
+    if (currentX == targetX && currentY == targetY)    {
+      if(g is Blinky){
+        //print("ICH 128");
+        return Directions.NOTHING;}
+    }
 
     int _currentDistanceX = (targetX - currentX).abs();
     int _currentDistanceY = (targetY - currentY).abs();
@@ -365,7 +369,7 @@ abstract class Ghost extends GameElement {
           return Directions.RIGHT;
         }
 
-        _checkX = currentX;    print("ICH 369");
+        _checkX = currentX;   // print("ICH 369");
         return Directions.NOTHING;
       }
 
@@ -391,7 +395,7 @@ abstract class Ghost extends GameElement {
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
-        _checkX = currentX;    print("ICH 397");
+        _checkX = currentX;   // print("ICH 397");
         return Directions.NOTHING;
       }
 
@@ -418,7 +422,7 @@ abstract class Ghost extends GameElement {
           _previousDirection = Directions.LEFT;
           return Directions.LEFT;
         }
-        _checkX = currentX;    print("ICH 427");
+        _checkX = currentX;   // print("ICH 427");
 
         return Directions.NOTHING;
       }
@@ -447,7 +451,7 @@ abstract class Ghost extends GameElement {
           _previousDirection = Directions.RIGHT;
           return Directions.RIGHT;
         }
-        _checkX = currentX; print("ICH 459");
+        _checkX = currentX; //print("ICH 459");
         return Directions.NOTHING;
       }
     }
@@ -477,7 +481,7 @@ abstract class Ghost extends GameElement {
           return Directions.DOWN;
         }
         _checkY = currentY;
-        print("ICH 488");
+      //  print("ICH 488");
         return Directions.NOTHING;
       }
 
@@ -504,7 +508,7 @@ abstract class Ghost extends GameElement {
           _previousDirection = Directions.DOWN;
           return Directions.DOWN;
         }
-        _checkY = currentY; print("ICH 515");
+        _checkY = currentY; //print("ICH 515");
         return Directions.NOTHING;
       }
 
@@ -531,7 +535,7 @@ abstract class Ghost extends GameElement {
           _previousDirection = Directions.UP;
           return Directions.UP;
         }
-        _checkY = currentY; print("ICH 546");
+        _checkY = currentY;// print("ICH 546");
         return Directions.NOTHING;
       }
 

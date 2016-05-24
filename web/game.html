@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="scaffolded-by" content="https://github.com/google/stagehand">
+    <title>Webtechnologie</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" media="screen and (max-device-width: 800px)" href="mobile.css" />
+</head>
+<body>
+<div class="game">
+    <!-- GameStatus -->
+    <div id="overlay">
+        <span id="gameend"></span>
+        <span id="startNext">NEXTLEVEL</span>
+    </div>
+    <!-- Headline -->
+    <div class="header"></div>
+
+    <!-- das Spielfeld -->
+    <div id="labyrinth"></div>
+
+    <!-- Spielinformationen -->
+    <div id="information">
+        <table id="infos">
+            <tbody><tr>
+                <td><div id="level">LEVEL: </div></td>
+                <td><div class="values" id="value1"></div></td>
+                <td><div id="score">SCORE: </div></td>
+                <td><div class="values" id="value2"></div></td>
+                <td><div id="lives">LIVES: </div></td>
+                <td><div class="values" id="value3"></div></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- mobile -->
+    <div class="mobile">
+        <table id="keylayout">
+            <tbody> <tr id="mobile1">
+                <td class="mobileBlank"></td>
+                <td id="mobileUp"></td>
+                <td class="mobileBlank"></td>
+            </tr>
+            <tr id="mobile2">
+                <td id="mobileLeft"></td>
+                <td class="mobileBlank"></td>
+                <td id="mobileRight"></td>
+            </tr>
+            <tr id="mobile3">
+                <td class="mobileBlank"></td>
+                <td id="mobileDown"></td>
+                <td class="mobileBlank"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Debugg Console -->
+    <div class="messages"></div>
+    <!-- Copyrights -->
+    <p id="footer">
+        <small>
+            &copy; Sheraz Azad, Malte Grebe & Niklas Klatt, 2016<br>
+        </small>
+    </p>
+</div>
+
+<script defer src="main.dart" type="application/dart"></script>
+<script defer src="packages/browser/dart.js"></script>
+</body>
+</html>

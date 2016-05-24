@@ -205,26 +205,26 @@ class Level {
         // pacman
         if (tile._pacman != null)
           switch (_pacmanDir) {
-          case Directions.UP:
-            ret[y].add(Types.PACMAN_UP);
-            _pacmanPre = Types.PACMAN_UP;
-            break;
-          case Directions.DOWN:
-            ret[y].add(Types.PACMAN_DOWN);
-            _pacmanPre = Types.PACMAN_DOWN;
-            break;
-          case Directions.LEFT:
-            ret[y].add(Types.PACMAN_LEFT);
-            _pacmanPre = Types.PACMAN_LEFT;
-            break;
-          case Directions.RIGHT:
-            ret[y].add(Types.PACMAN_RIGHT);
-            _pacmanPre = Types.PACMAN_RIGHT;
-            break;
-          default:
-            ret[y].add(_pacmanPre);
-            break;
-        }
+            case Directions.UP:
+              ret[y].add(Types.PACMAN_UP);
+              _pacmanPre = Types.PACMAN_UP;
+              break;
+            case Directions.DOWN:
+              ret[y].add(Types.PACMAN_DOWN);
+              _pacmanPre = Types.PACMAN_DOWN;
+              break;
+            case Directions.LEFT:
+              ret[y].add(Types.PACMAN_LEFT);
+              _pacmanPre = Types.PACMAN_LEFT;
+              break;
+            case Directions.RIGHT:
+              ret[y].add(Types.PACMAN_RIGHT);
+              _pacmanPre = Types.PACMAN_RIGHT;
+              break;
+            default:
+              ret[y].add(_pacmanPre);
+              break;
+          }
 
         // ghosts
         else if (tile._ghosts.length != 0) {
@@ -298,7 +298,8 @@ class Level {
    */
   void createObjects(String environmentCode) {
     // Split string in lines
-    List<String> lines = environmentCode.split(LevelLoader.NEWLINE);
+    List<String> lines;
+    lines = environmentCode.split(LevelLoader.NEWLINE);
     // compatible to size?
     if (lines.length != _sizeY) {
       // TODO log
@@ -310,22 +311,22 @@ class Level {
         switch (line[x]) {
           case LevelLoader.WALL:
             _tiles[y][x]._environment =
-                new Environment(x, y, true, true, false, false);
+            new Environment(x, y, true, true, false, false);
             break;
 
           case LevelLoader.PILL:
             _tiles[y][x]._item =
-                new Pill(x, y, true, false, true, _scorePill, _model);
+            new Pill(x, y, true, false, true, _scorePill, _model);
             break;
 
           case LevelLoader.POWERPILL:
             _tiles[y][x]._item =
-                new PowerPill(x, y, true, false, true, _scorePowerPill, _model);
+            new PowerPill(x, y, true, false, true, _scorePowerPill, _model);
             break;
 
           case LevelLoader.CHERRY:
             _tiles[y][x]._item =
-                new Cherry(x, y, true, false, true, _scoreCherry, _model);
+            new Cherry(x, y, true, false, true, _scoreCherry, _model);
             break;
 
           case LevelLoader.INKY:
@@ -365,7 +366,7 @@ class Level {
 
           case LevelLoader.DOOR:
             _tiles[y][x]._environment =
-                new Environment(x, y, true, false, false, true);
+            new Environment(x, y, true, false, false, true);
             break;
 
           default:
