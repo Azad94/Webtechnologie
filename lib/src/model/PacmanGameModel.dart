@@ -12,6 +12,7 @@ class PacmanGameModel {
   int _sizeY;
 
   Level _level;
+  LevelLoader _levelloader = new LevelLoader();
   int _currentLevel = -1;
 
   PacmanGameModel(PacmanGameController con) {
@@ -26,12 +27,33 @@ class PacmanGameModel {
 
   int getCurrentLevel() => _currentLevel;
 
-  void loadLevel(int level) {
+ /* void loadLevel(int level) {
     // Delete old references
     _pacman = null;
     _ghosts = new List();
-    LevelLoader.loadLevel(level);
+    print("Step 1");
+    _levelloader.loadLevel(level);}*/
+  Future loadLevel(int level) {
+    HttpRequest.getString("${level}_Level.json").then((loadLevel2));
+  }
+
+  void loadLevel2(String uri){
+    final data = JSON.decode(uri);
+    LevelLoader.levelNumber = data["level"];
+    LevelLoader.sizeX = data["sizeX"];
+    LevelLoader.sizeY = data["sizeY"];
+    LevelLoader._map = data["map"];
+    LevelLoader._lives = data["lives"];
+    LevelLoader._eatTime = data["ghostEatTime"];
+    LevelLoader._startBlinky = data["startBlinky"];
+    LevelLoader._startClyde = data["startClyde"];
+    LevelLoader._startInky = data["startInky"];
+    LevelLoader._startPinky = data["startPinky"];
+    LevelLoader._loaded = true;
+    print("Step 2");
+    print(LevelLoader._map);
     _currentLevel = LevelLoader.levelNumber;
+    print("Step 3");
     _level = new Level(
         LevelLoader._map,
         LevelLoader.sizeX,
@@ -47,7 +69,7 @@ class PacmanGameModel {
         LevelLoader._startInky,
         LevelLoader._startPinky,
         this);
-    print("LEVELLOADER" + LevelLoader.sizeY.toString());
+        _con.startGame();
   }
 
   /**

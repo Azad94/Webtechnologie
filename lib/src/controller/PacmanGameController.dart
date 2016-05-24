@@ -1,7 +1,7 @@
 part of pacmanLib;
 
 //the refreshrate of the view
-const speed = const Duration(milliseconds:400);
+const speed = const Duration(milliseconds:500);
 
 class PacmanGameController{
 
@@ -27,7 +27,7 @@ class PacmanGameController{
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
 
-    _pacmanView.startButton.onClick.listen((_) {_pacmanModel.loadLevel(1);  startGame();});
+    _pacmanView.startButton.onClick.listen((_) {_pacmanModel.loadLevel(1);});
     //TODO: NextLevel
    // _pacmanView.startNext.onClick.listen((_) {resetGame(this); _pacmanModel.loadLevel(2); startNextLevel();});
   }

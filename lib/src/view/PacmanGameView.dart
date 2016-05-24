@@ -172,6 +172,7 @@ class PacmanGameView {
 
   void updateOverlay(String s) {
     _overlay.innerHtml = "<span>$s</span>";
+    _overlay.classes.toggle('show');
   }
   //creates the table in the html-document
   String _createLabyrinth(List<List<Types>> l) {

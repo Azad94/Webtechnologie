@@ -21,14 +21,12 @@
     <p id="startText">WILLKOMMEN</p>
     <p id="startButton">START</p>
 </div>
-<!-- NextLevelTransition -->
-<div id="nextLevel">
-    <p id="startNext">NEXTLEVEL</p>
-</div>
-
 <div class="game">
     <!-- GameStatus -->
-    <div id="overlay"></div>
+    <div id="overlay">
+        <span id="gameend"></span>
+        <span id="startNext">NEXTLEVEL</span>
+    </div>
     <!-- Headline -->
     <div class="header"></div>
 
@@ -46,27 +44,27 @@
                 <td><div id="lives">LIVES: </div></td>
                 <td><div class="values" id="value3"></div></td>
             </tr>
-           </tbody>
+            </tbody>
         </table>
     </div>
     <!-- mobile -->
     <div class="mobile">
         <table id="keylayout">
             <tbody> <tr id="mobile1">
-                        <td class="mobileBlank"></td>
-                        <td id="mobileUp"></td>
-                        <td class="mobileBlank"></td>
-                    </tr>
-                    <tr id="mobile2">
-                        <td id="mobileLeft"></td>
-                        <td class="mobileBlank"></td>
-                        <td id="mobileRight"></td>
-                    </tr>
-                    <tr id="mobile3">
-                        <td class="mobileBlank"></td>
-                        <td id="mobileDown"></td>
-                        <td class="mobileBlank"></td>
-                    </tr>
+                <td class="mobileBlank"></td>
+                <td id="mobileUp"></td>
+                <td class="mobileBlank"></td>
+            </tr>
+            <tr id="mobile2">
+                <td id="mobileLeft"></td>
+                <td class="mobileBlank"></td>
+                <td id="mobileRight"></td>
+            </tr>
+            <tr id="mobile3">
+                <td class="mobileBlank"></td>
+                <td id="mobileDown"></td>
+                <td class="mobileBlank"></td>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -79,7 +77,6 @@
         </small>
     </p>
 </div>
-
 <script defer src="main.dart" type="application/dart"></script>
 <script defer src="packages/browser/dart.js"></script>
 </body>

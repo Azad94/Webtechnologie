@@ -150,9 +150,11 @@ class LevelLoader {
    * Loads a level from json file by given level number.
    * Return true if file is loaded, else false
    */
-  static bool loadLevel(int level) {
-    HttpRequest.getString("${level}_Level.json").then((json) {
-      final data = JSON.decode(json);
+   Future loadLevel(int level) {
+    HttpRequest.getString("${level}_Level.json").then((loadJson));}
+
+   bool loadJson(String uri) {
+      final data = JSON.decode(uri);
       levelNumber = data["level"];
       sizeX = data["sizeX"];
       sizeY = data["sizeY"];
@@ -163,8 +165,10 @@ class LevelLoader {
       _startClyde = data["startClyde"];
       _startInky = data["startInky"];
       _startPinky = data["startPinky"];
-    });
     _loaded = true;
+    print("Step 2");
+    print(_map);
+
     return true;
   }
 
