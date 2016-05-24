@@ -12,7 +12,7 @@ abstract class Ghost extends GameElement {
   bool _eatable = false;
 
   /**
-   * shows if the ghost is moving
+   * true if the ghost is moving, else false
    */
   bool _started = false;
 
@@ -72,6 +72,11 @@ abstract class Ghost extends GameElement {
   int timeCounter = 0;
 
   /**
+   * counter to change Mmdes between scatter and chase
+   */
+  int modeTimer= 0;
+
+  /**
    * reference to the level
    */
   Level _level;
@@ -100,6 +105,7 @@ abstract class Ghost extends GameElement {
         _started = true;
       }
     }
+    if(_started) modeTimer++;
     // only if eatable mode is on
     if (_eatable) {
       timeCounter++;
