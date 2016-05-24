@@ -3,68 +3,54 @@ part of pacmanLib;
 class Pinky extends Ghost {
   Pinky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
       num startTime, num score)
-      : super(
-      x,
-      y,
-      collPlayer,
-      collGhost,
-      l,
-      eatTime,
-      startTime,
-      score);
+      : super(x, y, collPlayer, collGhost, l, eatTime, startTime, score);
 
-  int _doorX = 14;
-  int _doorY = 8;
+  int _doorTargetX = 14;
+  int _doorTargetY = 8;
 
-  int _targetX = 14;
-  int _targetY = 8;
+  int _firsttargetX = 27;
+  int _firsttargetY = 16;
 
-  int _scatterX = 27;
-  int _scatterY = 16;
+  int _secondTargetX = 1;
+  int _secondTargetY = 1;
 
-  int _switchMode = 40;
-  bool _scatterModeOn = false;
-  bool _scat = true;
-  bool _chase = false;
-  bool _outOfDoor = false;
-  int _scatTimer = 0;
-  bool _te = false;
+  int _targetX;
+  int _targetY;
 
+  bool outOfDoor = false;
+  int _targetsReached = 8;
+
+  @override
   void move() {
     super.move();
-    if (_started) {
-      if (_x == _x_start && _y == _y_start) {
-        _targetX = _doorX;
-        _targetY = _doorY;
-        _scat = false;
-        _chase = false;
+    if(_started) {
+      if (outOfDoor == false) {
+        _targetX = _doorTargetX;
+        _targetY = _doorTargetY;
       }
 
-      if (_outOfDoor == true && _scat == false && _chase == false &&
-          _scatTimer == 40) {
-        _scatTimer = 0;
-        _chase = false;
-        _te = false;
-        _targetX = _scatterX;
-        _targetY = _scatterY;
+      switch (_targetsReached) {
+        case 0:
+          _targetX = _doorTargetX;
+          _targetY = _doorTargetY;
+          break;
+
+        case 1:
+          _targetX = _firsttargetX;
+          _targetY = _firsttargetY;
+          break;
+
+        case 2:
+          _targetX = _secondTargetX;
+          _targetY = _secondTargetY;
+          break;
+
+        default:
+          _targetX = _x;
+          _targetY = _y;
       }
 
-      if (_outOfDoor == true && _scat == true && _chase == false &&
-          _scatTimer == 15) {
-        _scat = false;
-        _scatTimer = 0;
-        _te = true;
-      }
-
-      if (_te == true && _scatTimer % 5 == 0) {
-        _targetX = _level.pacmanX;
-        _targetY = _level.pacmanY;
-      }
-
-     /* print("PINKY ZIEL         X " + _targetX.toString() + " Y: " +
-          _targetY.toString());*/
-
-      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfDoor, this)) {
+      switch (getNextMove(_x, _y, _targetX, _targetY, this)) {
         case Directions.UP:
           _level.registerElement(_x, _y, _x, --_y, this);
           break;
@@ -92,39 +78,9 @@ class Pinky extends Ghost {
       }
 
       if (_x == _targetX && _y == _targetY) {
-        if (_x == _doorX && _y == _doorY) {
-          _outOfDoor = true;
-          _scat = true;
-          _chase = false;
-          changeMode();
-        }
-
-        if (_x == _scatterX && _y == _scatterY) {
-          _scat = false;
-          _chase = true;
-          changeMode();
-        }
-
-        if (_x == _targetX && _y == _targetY) {
-          _scat = false;
-          _chase = true;
-          changeMode();
-        }
+        if (outOfDoor == false) outOfDoor = true;
+        _targetsReached++;
       }
-      ++_scatTimer;
-    }
-  }
-
-  void changeMode() {
-    if (_scat == true) {
-      _targetX = _scatterX;
-      _targetY = _scatterY;
-      _scatTimer = 0;
-    }
-    else {
-      _targetX = _level.pacmanX;
-      _targetY = _level.pacmanY;
-      _scatTimer = 0;
     }
   }
 }

@@ -99,9 +99,7 @@ class PacmanGameModel {
   void gameWon() {
     _gameWon = true;
   }
-  void newGame() {
-    _gameOver = false;
-  }
+
   /**
    * enable the power mode, means that ghosts are eatable
    */

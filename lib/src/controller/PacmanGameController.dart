@@ -1,7 +1,7 @@
 part of pacmanLib;
 
 //the refreshrate of the view
-const speed = const Duration(milliseconds:200);
+const speed = const Duration(milliseconds:400);
 
 class PacmanGameController{
 
@@ -16,8 +16,6 @@ class PacmanGameController{
   var _keyListener;
   Timer _timer;
 
-
-  var labyrinth;
   //mobile Keys
   var up;
   var down;
@@ -29,51 +27,39 @@ class PacmanGameController{
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
 
-    _pacmanModel.loadLevel(1);
-    //_pacmanView.startNext.onClick.listen((_) { _pacmanModel.loadLevel(2); startNextLevel();});
+    _pacmanView.startButton.onClick.listen((_) {_pacmanModel.loadLevel(1);  startGame();});
+    //TODO: NextLevel
+   // _pacmanView.startNext.onClick.listen((_) {resetGame(this); _pacmanModel.loadLevel(2); startNextLevel();});
   }
-
+  //TODO: Reset GameStatus to Play nextLevel
+  /*void resetGame(PacmanGameController con){
+      _pacmanModel = new PacmanGameModel(con);
+      _pacmanView = new PacmanGameView(con);
+  }
   //TODO: init new Game
-/*  void startNextLevel() {
-    //_pacmanModel.newGame();
-    print(_pacmanModel._gameOver);
-    _pacmanView.showNextLevel();
-    _pacmanView._overlay.classes.toggle('hide');
-    labyrinth = _pacmanModel.getMap();
-    createTable(labyrinth);
+  void startNextLevel() {
+    var labyrinth = _pacmanModel.getMap();
+    initField(labyrinth);
     refreshLabyrinth(labyrinth);
 
-    _timer2 = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
+    _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
 
-    if(_pacmanView.mql.matches){
-      up = _pacmanView.mobileUp.onClick.listen((_) {_pacmanModel.moveUp();});
-      down = _pacmanView.mobileDown.onClick.listen((_) {_pacmanModel.moveDown();});
-      left = _pacmanView.mobileLeft.onClick.listen((_) {_pacmanModel.moveLeft();});
-      right = _pacmanView.mobileRight.onClick.listen((_) {_pacmanModel.moveRight();});
-    } else {
-      _keyListener2 = window.onKeyDown.listen((KeyboardEvent ev) {
-        ev.preventDefault();
-        switch (ev.keyCode) {
-          case KeyCode.LEFT:
-            _pacmanModel.moveLeft();
-            break;
-          case KeyCode.RIGHT:
-            _pacmanModel.moveRight();
-            break;
-          case KeyCode.DOWN:
-            _pacmanModel.moveDown();
-            break;
-          case KeyCode.UP:
-            _pacmanModel.moveUp();
-            break;
-        }
-      });
-    }
+    _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
+      ev.preventDefault();
+      switch (ev.keyCode) {
+        case KeyCode.LEFT:  _pacmanModel.moveLeft(); break;
+        case KeyCode.RIGHT:  _pacmanModel.moveRight(); break;
+        case KeyCode.DOWN: _pacmanModel.moveDown(); break;
+        case KeyCode.UP: _pacmanModel.moveUp(); break;
+      }
+    });
 
   }*/
   //starts a new game
   void startGame() {
-    labyrinth = _pacmanModel.getMap();
+    _pacmanView.showGameview();
+
+    var labyrinth = _pacmanModel.getMap();
     createTable(labyrinth);
     refreshLabyrinth(labyrinth);
 
@@ -129,6 +115,9 @@ class PacmanGameController{
     if(b){
       stopGame();
       _pacmanView.updateOverlay("GAME OVER");
+      //TODO: NextLevel
+     /* _pacmanView._nextLevel.classes.toggle('show');
+      _pacmanView.startNext.classes.toggle('show');*/
     }
   }
   //ends the game, won
@@ -136,6 +125,8 @@ class PacmanGameController{
     if(b) {
       stopGame();
       _pacmanView.updateOverlay("STAGE CLEARED");
+      //TODO: NextLevel
+     /* _pacmanView._nextLevel.classes.toggle('show');*/
     }
   }
   //stops interaction
