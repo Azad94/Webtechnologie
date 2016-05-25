@@ -6,6 +6,7 @@ part of pacmanLib;
  * scatter to his point keep his distance from Pacman
  * but if Pacman crosses his way to his scatter position he doesn't hold back
  * eating him
+ *
  */
 class Clyde extends Ghost {
   Clyde(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
