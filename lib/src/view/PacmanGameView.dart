@@ -110,49 +110,31 @@ class PacmanGameView {
   PacmanGameController _con;
 
   //the different div-classes from the html-document
-  //final _startScreen = querySelector(".start");
   final _message = querySelector(".messages");
-  final _game = querySelector(".game");
 
   //different elements from the html-document
- // final _startText = querySelector("#startText");
- // final startButton = querySelector("#startButton");
-  final _nextLevel = querySelector("#nextLevel");
   final startNext = querySelector("#startNext");
   final _overlay = querySelector("#overlay");
   final _gameend = querySelector("#gameend");
   final _labyrinth = querySelector("#labyrinth");
 
-  final _information = querySelector("#information");
   final _level = querySelector("#value1");
   final _score = querySelector("#value2");
   final _lives = querySelector("#value3");
 
-  //mobile keys
+  //move keys for the mobile version
   final mobile = querySelector(".mobile");
   final mobileUp = querySelector("#mobileUp");
   final mobileDown = querySelector("#mobileDown");
   final mobileLeft = querySelector("#mobileLeft");
   final mobileRight = querySelector("#mobileRight");
 
+  //
   var mql = window.matchMedia("screen and (max-device-width : 800px)");
-  var mql2 = window.matchMedia("screen and (orientation: landscape)");
+  var mqlLandscape = window.matchMedia("screen and (orientation: landscape)");
+
   //constructor
   PacmanGameView(_con);
-
-  //close start screen and show the gamefield
-/*  void showGameview() {
-    _startScreen.classes.toggle('close');
-    _game.classes.toggle('show');
-  }*/
-  /*
-  //TODO: NextLevel
-  void nextLevel() {
-    _overlay.innerHtml="";
-    _nextLevel.classes.toggle('hide');
-    startNext.classes.toggle('hide');
-  }*/
-  void updateGameStatus() {}
 
   //see _labyrinthToHTMLTable
   void initTable(List<List<Types>> l) {
@@ -162,21 +144,28 @@ class PacmanGameView {
   void updateScore(int score) {
     _score.innerHtml = " $score";
   }
+  //displays the current level
   void updateLevel(int level){
     _level.innerHtml = " $level";
   }
+  //displays the current number of lives
   void updateLives(int lives){
     _lives.innerHtml = " $lives";
   }
+
   void updateMessages(String str) {
     _message.innerHtml = "Msg: $str"; }
 
+  //updates the gameoverlay according to the gameend condition
   void updateOverlay(String s) {
     _gameend.innerHtml = s;
-    _overlay.classes.toggle('show');
+    _overlay.style.display = "block";
   }
   void hideOverlay() {
     _overlay.style.display = "none";
+  }
+  void hideNextLevel() {
+    startNext.style.display = "none";
   }
   //creates the table in the html-document
   String _createLabyrinth(List<List<Types>> l) {
@@ -195,6 +184,7 @@ class PacmanGameView {
   }
 
   //loads the different game elements and their graphical representation into the table
+  //distingush between screen/mobile(portrait) and mobile(landscape)
   void _labyrinthFill(List<List<Types>> l) {
 
     var kl = _labyrinth.children[0].children[0];
@@ -204,7 +194,7 @@ class PacmanGameView {
     for (List<Types> row in l) {
 
       for (Types s in row) {
-        if (mql.matches && mql2.matches) {
+        if (mql.matches && mqlLandscape.matches) {
           switch (s) {
             case Types.WALL :
               kl.children[_row].children[_col].setAttribute("style", wall16);

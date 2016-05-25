@@ -69,13 +69,8 @@ class PacmanGameModel {
         LevelLoader._startInky,
         LevelLoader._startPinky,
         this);
-        if(LevelLoader.levelNumber==1){
-          print("LEVELNUMBER1:" + LevelLoader.levelNumber.toString());
-          _con.startGame();}
-        if(LevelLoader.levelNumber==2){
-          print("LEVELNUMBER2:" + LevelLoader.levelNumber.toString());
-          _con.startNextLevel();
-        }
+        _con.startGame();
+
   }
 
   /**
