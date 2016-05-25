@@ -6,6 +6,7 @@ part of pacmanLib;
  * scatter to his point keep his distance from Pac-Man
  * but if Pac-Man crosses his way to his scatter position he doesn't hold back
  * eating him
+ * he leaves the gate at last
  */
 class Clyde extends Ghost {
   Clyde(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
@@ -29,11 +30,6 @@ class Clyde extends Ghost {
   int _targetY;
 
   /**
-   * true if Clyde is out of the Gate, else false
-   */
-  bool _outOfGate = false;
-
-  /**
    * Direction where Clyde came from
    */
   Directions _previousDirection;
@@ -41,12 +37,12 @@ class Clyde extends Ghost {
   /**
    * period of Time Clyde is chasing the Pac-Man
    */
-  int _chasingTime = 50;
+  int _chasingTime = 40;
 
   /**
    * period of Time Clyde is chasing the Pac-Man
    */
-  int _scatteringTime = 25;
+  int _scatteringTime = 22;
 
   /**
    * updates the Pac-Man position as target
@@ -86,7 +82,7 @@ class Clyde extends Ghost {
 
 
       //switches to scatter mode if the requirements are fulfilled
-      if (_outOfGate == true && _isScattering == false && _isChasing == true
+      if (_outOfGate && !_isScattering && _isChasing
           && _changeModeTimer != 0 && (_changeModeTimer % _chasingTime) == 0) {
         _isScattering = true;
         changeMode();
@@ -169,7 +165,7 @@ class Clyde extends Ghost {
    */
   void changeMode() {
 
-    if (_isScattering == true) {
+    if (_isScattering) {
       _isChasing = false;
       _changeModeTimer = 0;
       _targetX = _scatterX;

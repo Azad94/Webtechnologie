@@ -1,17 +1,16 @@
 part of pacmanLib;
 
+/**
+ * AI for the Ghost BLINKY
+ * he pursuits Pac-Man with no mercy and tries to get to him in
+ * the chase mode asap, his time of scattering is compared to
+ * the other ghosts very short and therefore he is the most
+ * persistent ghost of them all, he leaves the gate at first
+ */
 class Blinky extends Ghost {
   Blinky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
       num startTime, num score)
-      : super(
-      x,
-      y,
-      collPlayer,
-      collGhost,
-      l,
-      eatTime,
-      startTime,
-      score);
+      : super( x, y, collPlayer, collGhost, l, eatTime, startTime, score);
 
 
   int _doorX = 14;
@@ -43,12 +42,12 @@ class Blinky extends Ghost {
   /**
    * period of Time Blinky is chasing the Pac-Man
    */
-  int _chasingTime = 50;
+  int _chasingTime = 40;
 
   /**
    * period of Time Blinky is chasing the Pac-Man
    */
-  int _scatteringTime = 10;
+  int _scatteringTime = 15;
 
   /**
    * updates the Pac-Man position as target
@@ -57,7 +56,7 @@ class Blinky extends Ghost {
   int _updateTargetTimer = 1;
 
   /**
-   * Moves Inky one step further
+   * Moves Blinky one step further
    */
   void move() {
     super.move();
@@ -70,7 +69,7 @@ class Blinky extends Ghost {
         _targetY = _doorY;
         _isScattering = false;
         _isChasing = false;
-        _previousDirection = Directions.LEFT;
+        _previousDirection = Directions.RIGHT;
       }
 
       //change to scatter mode after chasing time is up
@@ -101,7 +100,7 @@ class Blinky extends Ghost {
       }
 
       //updates the target of Blinky while in chasing mode to the
-      // current position of Pac-Man every step
+      //current position of Pac-Man every step
       if (_isScattering == false && _isChasing == true &&
           (_changeModeTimer % _updateTargetTimer) == 0) {
         _targetX = _level.pacmanX;

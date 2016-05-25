@@ -2,9 +2,9 @@ part of pacmanLib;
 
 /**
  * AI for the Ghost INKY
- * he is one of the smarter ghosts and tries to keep up with Pac-Man
- * while pursuing he tries to cross the way of Pac-Man
- * while his target is two squares in front of him
+ * he tries to be at the same horizontal level with Pac-Man
+ * during the whole game and tries to get in front of him,
+ * he leaves the gate as second last ghost
  */
 class Inky extends Ghost {
   Inky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
@@ -40,12 +40,12 @@ class Inky extends Ghost {
   /**
    * period of Time Inky is chasing the Pac-Man
    */
-  int _chasingTime = 50;
+  int _chasingTime = 40;
 
   /**
    * period of Time Inky is chasing the Pac-Man
    */
-  int _scatteringTime = 15;
+  int _scatteringTime = 20;
 
   /**
    * updates the Pac-Man position as target
@@ -99,11 +99,31 @@ class Inky extends Ghost {
       //updates the target of Inky while in chasing mode three suqares ahead
       //of the current position of Pac-Man every three steps
       if (_isScattering == false && _isChasing == true && (_changeModeTimer % _updateTargetTimer) == 0) {
+        switch(_level._pacmanPre){
+          case Types.PACMAN_UP:
+            _targetX = _level.pacmanX;
+            (_targetY - _y > 0) ? _targetY = _level.pacmanY + 1
+              : _targetY = _level.pacmanY - 1;
+            break;
+          case Types.PACMAN_DOWN:
+            _targetX = _level.pacmanX;
+            (_targetY - _y > 0) ? _targetY = _level.pacmanY + 1
+                : _targetY = _level.pacmanY - 1;
+            break;
+          case Types.PACMAN_LEFT:
+            _targetX = _level.pacmanX;
+            (_targetY - _y > 0) ? _targetY = _level.pacmanY + 1
+                : _targetY = _level.pacmanY - 1;
+            break;
+          case Types.PACMAN_RIGHT:
+            _targetX = _level.pacmanX;
+            (_targetY - _y > 0) ? _targetY = _level.pacmanY + 1
+                : _targetY = _level.pacmanY - 1;
+            break;
 
-        (_level.pacmanX - _x) > 0 ?
-          _targetX = _level.pacmanX + 3 :
-            _targetX = _level.pacmanX - 3;
-        _targetY = _level.pacmanY;
+          default:
+            break;
+        }
       }
 
       //gets the Direction Inky is allowed to head next, registers his next position
