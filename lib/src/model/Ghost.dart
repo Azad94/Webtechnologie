@@ -72,14 +72,24 @@ abstract class Ghost extends GameElement {
   int timeCounter = 0;
 
   /**
-   * counter to change Mmdes between scatter and chase
+   * counter to change Mode between scatter and chase
    */
-  int modeTimer= 0;
+  int _changeModeTimer= 0;
 
   /**
    * reference to the level
    */
   Level _level;
+
+  /**
+   * true if Clyde is scattering, else false
+   */
+  bool _isScattering;
+
+  /**
+   * true if Clyde is chasing the Pacman, else false
+   */
+  bool _isChasing;
 
   /**
    * Constructor of class Ghost
@@ -103,9 +113,11 @@ abstract class Ghost extends GameElement {
       if(timeCounter == _startTime) {
         timeCounter = 0;
         _started = true;
+        _isScattering = true;
+        _isChasing = false;
       }
     }
-    if(_started) modeTimer++;
+    if(_started) _changeModeTimer++;
     // only if eatable mode is on
     if (_eatable) {
       timeCounter++;
