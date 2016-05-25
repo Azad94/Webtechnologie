@@ -2,9 +2,9 @@ part of pacmanLib;
 
 /**
  * AI for the Ghost CLYDE
- * he doesn't pursuit the Pacman as the other Ghosts and spends more of his time
- * scatter to his point keep his distance from Pacman
- * but if Pacman crosses his way to his scatter position he doesn't hold back
+ * he doesn't pursuit the Pac-Man as the other Ghosts and spends more of his time
+ * scatter to his point keep his distance from Pac-Man
+ * but if Pac-Man crosses his way to his scatter position he doesn't hold back
  * eating him
  */
 class Clyde extends Ghost {
@@ -39,17 +39,17 @@ class Clyde extends Ghost {
   Directions _previousDirection;
 
   /**
-   * period of Time Clyde is chasing the Pacman
+   * period of Time Clyde is chasing the Pac-Man
    */
   int _chasingTime = 50;
 
   /**
-   * period of Time Clyde is chasing the Pacman
+   * period of Time Clyde is chasing the Pac-Man
    */
   int _scatteringTime = 25;
 
   /**
-   * updates the Pacman position as target
+   * updates the Pac-Man position as target
    * after a certain amount of time
    */
   int _updateTargetTimer = 5;
@@ -100,7 +100,7 @@ class Clyde extends Ghost {
       }
 
       //updates the target of Clyde while in chasing mode to the current
-      //position of Pacman every five steps
+      //position of Pac-Man every five steps
       if (_isScattering == false && _isChasing == true && (_changeModeTimer % _updateTargetTimer) == 0) {
         _targetX = _level.pacmanX;
         _targetY = _level.pacmanY;

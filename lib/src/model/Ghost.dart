@@ -87,7 +87,7 @@ abstract class Ghost extends GameElement {
   bool _isScattering;
 
   /**
-   * true if Clyde is chasing the Pacman, else false
+   * true if Clyde is chasing the Pac-Man, else false
    */
   bool _isChasing;
 
