@@ -1,85 +1,174 @@
 part of pacmanLib;
 
+/**
+ * AI for the Ghost CLYDE
+ * he doesn't pursuit the Pacman as the other Ghosts and spends more of his time
+ * scatter to his point keep his distance from Pacman
+ * but if Pacman crosses his way to his scatter position he doesn't hold back
+ * eating him
+ */
 class Clyde extends Ghost {
   Clyde(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
       num startTime, num score)
       : super(x, y, collPlayer, collGhost, l, eatTime, startTime, score);
-  int _doorTargetX = 14;
-  int _doorTargetY = 8;
 
-  int _firsttargetX = 27;
-  int _firsttargetY = 1;
+  int _doorX = 14;
+  int _doorY = 8;
 
-  int _secondTargetX = 1;
-  int _secondTargetY = 16;
+  int _scatterX = 1;
+  int _scatterY = 16;
 
+  /**
+   * X-Coordinate for the next horizontal target of Clyde
+   */
   int _targetX;
+
+  /**
+   * Y-Coordinate for the next vertical target of Clyde
+   */
   int _targetY;
 
-  bool outOfDoor = false;
-  int _targetsReached = 0;
+  /**
+   * true if Clyde is scattering, else false
+   */
+  bool _isScattering = true;
 
-  @override
+  /**
+   * true if Clyde is chasing the Pacman, else false
+   */
+  bool _isChasing = false;
+
+  /**
+   * true if Clyde is out of the Gate, else false
+   */
+  bool _outOfGate = false;
+
+  /**
+   * Direction where Clyde came from
+   */
+  Directions _previousDirection;
+
+  /**
+   * period of Time Clyde is chasing the Pacman
+   */
+  int _chasingTime = 40;
+
+  /**
+   * Moves Clyde one step further
+   */
   void move() {
     super.move();
-    if(_started) {
-      if (outOfDoor == false) {
-        _targetX = _doorTargetX;
-        _targetY = _doorTargetY;
+
+    //checks if Clyde is allowed to move yet
+    if (_started) {
+      //if Clyde is at his origin position his first target is to get out of the Door
+      if (_x == _x_start && _y == _y_start) {
+        _targetX = _doorX;
+        _targetY = _doorY;
+        _isScattering = false;
+        _isChasing = false;
+        _previousDirection = Directions.LEFT;
       }
 
-      switch (_targetsReached) {
-        case 0:
-          _targetX = _doorTargetX;
-          _targetY = _doorTargetY;
-          break;
-
-        case 1:
-          _targetX = _level.pacmanX;
-          _targetY = _level.pacmanY;
-          break;
-      /**
-          case 2:
-          _targetX = _secondTargetX;
-          _targetY = _secondTargetY;
-          break;
-       **/
-        default:
-          _targetX = _x;
-          _targetY = _y;
+      //change to scatter mode after chasing time is up
+      if(modeTimer > _chasingTime) {
+        _isScattering = true;
+        changeMode();
       }
 
-      switch (getNextMove(_x, _y, _targetX, _targetY, this)) {
+      //switches to scatter mode if the requirements are fulfilled
+      if (_outOfGate == true && _isScattering == false && _isChasing == true && (modeTimer % _chasingTime) == 0) {
+        _isScattering = true;
+        changeMode();
+      }
+
+      //switches to chasing mode if the requirements are fulfilled
+      if (_outOfGate == true && _isScattering == true && _isChasing == false && modeTimer != 0 && (modeTimer % 20) == 0)  {
+        _isScattering = false;
+        changeMode();
+      }
+
+      //updates the target of Clyde while in chasing mode to the current
+      //position of Pacman every five steps
+      if (_isScattering == false && _isChasing == true && (modeTimer % 5) == 0) {
+        _targetX = _level.pacmanX;
+        _targetY = _level.pacmanY;
+      }
+
+      //gets the Direction Clyde is allowed to head next, registers his next position
+      //and updates his previous direction
+      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirection, this)) {
         case Directions.UP:
           _level.registerElement(_x, _y, _x, --_y, this);
+          _previousDirection = Directions.UP;
           break;
 
         case Directions.DOWN:
         // TODO PROVISORISCH MUSS RAUS
           if (_x == 14 && _y == 8) {
             _level.registerElement(_x, _y, ++_x, _y, this);
+            _previousDirection = Directions.LEFT;
             break;
           }
           _level.registerElement(_x, _y, _x, ++_y, this);
+          _previousDirection = Directions.DOWN;
           break;
 
         case Directions.LEFT:
           _level.registerElement(_x, _y, --_x, _y, this);
+          _previousDirection = Directions.LEFT;
           break;
 
         case Directions.RIGHT:
           _level.registerElement(_x, _y, ++_x, _y, this);
+          _previousDirection = Directions.RIGHT;
           break;
 
         case Directions.NOTHING:
           _level.registerElement(_x, _y, _x, _y, this);
+          _previousDirection = Directions.NOTHING;
           break;
       }
 
+      //checks if Clyde has reached his target and changes the mode accordingly
       if (_x == _targetX && _y == _targetY) {
-        if (outOfDoor == false) outOfDoor = true;
-        _targetsReached++;
+        if (_x == _doorX && _y == _doorY) {
+          _outOfGate = true;
+          _isScattering = true;
+          changeMode();
+        }
+
+        if (_x == _scatterX && _y == _scatterY) {
+          _isScattering = false;
+          changeMode();
+        }
+
+        if (_x == _targetX && _y == _targetY) {
+          _isScattering = true;
+          changeMode();
+        }
       }
+      ++modeTimer;
+    }
+  }
+
+  /**
+   * changes the mode between scattering and chasing
+   * sets the timer back and updates the needed variables
+   */
+  void changeMode() {
+
+    if (_isScattering == true) {
+      _isChasing = false;
+      modeTimer = 0;
+      _targetX = _scatterX;
+      _targetY = _scatterY;
+    }
+    else {
+      _isChasing = true;
+      modeTimer = 0;
+      _targetX = _level.pacmanX;
+      _targetY = _level.pacmanY;
     }
   }
 }
