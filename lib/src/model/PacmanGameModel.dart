@@ -69,7 +69,13 @@ class PacmanGameModel {
         LevelLoader._startInky,
         LevelLoader._startPinky,
         this);
-        _con.startGame();
+        if(LevelLoader.levelNumber==1){
+          print("LEVELNUMBER1:" + LevelLoader.levelNumber.toString());
+          _con.startGame();}
+        if(LevelLoader.levelNumber==2){
+          print("LEVELNUMBER2:" + LevelLoader.levelNumber.toString());
+          _con.startNextLevel();
+        }
   }
 
   /**
@@ -121,7 +127,10 @@ class PacmanGameModel {
   void gameWon() {
     _gameWon = true;
   }
-
+  void newGame() {
+    _gameOver = false;
+    _gameWon = false;
+  }
   /**
    * enable the power mode, means that ghosts are eatable
    */

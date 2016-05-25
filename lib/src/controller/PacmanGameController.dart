@@ -14,8 +14,9 @@ class PacmanGameController{
 
   //keyListener for User interaction and timer for the refreshrate
   var _keyListener;
+  var _keyListener2;
   Timer _timer;
-
+  Timer _timer2;
   //mobile Keys
   var up;
   var down;
@@ -27,37 +28,48 @@ class PacmanGameController{
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
 
-    _pacmanView.startButton.onClick.listen((_) {_pacmanModel.loadLevel(1);});
+    /*_pacmanView.startButton.onClick.listen((_) {*/_pacmanModel.loadLevel(1);//});
     //TODO: NextLevel
    // _pacmanView.startNext.onClick.listen((_) {resetGame(this); _pacmanModel.loadLevel(2); startNextLevel();});
   }
-  //TODO: Reset GameStatus to Play nextLevel
-  /*void resetGame(PacmanGameController con){
-      _pacmanModel = new PacmanGameModel(con);
-      _pacmanView = new PacmanGameView(con);
-  }
+
   //TODO: init new Game
   void startNextLevel() {
+    _pacmanView.hideOverlay();
     var labyrinth = _pacmanModel.getMap();
-    initField(labyrinth);
+   // createTable(labyrinth);
     refreshLabyrinth(labyrinth);
 
-    _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
+    _timer2 = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
 
-    _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
-      ev.preventDefault();
-      switch (ev.keyCode) {
-        case KeyCode.LEFT:  _pacmanModel.moveLeft(); break;
-        case KeyCode.RIGHT:  _pacmanModel.moveRight(); break;
-        case KeyCode.DOWN: _pacmanModel.moveDown(); break;
-        case KeyCode.UP: _pacmanModel.moveUp(); break;
-      }
-    });
-
-  }*/
+    if(_pacmanView.mql.matches){
+      up = _pacmanView.mobileUp.onClick.listen((_) {_pacmanModel.moveUp();});
+      down = _pacmanView.mobileDown.onClick.listen((_) {_pacmanModel.moveDown();});
+      left = _pacmanView.mobileLeft.onClick.listen((_) {_pacmanModel.moveLeft();});
+      right = _pacmanView.mobileRight.onClick.listen((_) {_pacmanModel.moveRight();});
+    } else {
+      _keyListener2 = window.onKeyDown.listen((KeyboardEvent ev) {
+        ev.preventDefault();
+        switch (ev.keyCode) {
+          case KeyCode.LEFT:
+            _pacmanModel.moveLeft();
+            break;
+          case KeyCode.RIGHT:
+            _pacmanModel.moveRight();
+            break;
+          case KeyCode.DOWN:
+            _pacmanModel.moveDown();
+            break;
+          case KeyCode.UP:
+            _pacmanModel.moveUp();
+            break;
+        }
+      });
+    }
+  }
   //starts a new game
   void startGame() {
-    _pacmanView.showGameview();
+    //_pacmanView.showGameview();
 
     var labyrinth = _pacmanModel.getMap();
     createTable(labyrinth);
@@ -115,6 +127,9 @@ class PacmanGameController{
     if(b){
       stopGame();
       _pacmanView.updateOverlay("GAME OVER");
+      _pacmanModel.newGame();
+      print(_pacmanModel.gameEnd);
+      _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(2);});
       //TODO: NextLevel
      /* _pacmanView._nextLevel.classes.toggle('show');
       _pacmanView.startNext.classes.toggle('show');*/

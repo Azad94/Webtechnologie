@@ -68,7 +68,7 @@ html, body {
 }
 
 #nextLevel{
-    display:none;
+    display:block;
     margin: auto;
     position: absolute;
     top: 0px;
@@ -127,7 +127,7 @@ span {
     height: 100%;
     width: 1000px;
     margin: 0 auto;
-    display: none;
+    display: block;
 }
 #labyrinth td {
     background-color: black;
