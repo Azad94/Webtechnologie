@@ -167,6 +167,7 @@ class PacmanGameView {
   void hideNextLevel() {
     startNext.style.display = "none";
   }
+
   //creates the table in the html-document
   String _createLabyrinth(List<List<Types>> l) {
 

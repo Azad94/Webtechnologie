@@ -97,6 +97,7 @@ class PacmanGameController{
   void gameOver(bool b) {
     if(b){
       stopGame();
+      _pacmanView.hideNextLevel();
       _pacmanView.updateOverlay("GAME OVER");
     }
   }
