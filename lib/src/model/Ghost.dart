@@ -142,7 +142,6 @@ abstract class Ghost extends GameElement {
    */
   void respwan() {
     _eatable = false;
-    _started = false;
     timeCounter = 0;
     _x = _x_start;
     _y = _y_start;
