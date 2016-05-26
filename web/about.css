@@ -1,0 +1,33 @@
+@font-face {
+    font-family: PacMan; /*a name to be used later*/
+    src: url("PAC-FONT.TTF"); /*URL to font*/
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+    color: yellow;
+    background-color: black;
+    font-family: "Calibri Light", serif;
+    text-align: center;
+}
+#navigation{
+    border: 5px solid yellow;
+    color:yellow;
+    font-family: PacMan, serif;
+    border-radius: 20px;
+    padding: 3px 3px 3px 3px;
+    cursor: pointer;  width: 200px;
+    font-size: 2rem;
+    margin-top: 10%;
+}
+h1 {
+    font-family: PacMan, serif;
+}
+h2 {
+    font-family: PacMan, serif;
+    margin-bottom: 2%;
+}
+p{
+    margin-bottom: 4%;
+}

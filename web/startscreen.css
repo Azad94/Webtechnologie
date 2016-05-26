@@ -27,29 +27,34 @@ html, body {
     font-weight: bold;
     text-align: center;
 }
-.start.close { display: none;
+
+#startlayout{
+    margin-top: 30%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #startText {
-    position:absolute;
     width: auto;
-    margin: 0 auto;
-    left: 45%;
-    bottom: 25%;
     letter-spacing: 3px;
-    font-family: PacMan;
+    font-family: PacMan, serif;
     font-size: 2rem;
 }
 
 #startButton {
-    position: absolute;
     border: 5px solid yellow;
     color:yellow;
     border-radius: 20px;
     padding: 3px 3px 3px 3px;
     cursor: pointer;  width: 200px;
-    margin: 0 auto;
-    left: 50%;
-    bottom: 5%;
+    font-size: 2rem;
+}
+
+#about {
+    border: 5px solid yellow;
+    color:yellow;
+    border-radius: 20px;
+    padding: 3px 3px 3px 3px;
+    cursor: pointer;  width: 200px;
     font-size: 2rem;
 }

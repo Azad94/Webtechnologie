@@ -98,9 +98,6 @@ class PacmanGameController{
     if(b){
       stopGame();
       _pacmanView.updateOverlay("GAME OVER");
-      _pacmanModel.newGame();
-      print(_pacmanModel.gameEnd);
-      _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(++_currentLevel);});
     }
   }
   //ends the game, won
@@ -108,6 +105,9 @@ class PacmanGameController{
     if(b) {
       stopGame();
       _pacmanView.updateOverlay("STAGE CLEARED");
+      _pacmanModel.newGame();
+      print(_pacmanModel.gameEnd);
+      _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(++_currentLevel);});
     }
   }
   //stops interaction
