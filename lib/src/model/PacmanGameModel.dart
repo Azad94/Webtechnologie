@@ -50,10 +50,10 @@ class PacmanGameModel {
     LevelLoader._startInky = data["startInky"];
     LevelLoader._startPinky = data["startPinky"];
     LevelLoader._loaded = true;
-    print("Step 2");
-    print(LevelLoader._map);
+  //  print("Step 2");
+  //  print(LevelLoader._map);
     _currentLevel = LevelLoader.levelNumber;
-    print("Step 3");
+  //  print("Step 3");
     _level = new Level(
         LevelLoader._map,
         LevelLoader.sizeX,

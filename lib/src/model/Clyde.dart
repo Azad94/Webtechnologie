@@ -2,11 +2,11 @@ part of pacmanLib;
 
 /**
  * AI for the Ghost CLYDE
- * he doesn't pursuit the Pacman as the other Ghosts and spends more of his time
- * scatter to his point keep his distance from Pacman
- * but if Pacman crosses his way to his scatter position he doesn't hold back
+ * he doesn't pursuit the Pac-Man as the other Ghosts and spends more of his time
+ * scatter to his point keep his distance from Pac-Man
+ * but if Pac-Man crosses his way to his scatter position he doesn't hold back
  * eating him
- *
+ * he leaves the gate at last
  */
 class Clyde extends Ghost {
   Clyde(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
@@ -30,35 +30,32 @@ class Clyde extends Ghost {
   int _targetY;
 
   /**
-   * true if Clyde is scattering, else false
-   */
-  bool _isScattering = true;
-
-  /**
-   * true if Clyde is chasing the Pacman, else false
-   */
-  bool _isChasing = false;
-
-  /**
-   * true if Clyde is out of the Gate, else false
-   */
-  bool _outOfGate = false;
-
-  /**
    * Direction where Clyde came from
    */
   Directions _previousDirection;
 
   /**
-   * period of Time Clyde is chasing the Pacman
+   * period of Time Clyde is chasing the Pac-Man
    */
   int _chasingTime = 40;
+
+  /**
+   * period of Time Clyde is chasing the Pac-Man
+   */
+  int _scatteringTime = 22;
+
+  /**
+   * updates the Pac-Man position as target
+   * after a certain amount of time
+   */
+  int _updateTargetTimer = 5;
 
   /**
    * Moves Clyde one step further
    */
   void move() {
     super.move();
+
 
     //checks if Clyde is allowed to move yet
     if (_started) {
@@ -72,26 +69,35 @@ class Clyde extends Ghost {
       }
 
       //change to scatter mode after chasing time is up
-      if(modeTimer > _chasingTime) {
+      if(_changeModeTimer > _chasingTime && !_isScattering && _isChasing) {
         _isScattering = true;
         changeMode();
       }
 
+      //change to chase mode after scatter mode is up
+      if(_changeModeTimer > _scatteringTime && _isScattering && !_isChasing){
+        _isScattering = false;
+        changeMode();
+      }
+
+
       //switches to scatter mode if the requirements are fulfilled
-      if (_outOfGate == true && _isScattering == false && _isChasing == true && (modeTimer % _chasingTime) == 0) {
+      if (_outOfGate && !_isScattering && _isChasing
+          && _changeModeTimer != 0 && (_changeModeTimer % _chasingTime) == 0) {
         _isScattering = true;
         changeMode();
       }
 
       //switches to chasing mode if the requirements are fulfilled
-      if (_outOfGate == true && _isScattering == true && _isChasing == false && modeTimer != 0 && (modeTimer % 20) == 0)  {
+      if (_outOfGate == true && _isScattering == true && _isChasing == false
+          && _changeModeTimer != 0 && (_changeModeTimer % _scatteringTime) == 0)  {
         _isScattering = false;
         changeMode();
       }
 
       //updates the target of Clyde while in chasing mode to the current
-      //position of Pacman every five steps
-      if (_isScattering == false && _isChasing == true && (modeTimer % 5) == 0) {
+      //position of Pac-Man every five steps
+      if (_isScattering == false && _isChasing == true && (_changeModeTimer % _updateTargetTimer) == 0) {
         _targetX = _level.pacmanX;
         _targetY = _level.pacmanY;
       }
@@ -106,7 +112,7 @@ class Clyde extends Ghost {
 
         case Directions.DOWN:
         // TODO PROVISORISCH MUSS RAUS
-          if (_x == 14 && _y == 8) {
+          if (_x == _doorX && _y == _doorY) {
             _level.registerElement(_x, _y, ++_x, _y, this);
             _previousDirection = Directions.LEFT;
             break;
@@ -149,7 +155,7 @@ class Clyde extends Ghost {
           changeMode();
         }
       }
-      ++modeTimer;
+      ++_changeModeTimer;
     }
   }
 
@@ -159,15 +165,15 @@ class Clyde extends Ghost {
    */
   void changeMode() {
 
-    if (_isScattering == true) {
+    if (_isScattering) {
       _isChasing = false;
-      modeTimer = 0;
+      _changeModeTimer = 0;
       _targetX = _scatterX;
       _targetY = _scatterY;
     }
     else {
       _isChasing = true;
-      modeTimer = 0;
+      _changeModeTimer = 0;
       _targetX = _level.pacmanX;
       _targetY = _level.pacmanY;
     }
