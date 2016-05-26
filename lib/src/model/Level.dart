@@ -492,7 +492,6 @@ class Level {
         p.respawn();
         _model.respawnGhosts();
         _score.resetGhostMultiplier();
-        _tiles[y][x]._pacman.decreaseLife();
       }
     }
   }
