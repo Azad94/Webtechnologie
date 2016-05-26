@@ -1,10 +1,9 @@
 part of pacmanLib;
 
 //the refreshrate of the view
-const speed = const Duration(milliseconds:500);
+const speed = const Duration(milliseconds:400);
 
-class PacmanGameController{
-
+class PacmanGameController {
   //instances of PacmanGameModel and PacmanGameView
   PacmanGameModel _pacmanModel;
   PacmanGameView _pacmanView;
@@ -25,11 +24,14 @@ class PacmanGameController{
   var right;
   //constructor
   PacmanGameController() {
-
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
 
-    _pacmanModel.loadLevel(_currentLevel);
+    _pacmanView.startButton.onClick.listen((_) {
+      _pacmanModel.loadLevel(1).whenComplete(() => startGame()); // HIER ÄNDERUNG EINGEFÜGT
+    });
+    //TODO: NextLevel
+    // _pacmanView.startNext.onClick.listen((_) {resetGame(this); _pacmanModel.loadLevel(2); startNextLevel();});
   }
 
   //starts a new game
@@ -79,13 +81,15 @@ class PacmanGameController{
   }
 
   //create the table in the view
-  void createTable(List<List<Types>> l ) {
-      _pacmanView.initTable(l);
+  void createTable(List<List<Types>> l) {
+    _pacmanView.initTable(l);
   }
+
   //load the current game elements and graphis into the table
   void refreshLabyrinth(List<List<Types>> l) {
     _pacmanView._labyrinthFill(l);
   }
+
   //updates the current view
   void updateGameStatus() {
     updateScore();
@@ -99,15 +103,16 @@ class PacmanGameController{
 
   //ends the game, lost
   void gameOver(bool b) {
-    if(b){
+    if (b) {
       stopGame();
       _pacmanView.hideNextLevel();
       _pacmanView.updateOverlay("GAME OVER");
     }
   }
+
   //ends the game, won
   void gameWon(bool b) {
-    if(b) {
+    if (b) {
       stopGame();
       _pacmanView.updateOverlay("STAGE CLEARED");
       _pacmanModel.newGame();
@@ -115,6 +120,7 @@ class PacmanGameController{
       _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(++_currentLevel);});
     }
   }
+
   //stops interaction
   void stopGame() {
     if (_pacmanView.mql.matches) {
@@ -125,23 +131,27 @@ class PacmanGameController{
     } else {
       _keyListener.cancel();
     }
-      _timer.cancel();
+    _timer.cancel();
   }
 
   //set the direction for pacman to choose the right graphic
-  void setPacmanDir(Directions p){
+  void setPacmanDir(Directions p) {
     this.pacmanDir = p;
   }
+
   //let the view display the current score
   void updateScore() {
-      _pacmanView.updateScore(_pacmanModel.score);
+    _pacmanView.updateScore(_pacmanModel.score);
   }
+
   void updateLevel() {
     _pacmanView.updateLevel(_pacmanModel.level);
   }
+
   void updateLives() {
     _pacmanView.updateLives(_pacmanModel.lives);
   }
+
   void _updateMessage(String str) {
     _pacmanView.updateMessages(str);
   }

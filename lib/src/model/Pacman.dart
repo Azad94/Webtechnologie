@@ -1,7 +1,7 @@
 part of pacmanLib;
 
 class Pacman extends GameElement {
-  double _speed; // TODO speed
+  final _start_x, _start_y;
   int _lives;
   Level _level;
   PacmanGameModel _model;
@@ -11,7 +11,9 @@ class Pacman extends GameElement {
       : super(x, y, collPlayer, collGhost),
         this._lives = lives,
         this._level = l,
-        this._model = model;
+        this._model = model,
+        this._start_x = x,
+        this._start_y = y;
 
   /**
    * moves [Pacman] in the given [Directions].
@@ -43,5 +45,11 @@ class Pacman extends GameElement {
     if (--_lives == 0) {
       _model.gameOver();
     }
+  }
+
+  void respawn() {
+    _level.registerElement(_x, _y, _start_x, _start_y, this);
+    _x = _start_x;
+    _y = _start_y;
   }
 }
