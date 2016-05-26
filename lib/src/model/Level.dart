@@ -149,18 +149,51 @@ class Level {
   }
 
   /**
-   * checks if the given [GameElement] collides on a given position with another [GameElement]
+   * checks if the given [GameElement] collides on a given position with a [Environment]
    * return true if the object collides with another one, else false
    */
   bool checkCollision(int x, int y, GameElement g) {
+    final tile = _tiles[y][x];
+    // calculate side of the collision
+    Directions side;
+    int diff_x = g._x - x;
+    int diff_y = g._y - y;
+    if (diff_x == -1)
+      side = Directions.RIGHT;
+    else if (diff_x == 1)
+      side = Directions.LEFT;
+    else if (diff_y == -1)
+      side = Directions.DOWN;
+    else
+      side = Directions.UP;
     // no Statics
-    if (_tiles[y][x]._environment == null) return false;
+    if (tile._environment == null) return false;
     // ghosts collides
-    if (_tiles[y][x]._environment._collisionGhost == true && g is Ghost)
+    if (tile._environment._collisionGhost == true && g is Ghost) {
+      // is a side where is no collision
+      if (tile._environment._noCollisionSidesGhost != null) {
+        //check if side in list and calculate side is the same, if yes no collision
+        for (int i = 0;
+            i < tile._environment._noCollisionSidesGhost.length;
+            i++)
+          if (tile._environment._noCollisionSidesGhost[i] == side) return false;
+      }
       return true;
+    }
+
     // pacman collides
-    if (_tiles[y][x]._environment._collisionPlayer == true && g is Pacman)
+    if (tile._environment._collisionPlayer == true && g is Pacman) {
+      // is a side where is no collision
+      if (tile._environment._noCollisionSidesPlayer != null) {
+        //check if side in list and calculate side is the same, if yes no collision
+        for (int i = 0;
+            i < tile._environment._noCollisionSidesPlayer.length;
+            i++)
+          if (tile._environment._noCollisionSidesPlayer[i] == side)
+            return false;
+      }
       return true;
+    }
     // no collision
     return false;
   }
@@ -310,7 +343,7 @@ class Level {
         switch (line[x]) {
           case LevelLoader.WALL:
             _tiles[y][x]._environment =
-                new Environment(x, y, true, true, false, false);
+                new Environment(x, y, true, true, false, false, null, null);
             break;
 
           case LevelLoader.PILL:
@@ -364,8 +397,10 @@ class Level {
             break;
 
           case LevelLoader.DOOR:
-            _tiles[y][x]._environment =
-                new Environment(x, y, true, false, false, true);
+            List<Directions> noCollision = new List();
+            noCollision.add(Directions.UP);
+            _tiles[y][x]._environment = new Environment(
+                x, y, true, false, false, true, noCollision, null);
             break;
 
           default:
