@@ -26,11 +26,11 @@ class PacmanGameModel {
 
   int getCurrentLevel() => _currentLevel;
 
-  void loadLevel(int level) {
+  Future loadLevel(int level) async {
     // Delete old references
     _pacman = null;
     _ghosts = new List();
-    LevelLoader.loadLevel(level);
+    await LevelLoader.loadLevel(level);
     _currentLevel = LevelLoader.levelNumber;
     _level = new Level(
         LevelLoader._map,
@@ -47,7 +47,6 @@ class PacmanGameModel {
         LevelLoader._startInky,
         LevelLoader._startPinky,
         this);
-    print("LEVELLOADER" + LevelLoader.sizeY.toString());
   }
 
   /**

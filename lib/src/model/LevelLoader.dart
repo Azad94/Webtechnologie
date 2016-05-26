@@ -150,22 +150,20 @@ class LevelLoader {
    * Loads a level from json file by given level number.
    * Return true if file is loaded, else false
    */
-  static bool loadLevel(int level) {
-    HttpRequest.getString("${level}_Level.json").then((json) {
-      final data = JSON.decode(json);
-      levelNumber = data["level"];
-      sizeX = data["sizeX"];
-      sizeY = data["sizeY"];
-      _map = data["map"];
-      _lives = data["lives"];
-      _eatTime = data["ghostEatTime"];
-      _startBlinky = data["startBlinky"];
-      _startClyde = data["startClyde"];
-      _startInky = data["startInky"];
-      _startPinky = data["startPinky"];
-    });
+  static Future loadLevel(int level) async {
+    String json = await HttpRequest.getString("${level}_Level.json");
+    final data = JSON.decode(json);
+    levelNumber = data["level"];
+    sizeX = data["sizeX"];
+    sizeY = data["sizeY"];
+    _map = data["map"];
+    _lives = data["lives"];
+    _eatTime = data["ghostEatTime"];
+    _startBlinky = data["startBlinky"];
+    _startClyde = data["startClyde"];
+    _startInky = data["startInky"];
+    _startPinky = data["startPinky"];
     _loaded = true;
-    return true;
   }
 
   static bool loadConfig() {
