@@ -70,7 +70,6 @@ class PacmanGameModel {
         LevelLoader._startPinky,
         this);
         _con.startGame();
-
   }
 
   /**

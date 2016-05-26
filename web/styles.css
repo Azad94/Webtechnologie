@@ -114,8 +114,26 @@ span {
     border-collapse: separate;
     border: 5px solid yellow;
 }
+#keyless{
+    position: absolute;
+    top: 120px;
+    min-width: 1000px;
+    z-index: 142;
+    margin-left:auto;
+    margin-righ:auto;
+}
 
-
+#klcontrols{
+    width: inherit;
+    height: inherit;
+    margin-left:auto;
+    margin-righ:auto;
+}
+#klcontrols td {
+    background-color: rgba(0, 0, 0, 0.1);
+    width:333px;
+    height:200px;
+}
 #information {
     border-collapse: separate;
     border: 5px solid yellow;

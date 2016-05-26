@@ -54,6 +54,10 @@ class PacmanGameController{
      left = _pacmanView.mobileLeft.onClick.listen((_) {_pacmanModel.moveLeft();});
      right = _pacmanView.mobileRight.onClick.listen((_) {_pacmanModel.moveRight();});
     } else {
+      up = _pacmanView.klup.onClick.listen((_) {_pacmanModel.moveUp();});
+      down = _pacmanView.kldown.onClick.listen((_) {_pacmanModel.moveDown();});
+      left = _pacmanView.klleft.onClick.listen((_) {_pacmanModel.moveLeft();});
+      right = _pacmanView.klright.onClick.listen((_) {_pacmanModel.moveRight();});
       _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
         ev.preventDefault();
         switch (ev.keyCode) {

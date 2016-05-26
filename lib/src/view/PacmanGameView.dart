@@ -129,6 +129,10 @@ class PacmanGameView {
   final mobileLeft = querySelector("#mobileLeft");
   final mobileRight = querySelector("#mobileRight");
 
+  final klup = querySelector("#klUp");
+  final kldown = querySelector("#klDown");
+  final klleft = querySelector("#klLeft");
+  final klright = querySelector("#klRight");
   //
   var mql = window.matchMedia("screen and (max-device-width : 800px)");
   var mqlLandscape = window.matchMedia("screen and (orientation: landscape)");
