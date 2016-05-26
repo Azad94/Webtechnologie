@@ -483,12 +483,14 @@ class Level {
     if (_tiles[y][x]._pacman != null && _tiles[y][x]._ghosts.length != 0) {
       if (_tiles[y][x]._ghosts[0]._eatable) {
         final g = _tiles[y][x]._ghosts[0];
-        _tiles[y][x]._ghosts.remove(g);
         g.respwan();
-        _tiles[g._y][g._x]._ghosts.add(g);
         _score.addScore(g._score, g);
         _score.incGhostMultiplier();
       } else {
+        final Pacman p = _tiles[y][x]._pacman;
+        p.decreaseLife();
+        p.respawn();
+        _model.respawnGhosts();
         _score.resetGhostMultiplier();
         _tiles[y][x]._pacman.decreaseLife();
       }

@@ -116,6 +116,11 @@ class PacmanGameModel {
   }
 
   /**
+   * respawns all [Ghost]s
+   */
+  void respawnGhosts() => _ghosts.forEach((g) => g.respwan());
+
+  /**
    * return the full gameField as list over list with enum [Type]
    */
   List<List<Types>> getMap() => _level.getMap();

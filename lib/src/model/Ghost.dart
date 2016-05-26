@@ -143,6 +143,9 @@ abstract class Ghost extends GameElement {
   void respwan() {
     _eatable = false;
     timeCounter = 0;
+    _started = false;
+    _startTime = 4; // to to wait after respawn
+    _level.registerElement(_x, _y, _x_start, _y_start, this);
     _x = _x_start;
     _y = _y_start;
   }
