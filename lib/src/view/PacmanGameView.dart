@@ -172,6 +172,7 @@ class PacmanGameView {
 
   void updateOverlay(String s) {
     _overlay.innerHtml = "<span>$s</span>";
+    _overlay.classes.toggle('show');
   }
   //creates the table in the html-document
   String _createLabyrinth(List<List<Types>> l) {
@@ -210,14 +211,26 @@ class PacmanGameView {
             case Types.BLINKY :
               kl.children[_row].children[_col].setAttribute("style", blinky_r16);
               break;
+            case Types.BLINKY_EATABLE :
+              kl.children[_row].children[_col].setAttribute("style", scared_r16);
+              break;
             case Types.PINKY :
               kl.children[_row].children[_col].setAttribute("style", pinky_r16);
+              break;
+            case Types.PINKY_EATABLE :
+              kl.children[_row].children[_col].setAttribute("style", scared_r16);
               break;
             case Types.INKY :
               kl.children[_row].children[_col].setAttribute("style", inky_r16);
               break;
+            case Types.INKY_EATABLE :
+              kl.children[_row].children[_col].setAttribute("style", scared_r16);
+              break;
             case Types.CLYDE :
               kl.children[_row].children[_col].setAttribute("style", clyde_r16);
+              break;
+            case Types.CLYDE_EATABLE :
+              kl.children[_row].children[_col].setAttribute("style", scared_r16);
               break;
             case Types.PACMAN_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", pacman_r16);
@@ -258,14 +271,26 @@ class PacmanGameView {
             case Types.BLINKY :
               kl.children[_row].children[_col].setAttribute("style", blinky_r);
               break;
+            case Types.BLINKY_EATABLE :
+              kl.children[_row].children[_col].setAttribute("style", scared_r);
+              break;
             case Types.PINKY :
               kl.children[_row].children[_col].setAttribute("style", pinky_r);
+              break;
+            case Types.PINKY_EATABLE :
+              kl.children[_row].children[_col].setAttribute("style", scared_r);
               break;
             case Types.INKY :
               kl.children[_row].children[_col].setAttribute("style", inky_r);
               break;
+            case Types.INKY_EATABLE:
+              kl.children[_row].children[_col].setAttribute("style", scared_r);
+              break;
             case Types.CLYDE :
               kl.children[_row].children[_col].setAttribute("style", clyde_r);
+              break;
+            case Types.CLYDE_EATABLE :
+              kl.children[_row].children[_col].setAttribute("style", scared_r);
               break;
             case Types.PACMAN_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", pacman_r);

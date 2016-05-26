@@ -37,7 +37,7 @@
         left: 45%;
         bottom: 25%;
         letter-spacing: 3px;
-        font-family: PacMan;
+        font-family: PacMan, serif;
         font-size: 2rem;
     }
 
@@ -86,8 +86,8 @@
 
     #overlay {
         position: absolute;
-        top: 0%;
-        left: 0%;
+        top: 0;
+        left: 0;
         background-color: rgba(0, 0, 0, 0.50);
         text-align: center;
         color: red;
@@ -131,7 +131,7 @@
     #information {
         border-collapse: separate;
         border: 5px solid green;
-        font-family: PacMan;
+        font-family: PacMan, serif;
         font-size: 2rem;
     }
 
@@ -142,7 +142,7 @@
 
 
     #value1, #value2, #value3 {
-        font-family: "Calibri Light";
+        font-family: "Calibri Light",serif;
     }
 
     #keylayout {
@@ -227,7 +227,7 @@
         left: 45%;
         bottom: 25%;
         letter-spacing: 3px;
-        font-family: PacMan;
+        font-family: PacMan, serif;
         font-size: 2rem;
     }
 
@@ -254,8 +254,8 @@
 
     #overlay {
         position: absolute;
-        top: 0%;
-        left: 0%;
+        top: 0;
+        left: 0;
         height:100%;
         background-color: rgba(0, 0, 0, 0.50);
         text-align: center;
@@ -267,8 +267,8 @@
     }
 
     span {
-        margin-top: 50%;
-        margin-bottom: 50%;
+        margin-top: 20%;
+        margin-bottom: auto;
         margin-right: auto;
         margin-left: auto;
     }
@@ -285,10 +285,9 @@
     }
 
     #labyrinth td {
-        background-color: black;
         width: 16px;
         height: 16px;
-        background-repeat: no-repeat;
+        background: black no-repeat;
         background-size: 16px 16px;
     }
 
@@ -301,7 +300,7 @@
     #information {
         border-collapse: separate;
         border: 5px solid yellow;
-        font-family: PacMan;
+        font-family: PacMan, serif;
         font-size: 2rem;
         float:left;
     }
@@ -310,7 +309,7 @@
         width: 15%;
     }
     #value1, #value2, #value3 {
-        font-family: "Calibri Light";
+        font-family: "Calibri Light", serif;
     }
 
     #keylayout {

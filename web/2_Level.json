@@ -1,8 +1,8 @@
 {
-  "level": 1,
+  "level": 2,
   "sizeX": 29,
   "sizeY": 18,
-  "lives": 1,
+  "lives": 3,
   "ghostEatTime": 10,
   "startBlinky" : 10,
   "startClyde" : 0,
