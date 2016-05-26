@@ -15,6 +15,16 @@ class Level {
   num _sizeY;
 
   /**
+   * x position of the door
+   */
+  num _doorX;
+
+  /**
+   * y position of the door
+   */
+  num _doorY;
+
+  /**
    * number of lives for [Pacman]
    */
   num _lives;
@@ -140,6 +150,26 @@ class Level {
    * Getter for current score
    */
   int get score => _score.totalScore;
+
+  /**
+   * getter for field size X
+   */
+  int get width => _sizeX;
+
+  /**
+   * getter for field size Y
+   */
+  int get height => _sizeY;
+
+  /**
+   * get x position of the door
+   */
+  int get doorX => _doorX;
+
+  /**
+   * get y position of the door
+   */
+  int get doorY => _doorY;
 
   /**
    * Setter to chance [Pacman]s next direction
@@ -397,10 +427,14 @@ class Level {
             break;
 
           case LevelLoader.DOOR:
+            // set UP as no collision
             List<Directions> noCollision = new List();
             noCollision.add(Directions.UP);
             _tiles[y][x]._environment = new Environment(
                 x, y, true, false, false, true, noCollision, null);
+            // set door position
+            _doorX = x;
+            _doorY = y;
             break;
 
           default:
