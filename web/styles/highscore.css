@@ -1,0 +1,47 @@
+@font-face {
+    font-family: PacMan; /*a name to be used later*/
+    src: url("../PAC-FONT.TTF"); /*URL to font*/
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+    color: yellow;
+    background-color: black;
+    font-family: "Calibri Light", serif;
+    text-align: center;
+}
+a:-webkit-any-link {
+    color: -webkit-link;
+    text-decoration: none;
+    cursor: auto;
+}
+#navdiv{
+    margin-top: 5%;
+}
+#navigation{
+    border: 5px solid yellow;
+    color:yellow;
+    font-family: PacMan, serif;
+    border-radius: 20px;
+    padding: 3px 3px 3px 3px;
+    cursor: pointer;  width: 200px;
+    font-size: 2rem;
+}
+#highscore {
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#scoretable {
+    margin-left: auto;
+    margin-right: auto;
+}
+#scoretable td{
+    width: 200px;
+    height: 50px;
+}
+#head {
+    font-family: PacMan, serif;
+    font-size: 2rem;
+}

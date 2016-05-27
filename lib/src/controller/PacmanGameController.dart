@@ -16,7 +16,7 @@ class PacmanGameController {
   Timer _timer;
 
   int _currentLevel = 1;
-  int _maxLevel = 2;
+  int _maxLevel = 3;
   //mobile Keys
   var up;
   var down;
@@ -27,14 +27,11 @@ class PacmanGameController {
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
 
-    _pacmanView.startButton.onClick.listen((_) {
-      _pacmanModel.loadLevel(1).whenComplete(() => startGame()); // HIER ÄNDERUNG EINGEFÜGT
-    });
-    //TODO: NextLevel
-    // _pacmanView.startNext.onClick.listen((_) {resetGame(this); _pacmanModel.loadLevel(2); startNextLevel();});
+    _pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame()); // HIER ÄNDERUNG EINGEFÜGT
+
   }
 
-  //starts a new game
+  //start new game
   void startGame() {
     if(_currentLevel>1){
       _pacmanView.hideOverlay();
@@ -51,10 +48,10 @@ class PacmanGameController {
     _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
 
     if(_pacmanView.mql.matches){
-     up = _pacmanView.mobileUp.onClick.listen((_) {_pacmanModel.moveUp();});
-     down = _pacmanView.mobileDown.onClick.listen((_) {_pacmanModel.moveDown();});
-     left = _pacmanView.mobileLeft.onClick.listen((_) {_pacmanModel.moveLeft();});
-     right = _pacmanView.mobileRight.onClick.listen((_) {_pacmanModel.moveRight();});
+      up = _pacmanView.klup.onClick.listen((_) {_pacmanModel.moveUp();});
+      down = _pacmanView.kldown.onClick.listen((_) {_pacmanModel.moveDown();});
+      left = _pacmanView.klleft.onClick.listen((_) {_pacmanModel.moveLeft();});
+      right = _pacmanView.klright.onClick.listen((_) {_pacmanModel.moveRight();});
     } else {
       up = _pacmanView.klup.onClick.listen((_) {_pacmanModel.moveUp();});
       down = _pacmanView.kldown.onClick.listen((_) {_pacmanModel.moveDown();});
@@ -107,6 +104,7 @@ class PacmanGameController {
       stopGame();
       _pacmanView.hideNextLevel();
       _pacmanView.updateOverlay("GAME OVER");
+      _pacmanView.showHighscore();
     }
   }
 
@@ -117,7 +115,11 @@ class PacmanGameController {
       _pacmanView.updateOverlay("STAGE CLEARED");
       _pacmanModel.newGame();
       print(_pacmanModel.gameEnd);
-      _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(++_currentLevel);});
+      print("CURRENT: ");
+      print(_currentLevel);
+      _currentLevel++;
+      print(_currentLevel);
+      _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame());});
     }
   }
 

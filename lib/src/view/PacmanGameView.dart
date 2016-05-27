@@ -113,6 +113,9 @@ class PacmanGameView {
   final _message = querySelector(".messages");
 
   //different elements from the html-document
+  final highscore = querySelector("#userinput");
+  final username = querySelector("#username");
+
   final startNext = querySelector("#startNext");
   final _overlay = querySelector("#overlay");
   final _gameend = querySelector("#gameend");
@@ -123,14 +126,14 @@ class PacmanGameView {
   final _lives = querySelector("#value3");
 
   //move keys for the mobile version
-  final mobile = querySelector(".mobile");
+ /* final mobile = querySelector(".mobile");
   final mobileUp = querySelector("#mobileUp");
   final mobileDown = querySelector("#mobileDown");
   final mobileLeft = querySelector("#mobileLeft");
-  final mobileRight = querySelector("#mobileRight");
+  final mobileRight = querySelector("#mobileRight");*/
 
-  final klup = querySelector("#klUp");
-  final kldown = querySelector("#klDown");
+  final klup = querySelector(".klUp");
+  final kldown = querySelector(".klDown");
   final klleft = querySelector("#klLeft");
   final klright = querySelector("#klRight");
   //
@@ -170,6 +173,9 @@ class PacmanGameView {
   }
   void hideNextLevel() {
     startNext.style.display = "none";
+  }
+  void showHighscore() {
+    highscore.style.visibility = "visible";
   }
 
   //creates the table in the html-document

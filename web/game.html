@@ -11,8 +11,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="scaffolded-by" content="https://github.com/google/stagehand">
     <title>Webtechnologie - Pacman</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" media="screen and (max-device-width: 800px)" href="mobile.css" />
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" media="screen and (max-device-width: 800px)" href="styles/mobile.css" />
 </head>
 <body>
 <div class="game">
@@ -20,6 +20,14 @@
     <div id="overlay">
         <span id="gameend"></span>
         <span id="startNext">NEXTLEVEL</span>
+        <div id="userinput">
+            <form action="">
+                <label for="username" class="uname" data-icon="u" > YOUR NAME </label>
+
+                <input id="username" type="text" name="username" placeholder="name" size="40" required/>
+            <br>
+            </form>
+        </div>
     </div>
     <!-- Headline -->
     <div class="header"></div>
@@ -29,19 +37,16 @@
         <table id="klcontrols">
             <tbody>
             <tr>
-                <td></td>
-                <td id="klUp"></td>
-                <td></td>
+                <td class="klUp"></td>
+                <td class="klUp"></td>
             </tr>
             <tr >
                 <td id="klLeft"></td>
-                <td></td>
                 <td id="klRight"></td>
             </tr>
             <tr>
-                <td></td>
-                <td id="klDown"></td>
-                <td></td>
+                <td class="klDown"></td>
+                <td class="klDown"></td>
             </tr>
             </tbody>
         </table>
@@ -61,26 +66,7 @@
         </table>
     </div>
     <!-- mobile -->
-    <div class="mobile">
-        <table id="keylayout">
-            <tbody> <tr id="mobile1">
-                <td class="mobileBlank"></td>
-                <td id="mobileUp"></td>
-                <td class="mobileBlank"></td>
-            </tr>
-            <tr id="mobile2">
-                <td id="mobileLeft"></td>
-                <td class="mobileBlank"></td>
-                <td id="mobileRight"></td>
-            </tr>
-            <tr id="mobile3">
-                <td class="mobileBlank"></td>
-                <td id="mobileDown"></td>
-                <td class="mobileBlank"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+
     <!-- Debugg Console -->
     <div class="messages"></div>
     <!-- Copyrights -->
@@ -89,6 +75,9 @@
             &copy; Sheraz Azad, Malte Grebe & Niklas Klatt, 2016<br>
         </small>
     </p>
+    <div id="backbutton">
+        <a id="navigation" href="index.html">MAIN MENU</a>
+    </div>
 </div>
 <script defer src="main.dart" type="application/dart"></script>
 <script defer src="packages/browser/dart.js"></script>

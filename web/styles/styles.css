@@ -1,6 +1,6 @@
 @font-face {
     font-family: PacMan; /*a name to be used later*/
-    src: url("PAC-FONT.TTF"); /*URL to font*/
+    src: url("../PAC-FONT.TTF"); /*URL to font*/
 }
 
 html, body {
@@ -11,45 +11,22 @@ html, body {
     font-family: PacMan, serif;
     text-align: center;
 }
-.start {
-    width: 100%;
-    height: 100%;
-    background-image: url("resc/PacBack.png");
-    background-color: black;
-    -webkit-background-size:cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: fixed;
-    font-weight: bold;
-    text-align: center;
+a:-webkit-any-link {
+    color: -webkit-link;
+    text-decoration: none;
+    cursor: auto;
 }
-.start.close { display: none;
+#backbutton{
+    margin-left:auto;
+    margin-right:auto;
 }
-
-#startText {
-    position:absolute;
-    width: auto;
-    margin: 0 auto;
-    left: 45%;
-    bottom: 25%;
-    letter-spacing: 3px;
-    font-family: PacMan;
-    font-size: 2rem;
-}
-
-#startButton {
-    position: absolute;
+#navigation {
     border: 5px solid yellow;
     color:yellow;
     border-radius: 20px;
     padding: 3px 3px 3px 3px;
     cursor: pointer;  width: 200px;
     margin: 0 auto;
-    left: 50%;
-    bottom: 5%;
     font-size: 2rem;
 }
 #startNext{
@@ -82,13 +59,21 @@ span {
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
-    margin-bottom: 50%;
+}
+#userinput {
+    display: block;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right:auto;
+    font-size: 1.5rem;
+    margin-bottom: 45%;
+    visibility: hidden;
 }
 .header {
     margin-top: 20px;
     min-height: 100px;
     min-width:900px;
-    background-image: url("resc/PacmanHeader.png");
+    background-image: url("../resc/PacmanHeader.png");
     background-repeat: no-repeat;
     background-position: center;
     background-color: black;
@@ -117,22 +102,28 @@ span {
 #keyless{
     position: absolute;
     top: 120px;
-    min-width: 1000px;
+    width: 1000px;
     z-index: 142;
     margin-left:auto;
-    margin-righ:auto;
+    margin-right:auto;
+    display:none;
 }
 
 #klcontrols{
     width: inherit;
     height: inherit;
     margin-left:auto;
-    margin-righ:auto;
+    margin-right:auto;
 }
 #klcontrols td {
     background-color: rgba(0, 0, 0, 0.1);
-    width:333px;
     height:200px;
+}
+.klUp, .klDown{
+    width: 50%;
+}
+#klRight, #klLeft{
+    width: 50%;
 }
 #information {
     border-collapse: separate;
@@ -156,19 +147,19 @@ span {
     background-size:160px 160px;
 }
 .mobileBlank{
-    background-image:url(../web/resc/mobileBlank.png);
+    background-image:url(../resc/mobileBlank.png);
 }
 #mobileUp {
-    background-image:url(../web/resc/mobileUp.png);
+    background-image:url(../resc/mobileUp.png);
 }
 #mobileDown{
-    background-image:url(../web/resc/mobileDown.png);
+    background-image:url(../resc/mobileDown.png);
 }
 #mobileLeft {
-    background-image:url(../web/resc/mobileLeft.png);
+    background-image:url(../resc/mobileLeft.png);
 }
 #mobileRight{
-    background-image:url(../web/resc/mobileRight.png);
+    background-image:url(../resc/mobileRight.png);
 }
 #information td {
     background-color: black;
@@ -196,3 +187,4 @@ span {
     color: white;
     font-family: "Calibri Light";
 }
+

@@ -1,6 +1,6 @@
 @font-face {
     font-family: PacMan; /*a name to be used later*/
-    src: url("PAC-FONT.TTF"); /*URL to font*/
+    src: url("../PAC-FONT.TTF"); /*URL to font*/
 }
 
 html, body {
@@ -10,6 +10,11 @@ html, body {
     background-color: black;
     font-family: "Calibri Light", serif;
     text-align: center;
+}
+a:-webkit-any-link {
+    color: -webkit-link;
+    text-decoration: none;
+    cursor: auto;
 }
 #navigation{
     border: 5px solid yellow;
