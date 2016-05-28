@@ -199,14 +199,14 @@ class GameKeyClient {
   Future<List> getTop10() async {
     final states = await _getStates();
     var ret = [];
-    ret
+    ret = states
         .map((entry) => {
-              'name': "${entry['states']['name']}",
-              'score': entry['states']['score']
+              'name': "${entry['state']['name']}",
+              'score': entry['state']['score']
             })
         .toList();
     ret.sort((a, b) => b['score'] - a['score']);
-    ret = ret.sublist(0, 9);
+    if (ret.length > 10) ret = ret.sublist(0, 9);
     return ret;
   }
 }
