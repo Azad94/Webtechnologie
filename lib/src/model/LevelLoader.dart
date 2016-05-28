@@ -74,7 +74,15 @@ class LevelLoader {
    */
   static num SCORE_CHERRY = -1;
 
+  /**
+   * basic score for one ghost
+   */
   static num SCORE_GHOST = -1;
+
+  static String GAMEKEY_HOST;
+  static num GAMEKEY_PORT;
+  static String GAMEKEY_ID;
+  static String GAMEKEY_SECRET;
 
   /*
   MapCode
@@ -166,14 +174,17 @@ class LevelLoader {
     _loaded = true;
   }
 
-  static bool loadConfig() {
-    HttpRequest.getString(_CONFIGJSON).then((json) {
+  static Future<bool> loadConfig() async{
+      String json = await HttpRequest.getString(_CONFIGJSON);
       final data = JSON.decode(json);
       SCORE_PILL = data["scorePill"];
       SCORE_POWERPILL = data["scorePowerPill"];
       SCORE_CHERRY = data["scoreCherry"];
       SCORE_GHOST = data["scoreSingleGhost"];
-    });
+      GAMEKEY_HOST = data["GamekeyHost"];
+      GAMEKEY_PORT = data["GamekeyPort"];
+      GAMEKEY_ID = data["GamekeyID"];
+      GAMEKEY_SECRET = data["GamekeySecret"];
 
     return true;
   }
