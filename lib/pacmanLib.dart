@@ -26,6 +26,7 @@ part 'src/model/Pinky.dart';
 //IO
 part 'src/model/LevelLoader.dart';
 part 'src/model/GamekeyServer.dart';
+part 'src/controller/GameKeyClient.dart';
 
 // Rest
 part 'src/model/GameElement.dart';

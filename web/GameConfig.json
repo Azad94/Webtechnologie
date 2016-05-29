@@ -2,5 +2,9 @@
   "scoreCherry": 200,
   "scorePill": 50,
   "scorePowerPill" : 100,
-  "scoreSingleGhost" : 200
+  "scoreSingleGhost" : 200,
+  "GamekeyHost": "192.168.178.25",
+  "GamekeyPort" : 8080,
+  "GamekeyID" : "9df56672-52da-4a0d-aaaf-a260c4693fce",
+  "GamekeySecret": "24bc6d64c6dcbab2"
 }
