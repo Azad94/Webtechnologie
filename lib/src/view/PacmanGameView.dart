@@ -120,7 +120,7 @@ class PacmanGameView {
   final _overlay = querySelector("#overlay");
   final _gameend = querySelector("#gameend");
   final _labyrinth = querySelector("#labyrinth");
-
+  final name = querySelector("#namescore");
   final _level = querySelector("#value1");
   final _score = querySelector("#value2");
   final _lives = querySelector("#value3");
@@ -177,7 +177,15 @@ class PacmanGameView {
   void showHighscore() {
     highscore.style.visibility = "visible";
   }
-
+  void receiveUsername() {
+    var x = name;
+    var text ="";
+    var i;
+    for(i=0;i<x.length; i++){
+      text += x.children[i].nodeValue.toString();
+      print(text);
+    }
+  }
   //creates the table in the html-document
   String _createLabyrinth(List<List<Types>> l) {
 
