@@ -115,7 +115,7 @@ class PacmanGameView {
   //different elements from the html-document
   final highscore = querySelector("#userinput");
   final username = querySelector("#username");
-
+  final savename = querySelector("#save");
   final startNext = querySelector("#startNext");
   final _overlay = querySelector("#overlay");
   final _gameend = querySelector("#gameend");
@@ -126,16 +126,16 @@ class PacmanGameView {
   final _lives = querySelector("#value3");
 
   //move keys for the mobile version
- /* final mobile = querySelector(".mobile");
+  final mobile = querySelector(".mobile");
   final mobileUp = querySelector("#mobileUp");
   final mobileDown = querySelector("#mobileDown");
   final mobileLeft = querySelector("#mobileLeft");
-  final mobileRight = querySelector("#mobileRight");*/
+  final mobileRight = querySelector("#mobileRight");
 
-  final klup = querySelector(".klUp");
+ /* final klup = querySelector(".klUp");
   final kldown = querySelector(".klDown");
   final klleft = querySelector("#klLeft");
-  final klright = querySelector("#klRight");
+  final klright = querySelector("#klRight");*/
   //
   var mql = window.matchMedia("screen and (max-device-width : 800px)");
   var mqlLandscape = window.matchMedia("screen and (orientation: landscape)");
@@ -161,7 +161,7 @@ class PacmanGameView {
   }
 
   void updateMessages(String str) {
-    _message.innerHtml = "Msg: $str"; }
+    _message.innerHtml = str; }
 
   //updates the gameoverlay according to the gameend condition
   void updateOverlay(String s) {
@@ -174,10 +174,18 @@ class PacmanGameView {
   void hideNextLevel() {
     startNext.style.display = "none";
   }
+  //TODO
   void showHighscore() {
     highscore.style.visibility = "visible";
   }
-  void receiveUsername() {
+  void showTop10 (List<Map> scores) {
+    final list = scores.map((entry) => "<li>${entry['name']}: ${entry['score']}</li>").join("");
+    //String achievedScore = _con._pacmanModel.score.toString();
+    final points = "You got onetrillzillion points";
+    _overlay.innerHtml = "<div id='scorelist'> $points ${ list.isEmpty? "" : "<ol>$list</ol>"}</div>";;
+  }
+  String get user => (document.querySelector('#username') as InputElement).value;
+  /*void receiveUsername() {
     var x = name;
     var text ="";
     var i;
@@ -185,7 +193,8 @@ class PacmanGameView {
       text += x.children[i].nodeValue.toString();
       print(text);
     }
-  }
+  }*/
+
   //creates the table in the html-document
   String _createLabyrinth(List<List<Types>> l) {
 

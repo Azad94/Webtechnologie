@@ -7,7 +7,7 @@ class PacmanGameController {
   //instances of PacmanGameModel and PacmanGameView
   PacmanGameModel _pacmanModel;
   PacmanGameView _pacmanView;
-
+  GameKeyClient _gamekey;
   //the current Direction of Pacman
   Directions pacmanDir = Directions.RIGHT;
 
@@ -26,9 +26,17 @@ class PacmanGameController {
   PacmanGameController() {
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
+    _pacmanModel.loadLevel(_currentLevel).whenComplete(() => authenticateUser()); // HIER ÄNDERUNG EINGEFÜGT
+   //_gamekey = new GameKeyClient(LevelLoader.GAMEKEY_HOST, LevelLoader.GAMEKEY_PORT, LevelLoader.GAMEKEY_ID, LevelLoader.GAMEKEY_SECRET);
+  }
 
-    _pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame()); // HIER ÄNDERUNG EINGEFÜGT
-
+  //TODO user authentication
+  Future authenticateUser() async {
+    print("Gamekey-Data: ");
+    print(LevelLoader.GAMEKEY_HOST.toString() +"&"+ LevelLoader.GAMEKEY_PORT.toString() +"&" +LevelLoader.GAMEKEY_ID.toString() +"&"+ LevelLoader.GAMEKEY_SECRET.toString());
+    _gamekey = new GameKeyClient(LevelLoader.GAMEKEY_HOST, LevelLoader.GAMEKEY_PORT, LevelLoader.GAMEKEY_ID, LevelLoader.GAMEKEY_SECRET);
+    await _gamekey.authenticate();
+    startGame();
   }
 
   //start new game
@@ -44,19 +52,16 @@ class PacmanGameController {
       createTable(labyrinth);
     }
     refreshLabyrinth(labyrinth);
-
+    print("Gamekey available");
+    print(_gamekey._available.toString());
     _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
 
     if(_pacmanView.mql.matches){
-      up = _pacmanView.klup.onClick.listen((_) {_pacmanModel.moveUp();});
-      down = _pacmanView.kldown.onClick.listen((_) {_pacmanModel.moveDown();});
-      left = _pacmanView.klleft.onClick.listen((_) {_pacmanModel.moveLeft();});
-      right = _pacmanView.klright.onClick.listen((_) {_pacmanModel.moveRight();});
+      up = _pacmanView.mobileUp.onClick.listen((_) {_pacmanModel.moveUp();});
+      down = _pacmanView.mobileDown.onClick.listen((_) {_pacmanModel.moveDown();});
+      left = _pacmanView.mobileLeft.onClick.listen((_) {_pacmanModel.moveLeft();});
+      right = _pacmanView.mobileRight.onClick.listen((_) {_pacmanModel.moveRight();});
     } else {
-      up = _pacmanView.klup.onClick.listen((_) {_pacmanModel.moveUp();});
-      down = _pacmanView.kldown.onClick.listen((_) {_pacmanModel.moveDown();});
-      left = _pacmanView.klleft.onClick.listen((_) {_pacmanModel.moveLeft();});
-      right = _pacmanView.klright.onClick.listen((_) {_pacmanModel.moveRight();});
       _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
         ev.preventDefault();
         switch (ev.keyCode) {
@@ -105,8 +110,15 @@ class PacmanGameController {
       _pacmanView.hideNextLevel();
       _pacmanView.updateOverlay("GAME OVER");
       _pacmanView.showHighscore();
+      _pacmanView.savename.onClick.listen((_) { saveScore();/*_gamekey.authenticate();*/});
     }
   }
+
+    void saveScore() {
+      if(_gamekey._available){
+        _gamekey.addScore(_pacmanView.user, _pacmanModel.score).then((b) { _gamekey.getTop10().then((scores) { _pacmanView.showTop10(scores);});} );
+      }
+    }
 
   //ends the game, won
   void gameWon(bool b) {
@@ -114,11 +126,11 @@ class PacmanGameController {
       stopGame();
       _pacmanView.updateOverlay("STAGE CLEARED");
       _pacmanModel.newGame();
-      print(_pacmanModel.gameEnd);
-      print("CURRENT: ");
-      print(_currentLevel);
+     // print(_pacmanModel.gameEnd);
+     // print("CURRENT: ");
+     // print(_currentLevel);
       _currentLevel++;
-      print(_currentLevel);
+     // print(_currentLevel);
       _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame());});
     }
   }

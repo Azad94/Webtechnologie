@@ -1,4 +1,5 @@
 @media screen and (orientation:portrait) {
+    /*--Pac-Man Font--*/
     @font-face {
         font-family: PacMan; /*a name to be used later*/
         src: url("../PAC-FONT.TTF"); /*URL to font*/
@@ -10,6 +11,15 @@
         background-color: black;
         font-family: PacMan, serif;
         text-align: center;
+    }
+    a:-webkit-any-link {
+        color: -webkit-link;
+        text-decoration: none;
+        cursor: auto;
+    }
+    #backbutton{
+        margin-left:auto;
+        margin-right:auto;
     }
     #navigation{
         border: 5px solid yellow;
@@ -32,6 +42,7 @@
         font-family: "Calibri Light", serif;
         margin-bottom: 4%;
     }
+    /*--StartScreen--*/
     .start {
         width: 100%;
         height: 100%;
@@ -70,62 +81,77 @@
         width: 150px;
         margin: 0 auto;
         left: 45%;
-        bottom: 50%;
+        bottom: 55%;
+        font-size: 2rem;
+    }
+    #about {
+        position: absolute;
+        left: 45%;
+        bottom: 45%;
+        border: 5px solid yellow;
+        color:yellow;
+        border-radius: 20px;
+        padding: 3px 3px 3px 3px;
+        cursor: pointer;  width: 200px;
         font-size: 2rem;
     }
 
-    #startNext {
-        display:none;
+    #highscore {
         position: absolute;
-        border: 5px yellow;
-        padding: 1px;
-        border-radius: 17px;
-        cursor: pointer;
-        width: 150px;
-        margin-left: -75px;
-        left: 50%;
-        bottom: 60px;
-        font-size: 30px;
+        left: 40%;
+        bottom: 50%;
+        border: 5px solid yellow;
+        color:yellow;
+        border-radius: 20px;
+        padding: 3px 3px 3px 3px;
+        cursor: pointer;  width: 300px;
+        font-size: 2rem;
     }
 
-    #startNext.hide {
+    /*--Game--*/
+    #footer, .header, .messages {
         display: none;
     }
-
-    #startNext.show {
-        display: block;
-    }
-
-    #footer, .header, .messages, #nextLevel {
-        display: none;
-    }
-
-    #overlay:empty {
-        display: none;
-    }
-
     #overlay {
         display: none;
         position: absolute;
         top: 0;
         left: 0;
-        background-color: rgba(0, 0, 0, 0.50);
+        width: 100%;
+        height: auto;
+        background-color: rgba(0,0,0,0.50);
         text-align: center;
         color: red;
         font-family: PacMan, serif;
         font-weight: bold;
-        font-size: 3rem;
-        z-index: +3;
+        font-size: 2rem;
+        z-index: +1;
     }
-
     span {
         margin-top: 50%;
         display: inline-block;
         vertical-align: middle;
         line-height: normal;
-        margin-bottom: 50%;
     }
-
+    #startNext{
+        color: yellow;
+        cursor: pointer;  width: auto;
+        border: 5px solid yellow;
+        border-radius: 10px;
+        padding: 2px 2px 2px 2px;
+    }
+    #startNext.hide {
+        display: none;
+    }
+    #userinput {
+        display: block;
+        margin-top: 5%;
+        margin-left: auto;
+        margin-right:auto;
+        font-size: 1.5rem;
+        margin-bottom: 45%;
+        visibility: hidden;
+    }
     .game.show {
         display: block
     }
@@ -150,35 +176,9 @@
         border: 5px solid green;
     }
 
-    #keyless{
-        position: fixed;
-        top: 0px;
-        width: 100%;
-        z-index: 142;
-        margin-left:auto;
-        margin-right:auto;
-    }
-
-    #klcontrols{
-        width: 100%;
-        margin-left:auto;
-        margin-right:auto;
-    }
-    #klcontrols td {
-        background-color: rgba(255, 0, 0, 0.7);
-        height:150px;
-        width: 200px;
-    }
-    .klUp, .klDown{
-        width: 200px;
-    }
-    #klRight, #klLeft{
-        width: 200px;
-    }
-
     #information {
         border-collapse: separate;
-        border: 5px solid green;
+        border: 5px solid yellow;
         font-family: PacMan, serif;
         font-size: 2rem;
     }
@@ -192,7 +192,7 @@
     #value1, #value2, #value3 {
         font-family: "Calibri Light",serif;
     }
-
+    /*--keys for mobile version--*/
     #keylayout {
         margin-right: auto;
         margin-left: auto;
@@ -238,8 +238,8 @@
 
 @media screen and (orientation:landscape) {
     @font-face {
-        font-family: PacMan; /*a name to be used later*/
-        src: url("../PAC-FONT.TTF"); /*URL to font*/
+        font-family: PacMan;
+        src: url("../PAC-FONT.TTF");
     }
     html, body {
         margin: 0;
@@ -291,6 +291,10 @@
         bottom: 50%;
         font-size: 2rem;
     }
+    #backbutton{
+        margin-left:auto;
+        margin-right:auto;
+    }
     #navigation{
         border: 5px solid yellow;
         color:yellow;
@@ -336,9 +340,9 @@
 
     span {
         margin-top: 20%;
-        margin-bottom: auto;
-        margin-right: auto;
-        margin-left: auto;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
     }
 
     .game.show {

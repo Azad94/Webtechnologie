@@ -10,6 +10,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="scaffolded-by" content="https://github.com/google/stagehand">
+    <meta name="viewport" content="user-scalable=no" />
     <title>Webtechnologie - Pacman</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" media="screen and (max-device-width: 800px)" href="styles/mobile.css" />
@@ -21,12 +22,10 @@
         <span id="gameend"></span>
         <span id="startNext">NEXTLEVEL</span>
         <div id="userinput">
-            <form id="nameScore" action="highscore.html">
-                <label for="username" class="uname" data-icon="u" > YOUR NAME </label>
-
+            <form id="nameScore" action="">
                 <input id="username" type="text" name="username" placeholder="name" size="40" required/>
+                <button type='button' id="save">Save</button>
             <br>
-
             </form>
         </div>
     </div>
@@ -34,24 +33,6 @@
     <div class="header"></div>
     <!-- das Spielfeld -->
     <div id="labyrinth"></div>
-    <div id="keyless">
-        <table id="klcontrols">
-            <tbody>
-            <tr>
-                <td class="klUp"></td>
-                <td class="klUp"></td>
-            </tr>
-            <tr >
-                <td id="klLeft"></td>
-                <td id="klRight"></td>
-            </tr>
-            <tr>
-                <td class="klDown"></td>
-                <td class="klDown"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
     <!-- Spielinformationen -->
     <div id="information">
         <table id="infos">
@@ -67,7 +48,26 @@
         </table>
     </div>
     <!-- mobile -->
-
+    <div class="mobile">
+        <table id="keylayout">
+            <tbody> <tr id="mobile1">
+                <td class="mobileBlank"></td>
+                <td id="mobileUp"></td>
+                <td class="mobileBlank"></td>
+            </tr>
+            <tr id="mobile2">
+                <td id="mobileLeft"></td>
+                <td class="mobileBlank"></td>
+                <td id="mobileRight"></td>
+            </tr>
+            <tr id="mobile3">
+                <td class="mobileBlank"></td>
+                <td id="mobileDown"></td>
+                <td class="mobileBlank"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <!-- Debugg Console -->
     <div class="messages"></div>
     <!-- Copyrights -->

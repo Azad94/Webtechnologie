@@ -194,7 +194,7 @@ class GameKeyClient {
 
   /**
    * Autor: Nane Kratzke, modified by Niklas Klatt
-   * return a sorted list of the top ten highscores.
+   * return a sorted list of the top ten highscores.3
    */
   Future<List> getTop10() async {
     final states = await _getStates();
