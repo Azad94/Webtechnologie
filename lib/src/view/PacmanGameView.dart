@@ -132,11 +132,6 @@ class PacmanGameView {
   final mobileLeft = querySelector("#mobileLeft");
   final mobileRight = querySelector("#mobileRight");
 
- /* final klup = querySelector(".klUp");
-  final kldown = querySelector(".klDown");
-  final klleft = querySelector("#klLeft");
-  final klright = querySelector("#klRight");*/
-  //
   var mql = window.matchMedia("screen and (max-device-width : 800px)");
   var mqlLandscape = window.matchMedia("screen and (orientation: landscape)");
 
@@ -178,10 +173,9 @@ class PacmanGameView {
   void showHighscore() {
     highscore.style.visibility = "visible";
   }
-  void showTop10 (List<Map> scores) {
+  void showTop10 (List<Map> scores, int score) {
     final list = scores.map((entry) => "<li>${entry['name']}: ${entry['score']}</li>").join("");
-    //String achievedScore = _con._pacmanModel.score.toString();
-    final points = "You got onetrillzillion points";
+    final points = "You got $score points";
     _overlay.innerHtml = "<div id='scorelist'> $points ${ list.isEmpty? "" : "<ol>$list</ol>"}</div>";;
   }
   String get user => (document.querySelector('#username') as InputElement).value;

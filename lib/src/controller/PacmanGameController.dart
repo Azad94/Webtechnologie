@@ -17,6 +17,8 @@ class PacmanGameController {
 
   int _currentLevel = 1;
   int _maxLevel = 3;
+
+  int achievedScore = 0;
   //mobile Keys
   var up;
   var down;
@@ -109,14 +111,15 @@ class PacmanGameController {
       stopGame();
       _pacmanView.hideNextLevel();
       _pacmanView.updateOverlay("GAME OVER");
+      if(_gamekey._available){
       _pacmanView.showHighscore();
-      _pacmanView.savename.onClick.listen((_) { saveScore();/*_gamekey.authenticate();*/});
+      _pacmanView.savename.onClick.listen((_) { saveScore();/*_gamekey.authenticate();*/});}
     }
   }
 
     void saveScore() {
       if(_gamekey._available){
-        _gamekey.addScore(_pacmanView.user, _pacmanModel.score).then((b) { _gamekey.getTop10().then((scores) { _pacmanView.showTop10(scores);});} );
+        _gamekey.addScore(_pacmanView.user, _pacmanModel.score).then((b) { _gamekey.getTop10().then((scores) { _pacmanView.showTop10(scores, achievedScore);});} );
       }
     }
 
@@ -124,6 +127,7 @@ class PacmanGameController {
   void gameWon(bool b) {
     if (b) {
       stopGame();
+      achievedScore += _pacmanModel.score;
       _pacmanView.updateOverlay("STAGE CLEARED");
       _pacmanModel.newGame();
      // print(_pacmanModel.gameEnd);
