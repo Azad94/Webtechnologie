@@ -350,6 +350,8 @@ class Level {
     return ret;
   }
 
+  void endEatableMode() => _score.resetGhostMultiplier();
+
   /*
   Helper methods
    */

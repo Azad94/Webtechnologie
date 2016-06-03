@@ -126,6 +126,7 @@ abstract class Ghost extends GameElement {
       if (timeCounter == _eatTime) {
         _eatable = false;
         timeCounter = 0;
+        _level.endEatableMode();
       }
     }
   }
