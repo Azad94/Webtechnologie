@@ -95,6 +95,26 @@ class Level {
   Types _pacmanPre = Types.PACMAN_RIGHT;
 
   /**
+   * Direction of [Inky]
+   */
+  Directions _inkyDir;
+
+  /**
+   * Direction of [Pinky]
+   */
+  Directions _pinkyDir;
+
+  /**
+   * Direction of [Blinky]
+   */
+  Directions _blinkyDir;
+
+  /**
+   * Direction of [Clyde]
+   */
+  Directions _clydeDir;
+
+  /**
    * gamefiled as [List] over [List] of [Tile]s
    */
   List<List<Tile>> _tiles = new List<List<Tile>>();
@@ -185,18 +205,8 @@ class Level {
   bool checkCollision(int x, int y, GameElement g) {
     final tile = _tiles[y][x];
     // calculate side of the collision
-    Directions side;
-    int diff_x = g._x - x;
-    int diff_y = g._y - y;
-    if (diff_x == -1)
-      side = Directions.RIGHT;
-    else if (diff_x == 1)
-      side = Directions.LEFT;
-    else if (diff_y == -1)
-      side = Directions.DOWN;
-    else
-      side = Directions.UP;
-    // no Statics
+    Directions side = getDirection(g._x, g._y, x, y);
+     // no Statics
     if (tile._environment == null) return false;
     // ghosts collides
     if (tile._environment._collisionGhost == true && g is Ghost) {
@@ -496,5 +506,20 @@ class Level {
         _score.resetGhostMultiplier();
       }
     }
+  }
+
+  Directions getDirection(int x_old, int y_old, int x_new, int y_new) {
+    Directions ret = Directions.NOTHING;
+    int diff_x = x_old - x_new;
+    int diff_y = y_old - y_new;
+    if (diff_x == -1)
+      ret = Directions.RIGHT;
+    else if (diff_x == 1)
+      ret = Directions.LEFT;
+    else if (diff_y == -1)
+      ret = Directions.DOWN;
+    else
+      ret = Directions.UP;
+    return ret;
   }
 }
