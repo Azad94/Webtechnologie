@@ -16,6 +16,108 @@ a:-webkit-any-link {
     text-decoration: none;
     cursor: auto;
 }
+.cssload-container{
+    background:rgba(0,0,0, 0.2);
+}
+
+.cssload-container div {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    background-color: rgba(0,0,0, 0.0);
+    top: 45%;
+    border-radius: 50%;
+}
+#Loading {
+    font-family: PacMan;
+    color: yellow;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.cssload-container div:nth-child(1) {
+    background-image:url(../resc/ghosts/blinky/blinky_r32.png);
+    animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -o-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -ms-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -webkit-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -moz-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+
+.cssload-container div:nth-child(2) {
+    background-image:url(../resc/ghosts/pinky/pinky_r32.png);
+    animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -o-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -ms-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -webkit-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -moz-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+
+.cssload-container div:nth-child(3) {
+    background-image:url(../resc/ghosts/inky/inky_r32.png);
+    animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -o-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -ms-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -webkit-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -moz-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+
+.cssload-container div:nth-child(4) {
+    background-image:url(../resc/ghosts/clyde/clyde_r32.png);
+    animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -o-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -ms-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -webkit-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -moz-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+
+
+
+@keyframes cssload-move {
+    0% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@-o-keyframes cssload-move {
+    0% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@-ms-keyframes cssload-move {
+    0% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@-webkit-keyframes cssload-move {
+    0% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@-moz-keyframes cssload-move {
+    0% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
 #navdiv{
     margin-top: 5%;
 }
@@ -29,6 +131,7 @@ a:-webkit-any-link {
     font-size: 2rem;
 }
 #highscore {
+    display: none;
     margin-top: 2%;
     margin-left: auto;
     margin-right: auto;
