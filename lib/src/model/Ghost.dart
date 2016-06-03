@@ -104,6 +104,8 @@ abstract class Ghost extends GameElement {
         this._y_start = y,
         this._score = score;
 
+  bool get eatable => _eatable;
+
   /**
    * moves a ghost one step
    */
@@ -126,6 +128,7 @@ abstract class Ghost extends GameElement {
       if (timeCounter == _eatTime) {
         _eatable = false;
         timeCounter = 0;
+        _level.endEatableMode();
       }
     }
   }

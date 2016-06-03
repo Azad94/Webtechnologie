@@ -95,6 +95,26 @@ class Level {
   Types _pacmanPre = Types.PACMAN_RIGHT;
 
   /**
+   * Direction of [Inky]
+   */
+  Directions _inkyDir = Directions.NOTHING;
+
+  /**
+   * Direction of [Pinky]
+   */
+  Directions _pinkyDir = Directions.NOTHING;
+
+  /**
+   * Direction of [Blinky]
+   */
+  Directions _blinkyDir = Directions.NOTHING;
+
+  /**
+   * Direction of [Clyde]
+   */
+  Directions _clydeDir = Directions.NOTHING;
+
+  /**
    * gamefiled as [List] over [List] of [Tile]s
    */
   List<List<Tile>> _tiles = new List<List<Tile>>();
@@ -185,17 +205,7 @@ class Level {
   bool checkCollision(int x, int y, GameElement g) {
     final tile = _tiles[y][x];
     // calculate side of the collision
-    Directions side;
-    int diff_x = g._x - x;
-    int diff_y = g._y - y;
-    if (diff_x == -1)
-      side = Directions.RIGHT;
-    else if (diff_x == 1)
-      side = Directions.LEFT;
-    else if (diff_y == -1)
-      side = Directions.DOWN;
-    else
-      side = Directions.UP;
+    Directions side = getDirection(g._x, g._y, x, y);
     // no Statics
     if (tile._environment == null) return false;
     // ghosts collides
@@ -247,6 +257,11 @@ class Level {
       _tiles[yOld][xOld]._ghosts.remove(g);
       _tiles[yNew][xNew]._ghosts.add(g);
       this.collisionDetectionGhost(xNew, yNew);
+      Directions dir = getDirection(xOld, yOld, xNew, yNew);
+      if (g is Blinky) _blinkyDir = dir;
+      if (g is Inky) _inkyDir = dir;
+      if (g is Pinky) _pinkyDir = dir;
+      if (g is Clyde) _clydeDir = dir;
     }
   }
 
@@ -266,61 +281,155 @@ class Level {
         final tile = _tiles[y][x];
 
         // pacman
-        if (tile._pacman != null)
+        if (tile._pacman != null) {
           switch (_pacmanDir) {
-          case Directions.UP:
-            ret[y].add(Types.PACMAN_UP);
-            _pacmanPre = Types.PACMAN_UP;
-            break;
-          case Directions.DOWN:
-            ret[y].add(Types.PACMAN_DOWN);
-            _pacmanPre = Types.PACMAN_DOWN;
-            break;
-          case Directions.LEFT:
-            ret[y].add(Types.PACMAN_LEFT);
-            _pacmanPre = Types.PACMAN_LEFT;
-            break;
-          case Directions.RIGHT:
-            ret[y].add(Types.PACMAN_RIGHT);
-            _pacmanPre = Types.PACMAN_RIGHT;
-            break;
-          default:
-            ret[y].add(_pacmanPre);
-            break;
+            case Directions.UP:
+              ret[y].add(Types.PACMAN_UP);
+              _pacmanPre = Types.PACMAN_UP;
+              break;
+            case Directions.DOWN:
+              ret[y].add(Types.PACMAN_DOWN);
+              _pacmanPre = Types.PACMAN_DOWN;
+              break;
+            case Directions.LEFT:
+              ret[y].add(Types.PACMAN_LEFT);
+              _pacmanPre = Types.PACMAN_LEFT;
+              break;
+            case Directions.RIGHT:
+              ret[y].add(Types.PACMAN_RIGHT);
+              _pacmanPre = Types.PACMAN_RIGHT;
+              break;
+            default:
+              ret[y].add(_pacmanPre);
+              break;
+          }
         }
-
         // ghosts
         else if (tile._ghosts.length != 0) {
-          // blinky
-          if (tile._ghosts[0] is Blinky) {
-            if (tile._ghosts[0]._eatable)
-              ret[y].add(Types.BLINKY_EATABLE);
-            else
-              ret[y].add(Types.BLINKY);
+          Ghost ghost = tile._ghosts[0];
+          // Blinky
+          if (ghost is Blinky) {
+            switch (_blinkyDir) {
+              case Directions.LEFT:
+                if (ghost.eatable)
+                  ret[y].add(Types.BLINKY_SCARE_LEFT);
+                else
+                  ret[y].add(Types.BLINKY_LEFT);
+                break;
+              case Directions.RIGHT:
+                if (ghost.eatable)
+                  ret[y].add(Types.BLINKY_SCARE_RIGHT);
+                else
+                  ret[y].add(Types.BLINKY_RIGHT);
+                break;
+              case Directions.UP:
+                if (ghost.eatable)
+                  ret[y].add(Types.BLINKY_SCARE_UP);
+                else
+                  ret[y].add(Types.BLINKY_UP);
+                break;
+              case Directions.DOWN:
+                if (ghost.eatable)
+                  ret[y].add(Types.BLINKY_SCARE_DOWN);
+                else
+                  ret[y].add(Types.BLINKY_DOWN);
+                break;
+              default:
+                break;
+            }
           }
-
-          // pinky
-          else if (tile._ghosts[0] is Pinky) {
-            if (tile._ghosts[0]._eatable)
-              ret[y].add(Types.PINKY_EATABLE);
-            else
-              ret[y].add(Types.PINKY);
+          // Inky
+          if (ghost is Inky) {
+            switch (_inkyDir) {
+              case Directions.LEFT:
+                if (ghost.eatable)
+                  ret[y].add(Types.INKY_SCARE_LEFT);
+                else
+                  ret[y].add(Types.INKY_LEFT);
+                break;
+              case Directions.RIGHT:
+                if (ghost.eatable)
+                  ret[y].add(Types.INKY_SCARE_RIGHT);
+                else
+                  ret[y].add(Types.INKY_RIGHT);
+                break;
+              case Directions.UP:
+                if (ghost.eatable)
+                  ret[y].add(Types.INKY_SCARE_UP);
+                else
+                  ret[y].add(Types.INKY_UP);
+                break;
+              case Directions.DOWN:
+                if (ghost.eatable)
+                  ret[y].add(Types.INKY_SCARE_DOWN);
+                else
+                  ret[y].add(Types.INKY_DOWN);
+                break;
+              default:
+                break;
+            }
           }
-
-          // inky
-          else if (tile._ghosts[0] is Inky) {
-            if (tile._ghosts[0]._eatable)
-              ret[y].add(Types.INKY_EATABLE);
-            else
-              ret[y].add(Types.INKY);
+          // Pinky
+          if (ghost is Pinky) {
+            switch (_pinkyDir) {
+              case Directions.LEFT:
+                if (ghost.eatable)
+                  ret[y].add(Types.PINKY_SCARE_LEFT);
+                else
+                  ret[y].add(Types.PINKY_LEFT);
+                break;
+              case Directions.RIGHT:
+                if (ghost.eatable)
+                  ret[y].add(Types.PINKY_SCARE_RIGHT);
+                else
+                  ret[y].add(Types.PINKY_RIGHT);
+                break;
+              case Directions.UP:
+                if (ghost.eatable)
+                  ret[y].add(Types.PINKY_SCARE_UP);
+                else
+                  ret[y].add(Types.PINKY_UP);
+                break;
+              case Directions.DOWN:
+                if (ghost.eatable)
+                  ret[y].add(Types.PINKY_SCARE_DOWN);
+                else
+                  ret[y].add(Types.PINKY_DOWN);
+                break;
+              default:
+                break;
+            }
           }
-
-          // clyde
-          else if (tile._ghosts[0] is Clyde) {
-            if (tile._ghosts[0]._eatable)
-              ret[y].add(Types.CLYDE_EATABLE);
-            else
-              ret[y].add(Types.CLYDE);
+          // Clyde
+          if (ghost is Clyde) {
+            switch (_clydeDir) {
+              case Directions.LEFT:
+                if (ghost.eatable)
+                  ret[y].add(Types.CLYDE_SCARE_LEFT);
+                else
+                  ret[y].add(Types.CLYDE_LEFT);
+                break;
+              case Directions.RIGHT:
+                if (ghost.eatable)
+                  ret[y].add(Types.CLYDE_SCARE_RIGHT);
+                else
+                  ret[y].add(Types.CLYDE_RIGHT);
+                break;
+              case Directions.UP:
+                if (ghost.eatable)
+                  ret[y].add(Types.CLYDE_SCARE_UP);
+                else
+                  ret[y].add(Types.CLYDE_UP);
+                break;
+              case Directions.DOWN:
+                if (ghost.eatable)
+                  ret[y].add(Types.CLYDE_SCARE_DOWN);
+                else
+                  ret[y].add(Types.CLYDE_DOWN);
+                break;
+              default:
+                break;
+            }
           }
         }
         // items
@@ -336,7 +445,8 @@ class Level {
             ret[y].add(Types.CHERRY);
           else
             ret[y].add(Types.NOTHING);
-        } // environments
+        }
+        // environments
         else if (tile._environment != null) {
           // door
           if (tile._environment._door)
@@ -350,15 +460,17 @@ class Level {
     return ret;
   }
 
+  void endEatableMode() => _score.resetGhostMultiplier();
+
   /*
   Helper methods
    */
 
   /**
-   * creates all game objects and put them into the game field (_tiles).
-   * Needs a [String] with the map coding
-   *
-   */
+     * creates all game objects and put them into the game field (_tiles).
+     * Needs a [String] with the map coding
+     *
+     */
   void createObjects(String environmentCode) {
     // Split string in lines
     List<String> lines = environmentCode.split(LevelLoader.NEWLINE);
@@ -445,8 +557,8 @@ class Level {
   }
 
   /**
-   * initialize the _tiles
-   */
+     * initialize the _tiles
+     */
   void initTiles() {
     if (_sizeX == null || _sizeY == null) {
       // TODO log
@@ -462,8 +574,8 @@ class Level {
   }
 
   /**
-   * checks if [Pacman] collides with a Item on the given position
-   */
+     * checks if [Pacman] collides with a Item on the given position
+     */
   void collisionDetectionItem(int x, int y) {
     // no collision possible, pacman is not here
     if (_tiles[y][x]._pacman == null) return;
@@ -476,8 +588,8 @@ class Level {
   }
 
   /**
-   * checks if [Pacman] collides with a ghost on the given position
-   */
+     * checks if [Pacman] collides with a ghost on the given position
+     */
   void collisionDetectionGhost(int x, int y) {
     // ghost collides with pacman
     if (_tiles[y][x]._pacman != null && _tiles[y][x]._ghosts.length != 0) {
@@ -494,5 +606,20 @@ class Level {
         _score.resetGhostMultiplier();
       }
     }
+  }
+
+  Directions getDirection(int x_old, int y_old, int x_new, int y_new) {
+    Directions ret = Directions.NOTHING;
+    int diff_x = x_old - x_new;
+    int diff_y = y_old - y_new;
+    if (diff_x == -1)
+      ret = Directions.RIGHT;
+    else if (diff_x == 1)
+      ret = Directions.LEFT;
+    else if (diff_y == -1)
+      ret = Directions.DOWN;
+    else
+      ret = Directions.UP;
+    return ret;
   }
 }
