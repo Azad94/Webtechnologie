@@ -230,29 +230,101 @@ class PacmanGameView {
             case Types.DOOR :
               kl.children[_row].children[_col].setAttribute("style", door16);
               break;
-            case Types.BLINKY :
+            case Types.BLINKY_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", blinky_r16);
               break;
-            case Types.BLINKY_EATABLE :
+            case Types.BLINKY_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", blinky_d16);
+              break;
+            case Types.BLINKY_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", blinky_l16);
+              break;
+            case Types.BLINKY_UP :
+              kl.children[_row].children[_col].setAttribute("style", blinky_u16);
+              break;
+            case Types.BLINKY_SCARE_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", scared_r16);
               break;
-            case Types.PINKY :
+            case Types.BLINKY_SCARE_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", scared_d16);
+              break;
+            case Types.BLINKY_SCARE_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", scared_l16);
+              break;
+            case Types.BLINKY_SCARE_UP :
+              kl.children[_row].children[_col].setAttribute("style", scared_u16);
+              break;
+            case Types.PINKY_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", pinky_r16);
               break;
-            case Types.PINKY_EATABLE :
-              kl.children[_row].children[_col].setAttribute("style", scared_r16);
+            case Types.PINKY_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", pinky_d16);
               break;
-            case Types.INKY :
+            case Types.PINKY_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", pinky_l16);
+              break;
+            case Types.PINKY_UP :
+              kl.children[_row].children[_col].setAttribute("style", pinky_u16);
+              break;
+            case Types.PINKY_SCARE_RIGHT :
+            kl.children[_row].children[_col].setAttribute("style", scared_r16);
+            break;
+            case Types.PINKY_SCARE_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", scared_d16);
+              break;
+            case Types.PINKY_SCARE_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", scared_l16);
+              break;
+            case Types.PINKY_SCARE_UP :
+              kl.children[_row].children[_col].setAttribute("style", scared_u16);
+              break;
+            case Types.INKY_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", inky_r16);
               break;
-            case Types.INKY_EATABLE :
+            case Types.INKY_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", inky_d16);
+              break;
+            case Types.INKY_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", inky_l16);
+              break;
+            case Types.INKY_UP :
+              kl.children[_row].children[_col].setAttribute("style", inky_u16);
+              break;
+            case Types.INKY_SCARE_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", scared_r16);
               break;
-            case Types.CLYDE :
+            case Types.INKY_SCARE_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", scared_d16);
+              break;
+            case Types.INKY_SCARE_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", scared_l16);
+              break;
+            case Types.INKY_SCARE_UP :
+              kl.children[_row].children[_col].setAttribute("style", scared_u16);
+              break;
+            case Types.CLYDE_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", clyde_r16);
               break;
-            case Types.CLYDE_EATABLE :
+            case Types.CLYDE_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", clyde_d16);
+              break;
+            case Types.CLYDE_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", clyde_l16);
+              break;
+            case Types.CLYDE_UP :
+              kl.children[_row].children[_col].setAttribute("style", clyde_u16);
+              break;
+            case Types.CLYDE_SCARE_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", scared_r16);
+              break;
+            case Types.CLYDE_SCARE_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", scared_d16);
+              break;
+            case Types.CLYDE_SCARE_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", scared_l16);
+              break;
+            case Types.CLYDE_SCARE_UP :
+              kl.children[_row].children[_col].setAttribute("style", scared_u16);
               break;
             case Types.PACMAN_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", pacman_r16);
@@ -290,29 +362,101 @@ class PacmanGameView {
             case Types.DOOR :
               kl.children[_row].children[_col].setAttribute("style", door);
               break;
-            case Types.BLINKY :
+            case Types.BLINKY_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", blinky_r);
               break;
-            case Types.BLINKY_EATABLE :
+            case Types.BLINKY_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", blinky_d);
+              break;
+            case Types.BLINKY_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", blinky_l);
+              break;
+            case Types.BLINKY_UP :
+              kl.children[_row].children[_col].setAttribute("style", blinky_u);
+              break;
+            case Types.BLINKY_SCARE_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", scared_r);
               break;
-            case Types.PINKY :
+            case Types.BLINKY_SCARE_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", scared_d);
+              break;
+            case Types.BLINKY_SCARE_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", scared_l);
+              break;
+            case Types.BLINKY_SCARE_UP :
+              kl.children[_row].children[_col].setAttribute("style", scared_u);
+              break;
+            case Types.PINKY_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", pinky_r);
               break;
-            case Types.PINKY_EATABLE :
+            case Types.PINKY_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", pinky_d);
+              break;
+            case Types.PINKY_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", pinky_l);
+              break;
+            case Types.PINKY_UP :
+              kl.children[_row].children[_col].setAttribute("style", pinky_u);
+              break;
+            case Types.PINKY_SCARE_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", scared_r);
               break;
-            case Types.INKY :
+            case Types.PINKY_SCARE_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", scared_d);
+              break;
+            case Types.PINKY_SCARE_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", scared_l);
+              break;
+            case Types.PINKY_SCARE_UP :
+              kl.children[_row].children[_col].setAttribute("style", scared_u);
+              break;
+            case Types.INKY_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", inky_r);
               break;
-            case Types.INKY_EATABLE:
+            case Types.INKY_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", inky_d);
+              break;
+            case Types.INKY_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", inky_l);
+              break;
+            case Types.INKY_UP :
+              kl.children[_row].children[_col].setAttribute("style", inky_u);
+              break;
+            case Types.INKY_SCARE_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", scared_r);
               break;
-            case Types.CLYDE :
+            case Types.INKY_SCARE_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", scared_d);
+              break;
+            case Types.INKY_SCARE_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", scared_l);
+              break;
+            case Types.INKY_SCARE_UP :
+              kl.children[_row].children[_col].setAttribute("style", scared_u);
+              break;
+            case Types.CLYDE_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", clyde_r);
               break;
-            case Types.CLYDE_EATABLE :
+            case Types.CLYDE_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", clyde_d);
+              break;
+            case Types.CLYDE_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", clyde_l);
+              break;
+            case Types.CLYDE_UP :
+              kl.children[_row].children[_col].setAttribute("style", clyde_u);
+              break;
+            case Types.CLYDE_SCARE_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", scared_r);
+              break;
+            case Types.CLYDE_SCARE_DOWN :
+              kl.children[_row].children[_col].setAttribute("style", scared_d);
+              break;
+            case Types.CLYDE_SCARE_LEFT :
+              kl.children[_row].children[_col].setAttribute("style", scared_l);
+              break;
+            case Types.CLYDE_SCARE_UP :
+              kl.children[_row].children[_col].setAttribute("style", scared_u);
               break;
             case Types.PACMAN_RIGHT :
               kl.children[_row].children[_col].setAttribute("style", pacman_r);
