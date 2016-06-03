@@ -104,6 +104,8 @@ abstract class Ghost extends GameElement {
         this._y_start = y,
         this._score = score;
 
+  bool get eatable => _eatable;
+
   /**
    * moves a ghost one step
    */
