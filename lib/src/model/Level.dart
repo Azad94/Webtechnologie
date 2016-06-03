@@ -97,22 +97,22 @@ class Level {
   /**
    * Direction of [Inky]
    */
-  Directions _inkyDir = Directions.NOTHING;
+  Directions _inkyDir = Directions.UP;
 
   /**
    * Direction of [Pinky]
    */
-  Directions _pinkyDir = Directions.NOTHING;
+  Directions _pinkyDir = Directions.UP;
 
   /**
    * Direction of [Blinky]
    */
-  Directions _blinkyDir = Directions.NOTHING;
+  Directions _blinkyDir = Directions.UP;
 
   /**
    * Direction of [Clyde]
    */
-  Directions _clydeDir = Directions.NOTHING;
+  Directions _clydeDir = Directions.UP;
 
   /**
    * gamefiled as [List] over [List] of [Tile]s
