@@ -34,15 +34,20 @@ class PacmanGameController {
 
   //TODO user authentication
   Future authenticateUser() async {
-    print("Gamekey-Data: ");
-    print(LevelLoader.GAMEKEY_HOST.toString() +"&"+ LevelLoader.GAMEKEY_PORT.toString() +"&" +LevelLoader.GAMEKEY_ID.toString() +"&"+ LevelLoader.GAMEKEY_SECRET.toString());
     _gamekey = new GameKeyClient(LevelLoader.GAMEKEY_HOST, LevelLoader.GAMEKEY_PORT, LevelLoader.GAMEKEY_ID, LevelLoader.GAMEKEY_SECRET);
     await _gamekey.authenticate();
+    _pacmanView.showGame();
+    _pacmanView.hideLoading();
     startGame();
   }
 
   //start new game
   void startGame() {
+    if(_gamekey._available){
+      _pacmanView.updateMessages("Gamekey available", true);
+    }else{
+      _pacmanView.updateMessages("Gamekey unavailable", false);
+    }
     if(_currentLevel>1){
       _pacmanView.hideOverlay();
     }
@@ -54,8 +59,6 @@ class PacmanGameController {
       createTable(labyrinth);
     }
     refreshLabyrinth(labyrinth);
-    print("Gamekey available");
-    print(_gamekey._available.toString());
     _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
 
     if(_pacmanView.mql.matches){
@@ -119,7 +122,8 @@ class PacmanGameController {
 
     void saveScore() {
       if(_gamekey._available){
-        _gamekey.addScore(_pacmanView.user, _pacmanModel.score).then((b) { _gamekey.getTop10().then((scores) { _pacmanView.showTop10(scores, achievedScore);});} );
+        achievedScore+=_pacmanModel.score;
+        _gamekey.addScore(_pacmanView.user, achievedScore).then((b) { _gamekey.getTop10().then((scores) { _pacmanView.showTop10(scores, achievedScore);});} );
       }
     }
 
@@ -130,11 +134,7 @@ class PacmanGameController {
       achievedScore += _pacmanModel.score;
       _pacmanView.updateOverlay("STAGE CLEARED");
       _pacmanModel.newGame();
-     // print(_pacmanModel.gameEnd);
-     // print("CURRENT: ");
-     // print(_currentLevel);
       _currentLevel++;
-     // print(_currentLevel);
       _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame());});
     }
   }
@@ -170,7 +170,4 @@ class PacmanGameController {
     _pacmanView.updateLives(_pacmanModel.lives);
   }
 
-  void _updateMessage(String str) {
-    _pacmanView.updateMessages(str);
-  }
 }

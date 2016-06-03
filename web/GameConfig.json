@@ -3,8 +3,8 @@
   "scorePill": 50,
   "scorePowerPill" : 100,
   "scoreSingleGhost" : 200,
-  "GamekeyHost": "192.168.178.25",
-  "GamekeyPort" : 8080,
-  "GamekeyID" : "67c3a192-9f18-495a-b1f5-bbc733245d90",
-  "GamekeySecret": "13486e78a208dd82"
+  "GamekeyHost": "212.201.22.161",
+  "GamekeyPort" : 50001,
+  "GamekeyID" : "23a9c30c-8319-446a-bb1d-06af98442d05",
+  "GamekeySecret": "f2eb8b84b6c948d1"
 }

@@ -124,7 +124,8 @@ class PacmanGameView {
   final _level = querySelector("#value1");
   final _score = querySelector("#value2");
   final _lives = querySelector("#value3");
-
+  final _loadingscreen = querySelector(".cssload-container");
+  final _game = querySelector(".game");
   //move keys for the mobile version
   final mobile = querySelector(".mobile");
   final mobileUp = querySelector("#mobileUp");
@@ -155,9 +156,23 @@ class PacmanGameView {
     _lives.innerHtml = " $lives";
   }
 
-  void updateMessages(String str) {
-    _message.innerHtml = str; }
+  void updateMessages(String str, bool f) {
+    if(f) {
+      _message.style.color = "yellow";
+      _message.style.border = "5px solid yellow";
+    }else {
+      _message.style.color = "red";
+      _message.style.border = "5px solid yellow";
+    }
+    _message.innerHtml = str;
+  }
 
+  void hideLoading() {
+    _loadingscreen.style.display = "none";
+  }
+  void showGame() {
+    _game.style.display = "block";
+  }
   //updates the gameoverlay according to the gameend condition
   void updateOverlay(String s) {
     _gameend.innerHtml = s;
@@ -179,15 +194,6 @@ class PacmanGameView {
     _overlay.innerHtml = "<div id='scorelist'> $points ${ list.isEmpty? "" : "<ol>$list</ol>"}</div>";;
   }
   String get user => (document.querySelector('#username') as InputElement).value;
-  /*void receiveUsername() {
-    var x = name;
-    var text ="";
-    var i;
-    for(i=0;i<x.length; i++){
-      text += x.children[i].nodeValue.toString();
-      print(text);
-    }
-  }*/
 
   //creates the table in the html-document
   String _createLabyrinth(List<List<Types>> l) {
