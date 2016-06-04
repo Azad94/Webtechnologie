@@ -34,7 +34,7 @@ class PacmanGameController {
 
   //TODO user authentication
   Future authenticateUser() async {
-    _gamekey = new GameKeyClient(LevelLoader.GAMEKEY_HOST, LevelLoader.GAMEKEY_PORT, LevelLoader.GAMEKEY_ID, LevelLoader.GAMEKEY_SECRET);
+    _gamekey = new GameKeyClient(LevelLoader._gamekeyHost, LevelLoader._gamekeyPort, LevelLoader._gamekeyID, LevelLoader._gamekeySecret);
     await _gamekey.authenticate();
     _pacmanView.showGame();
     _pacmanView.hideLoading();

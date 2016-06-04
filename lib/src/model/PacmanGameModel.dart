@@ -4,7 +4,7 @@ class PacmanGameModel {
   List<Ghost> _ghosts = new List();
   Pacman _pacman;
   PacmanGameController _con;
-  Directions _pac_dir = Directions.NOTHING;
+  Directions _pacmanDir = Directions.NOTHING;
 
   bool _gameOver = false;
   bool _gameWon = false;
@@ -16,8 +16,8 @@ class PacmanGameModel {
 
   PacmanGameModel(PacmanGameController con) {
     LevelLoader.loadConfig();
-    _sizeX = LevelLoader.sizeX;
-    _sizeY = LevelLoader.sizeY;
+    _sizeX = LevelLoader._sizeX;
+    _sizeY = LevelLoader._sizeY;
     this._con = con;
   }
 
@@ -31,16 +31,16 @@ class PacmanGameModel {
     _pacman = null;
     _ghosts = new List();
     await LevelLoader.loadLevel(level);
-    _currentLevel = LevelLoader.levelNumber;
+    _currentLevel = LevelLoader._levelNumber;
     _level = new Level(
         LevelLoader._map,
-        LevelLoader.sizeX,
-        LevelLoader.sizeY,
+        LevelLoader._sizeX,
+        LevelLoader._sizeY,
         LevelLoader._lives,
-        LevelLoader.SCORE_PILL,
-        LevelLoader.SCORE_CHERRY,
-        LevelLoader.SCORE_POWERPILL,
-        LevelLoader.SCORE_GHOST,
+        LevelLoader._scorePill,
+        LevelLoader._scoreCherry,
+        LevelLoader._scorePowerPill,
+        LevelLoader._scoreGhost,
         LevelLoader._eatTime,
         LevelLoader._startBlinky,
         LevelLoader._startClyde,
@@ -53,37 +53,37 @@ class PacmanGameModel {
    * moves [Pacman] up if possible
    */
   void moveUp() {
-    _pac_dir = Directions.UP;
+    _pacmanDir = Directions.UP;
   }
 
   /**
    * moves [Pacman] down if possible
    */
   void moveDown() {
-    _pac_dir = Directions.DOWN;
+    _pacmanDir = Directions.DOWN;
   }
 
   /**
    * moves [Pacman] left if possible
    */
   void moveLeft() {
-    _pac_dir = Directions.LEFT;
+    _pacmanDir = Directions.LEFT;
   }
 
   /**
    * moves [Pacman] right if possible
    */
   void moveRight() {
-    _pac_dir = Directions.RIGHT;
+    _pacmanDir = Directions.RIGHT;
   }
 
   /**
    * move [Pacman] and [Ghost] to the next position. Call this method each frame.
    */
   void triggerFrame() {
-    _level.pacmanDir = _pac_dir;
-    _pacman.move(_pac_dir);
-    _pac_dir = Directions.NOTHING;
+    _level.pacmanDir = _pacmanDir;
+    _pacman.move(_pacmanDir);
+    _pacmanDir = Directions.NOTHING;
     this.moveGhost();
     this.updateView();
   }
@@ -144,7 +144,7 @@ class PacmanGameModel {
   bool get gameEnd => _gameOver;
   bool get gameVic => _gameWon;
 
-  int get level => LevelLoader.levelNumber;
+  int get level => LevelLoader._levelNumber;
 
   /**
    * register a new [GameElement]
@@ -153,7 +153,4 @@ class PacmanGameModel {
     if (g is Ghost) _ghosts.add(g);
     if (g is Pacman) _pacman = g;
   }
-
-  Level returnLevel() => _level;
-  Pacman returnPacman() => _pacman;
 }

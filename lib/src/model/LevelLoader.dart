@@ -45,44 +45,44 @@ class LevelLoader {
   /**
    * current level number
    */
-  static num levelNumber = -1;
+  static num _levelNumber = -1;
 
   /**
    * width field size
    */
-  static num sizeX;
+  static num _sizeX;
 
   /**
    * height field size
    */
-  static num sizeY;
+  static num _sizeY;
 
   /* gerneral const */
 
   /**
    * score of one pill
    */
-  static num SCORE_PILL = -1;
+  static num _scorePill = -1;
 
   /**
    * score of one powerPill
    */
-  static num SCORE_POWERPILL = -1;
+  static num _scorePowerPill = -1;
 
   /**
    * score of one cherry
    */
-  static num SCORE_CHERRY = -1;
+  static num _scoreCherry = -1;
 
   /**
    * basic score for one ghost
    */
-  static num SCORE_GHOST = -1;
+  static num _scoreGhost = -1;
 
-  static String GAMEKEY_HOST;
-  static num GAMEKEY_PORT;
-  static String GAMEKEY_ID;
-  static String GAMEKEY_SECRET;
+  static String _gamekeyHost;
+  static num _gamekeyPort;
+  static String _gamekeyID;
+  static String _gamekeySecret;
 
   /*
   MapCode
@@ -111,11 +111,6 @@ class LevelLoader {
    * character for cherry
    */
   static const CHERRY = "^";
-
-  /**
-   * character for Ghost
-   */
-  static const GHOST = "G";
 
   /**
    * character for Pinky
@@ -152,7 +147,7 @@ class LevelLoader {
    */
   static const NOTHING = "X";
 
-  static const _CONFIGJSON = "GameConfig.json";
+  static const _CONFIG_JSON = "GameConfig.json";
 
   /**
    * Loads a level from json file by given level number.
@@ -161,9 +156,9 @@ class LevelLoader {
   static Future loadLevel(int level) async {
     String json = await HttpRequest.getString("${level}_Level.json");
     final data = JSON.decode(json);
-    levelNumber = data["level"];
-    sizeX = data["sizeX"];
-    sizeY = data["sizeY"];
+    _levelNumber = data["level"];
+    _sizeX = data["sizeX"];
+    _sizeY = data["sizeY"];
     _map = data["map"];
     _lives = data["lives"];
     _eatTime = data["ghostEatTime"];
@@ -172,19 +167,20 @@ class LevelLoader {
     _startInky = data["startInky"];
     _startPinky = data["startPinky"];
     _loaded = true;
+    return true;
   }
 
-  static Future<bool> loadConfig() async{
-      String json = await HttpRequest.getString(_CONFIGJSON);
-      final data = JSON.decode(json);
-      SCORE_PILL = data["scorePill"];
-      SCORE_POWERPILL = data["scorePowerPill"];
-      SCORE_CHERRY = data["scoreCherry"];
-      SCORE_GHOST = data["scoreSingleGhost"];
-      GAMEKEY_HOST = data["GamekeyHost"];
-      GAMEKEY_PORT = data["GamekeyPort"];
-      GAMEKEY_ID = data["GamekeyID"];
-      GAMEKEY_SECRET = data["GamekeySecret"];
+  static Future<bool> loadConfig() async {
+    String json = await HttpRequest.getString(_CONFIG_JSON);
+    final data = JSON.decode(json);
+    _scorePill = data["scorePill"];
+    _scorePowerPill = data["scorePowerPill"];
+    _scoreCherry = data["scoreCherry"];
+    _scoreGhost = data["scoreSingleGhost"];
+    _gamekeyHost = data["GamekeyHost"];
+    _gamekeyPort = data["GamekeyPort"];
+    _gamekeyID = data["GamekeyID"];
+    _gamekeySecret = data["GamekeySecret"];
 
     return true;
   }

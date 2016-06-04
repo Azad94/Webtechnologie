@@ -608,10 +608,10 @@ class Level {
     }
   }
 
-  Directions getDirection(int x_old, int y_old, int x_new, int y_new) {
+  Directions getDirection(int xOld, int yOld, int xNew, int yNew) {
     Directions ret = Directions.NOTHING;
-    int diff_x = x_old - x_new;
-    int diff_y = y_old - y_new;
+    int diff_x = xOld - xNew;
+    int diff_y = yOld - yNew;
     if (diff_x == -1)
       ret = Directions.RIGHT;
     else if (diff_x == 1)

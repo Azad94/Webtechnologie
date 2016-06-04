@@ -28,11 +28,6 @@ class Inky extends Ghost {
   int _targetY;
 
   /**
-   * true if Inky is out of the Gate, else false
-   */
-  bool _outOfGate = false;
-
-  /**
    * Direction where Inky came from
    */
   Directions _previousDirection;
@@ -62,7 +57,7 @@ class Inky extends Ghost {
     //checks if Inky is allowed to move yet
     if (_started) {
       //if Inky is at his origin position his first target is to get out of the Door
-      if (_x == _x_start && _y == _y_start) {
+      if (_x == _start_x && _y == _start_y) {
         _targetX = _doorX;
         _targetY = _doorY;
         _isScattering = false;

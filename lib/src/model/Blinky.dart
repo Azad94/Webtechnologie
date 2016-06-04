@@ -30,11 +30,6 @@ class Blinky extends Ghost {
   int _targetY;
 
   /**
-   * true if Blinky is out of the Gate, else false
-   */
-  bool _outOfGate = false;
-
-  /**
    * Direction where Blinky came from
    */
   Directions _previousDirection;
@@ -64,7 +59,7 @@ class Blinky extends Ghost {
     //checks if Blinky is allowed to move yet
     if (_started) {
       //if Blinky is at his origin position his first target is to get out of the Door
-      if (_x == _x_start && _y == _y_start) {
+      if (_x == _start_x && _y == _start_y) {
         _targetX = _doorX;
         _targetY = _doorY;
         _isScattering = false;
