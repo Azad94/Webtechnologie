@@ -6,6 +6,8 @@
 html, body {
     margin: 0;
     height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     color: yellow;
     background-color: black;
     font-family: PacMan, serif;
