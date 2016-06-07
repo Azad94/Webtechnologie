@@ -6,6 +6,8 @@
 html, body {
     margin: 0;
     height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     color: yellow;
     background-color: black;
     font-family: "Calibri Light", serif;
@@ -130,7 +132,7 @@ a:-webkit-any-link {
     cursor: pointer;  width: 200px;
     font-size: 2rem;
 }
-#highscore {
+#highscorehtml {
     display: none;
     margin-top: 2%;
     margin-left: auto;

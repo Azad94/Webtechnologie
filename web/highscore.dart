@@ -3,7 +3,7 @@ import 'package:Webtechnologie/pacmanLib.dart';
 import 'dart:html';
 import 'dart:async';
 
-final highscore = querySelector("#highscore");
+final highscore = querySelector("#highscorehtml");
 final loading = querySelector(".cssload-container");
 String Gamekeyhost = "212.201.22.161";
 int Gamekeyport = 50001;

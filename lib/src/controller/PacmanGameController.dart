@@ -37,6 +37,9 @@ class PacmanGameController {
     _gamekey = new GameKeyClient(LevelLoader._gamekeyHost, LevelLoader._gamekeyPort, LevelLoader._gamekeyID, LevelLoader._gamekeySecret);
     await _gamekey.authenticate();
     _pacmanView.showGame();
+    if(_pacmanView.mql.matches){
+      _pacmanView.showMobile();
+    }
     _pacmanView.hideLoading();
     startGame();
   }

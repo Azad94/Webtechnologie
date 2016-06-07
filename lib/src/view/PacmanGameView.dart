@@ -188,6 +188,9 @@ class PacmanGameView {
   void showHighscore() {
     highscore.style.visibility = "visible";
   }
+  void showMobile() {
+    mobile.style.display = "block";
+  }
   void showTop10 (List<Map> scores, int score) {
     final list = scores.map((entry) => "<li>${entry['name']}: ${entry['score']}</li>").join("");
     final points = "You got $score points";

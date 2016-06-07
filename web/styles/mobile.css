@@ -1,9 +1,11 @@
 @media screen and (orientation:portrait) {
+
     /*--Pac-Man Font--*/
     @font-face {
-        font-family: PacMan; /*a name to be used later*/
-        src: url("../PAC-FONT.TTF"); /*URL to font*/
+        font-family: PacMan;
+        src: url("../PAC-FONT.TTF");
     }
+
     html, body {
         margin: 0;
         height: 100%;
@@ -12,15 +14,79 @@
         font-family: PacMan, serif;
         text-align: center;
     }
+
     a:-webkit-any-link {
         color: -webkit-link;
         text-decoration: none;
         cursor: auto;
     }
+
+    /*--StartScreen--*/
+    .start {
+        width: 100%;
+        height: 100%;
+        -webkit-background-size:cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background: black url("../resc/mPortrait.png") no-repeat center;
+        position: fixed;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .start.close {
+        display: none;
+    }
+    #startlayout {
+        margin-top: 50%;
+    }
+    #startText {
+        display:none;
+        position: absolute;
+        width: auto;
+        margin: 0 auto;
+        left: 45%;
+        bottom: 25%;
+        letter-spacing: 3px;
+        font-family: PacMan, serif;
+        font-size: 2rem;
+    }
+
+    #startButton {
+        border: 5px solid yellow;
+        border-radius: 20px;
+        padding: 2px 2px 2px 2px;
+        cursor: pointer;
+        width: 150px;
+        margin: 0 auto;
+        font-size: 2rem;
+    }
+    #about {
+        border: 5px solid yellow;
+        border-radius: 20px;
+        padding: 2px 2px 2px 2px;
+        cursor: pointer;
+        width: 150px;
+        margin: 0 auto;
+        font-size: 2rem;
+    }
+
+    #highscore {
+        border: 5px solid yellow;
+        border-radius: 20px;
+        padding: 2px 2px 2px 2px;
+        cursor: pointer;
+        width: 300px;
+        margin: 0 auto;
+        font-size: 2rem;
+    }
     #backbutton{
         margin-left:auto;
         margin-right:auto;
     }
+
+    /*---about ---*/
     #navigation{
         border: 5px solid yellow;
         color:yellow;
@@ -42,71 +108,7 @@
         font-family: "Calibri Light", serif;
         margin-bottom: 4%;
     }
-    /*--StartScreen--*/
-    .start {
-        width: 100%;
-        height: 100%;
-        -webkit-background-size:cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        background: black url("../resc/mPortrait.png") no-repeat center;
-        position: fixed;
-        font-weight: bold;
-        text-align: center;
-    }
 
-    .start.close {
-        display: none;
-    }
-
-    #startText {
-        display:none;
-        position: absolute;
-        width: auto;
-        margin: 0 auto;
-        left: 45%;
-        bottom: 25%;
-        letter-spacing: 3px;
-        font-family: PacMan, serif;
-        font-size: 2rem;
-    }
-
-    #startButton {
-        position: absolute;
-        border: 5px solid yellow;
-        border-radius: 20px;
-        padding: 2px 2px 2px 2px;
-        cursor: pointer;
-        width: 150px;
-        margin: 0 auto;
-        left: 45%;
-        bottom: 55%;
-        font-size: 2rem;
-    }
-    #about {
-        position: absolute;
-        left: 45%;
-        bottom: 45%;
-        border: 5px solid yellow;
-        color:yellow;
-        border-radius: 20px;
-        padding: 3px 3px 3px 3px;
-        cursor: pointer;  width: 200px;
-        font-size: 2rem;
-    }
-
-    #highscore {
-        position: absolute;
-        left: 40%;
-        bottom: 50%;
-        border: 5px solid yellow;
-        color:yellow;
-        border-radius: 20px;
-        padding: 3px 3px 3px 3px;
-        cursor: pointer;  width: 300px;
-        font-size: 2rem;
-    }
 
     /*--Game--*/
     #footer, .header, .messages {
@@ -160,7 +162,7 @@
         position: fixed;
         height: 100%;
         margin: 0 auto;
-        display: block;
+        display: none;
     }
 
     #labyrinth td {
@@ -192,6 +194,26 @@
     #value1, #value2, #value3 {
         font-family: "Calibri Light",serif;
     }
+    /**---highscore---*/
+    #highscorehtml {
+        display: none;
+        margin-top: 2%;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: "Calibri Light", serif;
+    }
+    #scoretable {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #scoretable td{
+        width: 200px;
+        height: 50px;
+    }
+    #head {
+        font-family: PacMan, serif;
+        font-size: 2rem;
+    }
     /*--keys for mobile version--*/
     #keylayout {
         margin-right: auto;
@@ -203,7 +225,7 @@
     }
 
     .mobile {
-        display: block;
+        display: none;
     }
 
     .mobile td {
@@ -280,15 +302,31 @@
     }
 
     #startButton {
-        position: absolute;
         border: 5px solid yellow;
         border-radius: 20px;
         padding: 2px 2px 2px 2px;
         cursor: pointer;
         width: 150px;
         margin: 0 auto;
-        left: 40%;
-        bottom: 50%;
+        font-size: 2rem;
+    }
+    #about {
+        border: 5px solid yellow;
+        border-radius: 20px;
+        padding: 2px 2px 2px 2px;
+        cursor: pointer;
+        width: 150px;
+        margin: 0 auto;
+        font-size: 2rem;
+    }
+
+    #highscore {
+        border: 5px solid yellow;
+        border-radius: 20px;
+        padding: 2px 2px 2px 2px;
+        cursor: pointer;
+        width: 300px;
+        margin: 0 auto;
         font-size: 2rem;
     }
     #backbutton{
@@ -369,7 +407,7 @@
         position: fixed;
         height: 100%;
         margin: 0 auto;
-        display: block;
+        display: none;
     }
 
     #labyrinth td {
@@ -429,12 +467,32 @@
     #klRight, #klLeft{
         width: 200px;
     }
+    /*---highscore---*/
+    #highscorehtml {
+        display: none;
+        margin-top: 2%;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: "Calibri Light", serif;
+    }
+    #scoretable {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #scoretable td{
+        width: 200px;
+        height: 50px;
+    }
+    #head {
+        font-family: PacMan, serif;
+        font-size: 2rem;
+    }
     .mobile {
         position:fixed;
         height: 0;
         right: 5%;
         top: 5%;
-        display: block;
+        display: none;
     }
 
     .mobile td {
