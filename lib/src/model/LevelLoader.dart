@@ -206,8 +206,8 @@ class LevelLoader {
   static Future<bool> loadConfig() async {
     try {
       String json = await HttpRequest.getString(_CONFIG_JSON);
-      if (json = null) throw new Exception("Can not read $_CONFIG_JSON");
-      final data = JSON.decode(json);
+      if (json == null) throw new Exception("Can not read $_CONFIG_JSON");
+      final data = await JSON.decode(json);
       _scorePill = data["scorePill"];
       _scorePowerPill = data["scorePowerPill"];
       _scoreCherry = data["scoreCherry"];

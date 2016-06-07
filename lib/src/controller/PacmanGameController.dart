@@ -1,7 +1,7 @@
 part of pacmanLib;
 
 //the refreshrate of the view
-const speed = const Duration(milliseconds:400);
+const speed = const Duration(milliseconds: 40);
 
 class PacmanGameController {
   //instances of PacmanGameModel and PacmanGameView
@@ -27,16 +27,31 @@ class PacmanGameController {
   PacmanGameController() {
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
-    _pacmanModel.loadLevel(_currentLevel).whenComplete(() => authenticateUser()); // HIER ÄNDERUNG EINGEFÜGT
-   //_gamekey = new GameKeyClient(LevelLoader.GAMEKEY_HOST, LevelLoader.GAMEKEY_PORT, LevelLoader.GAMEKEY_ID, LevelLoader.GAMEKEY_SECRET);
+    _pacmanModel.loadConfig().then((b) {
+      if (b)
+        _pacmanModel.loadLevel(_currentLevel).then((b) {
+        if (b)
+          authenticateUser();
+        else
+          _pacmanView.updateMessages("Fehler!", false);
+      });
+      else
+        _pacmanView.updateMessages("Fehler!", false);
+    });
+    // HIER ÄNDERUNG EINGEFÜGT
+    //_gamekey = new GameKeyClient(LevelLoader.GAMEKEY_HOST, LevelLoader.GAMEKEY_PORT, LevelLoader.GAMEKEY_ID, LevelLoader.GAMEKEY_SECRET);
   }
 
   //TODO user authentication
   Future authenticateUser() async {
-    _gamekey = new GameKeyClient(LevelLoader._gamekeyHost, LevelLoader._gamekeyPort, LevelLoader._gamekeyID, LevelLoader._gamekeySecret);
+    _gamekey = new GameKeyClient(
+        LevelLoader._gamekeyHost,
+        LevelLoader._gamekeyPort,
+        LevelLoader._gamekeyID,
+        LevelLoader._gamekeySecret);
     await _gamekey.authenticate();
     _pacmanView.showGame();
-    if(_pacmanView.mql.matches){
+    if (_pacmanView.mql.matches) {
       _pacmanView.showMobile();
     }
     _pacmanView.hideLoading();
@@ -45,30 +60,38 @@ class PacmanGameController {
 
   //start new game
   void startGame() {
-    if(_gamekey._available){
+    if (_gamekey._available) {
       _pacmanView.updateMessages("Gamekey available", true);
-    }else{
+    } else {
       _pacmanView.updateMessages("Gamekey unavailable", false);
     }
-    if(_currentLevel>1){
+    if (_currentLevel > 1) {
       _pacmanView.hideOverlay();
     }
-    if(_currentLevel==_maxLevel){
+    if (_currentLevel == _maxLevel) {
       _pacmanView.hideNextLevel();
     }
     var labyrinth = _pacmanModel.getMap();
-    if(_currentLevel==1){
+    if (_currentLevel == 1) {
       createTable(labyrinth);
     }
     refreshLabyrinth(labyrinth);
     if (_timer != null) _timer.cancel();
-    _timer = new Timer.periodic(speed, (_) =>_pacmanModel.triggerFrame());
+    _timer = new Timer.periodic(speed, (_) => _pacmanModel.triggerFrame());
 
-    if(_pacmanView.mql.matches){
-      up = _pacmanView.mobileUp.onClick.listen((_) {_pacmanModel.moveUp();});
-      down = _pacmanView.mobileDown.onClick.listen((_) {_pacmanModel.moveDown();});
-      left = _pacmanView.mobileLeft.onClick.listen((_) {_pacmanModel.moveLeft();});
-      right = _pacmanView.mobileRight.onClick.listen((_) {_pacmanModel.moveRight();});
+    if (_pacmanView.mql.matches) {
+      up = _pacmanView.mobileUp.onClick.listen((_) {
+        _pacmanModel.moveUp();
+      });
+      down = _pacmanView.mobileDown.onClick.listen((_) {
+        _pacmanModel.moveDown();
+      });
+      left = _pacmanView.mobileLeft.onClick.listen((_) {
+        _pacmanModel.moveLeft();
+      });
+      right = _pacmanView.mobileRight.onClick.listen((_) {
+        _pacmanModel.moveRight();
+      });
     } else {
       _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
         ev.preventDefault();
@@ -108,9 +131,7 @@ class PacmanGameController {
     var labyrinth = _pacmanModel.getMap();
     refreshLabyrinth(labyrinth);
     gameOver(_pacmanModel.gameEnd);
-    print("WOn:");
     print(_pacmanModel.gameVic.toString());
-    print("lost:");
     print(_pacmanModel.gameEnd.toString());
     gameWon(_pacmanModel.gameVic);
   }
@@ -121,18 +142,26 @@ class PacmanGameController {
       stopGame();
       _pacmanView.hideNextLevel();
       _pacmanView.updateOverlay("GAME OVER");
-      if(_gamekey._available){
-      _pacmanView.showHighscore();
-      _pacmanView.savename.onClick.listen((_) { saveScore();/*_gamekey.authenticate();*/});}
+      if (_gamekey._available) {
+        _pacmanView.showHighscore();
+        _pacmanView.savename.onClick.listen((_) {
+          saveScore();
+          /*_gamekey.authenticate();*/
+        });
+      }
     }
   }
 
-    void saveScore() {
-      if(_gamekey._available){
-        achievedScore+=_pacmanModel.score;
-        _gamekey.addScore(_pacmanView.user, achievedScore).then((b) { _gamekey.getTop10().then((scores) { _pacmanView.showTop10(scores, achievedScore);});} );
-      }
+  void saveScore() {
+    if (_gamekey._available) {
+      achievedScore += _pacmanModel.score;
+      _gamekey.addScore(_pacmanView.user, achievedScore).then((b) {
+        _gamekey.getTop10().then((scores) {
+          _pacmanView.showTop10(scores, achievedScore);
+        });
+      });
     }
+  }
 
   //ends the game, won
   void gameWon(bool b) {
@@ -140,12 +169,12 @@ class PacmanGameController {
       stopGame();
       achievedScore += _pacmanModel.score;
       _pacmanView.updateOverlay("STAGE CLEARED");
-      print("Verloren: " + _pacmanModel.gameEnd.toString());
-      print("Gewonnen:" + _pacmanModel.gameVic.toString());
-      if(_currentLevel<_maxLevel){
+      if (_currentLevel < _maxLevel) {
         _pacmanModel.newGame();
         _currentLevel++;
-        _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame());});
+        _pacmanView.startNext.onClick.listen((_) {
+          _pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame());
+        });
       }
     }
   }
@@ -180,5 +209,4 @@ class PacmanGameController {
   void updateLives() {
     _pacmanView.updateLives(_pacmanModel.lives);
   }
-
 }

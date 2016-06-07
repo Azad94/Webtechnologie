@@ -13,10 +13,7 @@ class Item extends GameElement {
     this._visible = visible;
     this._score = score;
     this._model = model;
-    if (!(this is Cherry)) {
-      _items++;
-      print("create item");
-    }
+    if (!(this is Cherry)) _items++;
   }
 
   /**
@@ -28,7 +25,6 @@ class Item extends GameElement {
       _visible = false;
       if (_itemsPickedUp == _items) _model.gameWon();
     }
-    print("$_itemsPickedUp von $_items");
   }
 
   static void resetCounter() {
