@@ -114,10 +114,6 @@ class PacmanGameController {
     var labyrinth = _pacmanModel.getMap();
     refreshLabyrinth(labyrinth);
     gameOver(_pacmanModel.gameEnd);
-    print("WOn:");
-    print(_pacmanModel.gameVic.toString());
-    print("lost:");
-    print(_pacmanModel.gameEnd.toString());
     gameWon(_pacmanModel.gameVic);
   }
 
@@ -146,8 +142,6 @@ class PacmanGameController {
       stopGame();
       achievedScore += _pacmanModel.score;
       _pacmanView.updateOverlay("STAGE CLEARED");
-      print("Verloren: " + _pacmanModel.gameEnd.toString());
-      print("Gewonnen:" + _pacmanModel.gameVic.toString());
       if(_currentLevel<_maxLevel){
         _pacmanModel.newGame();
         _currentLevel++;
