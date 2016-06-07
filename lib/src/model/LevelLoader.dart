@@ -3,11 +3,6 @@ part of pacmanLib;
 // TODO exception handling and logging
 class LevelLoader {
   /**
-   * indicates if a file is loaded
-   */
-  static bool _loaded = false;
-
-  /**
    * the map coded as [String]
    */
   static String _map = null;
@@ -153,20 +148,39 @@ class LevelLoader {
    * Loads a level from json file by given level number.
    * Return true if file is loaded, else false
    */
-  static Future loadLevel(int level) async {
-    String json = await HttpRequest.getString("${level}_Level.json");
-    final data = JSON.decode(json);
-    _levelNumber = data["level"];
-    _sizeX = data["sizeX"];
-    _sizeY = data["sizeY"];
-    _map = data["map"];
-    _lives = data["lives"];
-    _eatTime = data["ghostEatTime"];
-    _startBlinky = data["startBlinky"];
-    _startClyde = data["startClyde"];
-    _startInky = data["startInky"];
-    _startPinky = data["startPinky"];
-    _loaded = true;
+  static Future<bool> loadLevel(int level) async {
+    assert(level != null);
+    try {
+      String json = await HttpRequest.getString("${level}_Level.json");
+      if (json == null) throw new Exception("Can not find ${level}_Level.json");
+      final data = JSON.decode(json);
+      _levelNumber = data["level"];
+      _sizeX = data["sizeX"];
+      _sizeY = data["sizeY"];
+      _map = data["map"];
+      _lives = data["lives"];
+      _eatTime = data["ghostEatTime"];
+      _startBlinky = data["startBlinky"];
+      _startClyde = data["startClyde"];
+      _startInky = data["startInky"];
+      _startPinky = data["startPinky"];
+      if (_levelNumber == null ||
+          _sizeX == null ||
+          _sizeY == null ||
+          _map == null ||
+          _lives == null ||
+          _eatTime == null ||
+          _startBlinky == null ||
+          _startClyde == null ||
+          _startInky == null ||
+          _startPinky == null) {
+        throw new Exception("Can not read ${level}_Level.json");
+      }
+    }
+    catch(error, stackTrace) {
+      print("LevelLoader.loadlevel() caused following error: $error");
+      print(stackTrace);
+    }
     return true;
   }
 

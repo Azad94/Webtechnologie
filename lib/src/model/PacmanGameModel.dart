@@ -101,6 +101,7 @@ class PacmanGameModel {
   void newGame() {
     _gameOver = false;
     _gameWon = false;
+    Item.resetCounter();
   }
   /**
    * enable the power mode, means that ghosts are eatable
