@@ -1,6 +1,8 @@
 part of pacmanLib;
 
-// TODO exception handling and logging
+/**
+ * Load all json files
+ */
 class LevelLoader {
   /**
    * the map coded as [String]
@@ -74,9 +76,24 @@ class LevelLoader {
    */
   static num _scoreGhost = -1;
 
+  /**
+   * host of gamekey
+   */
   static String _gamekeyHost;
+
+  /**
+   * port of gamekey
+   */
   static num _gamekeyPort;
+
+  /**
+   * game id at gamekey
+   */
   static String _gamekeyID;
+
+  /**
+   * secret for authenticate the gamekey server
+   */
   static String _gamekeySecret;
 
   /*
@@ -149,7 +166,10 @@ class LevelLoader {
    * Return true if file is loaded, else false
    */
   static Future<bool> loadLevel(int level) async {
-    assert(level != null);
+    if (level == null) {
+      print("LevelLoader.loadlevel() param \"level\" is null");
+      return false;
+    }
     try {
       String json = await HttpRequest.getString("${level}_Level.json");
       if (json == null) throw new Exception("Can not find ${level}_Level.json");
@@ -176,8 +196,7 @@ class LevelLoader {
           _startPinky == null) {
         throw new Exception("Can not read ${level}_Level.json");
       }
-    }
-    catch(error, stackTrace) {
+    } catch (error, stackTrace) {
       print("LevelLoader.loadlevel() caused following error: $error");
       print(stackTrace);
     }
@@ -185,17 +204,32 @@ class LevelLoader {
   }
 
   static Future<bool> loadConfig() async {
-    String json = await HttpRequest.getString(_CONFIG_JSON);
-    final data = JSON.decode(json);
-    _scorePill = data["scorePill"];
-    _scorePowerPill = data["scorePowerPill"];
-    _scoreCherry = data["scoreCherry"];
-    _scoreGhost = data["scoreSingleGhost"];
-    _gamekeyHost = data["GamekeyHost"];
-    _gamekeyPort = data["GamekeyPort"];
-    _gamekeyID = data["GamekeyID"];
-    _gamekeySecret = data["GamekeySecret"];
-
+    try {
+      String json = await HttpRequest.getString(_CONFIG_JSON);
+      if (json = null) throw new Exception("Can not read $_CONFIG_JSON");
+      final data = JSON.decode(json);
+      _scorePill = data["scorePill"];
+      _scorePowerPill = data["scorePowerPill"];
+      _scoreCherry = data["scoreCherry"];
+      _scoreGhost = data["scoreSingleGhost"];
+      _gamekeyHost = data["GamekeyHost"];
+      _gamekeyPort = data["GamekeyPort"];
+      _gamekeyID = data["GamekeyID"];
+      _gamekeySecret = data["GamekeySecret"];
+      if (_scorePill == null ||
+          _scorePowerPill == null ||
+          _scoreCherry == null ||
+          _scoreGhost == null ||
+          _gamekeyHost == null ||
+          _gamekeyPort == null ||
+          _gamekeyID == null ||
+          _gamekeySecret == null)
+        throw new Exception("Can not read $_CONFIG_JSON");
+    } catch (error, stackTrace) {
+      print("LevelLoader.loadConfig() caused following error: $error");
+      print(stackTrace);
+      return false;
+    }
     return true;
   }
 }
