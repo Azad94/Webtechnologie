@@ -27,7 +27,8 @@ class PacmanGameController {
   PacmanGameController() {
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
-    _pacmanModel.loadLevel(_currentLevel).whenComplete(() => authenticateUser()); // HIER ÄNDERUNG EINGEFÜGT
+    _pacmanModel.loadLevel(_currentLevel).whenComplete(() => authenticateUser());
+    _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame());});// HIER ÄNDERUNG EINGEFÜGT
    //_gamekey = new GameKeyClient(LevelLoader.GAMEKEY_HOST, LevelLoader.GAMEKEY_PORT, LevelLoader.GAMEKEY_ID, LevelLoader.GAMEKEY_SECRET);
   }
 
@@ -65,11 +66,16 @@ class PacmanGameController {
     _timer = new Timer.periodic(speed, (_) =>_pacmanModel.triggerFrame());
 
     if(_pacmanView.mql.matches){
+      if(up!=null)up.cancel();
       up = _pacmanView.mobileUp.onClick.listen((_) {_pacmanModel.moveUp();});
+      if(down!=null)down.cancel();
       down = _pacmanView.mobileDown.onClick.listen((_) {_pacmanModel.moveDown();});
+      if(left!=null)left.cancel();
       left = _pacmanView.mobileLeft.onClick.listen((_) {_pacmanModel.moveLeft();});
+      if(right!=null)right.cancel();
       right = _pacmanView.mobileRight.onClick.listen((_) {_pacmanModel.moveRight();});
     } else {
+      if(_keyListener!=null) _keyListener.cancel();
       _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
         ev.preventDefault();
         switch (ev.keyCode) {
@@ -145,7 +151,6 @@ class PacmanGameController {
       if(_currentLevel<_maxLevel){
         _pacmanModel.newGame();
         _currentLevel++;
-        _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame());});
       }
     }
   }
