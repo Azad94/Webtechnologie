@@ -14,7 +14,6 @@ class PacmanGameController {
   //keyListener for User interaction and timer for the refreshrate
   var _keyListener;
   Timer _timer;
-
   int _currentLevel = 1;
   int _maxLevel = 3;
 
@@ -62,7 +61,8 @@ class PacmanGameController {
       createTable(labyrinth);
     }
     refreshLabyrinth(labyrinth);
-    _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
+    if (_timer != null) _timer.cancel();
+    _timer = new Timer.periodic(speed, (_) =>_pacmanModel.triggerFrame());
 
     if(_pacmanView.mql.matches){
       up = _pacmanView.mobileUp.onClick.listen((_) {_pacmanModel.moveUp();});
@@ -108,6 +108,10 @@ class PacmanGameController {
     var labyrinth = _pacmanModel.getMap();
     refreshLabyrinth(labyrinth);
     gameOver(_pacmanModel.gameEnd);
+    print("WOn:");
+    print(_pacmanModel.gameVic.toString());
+    print("lost:");
+    print(_pacmanModel.gameEnd.toString());
     gameWon(_pacmanModel.gameVic);
   }
 
@@ -136,9 +140,13 @@ class PacmanGameController {
       stopGame();
       achievedScore += _pacmanModel.score;
       _pacmanView.updateOverlay("STAGE CLEARED");
-      _pacmanModel.newGame();
-      _currentLevel++;
-      _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame());});
+      print("Verloren: " + _pacmanModel.gameEnd.toString());
+      print("Gewonnen:" + _pacmanModel.gameVic.toString());
+      if(_currentLevel<_maxLevel){
+        _pacmanModel.newGame();
+        _currentLevel++;
+        _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame());});
+      }
     }
   }
 
