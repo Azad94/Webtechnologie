@@ -1,7 +1,8 @@
 part of pacmanLib;
 
 /**
- * // TODO
+ * Represents one level. A level includes the map and all meta data, like lives, score etc.
+ * The level also detect collision of two [GameElement]s.
  */
 class Level {
   /**
@@ -118,6 +119,10 @@ class Level {
    * gamefiled as [List] over [List] of [Tile]s
    */
   List<List<Tile>> _tiles = new List<List<Tile>>();
+
+  /**
+   * model
+   */
   PacmanGameModel _model;
 
   /**
@@ -200,9 +205,13 @@ class Level {
 
   /**
    * checks if the given [GameElement] collides on a given position with a [Environment]
-   * return true if the object collides with another one, else false
+   * return true if the object collides with another one, if not false; error: null
    */
   bool checkCollision(int x, int y, GameElement g) {
+    if (x == null || y == null || g == null) {
+      print("Level.checkCollision(): param null");
+      return false;
+    }
     final tile = _tiles[y][x];
     // calculate side of the collision
     Directions side = getDirection(g._x, g._y, x, y);
@@ -243,6 +252,14 @@ class Level {
    * xOld and yOld is the old position and xNew and yNew the new one. g is a reference on the moving objekt.
    */
   void registerElement(int xOld, int yOld, int xNew, int yNew, GameElement g) {
+    if (xOld == null ||
+        yOld == null ||
+        xNew == null ||
+        yNew == null ||
+        g == null) {
+      print("Level.registerElement(): param null");
+      return;
+    }
     // position not correct
     assert(!this.checkCollision(xNew, yNew, g));
     // pacman chance position
@@ -460,108 +477,118 @@ class Level {
     return ret;
   }
 
+  /**
+   * ends eatable mode
+   */
   void endEatableMode() => _score.resetGhostMultiplier();
 
   /*
   Helper methods
    */
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /**
-     * creates all game objects and put them into the game field (_tiles).
-     * Needs a [String] with the map coding
-     *
-     */
+   *  DO NOT CALL; PRIVATE
+   * creates all game objects and put them into the game field (_tiles).
+   * Needs a [String] with the map coding
+   *
+   */
   void createObjects(String environmentCode) {
-    // Split string in lines
-    List<String> lines = environmentCode.split(LevelLoader.NEWLINE);
-    // compatible to size?
-    if (lines.length != _sizeY) {
-      // TODO log
+    if (environmentCode == null) {
+      print("Level.createObjects(): param null");
       return;
     }
-    for (int y = 0; y < _sizeY; y++) {
-      String line = lines[y];
-      for (int x = 0; x < _sizeX; x++) {
-        switch (line[x]) {
-          case LevelLoader.WALL:
-            _tiles[y][x]._environment =
-                new Environment(x, y, true, true, false, false, null, null);
-            break;
+    // Split string in lines
+    List<String> lines = environmentCode.split(LevelLoader.NEWLINE);
+    try {
+      for (int y = 0; y < _sizeY; y++) {
+        String line = lines[y];
+        for (int x = 0; x < _sizeX; x++) {
+          switch (line[x]) {
+            case LevelLoader.WALL:
+              _tiles[y][x]._environment =
+                  new Environment(x, y, true, true, false, false, null, null);
+              break;
 
-          case LevelLoader.PILL:
-            _tiles[y][x]._item =
-                new Pill(x, y, true, false, true, _scorePill, _model);
-            break;
+            case LevelLoader.PILL:
+              _tiles[y][x]._item =
+                  new Pill(x, y, true, false, true, _scorePill, _model);
+              break;
 
-          case LevelLoader.POWERPILL:
-            _tiles[y][x]._item =
-                new PowerPill(x, y, true, false, true, _scorePowerPill, _model);
-            break;
+            case LevelLoader.POWERPILL:
+              _tiles[y][x]._item = new PowerPill(
+                  x, y, true, false, true, _scorePowerPill, _model);
+              break;
 
-          case LevelLoader.CHERRY:
-            _tiles[y][x]._item =
-                new Cherry(x, y, true, false, true, _scoreCherry, _model);
-            break;
+            case LevelLoader.CHERRY:
+              _tiles[y][x]._item =
+                  new Cherry(x, y, true, false, true, _scoreCherry, _model);
+              break;
 
-          case LevelLoader.INKY:
-            Ghost g = new Inky(
-                x, y, false, false, this, _eatTime, _startInky, _scoreGhost);
-            _tiles[y][x]._ghosts.add(g);
-            _model.registerGameElement(g);
+            case LevelLoader.INKY:
+              Ghost g = new Inky(
+                  x, y, false, false, this, _eatTime, _startInky, _scoreGhost);
+              _tiles[y][x]._ghosts.add(g);
+              _model.registerGameElement(g);
 
-            break;
+              break;
 
-          case LevelLoader.PINKY:
-            Ghost g = new Pinky(
-                x, y, false, false, this, _eatTime, _startPinky, _scoreGhost);
-            _tiles[y][x]._ghosts.add(g);
-            _model.registerGameElement(g);
-            break;
+            case LevelLoader.PINKY:
+              Ghost g = new Pinky(
+                  x, y, false, false, this, _eatTime, _startPinky, _scoreGhost);
+              _tiles[y][x]._ghosts.add(g);
+              _model.registerGameElement(g);
+              break;
 
-          case LevelLoader.CLYDE:
-            Ghost g = new Clyde(
-                x, y, false, false, this, _eatTime, _startClyde, _scoreGhost);
-            _tiles[y][x]._ghosts.add(g);
-            _model.registerGameElement(g);
-            break;
+            case LevelLoader.CLYDE:
+              Ghost g = new Clyde(
+                  x, y, false, false, this, _eatTime, _startClyde, _scoreGhost);
+              _tiles[y][x]._ghosts.add(g);
+              _model.registerGameElement(g);
+              break;
 
-          case LevelLoader.BLINKY:
-            Ghost g = new Blinky(
-                x, y, false, false, this, _eatTime, _startBlinky, _scoreGhost);
-            _tiles[y][x]._ghosts.add(g);
-            _model.registerGameElement(g);
-            break;
+            case LevelLoader.BLINKY:
+              Ghost g = new Blinky(x, y, false, false, this, _eatTime,
+                  _startBlinky, _scoreGhost);
+              _tiles[y][x]._ghosts.add(g);
+              _model.registerGameElement(g);
+              break;
 
-          case LevelLoader.PACMAN:
-            _pacman = new Pacman(x, y, false, true, _lives, this, _model);
-            _tiles[y][x]._pacman = _pacman;
-            _model.registerGameElement(_pacman);
-            break;
+            case LevelLoader.PACMAN:
+              _pacman = new Pacman(x, y, false, true, _lives, this, _model);
+              _tiles[y][x]._pacman = _pacman;
+              _model.registerGameElement(_pacman);
+              break;
 
-          case LevelLoader.DOOR:
-            // set UP as no collision
-            List<Directions> noCollision = new List();
-            noCollision.add(Directions.UP);
-            _tiles[y][x]._environment = new Environment(
-                x, y, true, false, false, true, noCollision, null);
-            // set door position
-            _doorX = x;
-            _doorY = y;
-            break;
+            case LevelLoader.DOOR:
+              // set UP as no collision
+              List<Directions> noCollision = new List();
+              noCollision.add(Directions.UP);
+              _tiles[y][x]._environment = new Environment(
+                  x, y, true, false, false, true, noCollision, null);
+              // set door position
+              _doorX = x;
+              _doorY = y;
+              break;
 
-          default:
-            break;
+            default:
+              break;
+          }
         }
       }
+    } catch (error, stackTrace) {
+      print("Level.createObjects() caused following error: $error");
+      print(stackTrace);
+      return;
     }
   }
 
   /**
-     * initialize the _tiles
-     */
+   * DO NOT CALL; PRIVATE
+   * initialize the _tiles
+   */
   void initTiles() {
     if (_sizeX == null || _sizeY == null) {
-      // TODO log
+      print("Level.initTiles(): size null");
       return;
     }
     for (int i = 0; i < _sizeY; i++) {
@@ -574,9 +601,14 @@ class Level {
   }
 
   /**
-     * checks if [Pacman] collides with a Item on the given position
-     */
+   * DO NOT CALL; PRIVATE
+   * checks if [Pacman] collides with a Item on the given position
+   */
   void collisionDetectionItem(int x, int y) {
+    if (x == null || y == null) {
+      print("Level.collisionDetectionItem(): param null");
+      return;
+    }
     // no collision possible, pacman is not here
     if (_tiles[y][x]._pacman == null) return;
     // pacman collides with item
@@ -588,9 +620,14 @@ class Level {
   }
 
   /**
-     * checks if [Pacman] collides with a ghost on the given position
-     */
+   * DO NOT CALL; PRIVATE
+   * checks if [Pacman] collides with a ghost on the given position
+   */
   void collisionDetectionGhost(int x, int y) {
+    if (x == null || y == null) {
+      print("Level.collisionDetectionGhost(): param null");
+      return;
+    }
     // ghost collides with pacman
     if (_tiles[y][x]._pacman != null && _tiles[y][x]._ghosts.length != 0) {
       if (_tiles[y][x]._ghosts[0]._eatable) {
@@ -608,10 +645,18 @@ class Level {
     }
   }
 
-  Directions getDirection(int x_old, int y_old, int x_new, int y_new) {
+  /**
+   * DO NOT CALL; PRIAVTE
+   * calculate the direction
+   */
+  Directions getDirection(int xOld, int yOld, int xNew, int yNew) {
+    if (xOld == null || yOld == null || xNew == null || yNew == null) {
+      print("Level.getDirection(): param null");
+      return null;
+    }
     Directions ret = Directions.NOTHING;
-    int diff_x = x_old - x_new;
-    int diff_y = y_old - y_new;
+    int diff_x = xOld - xNew;
+    int diff_y = yOld - yNew;
     if (diff_x == -1)
       ret = Directions.RIGHT;
     else if (diff_x == 1)

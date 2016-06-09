@@ -27,9 +27,20 @@ class PacmanGameController {
   PacmanGameController() {
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
-    _pacmanModel.loadLevel(_currentLevel).whenComplete(() => authenticateUser());
+    _pacmanModel.loadConfig().then((b) {
+      if (b)
+        _pacmanModel.loadLevel(_currentLevel).then((b) {
+        if (b)
+          authenticateUser();
+        else
+          _pacmanView.updateMessages("Fehler!", false);
+      });
+      else
+        _pacmanView.updateMessages("Fehler!", false);
+    });
     _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(_currentLevel).whenComplete(() => startGame());});// HIER ÄNDERUNG EINGEFÜGT
-   //_gamekey = new GameKeyClient(LevelLoader.GAMEKEY_HOST, LevelLoader.GAMEKEY_PORT, LevelLoader.GAMEKEY_ID, LevelLoader.GAMEKEY_SECRET);
+    // HIER ÄNDERUNG EINGEFÜGT
+    //_gamekey = new GameKeyClient(LevelLoader.GAMEKEY_HOST, LevelLoader.GAMEKEY_PORT, LevelLoader.GAMEKEY_ID, LevelLoader.GAMEKEY_SECRET);
   }
 
   //TODO user authentication

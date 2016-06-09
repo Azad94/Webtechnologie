@@ -13,18 +13,23 @@ class Item extends GameElement {
     this._visible = visible;
     this._score = score;
     this._model = model;
-    if(!(this is Cherry)) _items++;
+    if (!(this is Cherry)) _items++;
   }
 
   /**
    * the [Item] is picked up. Make [Item] invisible
    */
   void pickUp() {
-    if(_visible) {
-      if(!(this is Cherry)) _itemsPickedUp++;
+    if (_visible) {
+      if (!(this is Cherry)) _itemsPickedUp++;
       _visible = false;
-      if(_itemsPickedUp == _items) _model.gameWon();
+      if (_itemsPickedUp == _items) _model.gameWon();
     }
+  }
 
+  static void resetCounter() {
+    // TODO Doku
+    _items = 0;
+    _itemsPickedUp = 0;
   }
 }

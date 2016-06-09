@@ -4,7 +4,7 @@ abstract class Ghost extends GameElement {
   /**
    * start position of ghost
    */
-  final _x_start, _y_start;
+  final _start_x, _start_y;
 
   /**
    * true if ghost is eatable, else false
@@ -100,8 +100,8 @@ abstract class Ghost extends GameElement {
         this._level = l,
         this._eatTime = eatTime,
         this._startTime = startTime,
-        this._x_start = x,
-        this._y_start = y,
+        this._start_x = x,
+        this._start_y = y,
         this._score = score;
 
   bool get eatable => _eatable;
@@ -148,9 +148,9 @@ abstract class Ghost extends GameElement {
     timeCounter = 0;
     _started = false;
     _startTime = 4; // to to wait after respawn
-    _level.registerElement(_x, _y, _x_start, _y_start, this);
-    _x = _x_start;
-    _y = _y_start;
+    _level.registerElement(_x, _y, _start_x, _start_y, this);
+    _x = _start_x;
+    _y = _start_y;
   }
 
   /**

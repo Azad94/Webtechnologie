@@ -33,6 +33,9 @@ class GameKeyClient {
       (new Uri(queryParameters: p)).query;
 
   GameKeyClient(String host, int port, this._gid, this._secret) {
+    if (host == null || port == null || _gid == null || _secret == null)
+      print("GameKeyClient(): param null");
+    else
     this._uri = new Uri.http("$host:$port", "/");
   }
 

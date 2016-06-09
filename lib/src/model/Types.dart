@@ -6,7 +6,6 @@ enum Types {
   PILL,
   POWERPILL,
   CHERRY,
-  BLINKY, // deprecated
   BLINKY_LEFT,
   BLINKY_RIGHT,
   BLINKY_UP,
@@ -15,8 +14,6 @@ enum Types {
   BLINKY_SCARE_RIGHT,
   BLINKY_SCARE_UP,
   BLINKY_SCARE_DOWN,
-  BLINKY_EATABLE, // deprecated
-  INKY, // deprecated
   INKY_LEFT,
   INKY_RIGHT,
   INKY_UP,
@@ -25,8 +22,6 @@ enum Types {
   INKY_SCARE_RIGHT,
   INKY_SCARE_UP,
   INKY_SCARE_DOWN,
-  INKY_EATABLE, // deprecated
-  PINKY, // deprecated
   PINKY_LEFT,
   PINKY_RIGHT,
   PINKY_UP,
@@ -35,8 +30,6 @@ enum Types {
   PINKY_SCARE_RIGHT,
   PINKY_SCARE_UP,
   PINKY_SCARE_DOWN,
-  PINKY_EATABLE, // deprecated
-  CLYDE, // deprecated
   CLYDE_LEFT,
   CLYDE_RIGHT,
   CLYDE_UP,
@@ -45,7 +38,6 @@ enum Types {
   CLYDE_SCARE_RIGHT,
   CLYDE_SCARE_UP,
   CLYDE_SCARE_DOWN,
-  CLYDE_EATABLE, // deprecated
   PACMAN,
   PACMAN_UP,
   PACMAN_DOWN,

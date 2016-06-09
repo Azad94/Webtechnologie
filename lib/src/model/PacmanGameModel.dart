@@ -4,7 +4,7 @@ class PacmanGameModel {
   List<Ghost> _ghosts = new List();
   Pacman _pacman;
   PacmanGameController _con;
-  Directions _pac_dir = Directions.NOTHING;
+  Directions _pacmanDir = Directions.NOTHING;
 
   bool _gameOver = false;
   bool _gameWon = false;
@@ -15,78 +15,34 @@ class PacmanGameModel {
   int _currentLevel = -1;
 
   PacmanGameModel(PacmanGameController con) {
-    LevelLoader.loadConfig();
-    _sizeX = LevelLoader.sizeX;
-    _sizeY = LevelLoader.sizeY;
+   // LevelLoader.loadConfig();
+    _sizeX = LevelLoader._sizeX;
+    _sizeY = LevelLoader._sizeY;
     this._con = con;
   }
 
-  bool getGameOver() => false;
-  bool getGameWone() => false;
+  /**
+   * return true if the game is game over, else false
+   */
+  bool get gameEnd => _gameOver;
+  bool get gameVic => _gameWon;
 
-  int getCurrentLevel() => _currentLevel;
-
-  Future loadLevel(int level) async {
-    // Delete old references
-    _pacman = null;
-    _ghosts = new List();
-    await LevelLoader.loadLevel(level);
-    _currentLevel = LevelLoader.levelNumber;
-    _level = new Level(
-        LevelLoader._map,
-        LevelLoader.sizeX,
-        LevelLoader.sizeY,
-        LevelLoader._lives,
-        LevelLoader.SCORE_PILL,
-        LevelLoader.SCORE_CHERRY,
-        LevelLoader.SCORE_POWERPILL,
-        LevelLoader.SCORE_GHOST,
-        LevelLoader._eatTime,
-        LevelLoader._startBlinky,
-        LevelLoader._startClyde,
-        LevelLoader._startInky,
-        LevelLoader._startPinky,
-        this);
-  }
+  int get level => LevelLoader._levelNumber;
 
   /**
-   * moves [Pacman] up if possible
+   * return the lives of [Pacman]
    */
-  void moveUp() {
-    _pac_dir = Directions.UP;
-  }
+  int get lives => _pacman._lives;
 
   /**
-   * moves [Pacman] down if possible
+   * return the current score
    */
-  void moveDown() {
-    _pac_dir = Directions.DOWN;
-  }
+  int get score => _level.score;
 
   /**
-   * moves [Pacman] left if possible
+   * enable the power mode, means that ghosts are eatable
    */
-  void moveLeft() {
-    _pac_dir = Directions.LEFT;
-  }
-
-  /**
-   * moves [Pacman] right if possible
-   */
-  void moveRight() {
-    _pac_dir = Directions.RIGHT;
-  }
-
-  /**
-   * move [Pacman] and [Ghost] to the next position. Call this method each frame.
-   */
-  void triggerFrame() {
-    _level.pacmanDir = _pac_dir;
-    _pacman.move(_pac_dir);
-    _pac_dir = Directions.NOTHING;
-    this.moveGhost();
-    this.updateView();
-  }
+  void enablePowerMode() => _ghosts.forEach((g) => g.eatableMode());
 
   /**
    * set the game to game over
@@ -98,53 +54,86 @@ class PacmanGameModel {
   void gameWon() {
     _gameWon = true;
   }
-  void newGame() {
-    _gameOver = false;
-    _gameWon = false;
-  }
-  /**
-   * enable the power mode, means that ghosts are eatable
-   */
-  void enablePowerMode() => _ghosts.forEach((g) => g.eatableMode());
 
-  void updateView() {
-    _con.updateGameStatus();
-  }
+  int getCurrentLevel() => _currentLevel;
 
-  /**
-   * Moves all [Ghost]s DO NOT CALL
-   */
-  void moveGhost() {
-    _ghosts.forEach((g) => g.move());
-  }
+  bool getGameOver() => false;
 
-  /**
-   * respawns all [Ghost]s
-   */
-  void respawnGhosts() => _ghosts.forEach((g) => g.respwan());
+  bool getGameWone() => false;
+
+  Future<bool> loadConfig() async => await LevelLoader.loadConfig();
 
   /**
    * return the full gameField as list over list with enum [Type]
    */
   List<List<Types>> getMap() => _level.getMap();
 
-  /**
-   * return the current score
-   */
-  int get score => _level.score;
+  Future<bool> loadLevel(int level) async {
+    // Delete old references
+    _pacman = null;
+    _ghosts = new List();
+    if (!await LevelLoader.loadLevel(level)) return false;
+    _currentLevel = LevelLoader._levelNumber;
+    _level = new Level(
+        LevelLoader._map,
+        LevelLoader._sizeX,
+        LevelLoader._sizeY,
+        LevelLoader._lives,
+        LevelLoader._scorePill,
+        LevelLoader._scoreCherry,
+        LevelLoader._scorePowerPill,
+        LevelLoader._scoreGhost,
+        LevelLoader._eatTime,
+        LevelLoader._startBlinky,
+        LevelLoader._startClyde,
+        LevelLoader._startInky,
+        LevelLoader._startPinky,
+        this);
+    return true;
+  }
 
   /**
-   * return the lives of [Pacman]
+   * moves [Pacman] down if possible
    */
-  int get lives => _pacman._lives;
+  void moveDown() {
+    _pacmanDir = Directions.DOWN;
+  }
 
   /**
-   * return true if the game is game over, else false
+   * Moves all [Ghost]s DO NOT CALL
    */
-  bool get gameEnd => _gameOver;
-  bool get gameVic => _gameWon;
+  void moveGhost() {
+    _ghosts.forEach((g) {
+      if (g != null) g.move();
+    });
+  }
 
-  int get level => LevelLoader.levelNumber;
+  /**
+   * moves [Pacman] left if possible
+   */
+  void moveLeft() {
+    _pacmanDir = Directions.LEFT;
+  }
+
+  /**
+   * moves [Pacman] right if possible
+   */
+  void moveRight() {
+    _pacmanDir = Directions.RIGHT;
+  }
+
+  /**
+   * moves [Pacman] up if possible
+   */
+  void moveUp() {
+    _pacmanDir = Directions.UP;
+  }
+
+  void newGame() {
+    _gameOver = false;
+    _gameWon = false;
+    Item.resetCounter();
+  }
 
   /**
    * register a new [GameElement]
@@ -154,6 +143,25 @@ class PacmanGameModel {
     if (g is Pacman) _pacman = g;
   }
 
-  Level returnLevel() => _level;
-  Pacman returnPacman() => _pacman;
+  /**
+   * respawns all [Ghost]s
+   */
+  void respawnGhosts() => _ghosts.forEach((g) {
+        if (g != null) g.respwan();
+      });
+
+  /**
+   * move [Pacman] and [Ghost] to the next position. Call this method each frame.
+   */
+  void triggerFrame() {
+    _level.pacmanDir = _pacmanDir;
+    if (_pacman != null) _pacman.move(_pacmanDir);
+    _pacmanDir = Directions.NOTHING;
+    this.moveGhost();
+    this.updateView();
+  }
+
+  void updateView() {
+    _con.updateGameStatus();
+  }
 }
