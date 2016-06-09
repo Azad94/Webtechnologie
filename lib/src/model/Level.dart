@@ -581,6 +581,7 @@ class Level {
     } catch (error, stackTrace) {
       print("Level.createObjects() caused following error: $error");
       print(stackTrace);
+      _model.errorScreen();
       return;
     }
   }
