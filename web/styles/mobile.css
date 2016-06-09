@@ -1,24 +1,122 @@
 @media screen and (orientation:portrait) {
 
-    /*--Pac-Man Font--*/
     @font-face {
-        font-family: PacMan;
-        src: url("../PAC-FONT.TTF");
+        font-family: PacMan; /*a name to be used later*/
+        src: url("../PAC-FONT.TTF"); /*URL to font*/
     }
 
-    html, body {
-        margin: 0;
-        height: 100%;
-        color: yellow;
-        background-color: black;
-        font-family: PacMan, serif;
-        text-align: center;
+    @font-face {
+        font-family: Retro;
+        src: url("../Retro Computer_DEMO.ttf");
     }
 
     a:-webkit-any-link {
         color: -webkit-link;
         text-decoration: none;
         cursor: auto;
+    }
+    /*--LoadingAnimation--*/
+    .cssload-container{
+        background:rgba(0,0,0, 0.2);
+    }
+
+    .cssload-container div {
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        background-color: rgba(0,0,0, 0.0);
+        top: 45%;
+        border-radius: 50%;
+    }
+    #Loading {
+        font-family: PacMan;
+        color: yellow;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .cssload-container div:nth-child(1) {
+        background-image:url(../resc/ghosts/blinky/blinky_r32.png);
+        animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -o-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -ms-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -webkit-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    }
+
+    .cssload-container div:nth-child(2) {
+        background-image:url(../resc/ghosts/pinky/pinky_r32.png);
+        animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -o-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -ms-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -webkit-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    }
+
+    .cssload-container div:nth-child(3) {
+        background-image:url(../resc/ghosts/inky/inky_r32.png);
+        animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -o-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -ms-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -webkit-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    }
+
+    .cssload-container div:nth-child(4) {
+        background-image:url(../resc/ghosts/clyde/clyde_r32.png);
+        animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -o-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -ms-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -webkit-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    }
+
+
+
+    @keyframes cssload-move {
+        0% {
+            left: 0%;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    @-o-keyframes cssload-move {
+        0% {
+            left: 0%;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    @-ms-keyframes cssload-move {
+        0% {
+            left: 0%;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    @-webkit-keyframes cssload-move {
+        0% {
+            left: 0%;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    @-moz-keyframes cssload-move {
+        0% {
+            left: 0%;
+        }
+        100% {
+            left: 100%;
+        }
     }
 
     /*--StartScreen--*/
@@ -29,18 +127,32 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-        background: black url("../resc/mPortrait.png") no-repeat center;
+        background: black url("../resc/backgrounds/mPortrait.png") no-repeat center;
         position: fixed;
         font-weight: bold;
         text-align: center;
     }
 
+    #error {
+        display:none;
+        position: absolute;
+        top:50%;
+        left:50%;
+        margin-top: -300px;
+        margin-left: -300px;
+        background-image: url("../resc/other/pacmanErr.png");
+        width: 600px;
+        height: 600px;
+    }
+
     .start.close {
         display: none;
     }
+
     #startlayout {
         margin-top: 50%;
     }
+
     #startText {
         display:none;
         position: absolute;
@@ -62,6 +174,7 @@
         margin: 0 auto;
         font-size: 2rem;
     }
+
     #about {
         border: 5px solid yellow;
         border-radius: 20px;
@@ -81,12 +194,39 @@
         margin: 0 auto;
         font-size: 2rem;
     }
-    #backbutton{
-        margin-left:auto;
-        margin-right:auto;
+    /*--HighscoreScreen--*/
+    #navdiv{
+        margin-top: 5%;
+    }
+    #navigation{
+        border: 5px solid yellow;
+        color:yellow;
+        font-family: PacMan, serif;
+        border-radius: 20px;
+        padding: 3px 3px 3px 3px;
+        cursor: pointer;  width: 200px;
+        font-size: 2rem;
+    }
+    #highscorehtml {
+        display: none;
+        margin-top: 2%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #scoretable {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #scoretable td{
+        width: 200px;
+        height: 50px;
+    }
+    #head {
+        font-family: PacMan, serif;
+        font-size: 2rem;
     }
 
-    /*---about ---*/
+    /*--AboutScreen--*/
     #navigation{
         border: 5px solid yellow;
         color:yellow;
@@ -105,12 +245,10 @@
         margin-bottom: 2%;
     }
     p{
-        font-family: "Calibri Light", serif;
         margin-bottom: 4%;
     }
 
-
-    /*--Game--*/
+    /*--GameScreen--*/
     #footer, .header, .messages {
         display: none;
     }
@@ -142,9 +280,7 @@
         border-radius: 10px;
         padding: 2px 2px 2px 2px;
     }
-    #startNext.hide {
-        display: none;
-    }
+
     #userinput {
         display: block;
         margin-top: 5%;
@@ -154,8 +290,12 @@
         margin-bottom: 45%;
         visibility: hidden;
     }
-    .game.show {
-        display: block
+    #scorelist {
+        font-family: Retro, serif;
+        height:100%;
+        margin-top:10%;
+        margin-bottom: 45%;
+        font-weight: bold;
     }
 
     .game {
@@ -192,28 +332,9 @@
 
 
     #value1, #value2, #value3 {
-        font-family: "Calibri Light",serif;
+        font-family: Retro,serif;
     }
-    /**---highscore---*/
-    #highscorehtml {
-        display: none;
-        margin-top: 2%;
-        margin-left: auto;
-        margin-right: auto;
-        font-family: "Calibri Light", serif;
-    }
-    #scoretable {
-        margin-left: auto;
-        margin-right: auto;
-    }
-    #scoretable td{
-        width: 200px;
-        height: 50px;
-    }
-    #head {
-        font-family: PacMan, serif;
-        font-size: 2rem;
-    }
+
     /*--keys for mobile version--*/
     #keylayout {
         margin-right: auto;
@@ -237,41 +358,147 @@
     }
 
     .mobileBlank {
-        background-image: url(../resc/mobileBlank.png);
+        background-image: url(../resc/mobilekeys/mobileBlank.png);
     }
 
     #mobileUp {
-        background-image: url(../resc/mobileUp.png);
+        background-image: url(../resc/mobilekeys/mobileUp.png);
     }
 
     #mobileDown {
-        background-image: url(../resc/mobileDown.png);
+        background-image: url(../resc/mobilekeys/mobileDown.png);
     }
 
     #mobileLeft {
-        background-image: url(../resc/mobileLeft.png);
+        background-image: url(../resc/mobilekeys/mobileLeft.png);
     }
 
     #mobileRight {
-        background-image: url(../resc/mobileRight.png);
+        background-image: url(../resc/mobilekeys/mobileRight.png);
     }
 }
 
 
 @media screen and (orientation:landscape) {
     @font-face {
-        font-family: PacMan;
-        src: url("../PAC-FONT.TTF");
+        font-family: PacMan; /*a name to be used later*/
+        src: url("../PAC-FONT.TTF"); /*URL to font*/
     }
-    html, body {
-        margin: 0;
-        height: 100%;
-        color: yellow;
-        background-color: black;
-        font-family: PacMan, serif;
-        text-align: center;
+    @font-face {
+        font-family: Retro;
+        src: url("../Retro Computer_DEMO.ttf");
+    }
+    a:-webkit-any-link {
+        color: -webkit-link;
+        text-decoration: none;
+        cursor: auto;
     }
 
+    /*--LoadingAnimation--*/
+    .cssload-container{
+        background:rgba(0,0,0, 0.2);
+    }
+
+    .cssload-container div {
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        background-color: rgba(0,0,0, 0.0);
+        top: 45%;
+        border-radius: 50%;
+    }
+    #Loading {
+        font-family: PacMan;
+        color: yellow;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .cssload-container div:nth-child(1) {
+        background-image:url(../resc/ghosts/blinky/blinky_r32.png);
+        animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -o-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -ms-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -webkit-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    }
+
+    .cssload-container div:nth-child(2) {
+        background-image:url(../resc/ghosts/pinky/pinky_r32.png);
+        animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -o-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -ms-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -webkit-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    }
+
+    .cssload-container div:nth-child(3) {
+        background-image:url(../resc/ghosts/inky/inky_r32.png);
+        animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -o-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -ms-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -webkit-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    }
+
+    .cssload-container div:nth-child(4) {
+        background-image:url(../resc/ghosts/clyde/clyde_r32.png);
+        animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -o-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -ms-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -webkit-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        -moz-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    }
+
+
+
+    @keyframes cssload-move {
+        0% {
+            left: 0%;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    @-o-keyframes cssload-move {
+        0% {
+            left: 0%;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    @-ms-keyframes cssload-move {
+        0% {
+            left: 0%;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    @-webkit-keyframes cssload-move {
+        0% {
+            left: 0%;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    @-moz-keyframes cssload-move {
+        0% {
+            left: 0%;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    /*--StartScreen--*/
     .start {
         width: 100%;
         height: 100%;
@@ -279,12 +506,23 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-        background: black url("../resc/mLandscape.png") no-repeat center;
+        background: black url("../resc/backgrounds/mLandscape.png") no-repeat center;
         position: fixed;
         font-weight: bold;
         text-align: center;
     }
 
+    #error {
+        display:none;
+        position: absolute;
+        top:50%;
+        left:50%;
+        margin-top: -300px;
+        margin-left: -300px;
+        background-image: url("../resc/other/pacmanErr.png");
+        width: 600px;
+        height: 600px;
+    }
     .start.close {
         display: none;
     }
@@ -310,6 +548,7 @@
         margin: 0 auto;
         font-size: 2rem;
     }
+
     #about {
         border: 5px solid yellow;
         border-radius: 20px;
@@ -329,13 +568,40 @@
         margin: 0 auto;
         font-size: 2rem;
     }
-    #backbutton{
-        position: absolute;
-        bottom:20%;
-        right:5%;
-        margin-left:auto;
-        margin-right:auto;
+
+    /*--HighscoreScreen--*/
+    #navdiv{
+        margin-top: 5%;
     }
+    #navigation{
+        border: 5px solid yellow;
+        color:yellow;
+        font-family: PacMan, serif;
+        border-radius: 20px;
+        padding: 3px 3px 3px 3px;
+        cursor: pointer;  width: 200px;
+        font-size: 2rem;
+    }
+    #highscorehtml {
+        display: none;
+        margin-top: 2%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #scoretable {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #scoretable td{
+        width: 200px;
+        height: 50px;
+    }
+    #head {
+        font-family: PacMan, serif;
+        font-size: 2rem;
+    }
+
+    /*--AboutScreen--*/
     #navigation{
         border: 5px solid yellow;
         color:yellow;
@@ -354,18 +620,17 @@
         margin-bottom: 2%;
     }
     p{
-        font-family: "Calibri Light", serif;
         margin-bottom: 4%;
     }
+
+    /*--GameScreen--*/
     #footer, .header, .messages, #nextLevel {
         display: none;
     }
 
-    #overlay:empty {
-        display: none;
-    }
 
     #overlay {
+        display: none;
         position: absolute;
         top: 0;
         left: 0;
@@ -396,11 +661,21 @@
         border-radius: 10px;
         padding: 2px 2px 2px 2px;
     }
-    #startNext.hide {
-        display: none;
+    #userinput {
+        display: block;
+        margin-top: 5%;
+        margin-left: auto;
+        margin-right:auto;
+        font-size: 1.5rem;
+        margin-bottom: 45%;
+        visibility: hidden;
     }
-    .game.show {
-        display: block
+    #scorelist {
+        font-family: Retro, serif;
+        height:100%;
+        margin-top:10%;
+        margin-bottom: 45%;
+        font-weight: bold;
     }
 
     .game {
@@ -435,58 +710,18 @@
         width: 15%;
     }
     #value1, #value2, #value3 {
-        font-family: "Calibri Light", serif;
+        font-family: Retro, serif;
     }
-
-    #keylayout {
-        margin-right: auto;
-        margin-left: auto;
-    }
-    #keyless{
-        position: fixed;
-        top: 0px;
-        width: 100%;
-        z-index: 142;
+    #backbutton{
+        position: absolute;
+        bottom:20%;
+        right:5%;
         margin-left:auto;
         margin-right:auto;
     }
 
-    #klcontrols{
-        width: 100%;
-        margin-left:auto;
-        margin-right:auto;
-    }
-    #klcontrols td {
-        background-color: rgba(255, 0, 0, 0.7);
-        height:150px;
-        width: 200px;
-    }
-    .klUp, .klDown{
-        width: 200px;
-    }
-    #klRight, #klLeft{
-        width: 200px;
-    }
-    /*---highscore---*/
-    #highscorehtml {
-        display: none;
-        margin-top: 2%;
-        margin-left: auto;
-        margin-right: auto;
-        font-family: "Calibri Light", serif;
-    }
-    #scoretable {
-        margin-left: auto;
-        margin-right: auto;
-    }
-    #scoretable td{
-        width: 200px;
-        height: 50px;
-    }
-    #head {
-        font-family: PacMan, serif;
-        font-size: 2rem;
-    }
+
+    /*--MobileKeys--*/
     .mobile {
         position:fixed;
         height: 0;
@@ -504,22 +739,23 @@
     }
 
     .mobileBlank {
-        background-image: url(../resc/mobileBlank.png);
+        background-image: url(../resc/mobilekeys/mobileBlank.png);
     }
 
     #mobileUp {
-        background-image: url(../resc/mobileUp.png);
+        background-image: url(../resc/mobilekeys/mobileUp.png);
     }
 
     #mobileDown {
-        background-image: url(../resc/mobileDown.png);
+        background-image: url(../resc/mobilekeys/mobileDown.png);
     }
 
     #mobileLeft {
-        background-image: url(../resc/mobileLeft.png);
+        background-image: url(../resc/mobilekeys/mobileLeft.png);
     }
 
     #mobileRight {
-        background-image: url(../resc/mobileRight.png);
+        background-image: url(../resc/mobilekeys/mobileRight.png);
     }
+
 }

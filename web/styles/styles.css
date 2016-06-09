@@ -2,7 +2,10 @@
     font-family: PacMan; /*a name to be used later*/
     src: url("../PAC-FONT.TTF"); /*URL to font*/
 }
-
+@font-face {
+    font-family: Retro;
+    src: url("../Retro Computer_DEMO.ttf");
+}
 html, body {
     margin: 0;
     height: 100%;
@@ -21,7 +24,17 @@ a:-webkit-any-link {
 .cssload-container{
     background:rgba(0,0,0, 0.2);
 }
-
+#error {
+    display:none;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top: -300px;
+    margin-left: -300px;
+    background-image: url("../resc/other/pacmanErr.png");
+    width: 600px;
+    height: 600px;
+}
 .cssload-container div {
     width: 32px;
     height: 32px;
@@ -142,9 +155,7 @@ a:-webkit-any-link {
     border-radius: 10px;
     padding: 2px 2px 2px 2px;
 }
-#startNext.hide {
-    display: none;
-}
+
 #overlay {
     display: none;
     position: absolute;
@@ -152,7 +163,7 @@ a:-webkit-any-link {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.50);
+    background-color: rgba(0,0,0,0.70);
     text-align: center;
     color: red;
     font-family: PacMan, serif;
@@ -176,15 +187,17 @@ span {
     visibility: hidden;
 }
 #scorelist {
-    font-family: "Calibri Light", serif;
+    font-family: Retro, serif;
     height:100%;
-    margin-top:5%;
+    margin-top:10%;
+    margin-bottom: 45%;
+    font-weight: bold;
 }
 .header {
     margin-top: 20px;
     min-height: 100px;
     min-width:900px;
-    background-image: url("../resc/PacmanHeader.png");
+    background-image: url("../resc/other/PacmanHeader.png");
     background-repeat: no-repeat;
     background-position: center;
     background-color: black;
@@ -209,32 +222,7 @@ span {
     border-collapse: separate;
     border: 5px solid yellow;
 }
-#keyless{
-    position: absolute;
-    top: 120px;
-    width: 1000px;
-    z-index: 142;
-    margin-left:auto;
-    margin-right:auto;
-    display:none;
-}
 
-#klcontrols{
-    width: inherit;
-    height: inherit;
-    margin-left:auto;
-    margin-right:auto;
-}
-#klcontrols td {
-    background-color: rgba(0, 0, 0, 0.1);
-    height:200px;
-}
-.klUp, .klDown{
-    width: 50%;
-}
-#klRight, #klLeft{
-    width: 50%;
-}
 #information {
     border-collapse: separate;
     border: 5px solid yellow;
@@ -257,26 +245,26 @@ span {
     background-size:160px 160px;
 }
 .mobileBlank{
-    background-image:url(../resc/mobileBlank.png);
+    background-image:url(../resc/mobilekeys/mobileBlank.png);
 }
 #mobileUp {
-    background-image:url(../resc/mobileUp.png);
+    background-image:url(../resc/mobilekeys/mobileUp.png);
 }
 #mobileDown{
-    background-image:url(../resc/mobileDown.png);
+    background-image:url(../resc/mobilekeys/mobileDown.png);
 }
 #mobileLeft {
-    background-image:url(../resc/mobileLeft.png);
+    background-image:url(../resc/mobilekeys/mobileLeft.png);
 }
 #mobileRight{
-    background-image:url(../resc/mobileRight.png);
+    background-image:url(../resc/mobilekeys/mobileRight.png);
 }
 #information td {
     background-color: black;
     width: 450px;
 }
 #value1, #value2, #value3 {
-    font-family: "Calibri Light";
+    font-family: Retro, serif;
     font-weight: bold;
 }
 .messages {
@@ -284,7 +272,7 @@ span {
     border: 5px solid red;
     padding: 3px 3px 3px 3px;
     color:red;
-    font-family: "Calibri Light", serif;
+    font-family: Retro, serif;
     font-size: 2rem;
     visibility: visible;
 }
@@ -292,6 +280,6 @@ span {
 #footer{
     text-align: center;
     color: white;
-    font-family: "Calibri Light";
+    font-family: Retro, serif;
 }
 

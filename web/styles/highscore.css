@@ -2,7 +2,10 @@
     font-family: PacMan; /*a name to be used later*/
     src: url("../PAC-FONT.TTF"); /*URL to font*/
 }
-
+@font-face {
+    font-family: Retro;
+    src: url("../Retro Computer_DEMO.ttf");
+}
 html, body {
     margin: 0;
     height: 100%;
@@ -10,7 +13,7 @@ html, body {
     overflow-x: hidden;
     color: yellow;
     background-color: black;
-    font-family: "Calibri Light", serif;
+    font-family: Retro, serif;
     text-align: center;
 }
 a:-webkit-any-link {
