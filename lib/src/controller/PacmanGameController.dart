@@ -143,6 +143,12 @@ class PacmanGameController {
   void toggleErrorScreen(){
     _pacmanView.showErrorScreen();
   }
+  void loadBonusLevel() {
+    _achievedScore += _pacmanModel.score;
+    _stopGame();
+    _pacmanModel.newGame();
+    _pacmanModel.loadLevel(99).whenComplete(() => _startGame());
+  }
   //ends the game, lost
   void _gameOver(bool b) {
     if (b) {
