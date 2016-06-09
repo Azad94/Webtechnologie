@@ -140,7 +140,9 @@ class PacmanGameController {
     _gameOver(_pacmanModel.gameEnd);
     _gameWon(_pacmanModel.gameVic);
   }
-
+  void toggleErrorScreen(){
+    _pacmanView.showErrorScreen();
+  }
   //ends the game, lost
   void _gameOver(bool b) {
     if (b) {
