@@ -511,7 +511,9 @@
         font-weight: bold;
         text-align: center;
     }
-
+    #startlayout {
+        margin-top: 20%;
+    }
     #error {
         display:none;
         position: absolute;
@@ -526,7 +528,6 @@
     .start.close {
         display: none;
     }
-
     #startText {
         display: none;
         position: absolute;
@@ -676,6 +677,7 @@
         margin-top:10%;
         margin-bottom: 45%;
         font-weight: bold;
+        font-size: 0.8rem
     }
 
     .game {
