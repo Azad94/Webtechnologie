@@ -212,6 +212,9 @@ class Level {
       print("Level.checkCollision(): param null");
       return false;
     }
+    // position outside field
+    if(x < 0 || x > _sizeX || y < 0 || y > _sizeY)
+      return true;
     final tile = _tiles[y][x];
     // calculate side of the collision
     Directions side = getDirection(g._x, g._y, x, y);
@@ -578,6 +581,7 @@ class Level {
     } catch (error, stackTrace) {
       print("Level.createObjects() caused following error: $error");
       print(stackTrace);
+      _model.errorScreen();
       return;
     }
   }

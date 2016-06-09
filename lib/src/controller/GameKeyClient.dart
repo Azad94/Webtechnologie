@@ -21,7 +21,7 @@ class GameKeyClient {
    */
   bool _available = false;
 
-  final _userName = "pacman";
+  final _userName = "pacman2";
   final _userPassword = "geheimesPasswort";
   String _userID;
 
@@ -177,7 +177,7 @@ class GameKeyClient {
     try {
       final uri = this
           ._uri
-          .resolve("/gamestate/$_gid")
+          .resolve("/gamestate/$_gid/$_userID")
           .resolveUri(new Uri(queryParameters: {'secret': "$_secret"}));
       final answer = await HttpRequest.request("$uri", method: 'GET');
       return JSON.decode(answer.responseText);

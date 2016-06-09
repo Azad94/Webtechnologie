@@ -39,6 +39,8 @@ class PacmanGameModel {
    */
   int get score => _level.score;
 
+  void errorScreen() => _con.toggleErrorScreen();
+
   /**
    * enable the power mode, means that ghosts are eatable
    */
