@@ -147,7 +147,7 @@ class PacmanGameController {
     _achievedScore += _pacmanModel.score;
     _stopGame();
     _pacmanModel.newGame();
-    _pacmanModel.loadLevel(99).whenComplete(() => _startGame());
+    _pacmanModel.loadLevel(0).whenComplete(() => _startGame());
   }
   //ends the game, lost
   void _gameOver(bool b) {
