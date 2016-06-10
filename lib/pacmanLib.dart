@@ -4,7 +4,6 @@ library pacmanLib;
 import 'dart:convert';
 import 'dart:html';
 import 'dart:async';
-import 'dart:math';
 
 // Items
 part 'src/model/Item.dart';
