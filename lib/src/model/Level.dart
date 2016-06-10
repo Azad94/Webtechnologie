@@ -485,10 +485,6 @@ class Level {
    */
   void endEatableMode() => _score.resetGhostMultiplier();
 
-  /*
-  Helper methods
-   */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /**
    *  DO NOT CALL; PRIVATE
    * creates all game objects and put them into the game field (_tiles).

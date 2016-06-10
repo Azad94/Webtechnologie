@@ -24,17 +24,41 @@ abstract class Ghost extends GameElement {
   /**
    * the Direction where the Ghost is trying or is heading next
    */
-  Directions nextDirection;
+  Directions _nextDirection;
 
+  /**
+   * period of Time Blinky is chasing the Pac-Man
+   */
+  int _chasingTimer;
+
+  /**
+   * period of Time Blinky is chasing the Pac-Man
+   */
+  int _scatteringTimer;
+
+  /**
+   * Direction where the Ghost came from
+   */
+  Directions _previousDirections;
   /**
    * amount of Directions on a intersection the Ghost possibly can go
    */
   int _possibleDirections;
 
   /**
+   * the target of the Ghost
+   */
+  int _targetX, _targetY;
+  /**
    * checks if the Direction UP is possible
    */
   bool _possibleUp;
+
+  /**
+   * updates the Pac-Man position as target
+   * after the given time
+   */
+  int update;
 
   /**
    * checks if the Direction Down is possible
@@ -91,39 +115,54 @@ abstract class Ghost extends GameElement {
    */
   bool _outOfGate = false;
 
+  int doorX;
+  int doorY;
+  int scatterX, scatterY;
   /**
    * Constructor of class Ghost
    */
-  Ghost(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime, num startTime,
+  Ghost(int startx, int starty,bool collPlayer, bool collGhost, Level l, num eatTime, num startTime,
       num score)
-      : super(x, y, collPlayer, collGhost),
+      : super(startx, starty, collPlayer, collGhost),
         this._level = l,
         this._eatTime = eatTime,
         this._startTime = startTime,
-        this._start_x = x,
-        this._start_y = y,
+        this._start_x = startx,
+        this._start_y = starty,
         this._score = score;
-
   bool get eatable => _eatable;
 
   /**
    * moves a ghost one step
    */
   void move() {
+    scatterX;
     if(!_started) {
       timeCounter++;
+
       if(timeCounter == _startTime) {
+        _targetX = 0;
+        _targetY = 0;
         timeCounter = 0;
         _started = true;
         _isScattering = true;
         _isChasing = false;
         _outOfGate = false;
+        _chasingTimer;
+        _scatteringTimer;
+        _previousDirections;
+        update;
+        doorX = _level._doorX;
+        doorY = _level._doorY;
       }
     }
+
     if(_started) _changeModeTimer++;
+
     // only if eatable mode is on
     if (_eatable) {
       timeCounter++;
+
       // check if the eatable mode is over
       if (timeCounter == _eatTime) {
         _eatable = false;
@@ -131,6 +170,44 @@ abstract class Ghost extends GameElement {
         _level.endEatableMode();
       }
     }
+
+    print("GHOST X" + _targetX.toString());
+    print("GHOST Y" + _targetY.toString());
+/**
+    switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirections, this)) {
+      case Directions.UP:
+        _level.registerElement(_x, _y, _x, --_y, this);
+        _previousDirections = Directions.UP;
+        break;
+
+      case Directions.DOWN:
+      // TODO PROVISORISCH MUSS RAUS
+        if (_x == doorX && _y == doorY) {
+          _level.registerElement(_x, _y, ++_x, _y, this);
+          _previousDirections = Directions.LEFT;
+          break;
+        }
+        _level.registerElement(_x, _y, _x, ++_y, this);
+        _previousDirections = Directions.DOWN;
+        break;
+
+      case Directions.LEFT:
+        _level.registerElement(_x, _y, --_x, _y, this);
+        _previousDirections = Directions.LEFT;
+        break;
+
+      case Directions.RIGHT:
+        _level.registerElement(_x, _y, ++_x, _y, this);
+        _previousDirections = Directions.RIGHT;
+        break;
+
+      case Directions.NOTHING:
+        _level.registerElement(_x, _y, _x, _y, this);
+        _previousDirections = Directions.NOTHING;
+        break;
+    }
+**/
+
   }
 
   /**
@@ -201,8 +278,8 @@ abstract class Ghost extends GameElement {
 
     //sets the next Direction according to the calculation above
     verticalMoreImportant ?
-      nextDirection = preferredVerDirection
-        : nextDirection = preferredHorDirection;
+      _nextDirection = preferredVerDirection
+        : _nextDirection = preferredHorDirection;
 
 
     /**
