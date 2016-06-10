@@ -93,9 +93,6 @@ class Blinky extends Ghost {
         }
       }
 
-      print("BLINKY X" + _targetX.toString());
-      print("BLINKY Y" + _targetY.toString());
-
       //gets the Direction Blinky is allowed to head next, registers his next position
       //and updates his previous direction
       switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirections, this)) {

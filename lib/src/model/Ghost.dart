@@ -1,6 +1,7 @@
 part of pacmanLib;
 
 abstract class Ghost extends GameElement {
+
   /**
    * start position of ghost
    */
@@ -22,11 +23,6 @@ abstract class Ghost extends GameElement {
   int _score;
 
   /**
-   * the Direction where the Ghost is trying or is heading next
-   */
-  Directions _nextDirection;
-
-  /**
    * period of Time Blinky is chasing the Pac-Man
    */
   int _chasingTimer;
@@ -43,7 +39,7 @@ abstract class Ghost extends GameElement {
   /**
    * amount of Directions on a intersection the Ghost possibly can go
    */
-  int _possibleDirections;
+  int _possibleDirections = 0;
 
   /**
    * the target of the Ghost
@@ -118,6 +114,7 @@ abstract class Ghost extends GameElement {
   int doorX;
   int doorY;
   int scatterX, scatterY;
+  bool _isVerticalMoreImportant;
   /**
    * Constructor of class Ghost
    */
@@ -136,7 +133,6 @@ abstract class Ghost extends GameElement {
    * moves a ghost one step
    */
   void move() {
-    scatterX;
     if(!_started) {
       timeCounter++;
 
@@ -171,8 +167,6 @@ abstract class Ghost extends GameElement {
       }
     }
 
-    print("GHOST X" + _targetX.toString());
-    print("GHOST Y" + _targetY.toString());
 /**
     switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirections, this)) {
       case Directions.UP:
@@ -181,12 +175,6 @@ abstract class Ghost extends GameElement {
         break;
 
       case Directions.DOWN:
-      // TODO PROVISORISCH MUSS RAUS
-        if (_x == doorX && _y == doorY) {
-          _level.registerElement(_x, _y, ++_x, _y, this);
-          _previousDirections = Directions.LEFT;
-          break;
-        }
         _level.registerElement(_x, _y, _x, ++_y, this);
         _previousDirections = Directions.DOWN;
         break;
@@ -237,17 +225,13 @@ abstract class Ghost extends GameElement {
    * return   the Direction where the Ghost is allowed to move next
    *          (UP, DOWN, LEFT, RIGHT, NOTHING)
    */
-  Directions getNextMove(int currentX, int currentY, int targetX, int targetY, bool _outOfDoor, Directions _prev, GameElement g) {
+  Directions getNextMove(int currentX, int currentY, int targetX, int targetY, bool isOutOfDoor, Directions previouDirection, GameElement g) {
 
     _possibleDirections = 0;
-    _possibleDirections = 0 ;
     _possibleUp = false;
     _possibleDown = false;
     _possibleLeft = false;
     _possibleRight = false;
-
-    Directions preferredHorDirection;
-    Directions preferredVerDirection;
 
     //calculates the vertical and horizontal distance between the current and target Position
     int _currentDistanceX = (targetX - currentX).abs();
@@ -259,27 +243,8 @@ abstract class Ghost extends GameElement {
 
     if(currentX == targetX && currentY == targetY) return Directions.NOTHING;
 
-    //calculates the preffered horizontal Direction the Ghost should move
-    (targetX - --_checkX).abs() < _currentDistanceX ?
-      preferredHorDirection = Directions.LEFT
-        : preferredHorDirection = Directions.RIGHT;
-
-    _checkX = currentX;
-
-    //calculates the preferred vertical Direction the Ghost should move
-    (targetY - --_checkY).abs() < _currentDistanceY ?
-      preferredVerDirection = Directions.UP
-        : preferredVerDirection = Directions.DOWN;
-
-    _checkY = currentY;
-
     //checks if the vertical difference is greater than the horizontal
-    bool verticalMoreImportant = _currentDistanceY > _currentDistanceX;
-
-    //sets the next Direction according to the calculation above
-    verticalMoreImportant ?
-      _nextDirection = preferredVerDirection
-        : _nextDirection = preferredHorDirection;
+    _isVerticalMoreImportant = _currentDistanceY > _currentDistanceX;
 
 
     /**
@@ -287,7 +252,7 @@ abstract class Ghost extends GameElement {
      * Directions are allowes
      */
     if (!_level.checkCollision(_checkX, --_checkY, this)){
-      if (_prev != Directions.DOWN){
+      if (previouDirection != Directions.DOWN){
         _possibleDirections++;
         _possibleUp = true;
       }
@@ -296,7 +261,7 @@ abstract class Ghost extends GameElement {
 
 
     if (!_level.checkCollision(_checkX, ++_checkY, this)){
-      if (_prev != Directions.UP){
+      if (previouDirection != Directions.UP){
         _possibleDirections++;
         _possibleDown = true;
       }
@@ -305,7 +270,7 @@ abstract class Ghost extends GameElement {
 
 
     if (!_level.checkCollision(--_checkX, _checkY, this)){
-      if (_prev != Directions.RIGHT){
+      if (previouDirection != Directions.RIGHT){
         _possibleDirections++;
         _possibleLeft = true;
       }
@@ -314,7 +279,7 @@ abstract class Ghost extends GameElement {
 
 
     if (!_level.checkCollision(++_checkX, _checkY, this)){
-      if (_prev != Directions.LEFT){
+      if (previouDirection != Directions.LEFT){
         _possibleDirections++;
         _possibleRight = true;
       }
@@ -327,7 +292,7 @@ abstract class Ghost extends GameElement {
      * distance between the Ghost and target declines
      */
     if (_possibleDirections > 1){
-      if (_prev != Directions.DOWN && _possibleUp){
+      if (previouDirection != Directions.DOWN && _possibleUp){
         if (!_level.checkCollision(_checkX, --_checkY, this)){
           _checkY = currentY;
           if ((targetY - --_checkY).abs() < _currentDistanceY) return Directions.UP;
@@ -348,7 +313,7 @@ abstract class Ghost extends GameElement {
         _checkX = currentX;
       }
 
-      if (_prev != Directions.UP && _possibleDown){
+      if (previouDirection != Directions.UP && _possibleDown){
         if (!_level.checkCollision(_checkX, ++_checkY, this)){
           _checkY = currentY;
           if ((targetY - ++_checkY).abs() < _currentDistanceY){
@@ -376,7 +341,7 @@ abstract class Ghost extends GameElement {
         _checkY = currentY;
       }
 
-      if (_prev != Directions.RIGHT && _possibleLeft) {
+      if (previouDirection != Directions.RIGHT && _possibleLeft) {
         if ((targetX - --_checkX).abs() < _currentDistanceX) {
           if (!_level.checkCollision(--_checkX, _checkY, this)) {
             _checkX = currentX;
@@ -386,7 +351,7 @@ abstract class Ghost extends GameElement {
 
           if (!_level.checkCollision(_checkX, ++_checkY, this)) {
             _checkY = currentY;
-            if (_prev != Directions.UP && (targetY - ++_checkY).abs() < _currentDistanceY)
+            if (previouDirection != Directions.UP && (targetY - ++_checkY).abs() < _currentDistanceY)
               return Directions.DOWN;
           }
           _checkY = currentY;
@@ -399,7 +364,7 @@ abstract class Ghost extends GameElement {
           _checkY = currentY;
         }
       }
-        if (_prev != Directions.LEFT && _possibleRight){
+        if (previouDirection != Directions.LEFT && _possibleRight){
           if (!_level.checkCollision(++_checkX, _checkY, this)){
             _checkX = currentX;
             if ((targetX - ++_checkX) < _currentDistanceX) return Directions.RIGHT;
@@ -425,8 +390,8 @@ abstract class Ghost extends GameElement {
     /**
      * Checks for next Direction with priority of moving vertically first
      */
-    if (verticalMoreImportant) {
-      if (_prev == Directions.UP) {
+    if (_isVerticalMoreImportant) {
+      if (previouDirection == Directions.UP) {
         if (!_level.checkCollision(--_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.LEFT;
@@ -445,7 +410,7 @@ abstract class Ghost extends GameElement {
         return Directions.NOTHING;
       }
 
-      if (_prev == Directions.DOWN) {
+      if (previouDirection == Directions.DOWN) {
         if (!_level.checkCollision(_checkX, ++_checkY, this)) {
           _checkY = currentY;
           return Directions.DOWN;
@@ -464,7 +429,7 @@ abstract class Ghost extends GameElement {
         return Directions.NOTHING;
       }
 
-      if (_prev == Directions.LEFT) {
+      if (previouDirection == Directions.LEFT) {
         if (!_level.checkCollision(_checkX, --_checkY, this)) {
           _checkY = currentY;
           return Directions.UP;
@@ -483,7 +448,7 @@ abstract class Ghost extends GameElement {
         return Directions.NOTHING;
       }
 
-      if (_prev == Directions.RIGHT) {
+      if (previouDirection == Directions.RIGHT) {
         if (!_level.checkCollision(_checkX, --_checkY, this)) {
           _checkY = currentY;
           return Directions.UP;
@@ -506,7 +471,7 @@ abstract class Ghost extends GameElement {
      * Checks for next Direction with priority of moving horizontally first
      */
     else {
-      if (_prev == Directions.LEFT) {
+      if (previouDirection == Directions.LEFT) {
         if (!_level.checkCollision(--_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.LEFT;
@@ -525,7 +490,7 @@ abstract class Ghost extends GameElement {
         return Directions.NOTHING;
       }
 
-      if (_prev == Directions.RIGHT) {
+      if (previouDirection == Directions.RIGHT) {
         if (!_level.checkCollision(++_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.RIGHT;
@@ -544,7 +509,7 @@ abstract class Ghost extends GameElement {
         return Directions.NOTHING;
       }
 
-      if (_prev == Directions.UP) {
+      if (previouDirection == Directions.UP) {
         if (!_level.checkCollision(--_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.LEFT;
@@ -563,7 +528,7 @@ abstract class Ghost extends GameElement {
         return Directions.NOTHING;
       }
 
-      if (_prev == Directions.DOWN) {
+      if (previouDirection == Directions.DOWN) {
         if (!_level.checkCollision(--_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.LEFT;

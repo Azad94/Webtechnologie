@@ -24,12 +24,7 @@ class Inky extends Ghost {
     _chasingTimer = 40;
     _scatteringTimer = 20;
     update = 3;
-    scatterX = --_level._sizeX;
-    scatterY = --_level._sizeY;
-    print("SIZE X ${_level._sizeX}");
-    print("SIZE Y ${_level._sizeY}");
-    print("INKY _SCATTERX = ${_scatterX} SCATTERX = ${scatterX}");
-    print("INKY _SCATTERY = ${_scatterY} SCATTERY = ${scatterY}");
+
     //checks if Inky is allowed to move yet
     if (_started) {
       //if Inky is at his origin position his first target is to get out of the Door
