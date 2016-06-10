@@ -2,22 +2,19 @@ part of pacmanLib;
 
 class PacmanGameModel {
   List<Ghost> _ghosts = new List();
+  List<Cherry> _cherrys = new List();
   Pacman _pacman;
   PacmanGameController _con;
   Directions _pacmanDir = Directions.NOTHING;
 
   bool _gameOver = false;
   bool _gameWon = false;
-  int _sizeX;
-  int _sizeY;
+  bool _hasBonus = false;
 
   Level _level;
   int _currentLevel = -1;
 
   PacmanGameModel(PacmanGameController con) {
-   // LevelLoader.loadConfig();
-    _sizeX = LevelLoader._sizeX;
-    _sizeY = LevelLoader._sizeY;
     this._con = con;
   }
 
@@ -27,7 +24,7 @@ class PacmanGameModel {
   bool get gameEnd => _gameOver;
   bool get gameVic => _gameWon;
 
-  int get level => LevelLoader._levelNumber;
+  int get level => _level._levelNumber;
 
   /**
    * return the lives of [Pacman]
@@ -57,8 +54,6 @@ class PacmanGameModel {
     _gameWon = true;
   }
 
-  int getCurrentLevel() => _currentLevel;
-
   bool getGameOver() => false;
 
   bool getGameWone() => false;
@@ -76,21 +71,46 @@ class PacmanGameModel {
     _ghosts = new List();
     if (!await LevelLoader.loadLevel(level)) return false;
     _currentLevel = LevelLoader._levelNumber;
-    _level = new Level(
-        LevelLoader._map,
-        LevelLoader._sizeX,
-        LevelLoader._sizeY,
-        LevelLoader._lives,
-        LevelLoader._scorePill,
-        LevelLoader._scoreCherry,
-        LevelLoader._scorePowerPill,
-        LevelLoader._scoreGhost,
-        LevelLoader._eatTime,
-        LevelLoader._startBlinky,
-        LevelLoader._startClyde,
-        LevelLoader._startInky,
-        LevelLoader._startPinky,
-        this);
+    if(LevelLoader._bonus) {
+      _level = new Level(
+          LevelLoader._map,
+          LevelLoader._sizeX,
+          LevelLoader._sizeY,
+          LevelLoader._levelNumber,
+          LevelLoader._lives,
+          LevelLoader._scorePill,
+          LevelLoader._scoreCherry,
+          LevelLoader._scorePowerPill,
+          LevelLoader._scoreGhost,
+          LevelLoader._eatTime,
+          LevelLoader._startBlinky,
+          LevelLoader._startClyde,
+          LevelLoader._startInky,
+          LevelLoader._startPinky,
+          this,
+          LevelLoader._portX,
+          LevelLoader._portY,
+          LevelLoader._openTime);
+          _hasBonus = true;
+    }
+    else {
+      _level = new Level(
+          LevelLoader._map,
+          LevelLoader._sizeX,
+          LevelLoader._sizeY,
+          LevelLoader._levelNumber,
+          LevelLoader._lives,
+          LevelLoader._scorePill,
+          LevelLoader._scoreCherry,
+          LevelLoader._scorePowerPill,
+          LevelLoader._scoreGhost,
+          LevelLoader._eatTime,
+          LevelLoader._startBlinky,
+          LevelLoader._startClyde,
+          LevelLoader._startInky,
+          LevelLoader._startPinky,
+          this);
+    }
     return true;
   }
 
@@ -134,6 +154,10 @@ class PacmanGameModel {
   void newGame() {
     _gameOver = false;
     _gameWon = false;
+    _hasBonus = false;
+    _pacman = null;
+    _ghosts = new List();
+    _cherrys = new List();
     Item.resetCounter();
   }
 
@@ -143,6 +167,7 @@ class PacmanGameModel {
   void registerGameElement(GameElement g) {
     if (g is Ghost) _ghosts.add(g);
     if (g is Pacman) _pacman = g;
+    if (g is Cherry) _cherrys.add(g);
   }
 
   /**
@@ -152,6 +177,18 @@ class PacmanGameModel {
         if (g != null) g.respwan();
       });
 
+  void _openWall() {
+    _level._openWall();
+  }
+
+  void _closeWall() {
+    _level._closeWall();
+  }
+
+  void _joinBonusLevel() {
+    _con.loadBonusLevel();
+  }
+
   /**
    * move [Pacman] and [Ghost] to the next position. Call this method each frame.
    */
@@ -160,6 +197,7 @@ class PacmanGameModel {
     if (_pacman != null) _pacman.move(_pacmanDir);
     _pacmanDir = Directions.NOTHING;
     this.moveGhost();
+    _cherrys.forEach((c) => c.triggerFrame());
     this.updateView();
   }
 

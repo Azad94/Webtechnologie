@@ -96,6 +96,26 @@ class LevelLoader {
    */
   static String _gamekeySecret;
 
+  /**
+   * X position for entry to bonus level
+   */
+  static num _portX = -1;
+
+  /**
+   * Y position for entry to bonus level
+   */
+  static num _portY = -1;
+
+  /**
+   * time(frames) how long entry to bonus level is open
+   */
+  static num _openTime = 0;
+
+  /**
+   * shows if level has got a bonus level
+   */
+  static bool _bonus = false;
+
   /*
   MapCode
    */
@@ -170,6 +190,7 @@ class LevelLoader {
       print("LevelLoader.loadlevel() param \"level\" is null");
       return false;
     }
+    _bonus = false; //reset bonus
     try {
       String json = await HttpRequest.getString("${level}_Level.json");
       if (json == null) throw new Exception("Can not find ${level}_Level.json");
@@ -184,6 +205,14 @@ class LevelLoader {
       _startClyde = data["startClyde"];
       _startInky = data["startInky"];
       _startPinky = data["startPinky"];
+      final bonus = data["bonus"];
+      // bonus level is active
+      if(bonus != null) {
+          _portX = bonus["portX"];
+          _portY = bonus["portY"];
+          _openTime = bonus["openTime"];
+          _bonus = true;
+      }
       if (_levelNumber == null ||
           _sizeX == null ||
           _sizeY == null ||

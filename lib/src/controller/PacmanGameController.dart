@@ -17,6 +17,8 @@ class PacmanGameController {
   int _currentLevel = 1;
   int _maxLevel = 3;
 
+  bool _paused = false;
+
   int _achievedScore = 0;
   //mobile Keys
   var _up;
@@ -78,9 +80,7 @@ class PacmanGameController {
       _createTable(labyrinth);
     }
     _refreshLabyrinth(labyrinth);
-    if (_timer != null) _timer.cancel();
-    _timer = new Timer.periodic(speed, (_) => _pacmanModel.triggerFrame());
-
+    _continueGame();
     if (_pacmanView._mql.matches) {
       if (_up != null) _up.cancel();
       _up = _pacmanView.mobileUp.onClick.listen((_) {
@@ -115,11 +115,24 @@ class PacmanGameController {
           case KeyCode.UP:
             _pacmanModel.moveUp();
             break;
+          case KeyCode.SPACE:
+            if(_paused){
+              _pacmanView.hidePause();
+              _continueGame();
+            }else{
+              _pacmanView.showPause();
+              _paused=true;
+            _stopGame();
+            }
         }
       });
     }
   }
-
+  _continueGame(){
+    _paused=false;
+    if (_timer != null) _timer.cancel();
+    _timer = new Timer.periodic(speed, (_) => _pacmanModel.triggerFrame());
+  }
   //create the table in the view
   void _createTable(List<List<Types>> l) {
     _pacmanView.initTable(l);
@@ -147,7 +160,7 @@ class PacmanGameController {
     _achievedScore += _pacmanModel.score;
     _stopGame();
     _pacmanModel.newGame();
-    _pacmanModel.loadLevel(99).whenComplete(() => _startGame());
+    _pacmanModel.loadLevel(0).whenComplete(() => _startGame());
   }
   //ends the game, lost
   void _gameOver(bool b) {
@@ -198,13 +211,15 @@ class PacmanGameController {
 
   //stops interaction
   void _stopGame() {
-    if (_pacmanView._mql.matches) {
-      _up.cancel();
-      _down.cancel();
-      _left.cancel();
-      _right.cancel();
-    } else {
-      _keyListener.cancel();
+    if(!_paused) {
+      if (_pacmanView._mql.matches) {
+        _up.cancel();
+        _down.cancel();
+        _left.cancel();
+        _right.cancel();
+      } else {
+        _keyListener.cancel();
+      }
     }
     _timer.cancel();
   }

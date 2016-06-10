@@ -16,6 +16,11 @@ class Level {
   num _sizeY;
 
   /**
+   * number of level
+   */
+  num _levelNumber;
+
+  /**
    * x position of the door
    */
   num _doorX;
@@ -76,6 +81,26 @@ class Level {
   num _scoreGhost;
 
   /**
+   * X position for entry to bonus level
+   */
+  num _portX;
+
+  /**
+   * Y position for entry to bonus level
+   */
+  num _portY;
+
+  /**
+   * time(frames) how long entry to bonus level is open
+   */
+  num _openTime;
+
+  /**
+   * hast level a bonus level?
+   */
+  bool _hasBonus = false;
+
+  /**
    * reference to [Pacman]
    */
   Pacman _pacman;
@@ -130,33 +155,25 @@ class Level {
    */
   Level(
       String environmentCode,
-      num sizeX,
-      num sizeY,
-      int lives,
-      num scorePill,
-      num scoreCherry,
-      num scorePowerPill,
-      num scoreGhost,
-      num eatTime,
-      num startBlinky,
-      num startClyde,
-      num startInky,
-      num startPinky,
-      PacmanGameModel model) {
-    this._sizeX = sizeX;
-    this._sizeY = sizeY;
-    this._model = model;
-    this._lives = lives;
-    this._eatTime = eatTime;
-    this._startBlinky = startBlinky;
-    this._startClyde = startClyde;
-    this._startInky = startInky;
-    this._startPinky = startPinky;
-    this._scorePill = scorePill;
-    this._scoreCherry = scoreCherry;
-    this._scorePowerPill = scorePowerPill;
-    this._scoreGhost = scoreGhost;
+      this._sizeX,
+      this._sizeY,
+      this._levelNumber,
+      this._lives,
+      this._scorePill,
+      this._scoreCherry,
+      this._scorePowerPill,
+      this._scoreGhost,
+      this._eatTime,
+      this._startBlinky,
+      this._startClyde,
+      this._startInky,
+      this._startPinky,
+      this._model,
+      [this._portX,
+      this._portY,
+      this._openTime]) {
     _score = new Score();
+    if (_portX != null && _portY != null && _openTime != null) _hasBonus = true;
     initTiles();
     createObjects(environmentCode);
   }
@@ -213,8 +230,7 @@ class Level {
       return false;
     }
     // position outside field
-    if(x < 0 || x > _sizeX || y < 0 || y > _sizeY)
-      return true;
+    if (x < 0 || x > _sizeX || y < 0 || y > _sizeY) return true;
     final tile = _tiles[y][x];
     // calculate side of the collision
     Directions side = getDirection(g._x, g._y, x, y);
@@ -271,6 +287,10 @@ class Level {
       _tiles[yNew][xNew]._pacman = g;
       this.collisionDetectionItem(xNew, yNew);
       this.collisionDetectionGhost(xNew, yNew);
+      // entry bonus level
+      if(_hasBonus && xNew == _portX && yNew == _portY) {
+        _model._joinBonusLevel();
+      }
     }
     // ghost chance position
     if (g is Ghost) {
@@ -485,6 +505,19 @@ class Level {
    */
   void endEatableMode() => _score.resetGhostMultiplier();
 
+  void _openWall() {
+    _tiles[_portY][_portX]._environment = null;
+  }
+
+  void _closeWall() {
+    _tiles[_portY][_portX]._environment =
+        new Environment(_portX, _portY, true, true, false, false, null, null);
+  }
+
+  /*
+  Helper methods
+   */
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /**
    *  DO NOT CALL; PRIVATE
    * creates all game objects and put them into the game field (_tiles).
@@ -519,8 +552,14 @@ class Level {
               break;
 
             case LevelLoader.CHERRY:
-              _tiles[y][x]._item =
-                  new Cherry(x, y, true, false, true, _scoreCherry, _model);
+              Item i;
+              if (_hasBonus) {
+                i = new Cherry(x, y, true, false, true, _scoreCherry, _model, _openTime);
+              } else {
+                i = new Cherry(x, y, true, false, true, _scoreCherry, _model);
+              }
+              _tiles[y][x]._item = i;
+              _model.registerGameElement(i);
               break;
 
             case LevelLoader.INKY:
