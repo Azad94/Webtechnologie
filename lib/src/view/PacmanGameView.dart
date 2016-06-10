@@ -157,6 +157,7 @@ class PacmanGameView {
   //the different div-classes from the html-document
   final _error = querySelector("#error");
   final _loadingscreen = querySelector(".cssload-container");
+  final _pause = querySelector("#pause");
   final _game = querySelector(".game");
   final _overlay = querySelector("#overlay");
   final _gameend = querySelector("#gameend");
@@ -188,7 +189,12 @@ class PacmanGameView {
     _game.style.display = "none";
     _loadingscreen.style.display = "none";
   }
-
+  void showPause(){
+    _pause.style.display = "block";
+  }
+  void hidePause() {
+    _pause.style.display = "none";
+  }
   void hideLoading() {
     _loadingscreen.style.display = "none";
   }
