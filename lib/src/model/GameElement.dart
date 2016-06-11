@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
 /**
  * Mother of all elements in pacman game.

@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
 class Cherry extends Item {
   int _openTime;

@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
 /**
  * represents pacman, controlled by player

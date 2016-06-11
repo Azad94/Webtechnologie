@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
 /**
  * AI for the Ghost CLYDE

@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
 /**
  * Represents a item which the player can pick up. Some items have an effect on gameplay

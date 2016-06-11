@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
 /**
  * represents the highscore of player in pacman game

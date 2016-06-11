@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanControllerLib;
 
 class GameKeyClient {
   /**

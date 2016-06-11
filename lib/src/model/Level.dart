@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
 /**
  * Represents one level. A level includes the map and all meta data, like lives, score etc.
