@@ -1,7 +1,18 @@
 part of pacmanLib;
 
+/**
+ * represents a static [GameElement] like a wall.
+ */
 class Environment extends GameElement {
-  bool _itemPlaceable, _door;
+  /**
+   * is it possible to put a item on it? (not used at the moment)
+   */
+  bool _itemPlaceable;
+
+  /**
+   * is environment a door?
+   */
+  bool _door;
 
   /**
    * Sides where are no collision with the objekt and Ghosts
@@ -14,11 +25,17 @@ class Environment extends GameElement {
    */
   List<Directions> _noCollisionSidesPlayer;
 
-  Environment(int x, int y, bool collPlayer, bool collGhost, bool itemPlaceable,
-      bool door, List<Directions> noCollisionSidesGhost, List<Directions> noCollisionSidesPlayer)
-      : super(x, y, collPlayer, collGhost),
-        this._itemPlaceable = itemPlaceable,
-        this._door = door,
-        this._noCollisionSidesGhost = noCollisionSidesGhost,
-        this._noCollisionSidesPlayer  = noCollisionSidesPlayer;
+  /**
+   * creates a new Environment
+   */
+  Environment(
+      int x,
+      int y,
+      bool collPlayer,
+      bool collGhost,
+      this._itemPlaceable,
+      this._door,
+      this._noCollisionSidesGhost,
+      this._noCollisionSidesPlayer)
+      : super(x, y, collPlayer, collGhost);
 }

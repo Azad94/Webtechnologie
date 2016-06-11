@@ -1,5 +1,8 @@
 part of pacmanLib;
 
+/**
+ * all types for View. Scare means ghosts are eatable.
+ */
 enum Types {
   WALL,
   DOOR,

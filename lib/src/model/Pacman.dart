@@ -1,17 +1,35 @@
 part of pacmanLib;
 
+/**
+ * represents pacman, controlled by player
+ */
 class Pacman extends GameElement {
+  /**
+   * default start position
+   */
   final _start_x, _start_y;
+
+  /**
+   * lives of pacman
+   */
   int _lives;
+
+  /**
+   * level
+   */
   Level _level;
+
+  /**
+   * model
+   */
   PacmanGameModel _model;
 
-  Pacman(int x, int y, bool collPlayer, bool collGhost, int lives, Level l,
-      PacmanGameModel model)
+  /**
+   * creates a new Pacman
+   */
+  Pacman(int x, int y, bool collPlayer, bool collGhost, this._lives,
+      this._level, this._model)
       : super(x, y, collPlayer, collGhost),
-        this._lives = lives,
-        this._level = l,
-        this._model = model,
         this._start_x = x,
         this._start_y = y;
 
@@ -41,12 +59,18 @@ class Pacman extends GameElement {
     }
   }
 
+  /**
+   * decrease pacmans lives by one
+   */
   void decreaseLife() {
     if (--_lives == 0) {
-      _model.gameOver();
+      _model._gameFinished();
     }
   }
 
+  /**
+   * respawn pacman to default position
+   */
   void respawn() {
     _level.registerElement(_x, _y, _start_x, _start_y, this);
     _x = _start_x;

@@ -179,6 +179,9 @@ class LevelLoader {
    */
   static const NOTHING = "X";
 
+  /**
+   * name of config file
+   */
   static const _CONFIG_JSON = "GameConfig.json";
 
   /**
@@ -207,11 +210,11 @@ class LevelLoader {
       _startPinky = data["startPinky"];
       final bonus = data["bonus"];
       // bonus level is active
-      if(bonus != null) {
-          _portX = bonus["portX"];
-          _portY = bonus["portY"];
-          _openTime = bonus["openTime"];
-          _bonus = true;
+      if (bonus != null) {
+        _portX = bonus["portX"];
+        _portY = bonus["portY"];
+        _openTime = bonus["openTime"];
+        _bonus = true;
       }
       if (_levelNumber == null ||
           _sizeX == null ||

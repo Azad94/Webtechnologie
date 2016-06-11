@@ -70,7 +70,6 @@ class GameKeyClient {
         /*
          * end of added/modified part
          */
-        return true;
       }
     } catch (error, stacktrace) {
       print("GameKey.getGame() caused following error: '$error'");
@@ -78,6 +77,7 @@ class GameKeyClient {
       this._available = false;
       return false;
     }
+    return true;
   }
 
   /**
@@ -209,7 +209,7 @@ class GameKeyClient {
             })
         .toList();
     ret.sort((a, b) => b['score'] - a['score']);
-    if (ret.length > 10) ret = ret.sublist(0, 9);
+    if (ret.length > 10) ret = ret.sublist(0, 10);
     return ret;
   }
 }

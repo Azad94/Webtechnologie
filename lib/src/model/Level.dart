@@ -288,7 +288,7 @@ class Level {
       this.collisionDetectionItem(xNew, yNew);
       this.collisionDetectionGhost(xNew, yNew);
       // entry bonus level
-      if(_hasBonus && xNew == _portX && yNew == _portY) {
+      if (_hasBonus && xNew == _portX && yNew == _portY) {
         _model._joinBonusLevel();
       }
     }
@@ -505,10 +505,16 @@ class Level {
    */
   void endEatableMode() => _score.resetGhostMultiplier();
 
+  /**
+   * Removes a Wall for entering into bonus level
+   */
   void _openWall() {
     _tiles[_portY][_portX]._environment = null;
   }
 
+  /**
+   * add the Wall, where wall for bonus level was removed
+   */
   void _closeWall() {
     _tiles[_portY][_portX]._environment =
         new Environment(_portX, _portY, true, true, false, false, null, null);
@@ -554,19 +560,20 @@ class Level {
             case LevelLoader.CHERRY:
               Item i;
               if (_hasBonus) {
-                i = new Cherry(x, y, true, false, true, _scoreCherry, _model, _openTime);
+                i = new Cherry(
+                    x, y, true, false, true, _scoreCherry, _model, _openTime);
               } else {
                 i = new Cherry(x, y, true, false, true, _scoreCherry, _model);
               }
               _tiles[y][x]._item = i;
-              _model.registerGameElement(i);
+              _model._registerGameElement(i);
               break;
 
             case LevelLoader.INKY:
               Ghost g = new Inky(
                   x, y, false, false, this, _eatTime, _startInky, _scoreGhost);
               _tiles[y][x]._ghosts.add(g);
-              _model.registerGameElement(g);
+              _model._registerGameElement(g);
 
               break;
 
@@ -574,27 +581,27 @@ class Level {
               Ghost g = new Pinky(
                   x, y, false, false, this, _eatTime, _startPinky, _scoreGhost);
               _tiles[y][x]._ghosts.add(g);
-              _model.registerGameElement(g);
+              _model._registerGameElement(g);
               break;
 
             case LevelLoader.CLYDE:
               Ghost g = new Clyde(
                   x, y, false, false, this, _eatTime, _startClyde, _scoreGhost);
               _tiles[y][x]._ghosts.add(g);
-              _model.registerGameElement(g);
+              _model._registerGameElement(g);
               break;
 
             case LevelLoader.BLINKY:
               Ghost g = new Blinky(x, y, false, false, this, _eatTime,
                   _startBlinky, _scoreGhost);
               _tiles[y][x]._ghosts.add(g);
-              _model.registerGameElement(g);
+              _model._registerGameElement(g);
               break;
 
             case LevelLoader.PACMAN:
               _pacman = new Pacman(x, y, false, true, _lives, this, _model);
               _tiles[y][x]._pacman = _pacman;
-              _model.registerGameElement(_pacman);
+              _model._registerGameElement(_pacman);
               break;
 
             case LevelLoader.DOOR:
@@ -616,7 +623,7 @@ class Level {
     } catch (error, stackTrace) {
       print("Level.createObjects() caused following error: $error");
       print(stackTrace);
-      _model.errorScreen();
+      _model._errorScreen();
       return;
     }
   }
@@ -678,7 +685,7 @@ class Level {
         final Pacman p = _tiles[y][x]._pacman;
         p.decreaseLife();
         p.respawn();
-        _model.respawnGhosts();
+        _model._respawnGhosts();
         _score.resetGhostMultiplier();
       }
     }
