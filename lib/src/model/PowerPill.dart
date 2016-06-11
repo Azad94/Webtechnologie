@@ -17,8 +17,8 @@ class PowerPill extends Item {
       : super(x, y, collPlayer, collGhost, visible, score, model);
 
   @override
-  void pickUp() {
-    super.pickUp();
+  void _pickUp() {
+    super._pickUp();
     if (!_used) {
       _model._enablePowerMode();
       _used = true;

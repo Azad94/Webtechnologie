@@ -22,7 +22,7 @@ class Score {
   /**
    * adds a new score to highscore
    */
-  void addScore(int score, GameElement g) {
+  void _addScore(int score, GameElement g) {
     if (g is Ghost)
       _scoreSum += _multiplier * score;
     else
@@ -32,21 +32,21 @@ class Score {
   /**
    * increase ghost multiplier
    */
-  void incGhostMultiplier() {
+  void _incGhostMultiplier() {
     _multiplier++;
   }
 
   /**
    * reset ghost multiplier
    */
-  void resetGhostMultiplier() {
+  void _resetGhostMultiplier() {
     _multiplier = 1;
   }
 
   /**
    * reset the whole score
    */
-  void reset() {
+  void _reset() {
     _scoreSum = 0;
     _multiplier = 1;
   }

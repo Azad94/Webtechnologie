@@ -36,7 +36,7 @@ class Pacman extends GameElement {
   /**
    * moves [Pacman] in the given [Directions].
    */
-  void move(Directions dir) {
+  void _move(Directions dir) {
     switch (dir) {
       case Directions.UP:
         if (!_level.checkCollision(_x, _y - 1, this))
@@ -62,7 +62,7 @@ class Pacman extends GameElement {
   /**
    * decrease pacmans lives by one
    */
-  void decreaseLife() {
+  void _decreaseLife() {
     if (--_lives == 0) {
       _model._gameFinished();
     }
@@ -71,7 +71,7 @@ class Pacman extends GameElement {
   /**
    * respawn pacman to default position
    */
-  void respawn() {
+  void _respawn() {
     _level.registerElement(_x, _y, _start_x, _start_y, this);
     _x = _start_x;
     _y = _start_y;

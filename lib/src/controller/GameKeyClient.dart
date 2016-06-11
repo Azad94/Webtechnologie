@@ -191,7 +191,7 @@ class GameKeyClient {
   /**
    * adds a score to GamekeyServer
    */
-  Future<bool> addScore(String name, int score) async {
+  Future<bool> _addScore(String name, int score) async {
     return await _storeState(_userID, {'name': '$name', 'score': score});
   }
 

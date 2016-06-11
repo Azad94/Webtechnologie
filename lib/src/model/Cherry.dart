@@ -18,10 +18,10 @@ class Cherry extends Item {
   }
 
   @override
-  void pickUp() {
+  void _pickUp() {
     if (_model._hasBonus && _visible) {
       _model._openWall();
     }
-    super.pickUp();
+    super._pickUp();
   }
 }

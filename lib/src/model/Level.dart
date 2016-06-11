@@ -503,7 +503,7 @@ class Level {
   /**
    * ends eatable mode
    */
-  void endEatableMode() => _score.resetGhostMultiplier();
+  void endEatableMode() => _score._resetGhostMultiplier();
 
   /**
    * Removes a Wall for entering into bonus level
@@ -660,8 +660,8 @@ class Level {
     // pacman collides with item
     if (_tiles[y][x]._item != null) {
       if (_tiles[y][x]._item._visible)
-        _score.addScore(_tiles[y][x]._item._score, _tiles[y][x]._item);
-      _tiles[y][x]._item.pickUp();
+        _score._addScore(_tiles[y][x]._item._score, _tiles[y][x]._item);
+      _tiles[y][x]._item._pickUp();
     }
   }
 
@@ -679,14 +679,14 @@ class Level {
       if (_tiles[y][x]._ghosts[0]._eatable) {
         final g = _tiles[y][x]._ghosts[0];
         g.respwan();
-        _score.addScore(g._score, g);
-        _score.incGhostMultiplier();
+        _score._addScore(g._score, g);
+        _score._incGhostMultiplier();
       } else {
         final Pacman p = _tiles[y][x]._pacman;
-        p.decreaseLife();
-        p.respawn();
+        p._decreaseLife();
+        p._respawn();
         _model._respawnGhosts();
-        _score.resetGhostMultiplier();
+        _score._resetGhostMultiplier();
       }
     }
   }

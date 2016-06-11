@@ -181,7 +181,7 @@ class PacmanGameController {
   void _saveScore() {
     if (_gamekey._available) {
       _achievedScore += _pacmanModel.score;
-      _gamekey.addScore(_pacmanView.user, _achievedScore).then((b) {
+      _gamekey._addScore(_pacmanView.user, _achievedScore).then((b) {
         _gamekey.getTop10().then((scores) {
           _pacmanView.showTop10(scores, _achievedScore);
         });

@@ -41,7 +41,7 @@ class Item extends GameElement {
   /**
    * the [Item] is picked up. Make [Item] invisible
    */
-  void pickUp() {
+  void _pickUp() {
     if (_visible) {
       if (!(this is Cherry)) _itemsPickedUp++;
       _visible = false;
@@ -52,7 +52,7 @@ class Item extends GameElement {
   /**
    * resets the item counter. Used if a new level starts
    */
-  static void resetCounter() {
+  static void _resetCounter() {
     _items = 0;
     _itemsPickedUp = 0;
   }

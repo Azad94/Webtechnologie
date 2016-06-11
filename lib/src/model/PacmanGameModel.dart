@@ -189,7 +189,7 @@ class PacmanGameModel {
     _gameOver = false;
     _gameWon = false;
     _hasBonus = false;
-    Item.resetCounter();
+    Item._resetCounter();
   }
 
   /**
@@ -197,7 +197,7 @@ class PacmanGameModel {
    */
   void triggerFrame() {
     _level.pacmanDir = _pacmanDir;
-    if (_pacman != null) _pacman.move(_pacmanDir);
+    if (_pacman != null) _pacman._move(_pacmanDir);
     _pacmanDir = Directions.NOTHING;
     this._moveGhost();
     _cherrys.forEach((c) => c.triggerFrame());
