@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
 /**
  * AI for the Ghost CLYDE
@@ -20,42 +20,14 @@ class Clyde extends Ghost {
   int _scatterY = 16;
 
   /**
-   * X-Coordinate for the next horizontal target of Clyde
-   */
-  int _targetX;
-
-  /**
-   * Y-Coordinate for the next vertical target of Clyde
-   */
-  int _targetY;
-
-  /**
-   * Direction where Clyde came from
-   */
-  Directions _previousDirection;
-
-  /**
-   * period of Time Clyde is chasing the Pac-Man
-   */
-  int _chasingTime = 40;
-
-  /**
-   * period of Time Clyde is chasing the Pac-Man
-   */
-  int _scatteringTime = 22;
-
-  /**
-   * updates the Pac-Man position as target
-   * after a certain amount of time
-   */
-  int _updateTargetTimer = 5;
-
-  /**
    * Moves Clyde one step further
    */
   void move() {
     super.move();
 
+    _chasingTimer = 40;
+    _scatteringTimer = 22;
+    update = 5;
 
     //checks if Clyde is allowed to move yet
     if (_started) {
@@ -65,17 +37,17 @@ class Clyde extends Ghost {
         _targetY = _doorY;
         _isScattering = false;
         _isChasing = false;
-        _previousDirection = Directions.LEFT;
+        _previousDirections = Directions.LEFT;
       }
 
       //change to scatter mode after chasing time is up
-      if(_changeModeTimer > _chasingTime && !_isScattering && _isChasing) {
+      if(_changeModeTimer > _chasingTimer && !_isScattering && _isChasing) {
         _isScattering = true;
         changeMode();
       }
 
       //change to chase mode after scatter mode is up
-      if(_changeModeTimer > _scatteringTime && _isScattering && !_isChasing){
+      if(_changeModeTimer > _scatteringTimer && _isScattering && !_isChasing){
         _isScattering = false;
         changeMode();
       }
@@ -83,57 +55,51 @@ class Clyde extends Ghost {
 
       //switches to scatter mode if the requirements are fulfilled
       if (_outOfGate && !_isScattering && _isChasing
-          && _changeModeTimer != 0 && (_changeModeTimer % _chasingTime) == 0) {
+          && _changeModeTimer != 0 && (_changeModeTimer % _chasingTimer) == 0) {
         _isScattering = true;
         changeMode();
       }
 
       //switches to chasing mode if the requirements are fulfilled
       if (_outOfGate == true && _isScattering == true && _isChasing == false
-          && _changeModeTimer != 0 && (_changeModeTimer % _scatteringTime) == 0)  {
+          && _changeModeTimer != 0 && (_changeModeTimer % _scatteringTimer) == 0)  {
         _isScattering = false;
         changeMode();
       }
 
       //updates the target of Clyde while in chasing mode to the current
       //position of Pac-Man every five steps
-      if (_isScattering == false && _isChasing == true && (_changeModeTimer % _updateTargetTimer) == 0) {
+      if (_isScattering == false && _isChasing == true && (_changeModeTimer % update) == 0) {
         _targetX = _level.pacmanX;
         _targetY = _level.pacmanY;
       }
 
       //gets the Direction Clyde is allowed to head next, registers his next position
       //and updates his previous direction
-      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirection, this)) {
+      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirections, this)) {
         case Directions.UP:
           _level.registerElement(_x, _y, _x, --_y, this);
-          _previousDirection = Directions.UP;
+          _previousDirections = Directions.UP;
           break;
 
         case Directions.DOWN:
-        // TODO PROVISORISCH MUSS RAUS
-          if (_x == _doorX && _y == _doorY) {
-            _level.registerElement(_x, _y, ++_x, _y, this);
-            _previousDirection = Directions.LEFT;
-            break;
-          }
           _level.registerElement(_x, _y, _x, ++_y, this);
-          _previousDirection = Directions.DOWN;
+          _previousDirections = Directions.DOWN;
           break;
 
         case Directions.LEFT:
           _level.registerElement(_x, _y, --_x, _y, this);
-          _previousDirection = Directions.LEFT;
+          _previousDirections = Directions.LEFT;
           break;
 
         case Directions.RIGHT:
           _level.registerElement(_x, _y, ++_x, _y, this);
-          _previousDirection = Directions.RIGHT;
+          _previousDirections = Directions.RIGHT;
           break;
 
         case Directions.NOTHING:
           _level.registerElement(_x, _y, _x, _y, this);
-          _previousDirection = Directions.NOTHING;
+          _previousDirections = Directions.NOTHING;
           break;
       }
 

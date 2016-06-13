@@ -1,5 +1,5 @@
 
-import 'package:Webtechnologie/pacmanLib.dart';
+import 'package:Webtechnologie/pacmanControllerLib.dart';
 import 'dart:html';
 import 'dart:async';
 

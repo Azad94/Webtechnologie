@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
 /**
  * Represents one level. A level includes the map and all meta data, like lives, score etc.
@@ -230,7 +230,7 @@ class Level {
       return false;
     }
     // position outside field
-    if (x < 0 || x > _sizeX || y < 0 || y > _sizeY) return true;
+    if (x < 0 || x >= _sizeX || y < 0 || y >= _sizeY) return true;
     final tile = _tiles[y][x];
     // calculate side of the collision
     Directions side = getDirection(g._x, g._y, x, y);
@@ -288,7 +288,7 @@ class Level {
       this.collisionDetectionItem(xNew, yNew);
       this.collisionDetectionGhost(xNew, yNew);
       // entry bonus level
-      if(_hasBonus && xNew == _portX && yNew == _portY) {
+      if (_hasBonus && xNew == _portX && yNew == _portY) {
         _model._joinBonusLevel();
       }
     }
@@ -503,12 +503,18 @@ class Level {
   /**
    * ends eatable mode
    */
-  void endEatableMode() => _score.resetGhostMultiplier();
+  void endEatableMode() => _score._resetGhostMultiplier();
 
+  /**
+   * Removes a Wall for entering into bonus level
+   */
   void _openWall() {
     _tiles[_portY][_portX]._environment = null;
   }
 
+  /**
+   * add the Wall, where wall for bonus level was removed
+   */
   void _closeWall() {
     _tiles[_portY][_portX]._environment =
         new Environment(_portX, _portY, true, true, false, false, null, null);
@@ -554,19 +560,20 @@ class Level {
             case LevelLoader.CHERRY:
               Item i;
               if (_hasBonus) {
-                i = new Cherry(x, y, true, false, true, _scoreCherry, _model, _openTime);
+                i = new Cherry(
+                    x, y, true, false, true, _scoreCherry, _model, _openTime);
               } else {
                 i = new Cherry(x, y, true, false, true, _scoreCherry, _model);
               }
               _tiles[y][x]._item = i;
-              _model.registerGameElement(i);
+              _model._registerGameElement(i);
               break;
 
             case LevelLoader.INKY:
               Ghost g = new Inky(
                   x, y, false, false, this, _eatTime, _startInky, _scoreGhost);
               _tiles[y][x]._ghosts.add(g);
-              _model.registerGameElement(g);
+              _model._registerGameElement(g);
 
               break;
 
@@ -574,27 +581,27 @@ class Level {
               Ghost g = new Pinky(
                   x, y, false, false, this, _eatTime, _startPinky, _scoreGhost);
               _tiles[y][x]._ghosts.add(g);
-              _model.registerGameElement(g);
+              _model._registerGameElement(g);
               break;
 
             case LevelLoader.CLYDE:
               Ghost g = new Clyde(
                   x, y, false, false, this, _eatTime, _startClyde, _scoreGhost);
               _tiles[y][x]._ghosts.add(g);
-              _model.registerGameElement(g);
+              _model._registerGameElement(g);
               break;
 
             case LevelLoader.BLINKY:
               Ghost g = new Blinky(x, y, false, false, this, _eatTime,
                   _startBlinky, _scoreGhost);
               _tiles[y][x]._ghosts.add(g);
-              _model.registerGameElement(g);
+              _model._registerGameElement(g);
               break;
 
             case LevelLoader.PACMAN:
               _pacman = new Pacman(x, y, false, true, _lives, this, _model);
               _tiles[y][x]._pacman = _pacman;
-              _model.registerGameElement(_pacman);
+              _model._registerGameElement(_pacman);
               break;
 
             case LevelLoader.DOOR:
@@ -616,7 +623,7 @@ class Level {
     } catch (error, stackTrace) {
       print("Level.createObjects() caused following error: $error");
       print(stackTrace);
-      _model.errorScreen();
+      _model._errorScreen();
       return;
     }
   }
@@ -653,8 +660,8 @@ class Level {
     // pacman collides with item
     if (_tiles[y][x]._item != null) {
       if (_tiles[y][x]._item._visible)
-        _score.addScore(_tiles[y][x]._item._score, _tiles[y][x]._item);
-      _tiles[y][x]._item.pickUp();
+        _score._addScore(_tiles[y][x]._item._score, _tiles[y][x]._item);
+      _tiles[y][x]._item._pickUp();
     }
   }
 
@@ -672,14 +679,14 @@ class Level {
       if (_tiles[y][x]._ghosts[0]._eatable) {
         final g = _tiles[y][x]._ghosts[0];
         g.respwan();
-        _score.addScore(g._score, g);
-        _score.incGhostMultiplier();
+        _score._addScore(g._score, g);
+        _score._incGhostMultiplier();
       } else {
         final Pacman p = _tiles[y][x]._pacman;
-        p.decreaseLife();
-        p.respawn();
-        _model.respawnGhosts();
-        _score.resetGhostMultiplier();
+        p._decreaseLife();
+        p._respawn();
+        _model._respawnGhosts();
+        _score._resetGhostMultiplier();
       }
     }
   }

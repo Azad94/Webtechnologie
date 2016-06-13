@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanViewLib;
 
 /**
  * the paths as const for the different graphics
@@ -182,6 +182,8 @@ class PacmanGameView {
 
   //constructor
   PacmanGameView(_con);
+
+  MediaQueryList get mql => _mql;
 
 
   void showErrorScreen() {

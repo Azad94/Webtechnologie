@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
 /**
  * Load all json files
@@ -79,22 +79,22 @@ class LevelLoader {
   /**
    * host of gamekey
    */
-  static String _gamekeyHost;
+  static String gamekeyHost;
 
   /**
    * port of gamekey
    */
-  static num _gamekeyPort;
+  static num gamekeyPort;
 
   /**
    * game id at gamekey
    */
-  static String _gamekeyID;
+  static String gamekeyID;
 
   /**
    * secret for authenticate the gamekey server
    */
-  static String _gamekeySecret;
+  static String gamekeySecret;
 
   /**
    * X position for entry to bonus level
@@ -179,6 +179,9 @@ class LevelLoader {
    */
   static const NOTHING = "X";
 
+  /**
+   * name of config file
+   */
   static const _CONFIG_JSON = "GameConfig.json";
 
   /**
@@ -207,11 +210,11 @@ class LevelLoader {
       _startPinky = data["startPinky"];
       final bonus = data["bonus"];
       // bonus level is active
-      if(bonus != null) {
-          _portX = bonus["portX"];
-          _portY = bonus["portY"];
-          _openTime = bonus["openTime"];
-          _bonus = true;
+      if (bonus != null) {
+        _portX = bonus["portX"];
+        _portY = bonus["portY"];
+        _openTime = bonus["openTime"];
+        _bonus = true;
       }
       if (_levelNumber == null ||
           _sizeX == null ||
@@ -241,18 +244,18 @@ class LevelLoader {
       _scorePowerPill = data["scorePowerPill"];
       _scoreCherry = data["scoreCherry"];
       _scoreGhost = data["scoreSingleGhost"];
-      _gamekeyHost = data["GamekeyHost"];
-      _gamekeyPort = data["GamekeyPort"];
-      _gamekeyID = data["GamekeyID"];
-      _gamekeySecret = data["GamekeySecret"];
+      gamekeyHost = data["GamekeyHost"];
+      gamekeyPort = data["GamekeyPort"];
+      gamekeyID = data["GamekeyID"];
+      gamekeySecret = data["GamekeySecret"];
       if (_scorePill == null ||
           _scorePowerPill == null ||
           _scoreCherry == null ||
           _scoreGhost == null ||
-          _gamekeyHost == null ||
-          _gamekeyPort == null ||
-          _gamekeyID == null ||
-          _gamekeySecret == null)
+          gamekeyHost == null ||
+          gamekeyPort == null ||
+          gamekeyID == null ||
+          gamekeySecret == null)
         throw new Exception("Can not read $_CONFIG_JSON");
     } catch (error, stackTrace) {
       print("LevelLoader.loadConfig() caused following error: $error");

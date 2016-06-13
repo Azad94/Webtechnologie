@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanControllerLib;
 
 class GameKeyClient {
   /**
@@ -70,7 +70,6 @@ class GameKeyClient {
         /*
          * end of added/modified part
          */
-        return true;
       }
     } catch (error, stacktrace) {
       print("GameKey.getGame() caused following error: '$error'");
@@ -78,6 +77,7 @@ class GameKeyClient {
       this._available = false;
       return false;
     }
+    return true;
   }
 
   /**
@@ -191,7 +191,7 @@ class GameKeyClient {
   /**
    * adds a score to GamekeyServer
    */
-  Future<bool> addScore(String name, int score) async {
+  Future<bool> _addScore(String name, int score) async {
     return await _storeState(_userID, {'name': '$name', 'score': score});
   }
 
@@ -209,7 +209,7 @@ class GameKeyClient {
             })
         .toList();
     ret.sort((a, b) => b['score'] - a['score']);
-    if (ret.length > 10) ret = ret.sublist(0, 9);
+    if (ret.length > 10) ret = ret.sublist(0, 10);
     return ret;
   }
 }

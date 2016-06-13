@@ -1,4 +1,4 @@
-part of pacmanLib;
+part of pacmanControllerLib;
 
 //the refreshrate of the view
 const speed = const Duration(milliseconds: 400);
@@ -49,13 +49,13 @@ class PacmanGameController {
 
   Future _authenticateUser() async {
     _gamekey = new GameKeyClient(
-        LevelLoader._gamekeyHost,
-        LevelLoader._gamekeyPort,
-        LevelLoader._gamekeyID,
-        LevelLoader._gamekeySecret);
+        LevelLoader.gamekeyHost,
+        LevelLoader.gamekeyPort,
+        LevelLoader.gamekeyID,
+        LevelLoader.gamekeySecret);
     await _gamekey.authenticate();
     _pacmanView.showGame();
-    if (_pacmanView._mql.matches) {
+    if (_pacmanView.mql.matches) {
       _pacmanView.showMobile();
     }
     _pacmanView.hideLoading();
@@ -81,7 +81,7 @@ class PacmanGameController {
     }
     _refreshLabyrinth(labyrinth);
     _continueGame();
-    if (_pacmanView._mql.matches) {
+    if (_pacmanView.mql.matches) {
       if (_up != null) _up.cancel();
       _up = _pacmanView.mobileUp.onClick.listen((_) {
         _pacmanModel.moveUp();
@@ -181,7 +181,7 @@ class PacmanGameController {
   void _saveScore() {
     if (_gamekey._available) {
       _achievedScore += _pacmanModel.score;
-      _gamekey.addScore(_pacmanView.user, _achievedScore).then((b) {
+      _gamekey._addScore(_pacmanView.user, _achievedScore).then((b) {
         _gamekey.getTop10().then((scores) {
           _pacmanView.showTop10(scores, _achievedScore);
         });
@@ -212,7 +212,7 @@ class PacmanGameController {
   //stops interaction
   void _stopGame() {
     if(!_paused) {
-      if (_pacmanView._mql.matches) {
+      if (_pacmanView.mql.matches) {
         _up.cancel();
         _down.cancel();
         _left.cancel();
