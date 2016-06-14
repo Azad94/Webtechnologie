@@ -1,7 +1,7 @@
 part of pacmanLib;
 
 //the refreshrate of the view
-const speed = const Duration(milliseconds:500);
+const speed = const Duration(milliseconds:400);
 
 class PacmanGameController{
 
@@ -16,8 +16,6 @@ class PacmanGameController{
   var _keyListener;
   Timer _timer;
 
-  int _currentLevel = 1;
-  int _maxLevel = 2;
   //mobile Keys
   var up;
   var down;
@@ -29,21 +27,40 @@ class PacmanGameController{
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
 
-    _pacmanModel.loadLevel(_currentLevel);
+    _pacmanView.startButton.onClick.listen((_) {_pacmanModel.loadLevel(1);});
+    //TODO: NextLevel
+   // _pacmanView.startNext.onClick.listen((_) {resetGame(this); _pacmanModel.loadLevel(2); startNextLevel();});
   }
+  //TODO: Reset GameStatus to Play nextLevel
+  /*void resetGame(PacmanGameController con){
+      _pacmanModel = new PacmanGameModel(con);
+      _pacmanView = new PacmanGameView(con);
+  }
+  //TODO: init new Game
+  void startNextLevel() {
+    var labyrinth = _pacmanModel.getMap();
+    initField(labyrinth);
+    refreshLabyrinth(labyrinth);
 
+    _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
+
+    _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
+      ev.preventDefault();
+      switch (ev.keyCode) {
+        case KeyCode.LEFT:  _pacmanModel.moveLeft(); break;
+        case KeyCode.RIGHT:  _pacmanModel.moveRight(); break;
+        case KeyCode.DOWN: _pacmanModel.moveDown(); break;
+        case KeyCode.UP: _pacmanModel.moveUp(); break;
+      }
+    });
+
+  }*/
   //starts a new game
   void startGame() {
-    if(_currentLevel>1){
-      _pacmanView.hideOverlay();
-    }
-    if(_currentLevel==_maxLevel){
-      _pacmanView.hideNextLevel();
-    }
+    _pacmanView.showGameview();
+
     var labyrinth = _pacmanModel.getMap();
-    if(_currentLevel==1){
-      createTable(labyrinth);
-    }
+    createTable(labyrinth);
     refreshLabyrinth(labyrinth);
 
     _timer = new Timer.periodic(speed, (_) {_pacmanModel.triggerFrame(); });
@@ -98,9 +115,9 @@ class PacmanGameController{
     if(b){
       stopGame();
       _pacmanView.updateOverlay("GAME OVER");
-      _pacmanModel.newGame();
-      print(_pacmanModel.gameEnd);
-      _pacmanView.startNext.onClick.listen((_) {_pacmanModel.loadLevel(++_currentLevel);});
+      //TODO: NextLevel
+     /* _pacmanView._nextLevel.classes.toggle('show');
+      _pacmanView.startNext.classes.toggle('show');*/
     }
   }
   //ends the game, won
@@ -108,6 +125,8 @@ class PacmanGameController{
     if(b) {
       stopGame();
       _pacmanView.updateOverlay("STAGE CLEARED");
+      //TODO: NextLevel
+     /* _pacmanView._nextLevel.classes.toggle('show');*/
     }
   }
   //stops interaction

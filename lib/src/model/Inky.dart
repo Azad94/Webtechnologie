@@ -1,5 +1,11 @@
 part of pacmanLib;
 
+/**
+ * AI for the Ghost INKY
+ * he tries to be at the same horizontal level with Pac-Man
+ * during the whole game and tries to get in front of him,
+ * he leaves the gate as second last ghost
+ */
 class Inky extends Ghost {
   Inky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
       num startTime, num score)
@@ -8,133 +14,192 @@ class Inky extends Ghost {
   int _doorX = 14;
   int _doorY = 8;
 
-  int _targetX = 14;
-  int _targetY = 8;
-
   int _scatterX = 27;
   int _scatterY = 16;
 
-  int _switchMode = 40;
-  bool _scatterModeOn = false;
-  bool _scat = true;
-  bool _chase = false;
-  bool _outOfDoor = false;
-  int _scatTimer = 0;
-  bool _te = false;
-  Directions _prev;
+  /**
+   * X-Coordinate for the next horizontal target of Inky
+   */
+  int _targetX;
 
-  void move()
-  {
+  /**
+   * Y-Coordinate for the next vertical target of Inky
+   */
+  int _targetY;
+
+  /**
+   * true if Inky is out of the Gate, else false
+   */
+  bool _outOfGate = false;
+
+  /**
+   * Direction where Inky came from
+   */
+  Directions _previousDirection;
+
+  /**
+   * period of Time Inky is chasing the Pac-Man
+   */
+  int _chasingTime = 40;
+
+  /**
+   * period of Time Inky is chasing the Pac-Man
+   */
+  int _scatteringTime = 20;
+
+  /**
+   * updates the Pac-Man position as target
+   * after a certain amount of time
+   */
+  int _updateTargetTimer = 3;
+
+  /**
+   * Moves Inky one step further
+   */
+  void move() {
     super.move();
-    if(_started)
-    {
-      if(_x == _x_start && _y == _y_start)
-      {
+
+    //checks if Inky is allowed to move yet
+    if (_started) {
+      //if Inky is at his origin position his first target is to get out of the Door
+      if (_x == _x_start && _y == _y_start) {
         _targetX = _doorX;
         _targetY = _doorY;
-        _scat = false;
-        _chase = false;
-        _prev = Directions.LEFT;
+        _isScattering = false;
+        _isChasing = false;
+        _previousDirection = Directions.LEFT;
       }
 
-      if(_outOfDoor == true && _scat == false && _chase == false && _scatTimer == 40)
-      {
-        _scatTimer = 0;
-        _chase = false;
-        _te = false;
-        _targetX = _scatterX;
-        _targetY = _scatterY;
+      //change to scatter mode after chasing time is up
+      if(_changeModeTimer > _chasingTime && !_isScattering && _isChasing) {
+        _isScattering = true;
+        changeMode();
       }
 
-      if(_outOfDoor == true && _scat == true && _chase == false && _scatTimer == 15)
-      {
-        _scat = false;
-        _scatTimer = 0;
-        _te = true;
+      //change to chase mode after scatter mode is up
+      if(_changeModeTimer > _scatteringTime && _isScattering && !_isChasing){
+        _isScattering = false;
+        changeMode();
       }
 
-      if(_te == true && _scatTimer % 5 == 0)
-      {
-        _targetX = _level.pacmanX;
-        _targetY = _level.pacmanY;
+      //switches to scatter mode if the requirements are fulfilled
+      if (_outOfGate == true && _isScattering == false && _isChasing == true
+          && _changeModeTimer != 0 && (_changeModeTimer % _chasingTime) == 0) {
+        _isScattering = true;
+        changeMode();
       }
 
+      //switches to chasing mode if the requirements are fulfilled
+      if (_outOfGate == true && _isScattering == true && _isChasing == false
+          && _changeModeTimer != 0 && (_changeModeTimer % _scatteringTime) == 0)  {
+        _isScattering = false;
+        changeMode();
+      }
 
-      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfDoor, _prev, this)) {
+      //updates the target of Inky while in chasing mode three suqares ahead
+      //of the current position of Pac-Man every three steps
+      if (_isScattering == false && _isChasing == true && (_changeModeTimer % _updateTargetTimer) == 0) {
+        switch(_level._pacmanPre){
+          case Types.PACMAN_UP:
+            _targetX = _level.pacmanX;
+            (_targetY - _y > 0) ? _targetY = _level.pacmanY + 1
+              : _targetY = _level.pacmanY - 1;
+            break;
+          case Types.PACMAN_DOWN:
+            _targetX = _level.pacmanX;
+            (_targetY - _y > 0) ? _targetY = _level.pacmanY + 1
+                : _targetY = _level.pacmanY - 1;
+            break;
+          case Types.PACMAN_LEFT:
+            _targetX = _level.pacmanX;
+            (_targetY - _y > 0) ? _targetY = _level.pacmanY + 1
+                : _targetY = _level.pacmanY - 1;
+            break;
+          case Types.PACMAN_RIGHT:
+            _targetX = _level.pacmanX;
+            (_targetY - _y > 0) ? _targetY = _level.pacmanY + 1
+                : _targetY = _level.pacmanY - 1;
+            break;
 
+          default:
+            break;
+        }
+      }
+
+      //gets the Direction Inky is allowed to head next, registers his next position
+      //and updates his previous direction
+      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirection, this)) {
         case Directions.UP:
           _level.registerElement(_x, _y, _x, --_y, this);
-          _prev = Directions.UP;
+          _previousDirection = Directions.UP;
           break;
 
         case Directions.DOWN:
         // TODO PROVISORISCH MUSS RAUS
-          if (_x == 14 && _y == 8) {
+          if (_x == _doorX && _y == _doorY) {
             _level.registerElement(_x, _y, ++_x, _y, this);
-            _prev = Directions.RIGHT;
+            _previousDirection = Directions.LEFT;
             break;
           }
           _level.registerElement(_x, _y, _x, ++_y, this);
-          _prev = Directions.DOWN;
+          _previousDirection = Directions.DOWN;
           break;
 
         case Directions.LEFT:
           _level.registerElement(_x, _y, --_x, _y, this);
-          _prev = Directions.LEFT;
+          _previousDirection = Directions.LEFT;
           break;
 
         case Directions.RIGHT:
           _level.registerElement(_x, _y, ++_x, _y, this);
-          _prev = Directions.RIGHT;
+          _previousDirection = Directions.RIGHT;
           break;
 
         case Directions.NOTHING:
           _level.registerElement(_x, _y, _x, _y, this);
-          _prev = Directions.NOTHING;
+          _previousDirection = Directions.NOTHING;
           break;
       }
 
-      if(_x == _targetX && _y == _targetY)
-      {
-        if(_x == _doorX && _y == _doorY)
-        {
-          _outOfDoor = true;
-          _scat = true;
-          _chase = false;
+      //checks if Inky has reached his target and changes the mode accordingly
+      if (_x == _targetX && _y == _targetY) {
+        if (_x == _doorX && _y == _doorY) {
+          _outOfGate = true;
+          _isScattering = true;
           changeMode();
         }
 
-        if(_x == _scatterX && _y == _scatterY)
-        {
-          _scat = false;
-          _chase = true;
+        if (_x == _scatterX && _y == _scatterY) {
+          _isScattering = false;
           changeMode();
         }
 
-        if(_x == _targetX && _y == _targetY)
-        {
-          _scat = false;
-          _chase = true;
-         changeMode();
+        if (_x == _targetX && _y == _targetY) {
+          _isScattering = true;
+          changeMode();
         }
       }
-      ++_scatTimer;
+      ++_changeModeTimer;
     }
   }
 
-  void changeMode()
-  {
-    if(_scat == true)
-    {
+  /**
+   * changes the mode between scattering and chasing
+   * sets the timer back and updates the needed variables
+   */
+  void changeMode() {
+
+    if (_isScattering == true) {
+      _isChasing = false;
+      _changeModeTimer = 0;
       _targetX = _scatterX;
       _targetY = _scatterY;
-      _scatTimer = 0;
     }
-    else
-    {
+    else {
+      _isChasing = true;
+      _changeModeTimer = 0;
       _targetX = _level.pacmanX;
       _targetY = _level.pacmanY;
-      _scatTimer = 0;
     }
   }
 }
