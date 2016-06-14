@@ -18,7 +18,7 @@ class PacmanGameController {
   int _maxLevel = 3;
 
   bool _paused = false;
-
+  bool _err = false;
   int _achievedScore = 0;
   //mobile Keys
   var _up;
@@ -38,10 +38,12 @@ class PacmanGameController {
           if (b) {
             _authenticateUser();
           } else {
+            _err=true;
             _pacmanView.showErrorScreen();
           }
         });
       } else {
+        _err=true;
         _pacmanView.showErrorScreen();
       }
     });
@@ -57,12 +59,14 @@ class PacmanGameController {
         LevelLoader.gamekeyID,
         LevelLoader.gamekeySecret);
     await _gamekey.authenticate();
-    _pacmanView.showGame();
     if (_pacmanView.mql.matches) {
       _pacmanView.showMobile();
     }
+    if(_err==false){
+    _pacmanView.showGame();
     _pacmanView.hideLoading();
     _startGame();
+    }
   }
 
   //start new game
@@ -170,6 +174,7 @@ class PacmanGameController {
     _gameWon(_pacmanModel.gameVic);
   }
   void toggleErrorScreen(){
+    _err = true;
     _pacmanView.showErrorScreen();
   }
   void loadBonusLevel() {
