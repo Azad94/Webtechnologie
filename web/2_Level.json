@@ -4,6 +4,7 @@
   "sizeY": 18,
   "lives": 3,
   "ghostEatTime": 10,
+  "pacmanPowerTime": 20,
   "startBlinky" : 15,
   "startClyde" : 1,
   "startInky": 10,

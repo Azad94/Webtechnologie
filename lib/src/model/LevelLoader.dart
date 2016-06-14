@@ -19,6 +19,8 @@ class LevelLoader {
    */
   static num _eatTime = 0;
 
+  static num _pacmanPowerTime;
+
   /**
    * time(frames) when Blinky starts moving
    */
@@ -135,9 +137,14 @@ class LevelLoader {
   static const PILL = "*";
 
   /**
-   * charactor for power pill
+   * character for power pill
    */
   static const POWERPILL = "+";
+
+  /**
+   * character for apple
+   */
+  static const APPLE = "A";
 
   /**
    * character for cherry
@@ -208,6 +215,7 @@ class LevelLoader {
       _startClyde = data["startClyde"];
       _startInky = data["startInky"];
       _startPinky = data["startPinky"];
+      _pacmanPowerTime = data["pacmanPowerTime"];
       final bonus = data["bonus"];
       // bonus level is active
       if (bonus != null) {
@@ -222,6 +230,7 @@ class LevelLoader {
           _map == null ||
           _lives == null ||
           _eatTime == null ||
+          _pacmanPowerTime == null ||
           _startBlinky == null ||
           _startClyde == null ||
           _startInky == null ||

@@ -40,6 +40,8 @@ class Level {
    */
   num _eatTime;
 
+  num _pacmanPowerTime;
+
   /**
    * time(frames) when Blinky starts moving
    */
@@ -99,6 +101,8 @@ class Level {
    * hast level a bonus level?
    */
   bool _hasBonus = false;
+
+  bool _pacmanPowerMode = false;
 
   /**
    * reference to [Pacman]
@@ -169,6 +173,7 @@ class Level {
       this._startInky,
       this._startPinky,
       this._model,
+      this._pacmanPowerTime,
       [this._portX,
       this._portY,
       this._openTime]) {
@@ -251,6 +256,7 @@ class Level {
 
     // pacman collides
     if (tile._environment._collisionPlayer == true && g is Pacman) {
+      if(_pacmanPowerMode) return false;
       // is a side where is no collision
       if (tile._environment._noCollisionSidesPlayer != null) {
         //check if side in list and calculate side is the same, if yes no collision
@@ -483,6 +489,8 @@ class Level {
           // cherry
           else if (tile._item is Cherry && tile._item._visible)
             ret[y].add(Types.CHERRY);
+          else if(tile._item is Apple && tile._item._visible)
+            ret[y].add(Types.APPLE);
           else
             ret[y].add(Types.NOTHING);
         }
@@ -520,6 +528,15 @@ class Level {
         new Environment(_portX, _portY, true, true, false, false, null, null);
   }
 
+  void _activatePacmanPowerMode() {
+    _pacmanPowerMode = true;
+    _pacman._activatePowerMode();
+  }
+
+  void _disablePacmanPowerMode() {
+    _pacmanPowerMode = false;
+  }
+
   /*
   Helper methods
    */
@@ -555,6 +572,11 @@ class Level {
             case LevelLoader.POWERPILL:
               _tiles[y][x]._item = new PowerPill(
                   x, y, true, false, true, _scorePowerPill, _model);
+              break;
+
+            case LevelLoader.APPLE:
+              _tiles[y][x]._item =
+                  new Apple(x, y, true, false, true, _scoreCherry, _model);
               break;
 
             case LevelLoader.CHERRY:
@@ -599,7 +621,7 @@ class Level {
               break;
 
             case LevelLoader.PACMAN:
-              _pacman = new Pacman(x, y, false, true, _lives, this, _model);
+              _pacman = new Pacman(x, y, false, true, _lives, this, _model, _pacmanPowerTime);
               _tiles[y][x]._pacman = _pacman;
               _model._registerGameElement(_pacman);
               break;

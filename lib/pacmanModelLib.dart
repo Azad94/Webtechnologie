@@ -25,3 +25,4 @@ part 'src/model/PowerPill.dart';
 part 'src/model/Score.dart';
 part 'src/model/Tile.dart';
 part 'src/model/Types.dart';
+part 'src/model/Apple.dart';

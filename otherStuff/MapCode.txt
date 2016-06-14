@@ -2,6 +2,7 @@
 "#" = wall
 "*" = pill
 "+" = powerPill
+"A" = Apple
 "^" = cherry
 "B" = Blinky
 "I" = Inky

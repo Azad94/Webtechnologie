@@ -14,6 +14,12 @@ class Pacman extends GameElement {
    */
   int _lives;
 
+  int _powerTime;
+
+  int _frameCounter = 0;
+
+  bool _powerMode = false;
+
   /**
    * level
    */
@@ -28,7 +34,7 @@ class Pacman extends GameElement {
    * creates a new Pacman
    */
   Pacman(int x, int y, bool collPlayer, bool collGhost, this._lives,
-      this._level, this._model)
+      this._level, this._model, this._powerTime)
       : super(x, y, collPlayer, collGhost),
         this._start_x = x,
         this._start_y = y;
@@ -75,5 +81,18 @@ class Pacman extends GameElement {
     _level.registerElement(_x, _y, _start_x, _start_y, this);
     _x = _start_x;
     _y = _start_y;
+  }
+
+  void _triggerFrame() {
+    if(_powerMode)  {
+      if(++_frameCounter == _powerTime) {
+        _powerMode = false;
+        _level._disablePacmanPowerMode();
+      }
+    }
+  }
+
+  void _activatePowerMode() {
+    _powerMode = true;
   }
 }
