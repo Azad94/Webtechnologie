@@ -129,6 +129,7 @@ class PacmanGameModel {
           LevelLoader._startInky,
           LevelLoader._startPinky,
           this,
+          LevelLoader._pacmanPowerTime,
           LevelLoader._portX,
           LevelLoader._portY,
           LevelLoader._openTime);
@@ -149,7 +150,8 @@ class PacmanGameModel {
           LevelLoader._startClyde,
           LevelLoader._startInky,
           LevelLoader._startPinky,
-          this);
+          this,
+          LevelLoader._pacmanPowerTime);
     }
     return true;
   }
@@ -201,6 +203,7 @@ class PacmanGameModel {
     _pacmanDir = Directions.NOTHING;
     this._moveGhost();
     _cherrys.forEach((c) => c.triggerFrame());
+    _pacman._triggerFrame();
     _con.updateGameStatus();
   }
 
@@ -216,6 +219,10 @@ class PacmanGameModel {
    */
   void _closeWall() {
     _level._closeWall();
+  }
+
+  void _activatePacmanPowerMode() {
+    _level._activatePacmanPowerMode();
   }
 
   /**

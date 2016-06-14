@@ -9,6 +9,7 @@ enum Types {
   PILL,
   POWERPILL,
   CHERRY,
+  APPLE,
   BLINKY_LEFT,
   BLINKY_RIGHT,
   BLINKY_UP,
