@@ -10,21 +10,40 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="scaffolded-by" content="https://github.com/google/stagehand">
-    <title>Webtechnologie</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" media="screen and (max-device-width: 800px)" href="mobile.css" />
+    <meta name="viewport" content="user-scalable=no" />
+    <title>Webtechnologie - Pacman</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" media="(max-device-width: 640px)" href="styles/mobile.css" />
 </head>
 <body>
+<div id="error"></div>
+<div class="cssload-container">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div id = "Loading">
+        <p>LOADING...</p>
+    </div>
+</div>
+<div id="pause"></div>
 <div class="game">
     <!-- GameStatus -->
     <div id="overlay">
         <span id="gameend"></span>
         <span id="startNext">NEXTLEVEL</span>
+        <div id="userinput">
+            <form id="nameScore">
+                <input type="text" id="username" placeholder="name" size="40" required/>
+                <button type="button" id="save">Save</button>
+            <br>
+            </form>
+        </div>
     </div>
     <!-- Headline -->
     <div class="header"></div>
     <!-- das Spielfeld -->
-    <div id="labyrinth"></div>
+    <div id="gamefield"></div>
     <!-- Spielinformationen -->
     <div id="information">
         <table id="infos">
@@ -49,7 +68,7 @@
             </tr>
             <tr id="mobile2">
                 <td id="mobileLeft"></td>
-                <td class="mobileBlank"></td>
+                <td id="mobilePause"></td>
                 <td id="mobileRight"></td>
             </tr>
             <tr id="mobile3">
@@ -68,6 +87,9 @@
             &copy; Sheraz Azad, Malte Grebe & Niklas Klatt, 2016<br>
         </small>
     </p>
+    <div id="backbutton">
+        <a id="navigation" href="index.html">MAIN MENU</a>
+    </div>
 </div>
 <script defer src="main.dart" type="application/dart"></script>
 <script defer src="packages/browser/dart.js"></script>

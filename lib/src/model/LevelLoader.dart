@@ -1,12 +1,9 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
-// TODO exception handling and logging
+/**
+ * Load all json files
+ */
 class LevelLoader {
-  /**
-   * indicates if a file is loaded
-   */
-  static bool _loaded = false;
-
   /**
    * the map coded as [String]
    */
@@ -45,36 +42,79 @@ class LevelLoader {
   /**
    * current level number
    */
-  static num levelNumber = -1;
+  static num _levelNumber = -1;
 
   /**
    * width field size
    */
-  static num sizeX;
+  static num _sizeX;
 
   /**
    * height field size
    */
-  static num sizeY;
+  static num _sizeY;
 
   /* gerneral const */
 
   /**
    * score of one pill
    */
-  static num SCORE_PILL = -1;
+  static num _scorePill = -1;
 
   /**
    * score of one powerPill
    */
-  static num SCORE_POWERPILL = -1;
+  static num _scorePowerPill = -1;
 
   /**
    * score of one cherry
    */
-  static num SCORE_CHERRY = -1;
+  static num _scoreCherry = -1;
 
-  static num SCORE_GHOST = -1;
+  /**
+   * basic score for one ghost
+   */
+  static num _scoreGhost = -1;
+
+  /**
+   * host of gamekey
+   */
+  static String gamekeyHost;
+
+  /**
+   * port of gamekey
+   */
+  static num gamekeyPort;
+
+  /**
+   * game id at gamekey
+   */
+  static String gamekeyID;
+
+  /**
+   * secret for authenticate the gamekey server
+   */
+  static String gamekeySecret;
+
+  /**
+   * X position for entry to bonus level
+   */
+  static num _portX = -1;
+
+  /**
+   * Y position for entry to bonus level
+   */
+  static num _portY = -1;
+
+  /**
+   * time(frames) how long entry to bonus level is open
+   */
+  static num _openTime = 0;
+
+  /**
+   * shows if level has got a bonus level
+   */
+  static bool _bonus = false;
 
   /*
   MapCode
@@ -103,11 +143,6 @@ class LevelLoader {
    * character for cherry
    */
   static const CHERRY = "^";
-
-  /**
-   * character for Ghost
-   */
-  static const GHOST = "G";
 
   /**
    * character for Pinky
@@ -144,20 +179,28 @@ class LevelLoader {
    */
   static const NOTHING = "X";
 
-  static const _CONFIGJSON = "GameConfig.json";
+  /**
+   * name of config file
+   */
+  static const _CONFIG_JSON = "GameConfig.json";
 
   /**
    * Loads a level from json file by given level number.
    * Return true if file is loaded, else false
    */
-   Future loadLevel(int level) {
-    HttpRequest.getString("${level}_Level.json").then((loadJson));}
-
-   bool loadJson(String uri) {
-      final data = JSON.decode(uri);
-      levelNumber = data["level"];
-      sizeX = data["sizeX"];
-      sizeY = data["sizeY"];
+  static Future<bool> loadLevel(int level) async {
+    if (level == null) {
+      print("LevelLoader.loadlevel() param \"level\" is null");
+      return false;
+    }
+    _bonus = false; //reset bonus
+    try {
+      String json = await HttpRequest.getString("${level}_Level.json");
+      if (json == null) throw new Exception("Can not find ${level}_Level.json");
+      final data = JSON.decode(json);
+      _levelNumber = data["level"];
+      _sizeX = data["sizeX"];
+      _sizeY = data["sizeY"];
       _map = data["map"];
       _lives = data["lives"];
       _eatTime = data["ghostEatTime"];
@@ -165,22 +208,60 @@ class LevelLoader {
       _startClyde = data["startClyde"];
       _startInky = data["startInky"];
       _startPinky = data["startPinky"];
-    _loaded = true;
-    print("Step 2");
-    print(_map);
-
+      final bonus = data["bonus"];
+      // bonus level is active
+      if (bonus != null) {
+        _portX = bonus["portX"];
+        _portY = bonus["portY"];
+        _openTime = bonus["openTime"];
+        _bonus = true;
+      }
+      if (_levelNumber == null ||
+          _sizeX == null ||
+          _sizeY == null ||
+          _map == null ||
+          _lives == null ||
+          _eatTime == null ||
+          _startBlinky == null ||
+          _startClyde == null ||
+          _startInky == null ||
+          _startPinky == null) {
+        throw new Exception("Can not read ${level}_Level.json");
+      }
+    } catch (error, stackTrace) {
+      print("LevelLoader.loadlevel() caused following error: $error");
+      print(stackTrace);
+    }
     return true;
   }
 
-  static bool loadConfig() {
-    HttpRequest.getString(_CONFIGJSON).then((json) {
-      final data = JSON.decode(json);
-      SCORE_PILL = data["scorePill"];
-      SCORE_POWERPILL = data["scorePowerPill"];
-      SCORE_CHERRY = data["scoreCherry"];
-      SCORE_GHOST = data["scoreSingleGhost"];
-    });
-
+  static Future<bool> loadConfig() async {
+    try {
+      String json = await HttpRequest.getString(_CONFIG_JSON);
+      if (json == null) throw new Exception("Can not read $_CONFIG_JSON");
+      final data = await JSON.decode(json);
+      _scorePill = data["scorePill"];
+      _scorePowerPill = data["scorePowerPill"];
+      _scoreCherry = data["scoreCherry"];
+      _scoreGhost = data["scoreSingleGhost"];
+      gamekeyHost = data["GamekeyHost"];
+      gamekeyPort = data["GamekeyPort"];
+      gamekeyID = data["GamekeyID"];
+      gamekeySecret = data["GamekeySecret"];
+      if (_scorePill == null ||
+          _scorePowerPill == null ||
+          _scoreCherry == null ||
+          _scoreGhost == null ||
+          gamekeyHost == null ||
+          gamekeyPort == null ||
+          gamekeyID == null ||
+          gamekeySecret == null)
+        throw new Exception("Can not read $_CONFIG_JSON");
+    } catch (error, stackTrace) {
+      print("LevelLoader.loadConfig() caused following error: $error");
+      print(stackTrace);
+      return false;
+    }
     return true;
   }
 }

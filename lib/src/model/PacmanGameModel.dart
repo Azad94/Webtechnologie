@@ -1,156 +1,78 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
+/**
+ * Model of Pacman game
+ */
 class PacmanGameModel {
-  List<Ghost> _ghosts = new List();
-  Pacman _pacman;
-  PacmanGameController _con;
-  Directions _pac_dir = Directions.NOTHING;
-
+  /**
+   * is player game over?
+   */
   bool _gameOver = false;
-  bool _gameWon = false;
-  int _sizeX;
-  int _sizeY;
 
-  Level _level;
-  LevelLoader _levelloader = new LevelLoader();
+  /**
+   * game won?
+   */
+  bool _gameWon = false;
+
+  /**
+   * has got level a bonus level?
+   */
+  bool _hasBonus = false;
+
+  /**
+   * current level number
+   */
   int _currentLevel = -1;
 
-  PacmanGameModel(PacmanGameController con) {
-    LevelLoader.loadConfig();
-    _sizeX = LevelLoader.sizeX;
-    _sizeY = LevelLoader.sizeY;
-    this._con = con;
-  }
-
-  bool getGameOver() => false;
-  bool getGameWone() => false;
-
-  int getCurrentLevel() => _currentLevel;
-
- /* void loadLevel(int level) {
-    // Delete old references
-    _pacman = null;
-    _ghosts = new List();
-    print("Step 1");
-    _levelloader.loadLevel(level);}*/
-  Future loadLevel(int level) {
-    HttpRequest.getString("${level}_Level.json").then((loadLevel2));
-  }
-
-  void loadLevel2(String uri){
-    final data = JSON.decode(uri);
-    LevelLoader.levelNumber = data["level"];
-    LevelLoader.sizeX = data["sizeX"];
-    LevelLoader.sizeY = data["sizeY"];
-    LevelLoader._map = data["map"];
-    LevelLoader._lives = data["lives"];
-    LevelLoader._eatTime = data["ghostEatTime"];
-    LevelLoader._startBlinky = data["startBlinky"];
-    LevelLoader._startClyde = data["startClyde"];
-    LevelLoader._startInky = data["startInky"];
-    LevelLoader._startPinky = data["startPinky"];
-    LevelLoader._loaded = true;
-  //  print("Step 2");
-  //  print(LevelLoader._map);
-    _currentLevel = LevelLoader.levelNumber;
-  //  print("Step 3");
-    _level = new Level(
-        LevelLoader._map,
-        LevelLoader.sizeX,
-        LevelLoader.sizeY,
-        LevelLoader._lives,
-        LevelLoader.SCORE_PILL,
-        LevelLoader.SCORE_CHERRY,
-        LevelLoader.SCORE_POWERPILL,
-        LevelLoader.SCORE_GHOST,
-        LevelLoader._eatTime,
-        LevelLoader._startBlinky,
-        LevelLoader._startClyde,
-        LevelLoader._startInky,
-        LevelLoader._startPinky,
-        this);
-        _con.startGame();
-
-  }
+  /**
+   * Direction of [Pacman]s next step
+   */
+  Directions _pacmanDir = Directions.NOTHING;
 
   /**
-   * moves [Pacman] up if possible
+   * all ghosts on the field. Used for moving ghosts
    */
-  void moveUp() {
-    _pac_dir = Directions.UP;
-  }
+  List<Ghost> _ghosts = new List();
 
   /**
-   * moves [Pacman] down if possible
+   * all cherrys on the field. Used for entering bonus level.
    */
-  void moveDown() {
-    _pac_dir = Directions.DOWN;
-  }
+  List<Cherry> _cherrys = new List();
 
   /**
-   * moves [Pacman] left if possible
+   * Pacman
    */
-  void moveLeft() {
-    _pac_dir = Directions.LEFT;
-  }
+  Pacman _pacman;
 
   /**
-   * moves [Pacman] right if possible
+   * the current played level
    */
-  void moveRight() {
-    _pac_dir = Directions.RIGHT;
-  }
+  Level _level;
 
   /**
-   * move [Pacman] and [Ghost] to the next position. Call this method each frame.
+   * Controller
    */
-  void triggerFrame() {
-    _level.pacmanDir = _pac_dir;
-    _pacman.move(_pac_dir);
-    _pac_dir = Directions.NOTHING;
-    this.moveGhost();
-    this.updateView();
-  }
+  PacmanGameController _con;
 
   /**
-   * set the game to game over
+   * creates a new Model
    */
-  void gameOver() {
-    _gameOver = true;
-  }
-
-  void gameWon() {
-    _gameWon = true;
-  }
-  void newGame() {
-    _gameOver = false;
-    _gameWon = false;
-  }
-  /**
-   * enable the power mode, means that ghosts are eatable
-   */
-  void enablePowerMode() => _ghosts.forEach((g) => g.eatableMode());
-
-  void updateView() {
-    _con.updateGameStatus();
-  }
+  PacmanGameModel(this._con);
 
   /**
-   * Moves all [Ghost]s DO NOT CALL
+   * return true if the game is game over, else false
    */
-  void moveGhost() {
-    _ghosts.forEach((g) => g.move());
-  }
+  bool get gameEnd => _gameOver;
 
   /**
-   * return the full gameField as list over list with enum [Type]
+   * return true if player won the game. else false
    */
-  List<List<Types>> getMap() => _level.getMap();
+  bool get gameVic => _gameWon;
 
   /**
-   * return the current score
+   * return the current level number
    */
-  int get score => _level.score;
+  int get level => _level._levelNumber;
 
   /**
    * return the lives of [Pacman]
@@ -158,21 +80,195 @@ class PacmanGameModel {
   int get lives => _pacman._lives;
 
   /**
-   * return true if the game is game over, else false
+   * return the current score
    */
-  bool get gameEnd => _gameOver;
-  bool get gameVic => _gameWon;
+  int get score => _level.score;
 
-  int get level => LevelLoader.levelNumber;
+  /**
+   * set game won
+   */
+  void gameWon() {
+    _gameWon = true;
+  }
+
+  /**
+   * load the config data for pacman game
+   */
+  Future<bool> loadConfig() async => await LevelLoader.loadConfig();
+
+  /**
+   * return the full gameField as list over list with enum [Type]
+   */
+  List<List<Types>> getMap() => _level.getMap();
+
+  /**
+   * load a level by given level number
+   */
+  Future<bool> loadLevel(int level) async {
+    // Delete old references
+    _pacman = null;
+    _ghosts = new List();
+    _cherrys = new List();
+
+    if (!await LevelLoader.loadLevel(level)) return false;
+    _currentLevel = LevelLoader._levelNumber;
+    if (LevelLoader._bonus) {
+      _level = new Level(
+          LevelLoader._map,
+          LevelLoader._sizeX,
+          LevelLoader._sizeY,
+          LevelLoader._levelNumber,
+          LevelLoader._lives,
+          LevelLoader._scorePill,
+          LevelLoader._scoreCherry,
+          LevelLoader._scorePowerPill,
+          LevelLoader._scoreGhost,
+          LevelLoader._eatTime,
+          LevelLoader._startBlinky,
+          LevelLoader._startClyde,
+          LevelLoader._startInky,
+          LevelLoader._startPinky,
+          this,
+          LevelLoader._portX,
+          LevelLoader._portY,
+          LevelLoader._openTime);
+      _hasBonus = true;
+    } else {
+      _level = new Level(
+          LevelLoader._map,
+          LevelLoader._sizeX,
+          LevelLoader._sizeY,
+          LevelLoader._levelNumber,
+          LevelLoader._lives,
+          LevelLoader._scorePill,
+          LevelLoader._scoreCherry,
+          LevelLoader._scorePowerPill,
+          LevelLoader._scoreGhost,
+          LevelLoader._eatTime,
+          LevelLoader._startBlinky,
+          LevelLoader._startClyde,
+          LevelLoader._startInky,
+          LevelLoader._startPinky,
+          this);
+    }
+    return true;
+  }
+
+  /**
+   * moves [Pacman] up if possible
+   */
+  void moveUp() {
+    _pacmanDir = Directions.UP;
+  }
+
+  /**
+   * moves [Pacman] down if possible
+   */
+  void moveDown() {
+    _pacmanDir = Directions.DOWN;
+  }
+
+  /**
+   * moves [Pacman] left if possible
+   */
+  void moveLeft() {
+    _pacmanDir = Directions.LEFT;
+  }
+
+  /**
+   * moves [Pacman] right if possible
+   */
+  void moveRight() {
+    _pacmanDir = Directions.RIGHT;
+  }
+
+  /**
+   * starts a new game
+   */
+  void newGame() {
+    _gameOver = false;
+    _gameWon = false;
+    _hasBonus = false;
+    Item._resetCounter();
+  }
+
+  /**
+   * move [Pacman] and [Ghost] to the next position. Call this method each frame.
+   */
+  void triggerFrame() {
+    _level.pacmanDir = _pacmanDir;
+    if (_pacman != null) _pacman._move(_pacmanDir);
+    _pacmanDir = Directions.NOTHING;
+    this._moveGhost();
+    _cherrys.forEach((c) => c.triggerFrame());
+    _con.updateGameStatus();
+  }
+
+  /**
+   * Removes a Wall for entering into bonus level
+   */
+  void _openWall() {
+    _level._openWall();
+  }
+
+  /**
+   * add the Wall, where wall for bonus level was removed
+   */
+  void _closeWall() {
+    _level._closeWall();
+  }
+
+  /**
+   * set the game to game over
+   */
+  void _gameFinished() {
+    _gameOver = true;
+  }
+
+  /**
+   * enable the power mode, means that ghosts are eatable
+   */
+  void _enablePowerMode() => _ghosts.forEach((g) => g.eatableMode());
+
+  /**
+   * start loading bonus level
+   */
+  void _joinBonusLevel() {
+    _con.loadBonusLevel();
+  }
+
+  /**
+   * respawns all [Ghost]s
+   */
+  void _respawnGhosts() => _ghosts.forEach((g) {
+        if (g != null) g.respwan();
+      });
 
   /**
    * register a new [GameElement]
    */
-  void registerGameElement(GameElement g) {
+  void _registerGameElement(GameElement g) {
     if (g is Ghost) _ghosts.add(g);
     if (g is Pacman) _pacman = g;
+    if (g is Cherry) _cherrys.add(g);
   }
 
-  Level returnLevel() => _level;
-  Pacman returnPacman() => _pacman;
+  /**
+   * show error screen on view
+   */
+  void _errorScreen() => _con.toggleErrorScreen();
+
+  /*
+   * local helper methods
+   */
+  /////////////////////////////////////////////////////////////////////////////////
+  /**
+   * DO NOT CALL; PRIVATE
+   * Moves all [Ghost]s
+   */
+  void _moveGhost() {
+    _ghosts.forEach((g) {
+      if (g != null) g.move();
+    });
+  }
 }

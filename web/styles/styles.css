@@ -1,0 +1,296 @@
+@font-face {
+    font-family: PacMan; /*a name to be used later*/
+    src: url("../PAC-FONT.TTF"); /*URL to font*/
+}
+@font-face {
+    font-family: Retro;
+    src: url("../Retro Computer_DEMO.ttf");
+}
+html, body {
+    margin: 0;
+    height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    color: yellow;
+    background-color: black;
+    font-family: PacMan, serif;
+    text-align: center;
+}
+a:-webkit-any-link {
+    color: -webkit-link;
+    text-decoration: none;
+    cursor: auto;
+}
+.cssload-container{
+    background:rgba(0,0,0, 0.2);
+}
+#error {
+    display:none;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top: -300px;
+    margin-left: -300px;
+    background-image: url("../resc/other/pacmanErr.png");
+    width: 600px;
+    height: 600px;
+}
+.cssload-container div {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    background-color: rgba(0,0,0, 0.0);
+    top: 45%;
+    border-radius: 50%;
+}
+#Loading {
+    font-family: PacMan;
+    color: yellow;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.cssload-container div:nth-child(1) {
+    background-image:url(../resc/ghosts/blinky/blinky_r32.png);
+    animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -o-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -ms-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -webkit-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -moz-animation: cssload-move 2.3s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+
+.cssload-container div:nth-child(2) {
+    background-image:url(../resc/ghosts/pinky/pinky_r32.png);
+    animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -o-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -ms-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -webkit-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -moz-animation: cssload-move 2.3s 172.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+
+.cssload-container div:nth-child(3) {
+    background-image:url(../resc/ghosts/inky/inky_r32.png);
+    animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -o-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -ms-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -webkit-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -moz-animation: cssload-move 2.3s 345ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+
+.cssload-container div:nth-child(4) {
+    background-image:url(../resc/ghosts/clyde/clyde_r32.png);
+    animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -o-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -ms-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -webkit-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+    -moz-animation: cssload-move 2.3s 517.5ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+
+
+
+@keyframes cssload-move {
+    0% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@-o-keyframes cssload-move {
+    0% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@-ms-keyframes cssload-move {
+    0% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@-webkit-keyframes cssload-move {
+    0% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@-moz-keyframes cssload-move {
+    0% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+#backbutton{
+    position: inherit;
+    text-align: center;
+    z-index: 200;
+}
+#navigation {
+    border: 5px solid yellow;
+    color:yellow;
+    border-radius: 20px;
+    padding: 3px 3px 3px 3px;
+    cursor: pointer;  width: 200px;
+    margin: 0 auto;
+    font-size: 2rem;
+
+}
+#startNext{
+    color: yellow;
+    cursor: pointer;  width: auto;
+    border: 5px solid yellow;
+    border-radius: 10px;
+    padding: 2px 2px 2px 2px;
+}
+
+#overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0,0,0,0.70);
+    text-align: center;
+    color: red;
+    font-family: PacMan, serif;
+    font-weight: bold;
+    font-size: 2rem;
+    z-index: +1;
+}
+span {
+    margin-top: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+#userinput {
+    display: block;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right:auto;
+    font-size: 1.5rem;
+    margin-bottom: 45%;
+    visibility: hidden;
+}
+#scorelist {
+    font-family: Retro, serif;
+    margin-top:10%;
+    margin-bottom: 50%;
+    font-weight: bold;
+}
+.header {
+    margin-top: 20px;
+    min-height: 100px;
+    min-width:900px;
+    background-image: url("../resc/other/PacmanHeader.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: black;
+}
+#pause{
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-left:-100px;
+    margin-top:-100px;
+    width:200px;
+    height:200px;
+    background-image: url("../resc/other/pause.png");
+    display:none;
+    z-index: +15;
+}
+.game {
+    position: relative;
+    height: 100%;
+    width: 1000px;
+    margin: 0 auto;
+    display: none;
+}
+#labyrinth td {
+    background-color: black;
+    width: 32px;
+    height: 32px;
+    background-repeat:no-repeat;
+    background-size:32px 32px;
+}
+
+#labyrinth {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: separate;
+    border: 5px solid yellow;
+}
+
+#information {
+    border-collapse: separate;
+    border: 5px solid yellow;
+    font-family: PacMan, serif;
+    font-size: 2rem;
+}
+#keylayout{
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.mobile{
+    display: none;
+}
+.mobile td{
+    background-color: black;
+    width: 160px;
+    height: 160px;
+    background-repeat:no-repeat;
+    background-size:160px 160px;
+}
+.mobileBlank{
+    background-image:url(../resc/mobilekeys/mobileBlank.png);
+}
+#mobileUp {
+    background-image:url(../resc/mobilekeys/mobileUp.png);
+}
+#mobileDown{
+    background-image:url(../resc/mobilekeys/mobileDown.png);
+}
+#mobileLeft {
+    background-image:url(../resc/mobilekeys/mobileLeft.png);
+}
+#mobileRight{
+    background-image:url(../resc/mobilekeys/mobileRight.png);
+}
+#information td {
+    background-color: black;
+    width: 450px;
+}
+#value1, #value2, #value3 {
+    font-family: Retro, serif;
+    font-weight: bold;
+}
+.messages {
+    background-color: black;
+    border: 5px solid red;
+    padding: 3px 3px 3px 3px;
+    color:red;
+    font-family: Retro, serif;
+    font-size: 2rem;
+    visibility: visible;
+}
+
+#footer{
+    text-align: center;
+    color: white;
+    font-family: Retro, serif;
+}
+

@@ -1,20 +1,59 @@
-part of pacmanLib;
+part of pacmanModelLib;
 
+/**
+ * Represents a item which the player can pick up. Some items have an effect on gameplay
+ */
 class Item extends GameElement {
+  /**
+   * is item visible?
+   */
   bool _visible = false;
-  int _score = 0;
+
+  /**
+   * score of this single item
+   */
+  final _score;
+
+  /**
+   * counter for all items on the map
+   */
+  static int _items = 0;
+
+  /**
+   * counter for all picked up items
+   */
+  static int _itemsPickedUp = 0;
+
+  /**
+   * model
+   */
   PacmanGameModel _model;
 
-  Item(int x, int y, bool collPlayer, bool collGhost, bool visible, int score,
-      PacmanGameModel model)
-      : super(x, y, collPlayer, collGhost),
-        this._visible = visible,
-        this._score = score,
-        this._model = model;
+  /**
+   * creates a new Item
+   */
+  Item(int x, int y, bool collPlayer, bool collGhost, this._visible,
+      this._score, this._model)
+      : super(x, y, collPlayer, collGhost) {
+    if (!(this is Cherry)) _items++;
+  }
+
   /**
    * the [Item] is picked up. Make [Item] invisible
    */
-  void pickUp() {
-    _visible = false;
+  void _pickUp() {
+    if (_visible) {
+      if (!(this is Cherry)) _itemsPickedUp++;
+      _visible = false;
+      if (_itemsPickedUp == _items) _model.gameWon();
+    }
+  }
+
+  /**
+   * resets the item counter. Used if a new level starts
+   */
+  static void _resetCounter() {
+    _items = 0;
+    _itemsPickedUp = 0;
   }
 }
