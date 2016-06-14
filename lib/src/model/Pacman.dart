@@ -93,6 +93,7 @@ class Pacman extends GameElement {
   }
 
   void _activatePowerMode() {
+    print("pacman active");
     _powerMode = true;
   }
 }

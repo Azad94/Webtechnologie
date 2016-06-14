@@ -10,7 +10,7 @@ class Apple extends Item {
       : super(x, y, collPlayer, collGhost, visible, score, model);
 
   @override
-  void pickUp() {
+  void _pickUp() {
     if(_visible) {
       _model._activatePacmanPowerMode();
   }
