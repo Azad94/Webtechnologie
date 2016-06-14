@@ -140,12 +140,16 @@ const String _powerpill =
     "background-image:url(../web/resc/items/a_powerpill32.gif);";
 const String _cherry =
     "background-image:url(../web/resc/items/a_cherry32.gif);";
+const String _apple =
+    "background-image:url(../web/resc/items/a_apple32.gif);";
 const String _pill16 =
     "background-image:url(../web/resc/16px/items/pill16.png);";
 const String _powerpill16 =
     "background-image:url(../web/resc/16px/items/a_powerpill16.gif);";
 const String _cherry16 =
     "background-image:url(../web/resc/16px/items/a_cherry16.gif);";
+const String _apple16 =
+    "background-image:url(../web/resc/items/a_apple16.gif);";
 
 /**
  * A [PacmanGameView] object interacts with the DOM tree
@@ -428,6 +432,9 @@ class PacmanGameView {
             case Types.CHERRY:
               kl.children[_row].children[_col].setAttribute("style", _cherry16);
               break;
+            case Types.APPLE:
+              kl.children[_row].children[_col].setAttribute("style", _apple16);
+              break;
             case Types.NOTHING:
               kl.children[_row].children[_col].setAttribute("style", "");
               break;
@@ -559,6 +566,9 @@ class PacmanGameView {
               break;
             case Types.CHERRY:
               kl.children[_row].children[_col].setAttribute("style", _cherry);
+              break;
+            case Types.APPLE:
+              kl.children[_row].children[_col].setAttribute("style", _apple);
               break;
             case Types.NOTHING:
               kl.children[_row].children[_col].setAttribute("style", "");
