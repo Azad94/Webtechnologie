@@ -187,9 +187,8 @@ span {
 }
 #scorelist {
     font-family: Retro, serif;
-    height:100%;
     margin-top:10%;
-    margin-bottom: 45%;
+    margin-bottom: 50%;
     font-weight: bold;
 }
 .header {
@@ -229,6 +228,8 @@ span {
 }
 
 #labyrinth {
+    margin-left: auto;
+    margin-right: auto;
     border-collapse: separate;
     border: 5px solid yellow;
 }

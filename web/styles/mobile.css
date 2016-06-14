@@ -315,7 +315,7 @@
 
     #labyrinth {
         border-collapse: separate;
-        border: 5px solid green;
+        border: 5px solid yellow;
     }
 
     #information {
@@ -375,6 +375,9 @@
 
     #mobileRight {
         background-image: url(../resc/mobilekeys/mobileRight.png);
+    }
+    #mobilePause {
+        background-image: url(../resc/mobilekeys/mobilePause.png);
     }
 }
 
@@ -759,5 +762,7 @@
     #mobileRight {
         background-image: url(../resc/mobilekeys/mobileRight.png);
     }
-
+    #mobilePause {
+        background-image: url(../resc/mobilekeys/mobilePause.png);
+    }
 }

@@ -25,6 +25,9 @@ class PacmanGameController {
   var _down;
   var _left;
   var _right;
+  var _pause;
+  var _submit;
+
   //constructor
   PacmanGameController() {
     _pacmanModel = new PacmanGameModel(this);
@@ -76,11 +79,12 @@ class PacmanGameController {
       _pacmanView.hideNextLevel();
     }
     var labyrinth = _pacmanModel.getMap();
-    if (_currentLevel == 1) {
       _createTable(labyrinth);
-    }
+
     _refreshLabyrinth(labyrinth);
+    //also use continueGame to initalise Timer
     _continueGame();
+
     if (_pacmanView.mql.matches) {
       if (_up != null) _up.cancel();
       _up = _pacmanView.mobileUp.onClick.listen((_) {
@@ -98,6 +102,18 @@ class PacmanGameController {
       _right = _pacmanView.mobileRight.onClick.listen((_) {
         _pacmanModel.moveRight();
       });
+      if (_pause != null) _pause.cancel();
+      _pause = _pacmanView.mobilePause.onClick.listen((_) {
+        if(_paused){
+          _pacmanView.hidePause();
+          _continueGame();
+        }else{
+          _pacmanView.showPause();
+          _paused=true;
+          _stopGame();
+        }
+      });
+
     } else {
       if (_keyListener != null) _keyListener.cancel();
       _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
@@ -116,13 +132,13 @@ class PacmanGameController {
             _pacmanModel.moveUp();
             break;
           case KeyCode.SPACE:
-            if(_paused){
+            if (_paused) {
               _pacmanView.hidePause();
               _continueGame();
-            }else{
+            } else {
               _pacmanView.showPause();
-              _paused=true;
-            _stopGame();
+              _paused = true;
+              _stopGame();
             }
         }
       });

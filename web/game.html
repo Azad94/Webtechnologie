@@ -13,7 +13,7 @@
     <meta name="viewport" content="user-scalable=no" />
     <title>Webtechnologie - Pacman</title>
     <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" media="screen and (max-device-width: 800px)" href="styles/mobile.css" />
+    <link rel="stylesheet" media="(max-device-width: 640px)" href="styles/mobile.css" />
 </head>
 <body>
 <div id="error"></div>
@@ -33,9 +33,9 @@
         <span id="gameend"></span>
         <span id="startNext">NEXTLEVEL</span>
         <div id="userinput">
-            <form id="nameScore" action="">
-                <input id="username" type="text" name="username" placeholder="name" size="40" required/>
-                <button type='button' id="save">Save</button>
+            <form id="nameScore">
+                <input type="text" id="username" placeholder="name" size="40" required/>
+                <button type="button" id="save">Save</button>
             <br>
             </form>
         </div>
@@ -43,7 +43,7 @@
     <!-- Headline -->
     <div class="header"></div>
     <!-- das Spielfeld -->
-    <div id="labyrinth"></div>
+    <div id="gamefield"></div>
     <!-- Spielinformationen -->
     <div id="information">
         <table id="infos">
@@ -68,7 +68,7 @@
             </tr>
             <tr id="mobile2">
                 <td id="mobileLeft"></td>
-                <td class="mobileBlank"></td>
+                <td id="mobilePause"></td>
                 <td id="mobileRight"></td>
             </tr>
             <tr id="mobile3">

@@ -163,10 +163,10 @@ class PacmanGameView {
   final _gameend = querySelector("#gameend");
   final startNext = querySelector("#startNext");
   final _highscore = querySelector("#userinput");
-  final _name = querySelector("#namescore");
-  final _username = querySelector("#username");
+  //final _name = querySelector("#namescore");
+  final username = querySelector("#username");
   final savename = querySelector("#save");
-  final _labyrinth = querySelector("#labyrinth");
+  final _labyrinth = querySelector("#gamefield");
   final _level = querySelector("#value1");
   final _score = querySelector("#value2");
   final _lives = querySelector("#value3");
@@ -175,6 +175,7 @@ class PacmanGameView {
   final mobileDown = querySelector("#mobileDown");
   final mobileLeft = querySelector("#mobileLeft");
   final mobileRight = querySelector("#mobileRight");
+  final mobilePause = querySelector("#mobilePause");
   final _message = querySelector(".messages");
 
   var _mql = window.matchMedia("screen and (max-device-width : 800px)");
@@ -241,12 +242,13 @@ class PacmanGameView {
 
   //see _labyrinthToHTMLTable
   void initTable(List<List<Types>> l) {
-    _labyrinth.innerHtml = _createLabyrinth(l);
+    String k = _createLabyrinth(l);
+    _labyrinth.innerHtml = k;
   }
 
   //creates the table in the html-document
   String _createLabyrinth(List<List<Types>> l) {
-    String labyrinthTable = "<table>";
+    String labyrinthTable = "<table id=\"labyrinth\">";
     for (List<Types> row in l) {
       labyrinthTable += "<tr>";
 
