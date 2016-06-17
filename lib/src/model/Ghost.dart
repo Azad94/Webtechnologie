@@ -3,21 +3,6 @@ part of pacmanModelLib;
 abstract class Ghost extends GameElement {
 
   /**
-   * start position of ghost
-   */
-  final _start_x, _start_y;
-
-  /**
-   * true if ghost is eatable, else false
-   */
-  bool _eatable = false;
-
-  /**
-   * true if the ghost is moving, else false
-   */
-  bool _started = false;
-
-  /**
    * score of the ghost
    */
   int _score;
@@ -115,6 +100,8 @@ abstract class Ghost extends GameElement {
   int doorY;
   int scatterX, scatterY;
   bool _isVerticalMoreImportant;
+  int _start_x, _start_y;
+  bool _eatable, _started;
   /**
    * Constructor of class Ghost
    */

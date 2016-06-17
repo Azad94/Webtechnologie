@@ -11,3 +11,7 @@
 "P" = Pacman
 "~" = door
 "X" = nothing
+
+
+
+
