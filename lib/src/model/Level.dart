@@ -631,7 +631,7 @@ class Level {
               List<Directions> noCollision = new List();
               noCollision.add(Directions.UP);
               _tiles[y][x]._environment = new Environment(
-                  x, y, true, false, false, true, noCollision, null);
+                  x, y, true, true, false, true, noCollision, null);
               // set door position
               _doorX = x;
               _doorY = y;
