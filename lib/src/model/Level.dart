@@ -179,8 +179,8 @@ class Level {
       this._openTime]) {
     _score = new Score();
     if (_portX != null && _portY != null && _openTime != null) _hasBonus = true;
-    initTiles();
-    createObjects(environmentCode);
+    _initTiles();
+    _createObjects(environmentCode);
   }
 
   /**
@@ -229,7 +229,7 @@ class Level {
    * checks if the given [GameElement] collides on a given position with a [Environment]
    * return true if the object collides with another one, if not false; error: null
    */
-  bool checkCollision(int x, int y, GameElement g) {
+  bool _checkCollision(int x, int y, GameElement g) {
     if (x == null || y == null || g == null) {
       print("Level.checkCollision(): param null");
       return false;
@@ -238,7 +238,7 @@ class Level {
     if (x < 0 || x >= _sizeX || y < 0 || y >= _sizeY) return true;
     final tile = _tiles[y][x];
     // calculate side of the collision
-    Directions side = getDirection(g._x, g._y, x, y);
+    Directions side = _getDirection(g._x, g._y, x, y);
     // no Statics
     if (tile._environment == null) return false;
     // ghosts collides
@@ -256,7 +256,7 @@ class Level {
 
     // pacman collides
     if (tile._environment._collisionPlayer == true && g is Pacman) {
-      if(_pacmanPowerMode) return false;
+      if (_pacmanPowerMode) return false;
       // is a side where is no collision
       if (tile._environment._noCollisionSidesPlayer != null) {
         //check if side in list and calculate side is the same, if yes no collision
@@ -276,7 +276,7 @@ class Level {
    * Register a [GameElement] on a new position.
    * xOld and yOld is the old position and xNew and yNew the new one. g is a reference on the moving objekt.
    */
-  void registerElement(int xOld, int yOld, int xNew, int yNew, GameElement g) {
+  void _registerElement(int xOld, int yOld, int xNew, int yNew, GameElement g) {
     if (xOld == null ||
         yOld == null ||
         xNew == null ||
@@ -286,13 +286,13 @@ class Level {
       return;
     }
     // position not correct
-    assert(!this.checkCollision(xNew, yNew, g));
+    assert(!this._checkCollision(xNew, yNew, g));
     // pacman chance position
     if (g is Pacman) {
       _tiles[yOld][xOld]._pacman = null;
       _tiles[yNew][xNew]._pacman = g;
-      this.collisionDetectionItem(xNew, yNew);
-      this.collisionDetectionGhost(xNew, yNew);
+      this._collisionDetectionItem(xNew, yNew);
+      this._collisionDetectionGhost(xNew, yNew);
       // entry bonus level
       if (_hasBonus && xNew == _portX && yNew == _portY) {
         _model._joinBonusLevel();
@@ -302,8 +302,8 @@ class Level {
     if (g is Ghost) {
       _tiles[yOld][xOld]._ghosts.remove(g);
       _tiles[yNew][xNew]._ghosts.add(g);
-      this.collisionDetectionGhost(xNew, yNew);
-      Directions dir = getDirection(xOld, yOld, xNew, yNew);
+      this._collisionDetectionGhost(xNew, yNew);
+      Directions dir = _getDirection(xOld, yOld, xNew, yNew);
       if (g is Blinky) _blinkyDir = dir;
       if (g is Inky) _inkyDir = dir;
       if (g is Pinky) _pinkyDir = dir;
@@ -314,7 +314,7 @@ class Level {
   /**
    * return the full gameField as list over list with enum [Type]
    */
-  List<List<Types>> getMap() {
+  List<List<Types>> _getMap() {
     /*
          * if more ghosts of pacman and ghosts on the same field the following priority are used:
          * if pacman on a field, only pacman is returned
@@ -489,7 +489,7 @@ class Level {
           // cherry
           else if (tile._item is Cherry && tile._item._visible)
             ret[y].add(Types.CHERRY);
-          else if(tile._item is Apple && tile._item._visible)
+          else if (tile._item is Apple && tile._item._visible)
             ret[y].add(Types.APPLE);
           else
             ret[y].add(Types.NOTHING);
@@ -511,7 +511,7 @@ class Level {
   /**
    * ends eatable mode
    */
-  void endEatableMode() => _score._resetGhostMultiplier();
+  void _endEatableMode() => _score._resetGhostMultiplier();
 
   /**
    * Removes a Wall for entering into bonus level
@@ -547,7 +547,7 @@ class Level {
    * Needs a [String] with the map coding
    *
    */
-  void createObjects(String environmentCode) {
+  void _createObjects(String environmentCode) {
     if (environmentCode == null) {
       print("Level.createObjects(): param null");
       return;
@@ -621,7 +621,8 @@ class Level {
               break;
 
             case LevelLoader.PACMAN:
-              _pacman = new Pacman(x, y, false, true, _lives, this, _model, _pacmanPowerTime);
+              _pacman = new Pacman(
+                  x, y, false, true, _lives, this, _model, _pacmanPowerTime);
               _tiles[y][x]._pacman = _pacman;
               _model._registerGameElement(_pacman);
               break;
@@ -631,7 +632,7 @@ class Level {
               List<Directions> noCollision = new List();
               noCollision.add(Directions.UP);
               _tiles[y][x]._environment = new Environment(
-                  x, y, true, true, false, true, noCollision, null);
+                  x, y, true, true, false, true, noCollision, noCollision);
               // set door position
               _doorX = x;
               _doorY = y;
@@ -654,7 +655,7 @@ class Level {
    * DO NOT CALL; PRIVATE
    * initialize the _tiles
    */
-  void initTiles() {
+  void _initTiles() {
     if (_sizeX == null || _sizeY == null) {
       print("Level.initTiles(): size null");
       return;
@@ -672,7 +673,7 @@ class Level {
    * DO NOT CALL; PRIVATE
    * checks if [Pacman] collides with a Item on the given position
    */
-  void collisionDetectionItem(int x, int y) {
+  void _collisionDetectionItem(int x, int y) {
     if (x == null || y == null) {
       print("Level.collisionDetectionItem(): param null");
       return;
@@ -691,7 +692,7 @@ class Level {
    * DO NOT CALL; PRIVATE
    * checks if [Pacman] collides with a ghost on the given position
    */
-  void collisionDetectionGhost(int x, int y) {
+  void _collisionDetectionGhost(int x, int y) {
     if (x == null || y == null) {
       print("Level.collisionDetectionGhost(): param null");
       return;
@@ -717,7 +718,7 @@ class Level {
    * DO NOT CALL; PRIAVTE
    * calculate the direction
    */
-  Directions getDirection(int xOld, int yOld, int xNew, int yNew) {
+  Directions _getDirection(int xOld, int yOld, int xNew, int yNew) {
     if (xOld == null || yOld == null || xNew == null || yNew == null) {
       print("Level.getDirection(): param null");
       return null;

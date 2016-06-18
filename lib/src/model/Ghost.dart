@@ -163,7 +163,7 @@ abstract class Ghost extends GameElement {
       if (timeCounter == _eatTime) {
         _eatable = false;
         timeCounter = 0;
-        _level.endEatableMode();
+        _level._endEatableMode();
       }
     }
 
@@ -213,7 +213,7 @@ abstract class Ghost extends GameElement {
     timeCounter = 0;
     _started = false;
     _startTime = 4; // to to wait after respawn
-    _level.registerElement(_x, _y, _start_x, _start_y, this);
+    _level._registerElement(_x, _y, _start_x, _start_y, this);
     _x = _start_x;
     _y = _start_y;
   }
@@ -251,7 +251,7 @@ abstract class Ghost extends GameElement {
      * Checks if there is an intersection and how many possible
      * Directions are allowes
      */
-    if (!_level.checkCollision(_checkX, --_checkY, this)){
+    if (!_level._checkCollision(_checkX, --_checkY, this)){
       if (previouDirection != Directions.DOWN){
         _possibleDirections++;
         _possibleUp = true;
@@ -260,7 +260,7 @@ abstract class Ghost extends GameElement {
     _checkY = currentY;
 
 
-    if (!_level.checkCollision(_checkX, ++_checkY, this)){
+    if (!_level._checkCollision(_checkX, ++_checkY, this)){
       if (previouDirection != Directions.UP){
         _possibleDirections++;
         _possibleDown = true;
@@ -269,7 +269,7 @@ abstract class Ghost extends GameElement {
     _checkY = currentY;
 
 
-    if (!_level.checkCollision(--_checkX, _checkY, this)){
+    if (!_level._checkCollision(--_checkX, _checkY, this)){
       if (previouDirection != Directions.RIGHT){
         _possibleDirections++;
         _possibleLeft = true;
@@ -278,7 +278,7 @@ abstract class Ghost extends GameElement {
     _checkX = currentX;
 
 
-    if (!_level.checkCollision(++_checkX, _checkY, this)){
+    if (!_level._checkCollision(++_checkX, _checkY, this)){
       if (previouDirection != Directions.LEFT){
         _possibleDirections++;
         _possibleRight = true;
@@ -293,20 +293,20 @@ abstract class Ghost extends GameElement {
      */
     if (_possibleDirections > 1){
       if (previouDirection != Directions.DOWN && _possibleUp){
-        if (!_level.checkCollision(_checkX, --_checkY, this)){
+        if (!_level._checkCollision(_checkX, --_checkY, this)){
           _checkY = currentY;
           if ((targetY - --_checkY).abs() < _currentDistanceY) return Directions.UP;
         }
         _checkY = currentY;
 
-        if (!_level.checkCollision(--_checkX, _checkY, this)){
+        if (!_level._checkCollision(--_checkX, _checkY, this)){
           _checkX = currentX;
           if ((targetX - --_checkX).abs() < _currentDistanceX) return Directions.LEFT;
 
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(++_checkX, _checkY, this)){
+        if (!_level._checkCollision(++_checkX, _checkY, this)){
           _checkX = currentX;
           if ((targetX - ++_checkX).abs() < _currentDistanceX) return Directions.RIGHT;
         }
@@ -314,7 +314,7 @@ abstract class Ghost extends GameElement {
       }
 
       if (previouDirection != Directions.UP && _possibleDown){
-        if (!_level.checkCollision(_checkX, ++_checkY, this)){
+        if (!_level._checkCollision(_checkX, ++_checkY, this)){
           _checkY = currentY;
           if ((targetY - ++_checkY).abs() < _currentDistanceY){
             if (_currentDistanceY > _currentDistanceX) return Directions.DOWN;
@@ -322,19 +322,19 @@ abstract class Ghost extends GameElement {
         }
         _checkY = currentY;
 
-        if (!_level.checkCollision(--_checkX, _checkY, this)){
+        if (!_level._checkCollision(--_checkX, _checkY, this)){
           _checkX = currentX;
           if ((targetX - --_checkX).abs() < _currentDistanceX) return Directions.LEFT;
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(++_checkX, _checkY, this)){
+        if (!_level._checkCollision(++_checkX, _checkY, this)){
           _checkX = currentX;
           if ((targetX - ++_checkX).abs() < _currentDistanceX) return Directions.RIGHT;
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(_checkX, ++_checkY, this)){
+        if (!_level._checkCollision(_checkX, ++_checkY, this)){
           _checkY = currentY;
           if ((targetY - ++_checkY).abs() < _currentDistanceY) return Directions.DOWN;
         }
@@ -343,20 +343,20 @@ abstract class Ghost extends GameElement {
 
       if (previouDirection != Directions.RIGHT && _possibleLeft) {
         if ((targetX - --_checkX).abs() < _currentDistanceX) {
-          if (!_level.checkCollision(--_checkX, _checkY, this)) {
+          if (!_level._checkCollision(--_checkX, _checkY, this)) {
             _checkX = currentX;
             if ((targetX - --_checkX).abs() < _currentDistanceX) return Directions.LEFT;
           }
           _checkX = currentX;
 
-          if (!_level.checkCollision(_checkX, ++_checkY, this)) {
+          if (!_level._checkCollision(_checkX, ++_checkY, this)) {
             _checkY = currentY;
             if (previouDirection != Directions.UP && (targetY - ++_checkY).abs() < _currentDistanceY)
               return Directions.DOWN;
           }
           _checkY = currentY;
 
-          if (!_level.checkCollision(_checkX, --_checkY, this)) {
+          if (!_level._checkCollision(_checkX, --_checkY, this)) {
             _checkY = currentY;
             if ((targetY - --_checkY).abs() < _currentDistanceY) return Directions.UP;
 
@@ -365,21 +365,21 @@ abstract class Ghost extends GameElement {
         }
       }
         if (previouDirection != Directions.LEFT && _possibleRight){
-          if (!_level.checkCollision(++_checkX, _checkY, this)){
+          if (!_level._checkCollision(++_checkX, _checkY, this)){
             _checkX = currentX;
             if ((targetX - ++_checkX) < _currentDistanceX) return Directions.RIGHT;
 
           }
           _checkX = currentX;
 
-          if (!_level.checkCollision(_checkX, --_checkY, this)){
+          if (!_level._checkCollision(_checkX, --_checkY, this)){
             _checkY = currentY;
             if ((targetY - --_checkY).abs() < _currentDistanceY) return Directions.UP;
 
           }
           _checkY = currentY;
 
-          if (!_level.checkCollision(_checkX, ++_checkY, this)){
+          if (!_level._checkCollision(_checkX, ++_checkY, this)){
             _checkY = currentY;
             if ((targetY - ++_checkY).abs() < _currentDistanceY) return Directions.DOWN;
           }
@@ -392,76 +392,76 @@ abstract class Ghost extends GameElement {
      */
     if (_isVerticalMoreImportant) {
       if (previouDirection == Directions.UP) {
-        if (!_level.checkCollision(--_checkX, _checkY, this)) {
+        if (!_level._checkCollision(--_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.LEFT;
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(_checkX, --_checkY, this)) {
+        if (!_level._checkCollision(_checkX, --_checkY, this)) {
           _checkY = currentY;
           return Directions.UP;
         }
         _checkY = currentY;
 
-        if (!_level.checkCollision(++_checkX, _checkY, this))  return Directions.RIGHT;
+        if (!_level._checkCollision(++_checkX, _checkY, this))  return Directions.RIGHT;
         _checkX = currentX;
 
         return Directions.NOTHING;
       }
 
       if (previouDirection == Directions.DOWN) {
-        if (!_level.checkCollision(_checkX, ++_checkY, this)) {
+        if (!_level._checkCollision(_checkX, ++_checkY, this)) {
           _checkY = currentY;
           return Directions.DOWN;
         }
         _checkY = currentY;
 
-        if (!_level.checkCollision(--_checkX, _checkY, this)) {
+        if (!_level._checkCollision(--_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.LEFT;
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(++_checkX, _checkY, this)) return Directions.RIGHT;
+        if (!_level._checkCollision(++_checkX, _checkY, this)) return Directions.RIGHT;
 
         _checkX = currentX;
         return Directions.NOTHING;
       }
 
       if (previouDirection == Directions.LEFT) {
-        if (!_level.checkCollision(_checkX, --_checkY, this)) {
+        if (!_level._checkCollision(_checkX, --_checkY, this)) {
           _checkY = currentY;
           return Directions.UP;
         }
         _checkY = currentY;
 
-        if (!_level.checkCollision(_checkX, ++_checkY, this)) {
+        if (!_level._checkCollision(_checkX, ++_checkY, this)) {
           _checkY = currentY;
           return Directions.DOWN;
         }
         _checkY = currentY;
 
-        if (!_level.checkCollision(--_checkX, _checkY, this)) return Directions.LEFT;
+        if (!_level._checkCollision(--_checkX, _checkY, this)) return Directions.LEFT;
 
         _checkX = currentX;
         return Directions.NOTHING;
       }
 
       if (previouDirection == Directions.RIGHT) {
-        if (!_level.checkCollision(_checkX, --_checkY, this)) {
+        if (!_level._checkCollision(_checkX, --_checkY, this)) {
           _checkY = currentY;
           return Directions.UP;
         }
         _checkY = currentY;
 
-        if (!_level.checkCollision(_checkX, ++_checkY, this)) {
+        if (!_level._checkCollision(_checkX, ++_checkY, this)) {
           _checkY = currentY;
           return Directions.DOWN;
         }
         _checkY = currentY;
 
-        if (!_level.checkCollision(++_checkX, _checkY, this)) return Directions.RIGHT;
+        if (!_level._checkCollision(++_checkX, _checkY, this)) return Directions.RIGHT;
         _checkX = currentX;
 
         return Directions.NOTHING;
@@ -472,76 +472,76 @@ abstract class Ghost extends GameElement {
      */
     else {
       if (previouDirection == Directions.LEFT) {
-        if (!_level.checkCollision(--_checkX, _checkY, this)) {
+        if (!_level._checkCollision(--_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.LEFT;
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(_checkX, --_checkY, this)) {
+        if (!_level._checkCollision(_checkX, --_checkY, this)) {
           _checkY = currentY;
           return Directions.UP;
         }
         _checkY = currentY;
 
-        if (!_level.checkCollision(_checkX, ++_checkY, this)) return Directions.DOWN;
+        if (!_level._checkCollision(_checkX, ++_checkY, this)) return Directions.DOWN;
         _checkY = currentY;
 
         return Directions.NOTHING;
       }
 
       if (previouDirection == Directions.RIGHT) {
-        if (!_level.checkCollision(++_checkX, _checkY, this)) {
+        if (!_level._checkCollision(++_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.RIGHT;
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(_checkX, --_checkY, this)) {
+        if (!_level._checkCollision(_checkX, --_checkY, this)) {
           _checkY = currentY;
           return Directions.UP;
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(_checkX, ++_checkY, this)) return Directions.DOWN;
+        if (!_level._checkCollision(_checkX, ++_checkY, this)) return Directions.DOWN;
         _checkY = currentY;
 
         return Directions.NOTHING;
       }
 
       if (previouDirection == Directions.UP) {
-        if (!_level.checkCollision(--_checkX, _checkY, this)) {
+        if (!_level._checkCollision(--_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.LEFT;
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(++_checkX, _checkY, this)) {
+        if (!_level._checkCollision(++_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.RIGHT;
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(_checkX, --_checkY, this)) return Directions.UP;
+        if (!_level._checkCollision(_checkX, --_checkY, this)) return Directions.UP;
         _checkY = currentY;
 
         return Directions.NOTHING;
       }
 
       if (previouDirection == Directions.DOWN) {
-        if (!_level.checkCollision(--_checkX, _checkY, this)) {
+        if (!_level._checkCollision(--_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.LEFT;
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(++_checkX, _checkY, this)) {
+        if (!_level._checkCollision(++_checkX, _checkY, this)) {
           _checkX = currentX;
           return Directions.RIGHT;
         }
         _checkX = currentX;
 
-        if (!_level.checkCollision(_checkX, ++_checkY, this)) return Directions.DOWN;
+        if (!_level._checkCollision(_checkX, ++_checkY, this)) return Directions.DOWN;
         _checkY = currentY;
 
         return Directions.NOTHING;

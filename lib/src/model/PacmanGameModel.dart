@@ -99,7 +99,7 @@ class PacmanGameModel {
   /**
    * return the full gameField as list over list with enum [Type]
    */
-  List<List<Types>> getMap() => _level.getMap();
+  List<List<Types>> getMap() => _level._getMap();
 
   /**
    * load a level by given level number
