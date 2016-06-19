@@ -97,27 +97,27 @@ class Blinky extends Ghost {
       //and updates his previous direction
       switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirections, this)) {
         case Directions.UP:
-          _level.registerElement(_x, _y, _x, --_y, this);
+          _level._registerElement(_x, _y, _x, --_y, this);
           _previousDirections = Directions.UP;
           break;
 
         case Directions.DOWN:
-          _level.registerElement(_x, _y, _x, ++_y, this);
+          _level._registerElement(_x, _y, _x, ++_y, this);
           _previousDirections = Directions.DOWN;
           break;
 
         case Directions.LEFT:
-          _level.registerElement(_x, _y, --_x, _y, this);
+          _level._registerElement(_x, _y, --_x, _y, this);
           _previousDirections = Directions.LEFT;
           break;
 
         case Directions.RIGHT:
-          _level.registerElement(_x, _y, ++_x, _y, this);
+          _level._registerElement(_x, _y, ++_x, _y, this);
           _previousDirections = Directions.RIGHT;
           break;
 
         case Directions.NOTHING:
-          _level.registerElement(_x, _y, _x, _y, this);
+          _level._registerElement(_x, _y, _x, _y, this);
           _previousDirections = Directions.NOTHING;
           break;
       }

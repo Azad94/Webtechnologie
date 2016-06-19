@@ -25,6 +25,16 @@ class PacmanGameModel {
   int _currentLevel = -1;
 
   /**
+   * counter for view with rest time of bouns level time or apple time
+   */
+  int _counter = -1;
+
+  /**
+   * time how long apple item is active
+   */
+  int _appleTime;
+
+  /**
    * Direction of [Pacman]s next step
    */
   Directions _pacmanDir = Directions.NOTHING;
@@ -85,6 +95,16 @@ class PacmanGameModel {
   int get score => _level.score;
 
   /**
+   * return counter
+   */
+  int get counter {
+    if (_counter != -1)
+      return _appleTime - _counter;
+    else
+      return -1;
+  }
+
+  /**
    * set game won
    */
   void gameWon() {
@@ -99,7 +119,7 @@ class PacmanGameModel {
   /**
    * return the full gameField as list over list with enum [Type]
    */
-  List<List<Types>> getMap() => _level.getMap();
+  List<List<Types>> getMap() => _level._getMap();
 
   /**
    * load a level by given level number
@@ -112,6 +132,7 @@ class PacmanGameModel {
 
     if (!await LevelLoader.loadLevel(level)) return false;
     _currentLevel = LevelLoader._levelNumber;
+    _appleTime = LevelLoader._pacmanPowerTime;
     if (LevelLoader._bonus) {
       _level = new Level(
           LevelLoader._map,
@@ -198,6 +219,7 @@ class PacmanGameModel {
    * move [Pacman] and [Ghost] to the next position. Call this method each frame.
    */
   void triggerFrame() {
+    if (_counter > -1) _counter++;
     _level.pacmanDir = _pacmanDir;
     if (_pacman != null) _pacman._move(_pacmanDir);
     _pacmanDir = Directions.NOTHING;
@@ -211,6 +233,7 @@ class PacmanGameModel {
    * Removes a Wall for entering into bonus level
    */
   void _openWall() {
+    _counter++;
     _level._openWall();
   }
 
@@ -218,6 +241,7 @@ class PacmanGameModel {
    * add the Wall, where wall for bonus level was removed
    */
   void _closeWall() {
+    _counter = -1;
     _level._closeWall();
   }
 
