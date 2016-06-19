@@ -26,7 +26,6 @@ class PacmanGameController {
   var _left;
   var _right;
   var _pause;
-  var _submit;
 
   //constructor
   PacmanGameController() {
@@ -148,7 +147,7 @@ class PacmanGameController {
       });
     }
   }
-  _continueGame(){
+  void _continueGame(){
     _paused=false;
     if (_timer != null) _timer.cancel();
     _timer = new Timer.periodic(speed, (_) => _pacmanModel.triggerFrame());
