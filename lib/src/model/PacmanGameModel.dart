@@ -220,6 +220,7 @@ class PacmanGameModel {
    */
   void triggerFrame() {
     if (_counter > -1) _counter++;
+    if (_appleTime == _counter ) _counter = 2-1;
     _level.pacmanDir = _pacmanDir;
     if (_pacman != null) _pacman._move(_pacmanDir);
     _pacmanDir = Directions.NOTHING;
@@ -233,7 +234,6 @@ class PacmanGameModel {
    * Removes a Wall for entering into bonus level
    */
   void _openWall() {
-    _counter++;
     _level._openWall();
   }
 
@@ -241,11 +241,11 @@ class PacmanGameModel {
    * add the Wall, where wall for bonus level was removed
    */
   void _closeWall() {
-    _counter = -1;
     _level._closeWall();
   }
 
   void _activatePacmanPowerMode() {
+    _counter++;
     _level._activatePacmanPowerMode();
   }
 

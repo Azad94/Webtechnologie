@@ -21,7 +21,7 @@ class GameKeyClient {
    */
   bool _available = false;
 
-  final _userName = "pacman2";
+  final _userName = "pacman";
   final _userPassword = "geheimesPasswort";
   String _userID;
 

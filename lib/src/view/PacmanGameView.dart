@@ -174,6 +174,7 @@ class PacmanGameView {
   final _level = querySelector("#value1");
   final _score = querySelector("#value2");
   final _lives = querySelector("#value3");
+  final _time = querySelector("#value4");
   final _mobile = querySelector(".mobile");
   final mobileUp = querySelector("#mobileUp");
   final mobileDown = querySelector("#mobileDown");
@@ -596,6 +597,14 @@ class PacmanGameView {
   //displays the current number of lives
   void updateLives(int lives) {
     _lives.innerHtml = " $lives";
+  }
+  void updatePowerUpTime(int time) {
+    if(time == -1){
+      _time.innerHtml = "";
+    }
+    else {
+      _time.innerHtml = " $time";
+    }
   }
 
   void showMobile() {

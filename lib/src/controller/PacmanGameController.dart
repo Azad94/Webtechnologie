@@ -1,33 +1,51 @@
 part of pacmanControllerLib;
 
-//the refreshrate of the view
+/**
+ * the refreshrate of the view
+ */
 const speed = const Duration(milliseconds: 400);
 
 class PacmanGameController {
-  //instances of PacmanGameModel and PacmanGameView
+  /**
+   * instances of PacmanGameModel, PacmanGameView & GameKeyClient
+   */
   PacmanGameModel _pacmanModel;
   PacmanGameView _pacmanView;
   GameKeyClient _gamekey;
-  //the current Direction of Pacman
+
+  /**
+   * the current Direction of Pacman
+   */
   Directions _pacmanDir = Directions.RIGHT;
 
-  //keyListener for User interaction and timer for the refreshrate
+  /**
+   * keyListener for User interaction
+   * timer for the refreshrate
+   */
   var _keyListener;
   Timer _timer;
   int _currentLevel = 1;
   int _maxLevel = 3;
 
+  /**
+   * a few different values, if the game is paused, an error occured an the achievedScore during a session
+   */
   bool _paused = false;
   bool _err = false;
   int _achievedScore = 0;
-  //mobile Keys
+
+  /**
+   * the differen mobile keys,
+   */
   var _up;
   var _down;
   var _left;
   var _right;
   var _pause;
 
-  //constructor
+  /**
+   * creates a Controller
+   */
   PacmanGameController() {
     _pacmanModel = new PacmanGameModel(this);
     _pacmanView = new PacmanGameView(this);
@@ -167,6 +185,7 @@ class PacmanGameController {
     _updateScore();
     _updateLevel();
     _updateLives();
+    _updatePowerUpTime();
     var _labyrinth = _pacmanModel.getMap();
     _refreshLabyrinth(_labyrinth);
     _gameOver(_pacmanModel.gameEnd);
@@ -192,7 +211,6 @@ class PacmanGameController {
         _pacmanView.showHighscore();
         _pacmanView.savename.onClick.listen((_) {
           _saveScore();
-          /*_gamekey.authenticate();*/
         });
       }
     }
@@ -223,7 +241,6 @@ class PacmanGameController {
           _pacmanView.showHighscore();
           _pacmanView.savename.onClick.listen((_) {
             _saveScore();
-            /*_gamekey.authenticate();*/
           });}
       }
     }
@@ -261,4 +278,7 @@ class PacmanGameController {
   void _updateLives() {
     _pacmanView.updateLives(_pacmanModel.lives);
   }
+
+  void _updatePowerUpTime() {
+    _pacmanView.updatePowerUpTime(_pacmanModel.counter);}
 }
