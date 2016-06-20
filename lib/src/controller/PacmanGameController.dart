@@ -14,11 +14,6 @@ class PacmanGameController {
   GameKeyClient _gamekey;
 
   /**
-   * the current Direction of Pacman
-   */
- // Directions _pacmanDir = Directions.RIGHT;
-
-  /**
    * keyListener for User interaction
    * timer for the refreshrate
    */
