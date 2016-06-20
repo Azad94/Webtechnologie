@@ -17,9 +17,11 @@ String gamekeySecret;
  * when the button Highscore is clicked in the Main Menu
  */
 void main() {
-  loadConfig().then((b) {GameKeyClient gamekey =
-  new GameKeyClient(gamekeyHost, gamekeyPort, gamekeyID, gamekeySecret);
-  authenticateGamekey(gamekey);});
+  loadConfig().then((b) {
+    GameKeyClient gamekey =
+        new GameKeyClient(gamekeyHost, gamekeyPort, gamekeyID, gamekeySecret);
+    authenticateGamekey(gamekey);
+  });
 }
 
 Future authenticateGamekey(GameKeyClient gamekey) async {
