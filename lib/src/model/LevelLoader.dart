@@ -19,6 +19,9 @@ class LevelLoader {
    */
   static num _eatTime = 0;
 
+  /**
+   * time(frames) how long pacman is in PowerMode
+   */
   static num _pacmanPowerTime;
 
   /**

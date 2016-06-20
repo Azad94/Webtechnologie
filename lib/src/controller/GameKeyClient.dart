@@ -21,8 +21,19 @@ class GameKeyClient {
    */
   bool _available = false;
 
+  /**
+   * username
+   */
   final _userName = "pacman";
+
+  /**
+   * user password
+   */
   final _userPassword = "geheimesPasswort";
+
+  /**
+   * user ID
+   */
   String _userID;
 
   /**
@@ -36,7 +47,7 @@ class GameKeyClient {
     if (host == null || port == null || _gid == null || _secret == null)
       print("GameKeyClient(): param null");
     else
-    this._uri = new Uri.http("$host:$port", "/");
+      this._uri = new Uri.http("$host:$port", "/");
   }
 
   /**
