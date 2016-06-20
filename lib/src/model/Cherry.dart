@@ -8,7 +8,7 @@ class Cherry extends Item {
       [this._openTime])
       : super(x, y, collPlayer, collGhost, visible, score, model);
 
-  void triggerFrame() {
+  void _triggerFrame() {
     // bonus level is active and cherry is picked up
     if (_openTime != null && !_visible) {
       if (++_counter == _openTime) {

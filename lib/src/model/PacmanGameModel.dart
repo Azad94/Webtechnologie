@@ -224,7 +224,7 @@ class PacmanGameModel {
     if (_pacman != null) _pacman._move(_pacmanDir);
     _pacmanDir = Directions.NOTHING;
     this._moveGhost();
-    _cherrys.forEach((c) => c.triggerFrame());
+    _cherrys.forEach((c) => c._triggerFrame());
     _pacman._triggerFrame();
     _con.updateGameStatus();
   }
