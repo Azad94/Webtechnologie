@@ -139,14 +139,16 @@ class PacmanGameView {
    */
   String _createLabyrinth(List<List<Types>> l) {
     String labyrinthTable = "<table id=\"labyrinth\">";
-    for (List<Types> row in l) {
+    final field = l;
+    for (int row = 0; row < l.length; row++) {
       labyrinthTable += "<tr>";
 
-      for (Types s in row) {
+      for (int col = 0; col < field[row].length; col++) {
         labyrinthTable += "<td>" "</td>";
       }
 
       labyrinthTable += "</tr>";
+
     }
     return labyrinthTable += "</table>";
   }
