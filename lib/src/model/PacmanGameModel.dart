@@ -82,7 +82,7 @@ class PacmanGameModel {
   /**
    * return the current level number
    */
-  int get level => _level._levelNumber;
+  int get level => _currentLevel;
 
   /**
    * return the lives of [Pacman]
