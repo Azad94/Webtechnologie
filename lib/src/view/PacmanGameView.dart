@@ -5,7 +5,6 @@ part of pacmanViewLib;
  * to reflect actual [PacmanGame] state to the user
  */
 class PacmanGameView {
-  PacmanGameController _con;
 
   //the different div-classes from the html-document
   final _error = querySelector("#error");
@@ -34,11 +33,6 @@ class PacmanGameView {
   //mql and mqlLandscape is used to determine if a mobile device is used and the orientation of the device
   var _mql = window.matchMedia("screen and (max-device-width : 800px)");
   var _mqlLandscape = window.matchMedia("screen and (orientation: landscape)");
-
-  /**
-   * creates a PacmanGameView
-   */
-  PacmanGameView(_con);
 
   MediaQueryList get mql => _mql;
 

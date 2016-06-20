@@ -16,7 +16,7 @@ class PacmanGameController {
   /**
    * the current Direction of Pacman
    */
-  Directions _pacmanDir = Directions.RIGHT;
+ // Directions _pacmanDir = Directions.RIGHT;
 
   /**
    * keyListener for User interaction
@@ -53,7 +53,7 @@ class PacmanGameController {
    */
   PacmanGameController() {
     _pacmanModel = new PacmanGameModel(this);
-    _pacmanView = new PacmanGameView(this);
+    _pacmanView = new PacmanGameView();
     _pacmanModel.loadConfig().then((b) {
       if (b) {
         _pacmanModel.loadLevel(_currentLevel).then((b) {
@@ -308,13 +308,6 @@ class PacmanGameController {
       }
     }
     _timer.cancel();
-  }
-
-  /**
-   * set the direction for pacman to choose the right graphic
-   */
-  void setPacmanDir(Directions p) {
-    this._pacmanDir = p;
   }
 
   /**

@@ -718,6 +718,7 @@
         font-family: Retro, serif;
     }
     #backbutton{
+        display: none;
         position: absolute;
         bottom:20%;
         right:5%;
