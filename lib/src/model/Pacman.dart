@@ -102,7 +102,7 @@ class Pacman extends GameElement {
    * DO NOT CALL; PRIAVTE
    * checks if [Pacman] has got a way
    */
-  void _possiblePacmanWay(int x, int y, Pacman p) {
+    void _possiblePacmanWay(int x, int y, Pacman p) {
     if (_level._checkCollision(x - 1, y, p) &&
         _level._checkCollision(x + 1, y, p) &&
         _level._checkCollision(x, y - 1, p) &&

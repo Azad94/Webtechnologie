@@ -3,7 +3,7 @@ part of pacmanModelLib;
 /**
  * Represents a item which the player can pick up. Some items have an effect on gameplay
  */
-class Item extends GameElement {
+abstract class Item extends GameElement {
   /**
    * is item visible?
    */
