@@ -5,7 +5,7 @@ part of pacmanModelLib;
  */
 class Pill extends Item {
   /**
-   * creates a new pill
+   * create a new pill
    */
   Pill(int x, int y, bool collPlayer, bool collGhost, bool visible, int score,
       PacmanGameModel model)

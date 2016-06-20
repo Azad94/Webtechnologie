@@ -40,6 +40,9 @@ class Level {
    */
   num _eatTime;
 
+  /**
+   * time(frames) how long Pacman is in PowerMode
+   */
   num _pacmanPowerTime;
 
   /**
@@ -102,6 +105,9 @@ class Level {
    */
   bool _hasBonus = false;
 
+  /**
+   * Pacman PowerMode on?
+   */
   bool _pacmanPowerMode = false;
 
   /**
@@ -528,11 +534,17 @@ class Level {
         new Environment(_portX, _portY, true, true, false, false, null, null);
   }
 
+  /**
+   * activate Pacman PowerMode
+   */
   void _activatePacmanPowerMode() {
     _pacmanPowerMode = true;
     _pacman._activatePowerMode();
   }
 
+  /**
+   * disable Pacman PowerMode
+   */
   void _disablePacmanPowerMode() {
     _pacmanPowerMode = false;
   }

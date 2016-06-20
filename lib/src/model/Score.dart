@@ -42,12 +42,4 @@ class Score {
   void _resetGhostMultiplier() {
     _multiplier = 1;
   }
-
-  /**
-   * reset the whole score
-   */
-  void _reset() {
-    _scoreSum = 0;
-    _multiplier = 1;
-  }
 }

@@ -14,10 +14,19 @@ class Pacman extends GameElement {
    */
   int _lives;
 
+  /**
+   * time(frames) who long pacman is in PowerMode
+   */
   int _powerTime;
 
+  /**
+   * counter for counting frames
+   */
   int _frameCounter = 0;
 
+  /**
+   * is Pacman in PowerMode?
+   */
   bool _powerMode = false;
 
   /**
@@ -84,6 +93,9 @@ class Pacman extends GameElement {
     _y = _start_y;
   }
 
+  /**
+   * called every frame. Count frames an disable Powermode after _powerTime.
+   */
   void _triggerFrame() {
     if (_powerMode) {
       if (++_frameCounter == _powerTime) {
@@ -93,6 +105,9 @@ class Pacman extends GameElement {
     }
   }
 
+  /**
+   * starts pacman PowerMode
+   */
   void _activatePowerMode() {
     print("pacman active");
     _powerMode = true;

@@ -82,7 +82,7 @@ class PacmanGameModel {
   /**
    * return the current level number
    */
-  int get level => _level._levelNumber;
+  int get level => _currentLevel;
 
   /**
    * return the lives of [Pacman]
@@ -220,12 +220,12 @@ class PacmanGameModel {
    */
   void triggerFrame() {
     if (_counter > -1) _counter++;
-    if (_appleTime == _counter ) _counter = -1;
+    if (_appleTime == _counter) _counter = -1;
     _level.pacmanDir = _pacmanDir;
     if (_pacman != null) _pacman._move(_pacmanDir);
     _pacmanDir = Directions.NOTHING;
     this._moveGhost();
-    _cherrys.forEach((c) => c.triggerFrame());
+    _cherrys.forEach((c) => c._triggerFrame());
     _pacman._triggerFrame();
     _con.updateGameStatus();
   }
@@ -244,6 +244,9 @@ class PacmanGameModel {
     _level._closeWall();
   }
 
+  /**
+   * starts pacman PowerMode
+   */
   void _activatePacmanPowerMode() {
     _counter++;
     _level._activatePacmanPowerMode();
