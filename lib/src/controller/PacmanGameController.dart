@@ -5,6 +5,9 @@ part of pacmanControllerLib;
  */
 const speed = const Duration(milliseconds: 400);
 
+/**
+ * Controller of Pacman game
+ */
 class PacmanGameController {
   /**
    * instances of PacmanGameModel, PacmanGameView & GameKeyClient
