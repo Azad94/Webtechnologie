@@ -327,11 +327,11 @@
 
     #information td {
         background-color: black;
-        width: 15%;
+        width: 10%;
     }
 
 
-    #value1, #value2, #value3 {
+    #value1, #value2, #value3, #value4 {
         font-family: Retro,serif;
     }
 
@@ -712,12 +712,13 @@
     }
     #information td {
         background-color: black;
-        width: 15%;
+        width: 10%;
     }
-    #value1, #value2, #value3 {
+    #value1, #value2, #value3, #value4 {
         font-family: Retro, serif;
     }
     #backbutton{
+        display: none;
         position: absolute;
         bottom:20%;
         right:5%;

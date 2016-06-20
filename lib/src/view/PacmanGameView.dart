@@ -1,162 +1,10 @@
 part of pacmanViewLib;
 
 /**
- * the paths as const for the different graphics
- */
-/**
- * enviornment resources
- */
-const String _wall =
-    "background-image:url(../web/resc/enviornment/wall32.png);";
-const String _door =
-    "background-image:url(../web/resc/enviornment/door32.png);";
-const String _wall16 =
-    "background-image:url(../web/resc/16px/enviornment/wall16.png);";
-const String _door16 =
-    "background-image:url(../web/resc/16px/enviornment/door16.png);";
-/**
- * ghost normal state resources
- */
-/**
- * Blinky
- */
-const String _blinky_r =
-    "background-image:url(../web/resc/ghosts/blinky/blinky_r32.png);";
-const String _blinky_l =
-    "background-image:url(../web/resc/ghosts/blinky/blinky_l32.png);";
-const String _blinky_u =
-    "background-image:url(../web/resc/ghosts/blinky/blinky_t32.png);";
-const String _blinky_d =
-    "background-image:url(../web/resc/ghosts/blinky/blinky_d32.png);";
-const String _blinky_r16 =
-    "background-image:url(../web/resc/16px/ghosts/blinky/blinky_r16.png);";
-const String _blinky_l16 =
-    "background-image:url(../web/resc/16px/ghosts/blinky/blinky_l16.png);";
-const String _blinky_u16 =
-    "background-image:url(../web/resc/16px/ghosts/blinky/blinky_t16.png);";
-const String _blinky_d16 =
-    "background-image:url(../web/resc/16px/ghosts/blinky/blinky_d16.png);";
-/**
- * Pinky
- */
-const String _pinky_r =
-    "background-image:url(../web/resc/ghosts/pinky/pinky_r32.png);";
-const String _pinky_l =
-    "background-image:url(../web/resc/ghosts/pinky/pinky_l32.png);";
-const String _pinky_u =
-    "background-image:url(../web/resc/ghosts/pinky/pinky_t32.png);";
-const String _pinky_d =
-    "background-image:url(../web/resc/ghosts/pinky/pinky_d32.png);";
-const String _pinky_r16 =
-    "background-image:url(../web/resc/16px/ghosts/pinky/pinky_r16.png);";
-const String _pinky_l16 =
-    "background-image:url(../web/resc/16px/ghosts/pinky/pinky_l16.png);";
-const String _pinky_u16 =
-    "background-image:url(../web/resc/16px/ghosts/pinky/pinky_t16.png);";
-const String _pinky_d16 =
-    "background-image:url(../web/resc/16px/ghosts/pinky/pinky_d16.png);";
-/**
- * Inky
- */
-const String _inky_r =
-    "background-image:url(../web/resc/ghosts/inky/inky_r32.png);";
-const String _inky_l =
-    "background-image:url(../web/resc/ghosts/inky/inky_l32.png);";
-const String _inky_u =
-    "background-image:url(../web/resc/ghosts/inky/inky_t32.png);";
-const String _inky_d =
-    "background-image:url(../web/resc/ghosts/inky/inky_d32.png);";
-const String _inky_r16 =
-    "background-image:url(../web/resc/16px/ghosts/inky/inky_r16.png);";
-const String _inky_l16 =
-    "background-image:url(../web/resc/16px/ghosts/inky/inky_l16.png);";
-const String _inky_u16 =
-    "background-image:url(../web/resc/16px/ghosts/inky/inky_t16.png);";
-const String _inky_d16 =
-    "background-image:url(../web/resc/16px/ghosts/inky/inky_d16.png);";
-/**
- * Clyde
- */
-const String _clyde_r =
-    "background-image:url(../web/resc/ghosts/clyde/clyde_r32.png);";
-const String _clyde_l =
-    "background-image:url(../web/resc/ghosts/clyde/clyde_l32.png);";
-const String _clyde_u =
-    "background-image:url(../web/resc/ghosts/clyde/clyde_t32.png);";
-const String _clyde_d =
-    "background-image:url(../web/resc/ghosts/clyde/clyde_d32.png);";
-const String _clyde_r16 =
-    "background-image:url(../web/resc/16px/ghosts/clyde/clyde_r16.png);";
-const String _clyde_l16 =
-    "background-image:url(../web/resc/16px/ghosts/clyde/clyde_l16.png);";
-const String _clyde_u16 =
-    "background-image:url(../web/resc/16px/ghosts/clyde/clyde_t16.png);";
-const String _clyde_d16 =
-    "background-image:url(../web/resc/16px/ghosts/clyde/clyde_d16.png);";
-/**
- * ghost scared state resources
- */
-const String _scared_r =
-    "background-image:url(../web/resc/ghosts/scared/a_scaredghost_r.gif);";
-const String _scared_l =
-    "background-image:url(../web/resc/ghosts/scared/a_scaredghost_l.gif);";
-const String _scared_u =
-    "background-image:url(../web/resc/ghosts/scared/a_scaredghost_t.gif);";
-const String _scared_d =
-    "background-image:url(../web/resc/ghosts/scared/a_scaredghost_d.gif);";
-const String _scared_r16 =
-    "background-image:url(../web/resc/16px/ghosts/scared/a_scaredghost_r16.gif);";
-const String _scared_l16 =
-    "background-image:url(../web/resc/16px/ghosts/scared/a_scaredghost_l16.gif);";
-const String _scared_u16 =
-    "background-image:url(../web/resc/16px/ghosts/scared/a_scaredghost_t16.gif);";
-const String _scared_d16 =
-    "background-image:url(../web/resc/16px/ghosts/scared/a_scaredghost_d16.gif);";
-/**
- * Pacman normal state resources
- */
-const String _pacman_r =
-    "background-image:url(../web/resc/pacman/pacman_r32.gif);";
-const String _pacman_l =
-    "background-image:url(../web/resc/pacman/pacman_l32.gif);";
-const String _pacman_u =
-    "background-image:url(../web/resc/pacman/pacman_u32.gif);";
-const String _pacman_d =
-    "background-image:url(../web/resc/pacman/pacman_d32.gif);";
-const String _pacman_r16 =
-    "background-image:url(../web/resc/16px/pacman/pacman_r16.gif);";
-const String _pacman_l16 =
-    "background-image:url(../web/resc/16px/pacman/pacman_l16.gif);";
-const String _pacman_u16 =
-    "background-image:url(../web/resc/16px/pacman/pacman_u16.gif);";
-const String _pacman_d16 =
-    "background-image:url(../web/resc/16px/pacman/pacman_d16.gif);";
-
-/**
- * items resources
- */
-const String _pill = "background-image:url(../web/resc/items/pill32.png);";
-const String _powerpill =
-    "background-image:url(../web/resc/items/a_powerpill32.gif);";
-const String _cherry =
-    "background-image:url(../web/resc/items/a_cherry32.gif);";
-const String _apple =
-    "background-image:url(../web/resc/items/a_apple32.gif);";
-const String _pill16 =
-    "background-image:url(../web/resc/16px/items/pill16.png);";
-const String _powerpill16 =
-    "background-image:url(../web/resc/16px/items/a_powerpill16.gif);";
-const String _cherry16 =
-    "background-image:url(../web/resc/16px/items/a_cherry16.gif);";
-const String _apple16 =
-    "background-image:url(../web/resc/items/a_apple16.gif);";
-
-/**
  * A [PacmanGameView] object interacts with the DOM tree
  * to reflect actual [PacmanGame] state to the user
  */
 class PacmanGameView {
-  PacmanGameController _con;
 
   //the different div-classes from the html-document
   final _error = querySelector("#error");
@@ -167,7 +15,6 @@ class PacmanGameView {
   final _gameend = querySelector("#gameend");
   final startNext = querySelector("#startNext");
   final _highscore = querySelector("#userinput");
-  //final _name = querySelector("#namescore");
   final username = querySelector("#username");
   final savename = querySelector("#save");
   final _labyrinth = querySelector("#gamefield");
@@ -183,56 +30,90 @@ class PacmanGameView {
   final mobilePause = querySelector("#mobilePause");
   final _message = querySelector(".messages");
 
+  //mql and mqlLandscape is used to determine if a mobile device is used and the orientation of the device
   var _mql = window.matchMedia("screen and (max-device-width : 800px)");
   var _mqlLandscape = window.matchMedia("screen and (orientation: landscape)");
 
-  //constructor
-  PacmanGameView(_con);
-
   MediaQueryList get mql => _mql;
 
-
+  /**
+   * This method is used to
+   * hide the game and the loadingscreen Elements
+   * and display the error Screen
+   */
   void showErrorScreen() {
     _error.style.display = "block";
     _game.style.display = "none";
     _loadingscreen.style.display = "none";
   }
+
+  /**
+   * display the pause graphic
+   */
   void showPause(){
     _pause.style.display = "block";
   }
+
+  /**
+   * hide the pause graphic
+   */
   void hidePause() {
     _pause.style.display = "none";
   }
+
+  /**
+   * hide the laoding screen
+   */
   void hideLoading() {
     _loadingscreen.style.display = "none";
   }
 
+  /**
+   * display the laoding screen
+   */
   void showLoading() {
     _loadingscreen.style.display = "block";
   }
 
+  /**
+   * display the game container
+   */
   void showGame() {
     _game.style.display = "block";
   }
 
-  //updates the gameoverlay according to the gameend condition
+  /**
+   * updates the gameoverlay according to the gameend condition
+   */
   void updateOverlay(String s) {
     _gameend.innerHtml = s;
     _overlay.style.display = "block";
   }
 
+  /**
+   * hides the overlay
+   */
   void hideOverlay() {
     _overlay.style.display = "none";
   }
 
+  /**
+   * hides the nextlevel button
+   */
   void hideNextLevel() {
     startNext.style.display = "none";
   }
 
+  /**
+   * display the userinput to enter the name for the highscore
+   */
   void showHighscore() {
     _highscore.style.visibility = "visible";
   }
 
+  /**
+   * creates a list, to display the best 10 players
+   */
   void showTop10(List<Map> scores, int score) {
     final list = scores
         .map((entry) => "<li>${entry['name']}: ${entry['score']}</li>")
@@ -245,13 +126,17 @@ class PacmanGameView {
   String get user =>
       (document.querySelector('#username') as InputElement).value;
 
-  //see _labyrinthToHTMLTable
+  /**
+   * see _labyrinthToHTMLTable
+   */
   void initTable(List<List<Types>> l) {
     String k = _createLabyrinth(l);
     _labyrinth.innerHtml = k;
   }
 
-  //creates the table in the html-document
+  /**
+   * creates the table in the html-document
+   */
   String _createLabyrinth(List<List<Types>> l) {
     String labyrinthTable = "<table id=\"labyrinth\">";
     for (List<Types> row in l) {
@@ -266,8 +151,10 @@ class PacmanGameView {
     return labyrinthTable += "</table>";
   }
 
-  //loads the different game elements and their graphical representation into the table
-  //distingush between screen/mobile(portrait) and mobile(landscape)
+  /**
+   * loads the different game elements and their graphical representation into the table
+   * distingush between screen/mobile(portrait) and mobile(landscape)
+   */
   void labyrinthFill(List<List<Types>> l) {
     var kl = _labyrinth.children[0].children[0];
 
@@ -585,19 +472,30 @@ class PacmanGameView {
     }
   }
 
-  //displays the current level
+  /**
+   * display the current level
+   */
   void updateLevel(int level) {
     _level.innerHtml = " $level";
   }
 
+  /**
+   * display the current score
+   */
   void updateScore(int score) {
     _score.innerHtml = " $score";
   }
 
-  //displays the current number of lives
+  /**
+   * display the current number of lives
+   */
   void updateLives(int lives) {
     _lives.innerHtml = " $lives";
   }
+
+  /**
+   * display the powerUp duration time
+   */
   void updatePowerUpTime(int time) {
     if(time == -1){
       _time.innerHtml = "";
@@ -607,10 +505,16 @@ class PacmanGameView {
     }
   }
 
+  /**
+   * dispaly the mobile keys, when a mobile device is used
+   */
   void showMobile() {
     _mobile.style.display = "block";
   }
 
+  /**
+   * display the gamekey status
+   */
   void updateMessages(String str, bool f) {
     if (f) {
       _message.style.color = "yellow";
