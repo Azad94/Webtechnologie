@@ -24,6 +24,7 @@ class PacmanGameController {
    */
   var _keyListener;
   Timer _timer;
+  var _labyrinth;
   int _currentLevel = 1;
   int _maxLevel = 3;
 
@@ -45,6 +46,10 @@ class PacmanGameController {
 
   /**
    * creates a Controller
+   * loads the GameConfig.json
+   * then proceeds with loading the first level 1_Level.json
+   * When something goes wrong an error message is displayed
+   * Also the Button to load the next level is initialised
    */
   PacmanGameController() {
     _pacmanModel = new PacmanGameModel(this);
@@ -55,12 +60,12 @@ class PacmanGameController {
           if (b) {
             _authenticateUser();
           } else {
-            _err=true;
+            _err = true;
             _pacmanView.showErrorScreen();
           }
         });
       } else {
-        _err=true;
+        _err = true;
         _pacmanView.showErrorScreen();
       }
     });
@@ -69,6 +74,10 @@ class PacmanGameController {
     });
   }
 
+  /**
+   * initialise the gamekey instance
+   * authenticate, and display the appropriate view for the game
+   */
   Future _authenticateUser() async {
     _gamekey = new GameKeyClient(
         LevelLoader.gamekeyHost,
@@ -79,14 +88,17 @@ class PacmanGameController {
     if (_pacmanView.mql.matches) {
       _pacmanView.showMobile();
     }
-    if(_err==false){
-    _pacmanView.showGame();
-    _pacmanView.hideLoading();
-    _startGame();
+    if (_err == false) {
+      _pacmanView.showGame();
+      _pacmanView.hideLoading();
+      _startGame();
     }
   }
 
-  //start new game
+  /**
+   * starts the game
+   *
+   */
   void _startGame() {
     if (_gamekey._available) {
       _pacmanView.updateMessages("Gamekey available", true);
@@ -99,13 +111,14 @@ class PacmanGameController {
     if (_currentLevel == _maxLevel) {
       _pacmanView.hideNextLevel();
     }
-    var labyrinth = _pacmanModel.getMap();
-      _createTable(labyrinth);
+    _labyrinth = _pacmanModel.getMap();
+    _createTable(_labyrinth);
 
-    _refreshLabyrinth(labyrinth);
-    //also use continueGame to initalise Timer
+    _refreshLabyrinth(_labyrinth);
+
+    //also continueGame is used to initalise the Timer
     _continueGame();
-
+    //when the game is played from a mobile device the mobile keys are initialised
     if (_pacmanView.mql.matches) {
       if (_up != null) _up.cancel();
       _up = _pacmanView.mobileUp.onClick.listen((_) {
@@ -125,16 +138,16 @@ class PacmanGameController {
       });
       if (_pause != null) _pause.cancel();
       _pause = _pacmanView.mobilePause.onClick.listen((_) {
-        if(_paused){
+        if (_paused) {
           _pacmanView.hidePause();
           _continueGame();
-        }else{
+        } else {
           _pacmanView.showPause();
-          _paused=true;
+          _paused = true;
           _stopGame();
         }
       });
-
+      //when the game is not played from a mobile device
     } else {
       if (_keyListener != null) _keyListener.cancel();
       _keyListener = window.onKeyDown.listen((KeyboardEvent ev) {
@@ -165,43 +178,68 @@ class PacmanGameController {
       });
     }
   }
-  void _continueGame(){
-    _paused=false;
+
+  /**
+   * initialise the timer
+   * timer calls triggerFrame periodic to keep the view updated
+   */
+  void _continueGame() {
+    _paused = false;
     if (_timer != null) _timer.cancel();
     _timer = new Timer.periodic(speed, (_) => _pacmanModel.triggerFrame());
   }
-  //create the table in the view
+
+  /**
+   * create the table in the view
+   */
   void _createTable(List<List<Types>> l) {
     _pacmanView.initTable(l);
   }
 
-  //load the current game elements and graphis into the table
+  /**
+   * load the current game elements and graphis into the table, at their updated position
+   */
   void _refreshLabyrinth(List<List<Types>> l) {
     _pacmanView.labyrinthFill(l);
   }
 
-  //updates the current view
+  /**
+   * updates the current of the view
+   */
   void updateGameStatus() {
     _updateScore();
     _updateLevel();
     _updateLives();
     _updatePowerUpTime();
-    var _labyrinth = _pacmanModel.getMap();
+    _labyrinth = _pacmanModel.getMap();
     _refreshLabyrinth(_labyrinth);
     _gameOver(_pacmanModel.gameEnd);
     _gameWon(_pacmanModel.gameVic);
   }
-  void toggleErrorScreen(){
+
+  /**
+   * upon an error displays an error Message on the screen
+   */
+  void toggleErrorScreen() {
     _err = true;
     _pacmanView.showErrorScreen();
   }
+
+  /**
+   * loads the bonus level
+   */
   void loadBonusLevel() {
     _achievedScore += _pacmanModel.score;
     _stopGame();
     _pacmanModel.newGame();
     _pacmanModel.loadLevel(0).whenComplete(() => _startGame());
   }
-  //ends the game, lost
+
+  /**
+   * is used when the player lost the game.
+   * stops the timer and updates the view accordingly.
+   * when gamekey is available, the user can enter a name to save the score.
+   */
   void _gameOver(bool b) {
     if (b) {
       _stopGame();
@@ -216,6 +254,9 @@ class PacmanGameController {
     }
   }
 
+  /**
+   * saves the score a player achieved through all the levels to the gamekeyserver.
+   */
   void _saveScore() {
     if (_gamekey._available) {
       _achievedScore += _pacmanModel.score;
@@ -227,7 +268,12 @@ class PacmanGameController {
     }
   }
 
-  //ends the game, won
+  /**
+   * is used when the player won the game.
+   * stops the timer and updates the view accordingly.
+   * when gamekey is available and the user beat the last level,
+   * the user can enter a name to save the score.
+   */
   void _gameWon(bool b) {
     if (b) {
       _stopGame();
@@ -241,14 +287,17 @@ class PacmanGameController {
           _pacmanView.showHighscore();
           _pacmanView.savename.onClick.listen((_) {
             _saveScore();
-          });}
+          });
+        }
       }
     }
   }
 
-  //stops interaction
+  /**
+   * stops all listeners and the timer
+   */
   void _stopGame() {
-    if(!_paused) {
+    if (!_paused) {
       if (_pacmanView.mql.matches) {
         _up.cancel();
         _down.cancel();
@@ -261,24 +310,38 @@ class PacmanGameController {
     _timer.cancel();
   }
 
-  //set the direction for pacman to choose the right graphic
+  /**
+   * set the direction for pacman to choose the right graphic
+   */
   void setPacmanDir(Directions p) {
     this._pacmanDir = p;
   }
 
-  //let the view display the current score
+  /**
+   * let the view display the current score
+   */
   void _updateScore() {
     _pacmanView.updateScore(_pacmanModel.score);
   }
 
+  /**
+   * let the view display the current levelnumber
+   */
   void _updateLevel() {
     _pacmanView.updateLevel(_pacmanModel.level);
   }
 
+  /**
+   * let the view display the current lives
+   */
   void _updateLives() {
     _pacmanView.updateLives(_pacmanModel.lives);
   }
 
+  /**
+   * let the view display the current time, the apple powerup is active
+   */
   void _updatePowerUpTime() {
-    _pacmanView.updatePowerUpTime(_pacmanModel.counter);}
+    _pacmanView.updatePowerUpTime(_pacmanModel.counter);
+  }
 }

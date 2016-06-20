@@ -220,7 +220,7 @@ class PacmanGameModel {
    */
   void triggerFrame() {
     if (_counter > -1) _counter++;
-    if (_appleTime == _counter ) _counter = 2-1;
+    if (_appleTime == _counter ) _counter = -1;
     _level.pacmanDir = _pacmanDir;
     if (_pacman != null) _pacman._move(_pacmanDir);
     _pacmanDir = Directions.NOTHING;
