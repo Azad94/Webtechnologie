@@ -11,13 +11,12 @@ part of pacmanModelLib;
 class Clyde extends Ghost {
   Clyde(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
       num startTime, num score)
-      : super(x, y, collPlayer, collGhost, l, eatTime, startTime, score);
+      : super(x, y, collPlayer, collGhost, l, eatTime, startTime, score){
 
-  int _doorX = 14;
-  int _doorY = 8;
-
-  int _scatterX = 1;
-  int _scatterY = 16;
+    //Scatter position of Clyde
+    _scatterX = 1;
+    _scatterY = _level._sizeY - 1;
+  }
 
   /**
    * Moves Clyde one step further

@@ -8,10 +8,12 @@ part of pacmanModelLib;
 class Pinky extends Ghost {
   Pinky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
       num startTime, num score)
-      : super( x, y, collPlayer, collGhost, l, eatTime, startTime, score);
+      : super( x, y, collPlayer, collGhost, l, eatTime, startTime, score){
 
-  int _scatterX = 1;
-  int _scatterY = 1;
+    //Scatter position of Pinky
+    _scatterX = 1;
+    _scatterY = 1;
+  }
 
 
   /**
@@ -27,8 +29,8 @@ class Pinky extends Ghost {
     if (_started) {
       //if Pinky is at his origin position his first target is to get out of the Door
       if (_x == _start_x && _y == _start_y) {
-        _targetX = doorX;
-        _targetY = doorY;
+        _targetX = _doorX;
+        _targetY = _doorY;
         _isScattering = false;
         _isChasing = false;
         _previousDirections = Directions.RIGHT;
@@ -117,7 +119,7 @@ class Pinky extends Ghost {
 
       //checks if Pinky has reached his target and changes the mode accordingly
       if (_x == _targetX && _y == _targetY) {
-        if (_x == doorX && _y == doorY) {
+        if (_x == _doorX && _y == _doorY) {
           _outOfGate = true;
           _isScattering = true;
           changeMode();

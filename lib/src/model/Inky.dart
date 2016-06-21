@@ -9,12 +9,12 @@ part of pacmanModelLib;
 class Inky extends Ghost {
   Inky(int x, int y, bool collPlayer, bool collGhost, Level l, num eatTime,
       num startTime, num score)
-      : super(x, y, collPlayer, collGhost, l, eatTime, startTime, score);
+      : super(x, y, collPlayer, collGhost, l, eatTime, startTime, score){
 
-
-  int _scatterX = 27;
-  int _scatterY = 16;
-
+    //Scatter position of Inky
+    _scatterX = _level._sizeX - 1;
+    _scatterY = _level._sizeY - 1;
+  }
 
   /**
    * Moves Inky one step further
@@ -29,8 +29,8 @@ class Inky extends Ghost {
     if (_started) {
       //if Inky is at his origin position his first target is to get out of the Door
       if (_x == _start_x && _y == _start_y) {
-        _targetX = doorX;
-        _targetY = doorY;
+        _targetX = _doorX;
+        _targetY = _doorY;
         _isScattering = false;
         _isChasing = false;
         _previousDirections = Directions.LEFT;
@@ -123,7 +123,7 @@ class Inky extends Ghost {
 
       //checks if Inky has reached his target and changes the mode accordingly
       if (_x == _targetX && _y == _targetY) {
-        if (_x == doorX && _y == doorY) {
+        if (_x == _doorX && _y == _doorY) {
           _outOfGate = true;
           _isScattering = true;
           changeMode();

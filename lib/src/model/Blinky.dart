@@ -8,15 +8,15 @@ part of pacmanModelLib;
  * persistent ghost of them all, he leaves the gate at first
  */
 class Blinky extends Ghost {
+
   Blinky(int startx, int starty, bool collPlayer, bool collGhost, Level l, num eatTime,
       num startTime, num score)
-      : super( startx, starty, collPlayer, collGhost, l, eatTime, startTime, score);
+      : super( startx, starty, collPlayer, collGhost, l, eatTime, startTime, score){
 
-  int _scatterX = 27;
-  int _scatterY = 1;
-
-
-
+    //Scatter position of Blinky
+    _scatterX = _level._sizeX - 1;
+    _scatterY = 1;
+  }
 
   /**
    * Moves Blinky one step further
@@ -32,8 +32,8 @@ class Blinky extends Ghost {
     if (_started) {
       //if Blinky is at his origin position his first target is to get out of the Door
       if (_x == _start_x && _y == _start_y) {
-        _targetX = doorX;
-        _targetY = doorY;
+        _targetX = _doorX;
+        _targetY = _doorY;
         _isScattering = false;
         _isChasing = false;
         _previousDirections = Directions.RIGHT;
@@ -76,7 +76,7 @@ class Blinky extends Ghost {
 
       //checks if Blinky has reached his target and changes the mode accordingly
       if (_x == _targetX && _y == _targetY) {
-        if (_x == doorX && _y == doorY) {
+        if (_x == _doorX && _y == _doorY) {
           _outOfGate = true;
           _isScattering = true;
           changeMode();
@@ -121,7 +121,6 @@ class Blinky extends Ghost {
           _previousDirections = Directions.NOTHING;
           break;
       }
-
 
       ++_changeModeTimer;
     }

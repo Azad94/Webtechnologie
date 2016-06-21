@@ -1,9 +1,12 @@
 part of pacmanModelLib;
 
+/**
+ * Contains the structure for each Ghost
+ */
 abstract class Ghost extends GameElement {
 
   /**
-   * start position of ghost
+   * start position of the Ghost
    */
   final _start_x, _start_y;
 
@@ -111,10 +114,23 @@ abstract class Ghost extends GameElement {
    */
   bool _outOfGate = false;
 
-  int doorX;
-  int doorY;
-  int scatterX, scatterY;
+  /**
+   * Position of the Door
+   */
+  int _doorX, _doorY;
+
+  /**
+   * Scatter Position of the Ghost
+   */
+  int _scatterX, _scatterY;
+
+  /**
+   * true if the vertical difference between
+   * the Ghost and Pac-Man is higher than
+   * the horizontal difference, else false
+   */
   bool _isVerticalMoreImportant;
+
   /**
    * Constructor of class Ghost
    */
@@ -136,6 +152,7 @@ abstract class Ghost extends GameElement {
     if(!_started) {
       timeCounter++;
 
+      //Attributs needed for the AI
       if(timeCounter == _startTime) {
         _targetX = 0;
         _targetY = 0;
@@ -148,8 +165,8 @@ abstract class Ghost extends GameElement {
         _scatteringTimer;
         _previousDirections;
         update;
-        doorX = _level._doorX;
-        doorY = _level._doorY;
+        _doorX = _level._doorX;
+        _doorY = _level._doorY;
       }
     }
 
@@ -166,36 +183,6 @@ abstract class Ghost extends GameElement {
         _level._endEatableMode();
       }
     }
-
-/**
-    switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirections, this)) {
-      case Directions.UP:
-        _level.registerElement(_x, _y, _x, --_y, this);
-        _previousDirections = Directions.UP;
-        break;
-
-      case Directions.DOWN:
-        _level.registerElement(_x, _y, _x, ++_y, this);
-        _previousDirections = Directions.DOWN;
-        break;
-
-      case Directions.LEFT:
-        _level.registerElement(_x, _y, --_x, _y, this);
-        _previousDirections = Directions.LEFT;
-        break;
-
-      case Directions.RIGHT:
-        _level.registerElement(_x, _y, ++_x, _y, this);
-        _previousDirections = Directions.RIGHT;
-        break;
-
-      case Directions.NOTHING:
-        _level.registerElement(_x, _y, _x, _y, this);
-        _previousDirections = Directions.NOTHING;
-        break;
-    }
-**/
-
   }
 
   /**
