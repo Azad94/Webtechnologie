@@ -29,6 +29,8 @@ class Pacman extends GameElement {
    */
   bool _powerMode = false;
 
+  bool _lastFramePowerMode = false;
+
   /**
    * level
    */
@@ -70,7 +72,10 @@ class Pacman extends GameElement {
           _level._registerElement(_x, _y, ++_x, _y, this);
         break;
       default:
-        if (!_powerMode) this._possiblePacmanWay(_x, _y, this);
+        if (_lastFramePowerMode) {
+          this._possiblePacmanWay(_x, _y, this);
+          _lastFramePowerMode = false;
+        }
         break;
     }
   }
@@ -100,6 +105,7 @@ class Pacman extends GameElement {
     if (_powerMode) {
       if (++_frameCounter == _powerTime) {
         _powerMode = false;
+        _lastFramePowerMode = true;
         _level._disablePacmanPowerMode();
       }
     }
