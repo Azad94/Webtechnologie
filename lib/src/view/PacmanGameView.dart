@@ -30,7 +30,8 @@ class PacmanGameView {
   final mobilePause = querySelector("#mobilePause");
   final _message = querySelector(".messages");
 
-  //mql and mqlLandscape is used to determine if a mobile device is used and the orientation of the device
+  //mql and mqlLandscape is used to determine if a mobile device is used
+  // and the orientation of the device
   var _mql = window.matchMedia("screen and (max-device-width : 800px)");
   var _mqlLandscape = window.matchMedia("screen and (orientation: landscape)");
 
@@ -120,7 +121,8 @@ class PacmanGameView {
         .join("");
     final points = "You got $score points";
     _overlay.innerHtml =
-        "<div id='scorelist'> $points ${ list.isEmpty? "" : "<ol>$list</ol>"}</div>";
+        "<div id='scorelist'> $points ${ list.isEmpty? ""
+            : "<ol>$list</ol>"}</div>";
   }
 
   String get user =>
@@ -154,8 +156,9 @@ class PacmanGameView {
   }
 
   /**
-   * loads the different game elements and their graphical representation into the table
-   * distingush between screen/mobile(portrait) and mobile(landscape)
+   * loads the different game elements and their graphical representation
+   * into the table distingush between screen/mobile(portrait)
+   * and mobile(landscape)
    */
   void labyrinthFill(List<List<Types>> l) {
     var kl = _labyrinth.children[0].children[0];

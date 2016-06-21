@@ -1,7 +1,8 @@
 part of pacmanModelLib;
 
 /**
- * Represents a item which the player can pick up. Some items have an effect on gameplay
+ * Represents a item which the player can pick up.
+ * Some items havean effect on gameplay
  */
 abstract class Item extends GameElement {
   /**

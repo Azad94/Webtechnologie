@@ -247,6 +247,9 @@ class LevelLoader {
     return true;
   }
 
+  /**
+   * loads the game configs
+   */
   static Future<bool> loadConfig() async {
     try {
       String json = await HttpRequest.getString(_CONFIG_JSON);

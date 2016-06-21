@@ -134,8 +134,8 @@ abstract class Ghost extends GameElement {
   /**
    * Constructor of class Ghost
    */
-  Ghost(int startx, int starty,bool collPlayer, bool collGhost, Level l, num eatTime, num startTime,
-      num score)
+  Ghost(int startx, int starty,bool collPlayer, bool collGhost, Level l,
+      num eatTime, num startTime, num score)
       : super(startx, starty, collPlayer, collGhost),
         this._level = l,
         this._eatTime = eatTime,
@@ -212,7 +212,9 @@ abstract class Ghost extends GameElement {
    * return   the Direction where the Ghost is allowed to move next
    *          (UP, DOWN, LEFT, RIGHT, NOTHING)
    */
-  Directions getNextMove(int currentX, int currentY, int targetX, int targetY, bool isOutOfDoor, Directions previouDirection, GameElement g) {
+  Directions getNextMove(int currentX, int currentY, int targetX,
+      int targetY, bool isOutOfDoor, Directions previouDirection,
+      GameElement g) {
 
     _possibleDirections = 0;
     _possibleUp = false;
@@ -220,11 +222,13 @@ abstract class Ghost extends GameElement {
     _possibleLeft = false;
     _possibleRight = false;
 
-    //calculates the vertical and horizontal distance between the current and target Position
+    //calculates the vertical and horizontal distance between the current
+    // and target Position
     int _currentDistanceX = (targetX - currentX).abs();
     int _currentDistanceY = (targetY - currentY).abs();
 
-    // variables to check for collision without changing current Position Coordinates
+    // variables to check for collision without changing
+    // current Position Coordinates
     int _checkX = currentX;
     int _checkY = currentY;
 
@@ -282,20 +286,23 @@ abstract class Ghost extends GameElement {
       if (previouDirection != Directions.DOWN && _possibleUp){
         if (!_level._checkCollision(_checkX, --_checkY, this)){
           _checkY = currentY;
-          if ((targetY - --_checkY).abs() < _currentDistanceY) return Directions.UP;
+          if ((targetY - --_checkY).abs() < _currentDistanceY)
+            return Directions.UP;
         }
         _checkY = currentY;
 
         if (!_level._checkCollision(--_checkX, _checkY, this)){
           _checkX = currentX;
-          if ((targetX - --_checkX).abs() < _currentDistanceX) return Directions.LEFT;
+          if ((targetX - --_checkX).abs() < _currentDistanceX)
+            return Directions.LEFT;
 
         }
         _checkX = currentX;
 
         if (!_level._checkCollision(++_checkX, _checkY, this)){
           _checkX = currentX;
-          if ((targetX - ++_checkX).abs() < _currentDistanceX) return Directions.RIGHT;
+          if ((targetX - ++_checkX).abs() < _currentDistanceX)
+            return Directions.RIGHT;
         }
         _checkX = currentX;
       }
@@ -304,26 +311,30 @@ abstract class Ghost extends GameElement {
         if (!_level._checkCollision(_checkX, ++_checkY, this)){
           _checkY = currentY;
           if ((targetY - ++_checkY).abs() < _currentDistanceY){
-            if (_currentDistanceY > _currentDistanceX) return Directions.DOWN;
+            if (_currentDistanceY > _currentDistanceX)
+              return Directions.DOWN;
           }
         }
         _checkY = currentY;
 
         if (!_level._checkCollision(--_checkX, _checkY, this)){
           _checkX = currentX;
-          if ((targetX - --_checkX).abs() < _currentDistanceX) return Directions.LEFT;
+          if ((targetX - --_checkX).abs() < _currentDistanceX)
+            return Directions.LEFT;
         }
         _checkX = currentX;
 
         if (!_level._checkCollision(++_checkX, _checkY, this)){
           _checkX = currentX;
-          if ((targetX - ++_checkX).abs() < _currentDistanceX) return Directions.RIGHT;
+          if ((targetX - ++_checkX).abs() < _currentDistanceX)
+            return Directions.RIGHT;
         }
         _checkX = currentX;
 
         if (!_level._checkCollision(_checkX, ++_checkY, this)){
           _checkY = currentY;
-          if ((targetY - ++_checkY).abs() < _currentDistanceY) return Directions.DOWN;
+          if ((targetY - ++_checkY).abs() < _currentDistanceY)
+            return Directions.DOWN;
         }
         _checkY = currentY;
       }
@@ -332,20 +343,23 @@ abstract class Ghost extends GameElement {
         if ((targetX - --_checkX).abs() < _currentDistanceX) {
           if (!_level._checkCollision(--_checkX, _checkY, this)) {
             _checkX = currentX;
-            if ((targetX - --_checkX).abs() < _currentDistanceX) return Directions.LEFT;
+            if ((targetX - --_checkX).abs() < _currentDistanceX)
+              return Directions.LEFT;
           }
           _checkX = currentX;
 
           if (!_level._checkCollision(_checkX, ++_checkY, this)) {
             _checkY = currentY;
-            if (previouDirection != Directions.UP && (targetY - ++_checkY).abs() < _currentDistanceY)
+            if (previouDirection != Directions.UP
+                && (targetY - ++_checkY).abs() < _currentDistanceY)
               return Directions.DOWN;
           }
           _checkY = currentY;
 
           if (!_level._checkCollision(_checkX, --_checkY, this)) {
             _checkY = currentY;
-            if ((targetY - --_checkY).abs() < _currentDistanceY) return Directions.UP;
+            if ((targetY - --_checkY).abs() < _currentDistanceY)
+              return Directions.UP;
 
           }
           _checkY = currentY;
@@ -354,21 +368,24 @@ abstract class Ghost extends GameElement {
         if (previouDirection != Directions.LEFT && _possibleRight){
           if (!_level._checkCollision(++_checkX, _checkY, this)){
             _checkX = currentX;
-            if ((targetX - ++_checkX) < _currentDistanceX) return Directions.RIGHT;
+            if ((targetX - ++_checkX) < _currentDistanceX)
+              return Directions.RIGHT;
 
           }
           _checkX = currentX;
 
           if (!_level._checkCollision(_checkX, --_checkY, this)){
             _checkY = currentY;
-            if ((targetY - --_checkY).abs() < _currentDistanceY) return Directions.UP;
+            if ((targetY - --_checkY).abs() < _currentDistanceY)
+              return Directions.UP;
 
           }
           _checkY = currentY;
 
           if (!_level._checkCollision(_checkX, ++_checkY, this)){
             _checkY = currentY;
-            if ((targetY - ++_checkY).abs() < _currentDistanceY) return Directions.DOWN;
+            if ((targetY - ++_checkY).abs() < _currentDistanceY)
+              return Directions.DOWN;
           }
           _checkY = currentY;
         }
@@ -391,7 +408,8 @@ abstract class Ghost extends GameElement {
         }
         _checkY = currentY;
 
-        if (!_level._checkCollision(++_checkX, _checkY, this))  return Directions.RIGHT;
+        if (!_level._checkCollision(++_checkX, _checkY, this))
+          return Directions.RIGHT;
         _checkX = currentX;
 
         return Directions.NOTHING;
@@ -410,7 +428,8 @@ abstract class Ghost extends GameElement {
         }
         _checkX = currentX;
 
-        if (!_level._checkCollision(++_checkX, _checkY, this)) return Directions.RIGHT;
+        if (!_level._checkCollision(++_checkX, _checkY, this))
+          return Directions.RIGHT;
 
         _checkX = currentX;
         return Directions.NOTHING;
@@ -429,7 +448,8 @@ abstract class Ghost extends GameElement {
         }
         _checkY = currentY;
 
-        if (!_level._checkCollision(--_checkX, _checkY, this)) return Directions.LEFT;
+        if (!_level._checkCollision(--_checkX, _checkY, this))
+          return Directions.LEFT;
 
         _checkX = currentX;
         return Directions.NOTHING;
@@ -448,7 +468,8 @@ abstract class Ghost extends GameElement {
         }
         _checkY = currentY;
 
-        if (!_level._checkCollision(++_checkX, _checkY, this)) return Directions.RIGHT;
+        if (!_level._checkCollision(++_checkX, _checkY, this))
+          return Directions.RIGHT;
         _checkX = currentX;
 
         return Directions.NOTHING;
@@ -471,7 +492,8 @@ abstract class Ghost extends GameElement {
         }
         _checkY = currentY;
 
-        if (!_level._checkCollision(_checkX, ++_checkY, this)) return Directions.DOWN;
+        if (!_level._checkCollision(_checkX, ++_checkY, this))
+          return Directions.DOWN;
         _checkY = currentY;
 
         return Directions.NOTHING;
@@ -490,7 +512,8 @@ abstract class Ghost extends GameElement {
         }
         _checkX = currentX;
 
-        if (!_level._checkCollision(_checkX, ++_checkY, this)) return Directions.DOWN;
+        if (!_level._checkCollision(_checkX, ++_checkY, this))
+          return Directions.DOWN;
         _checkY = currentY;
 
         return Directions.NOTHING;
@@ -509,7 +532,8 @@ abstract class Ghost extends GameElement {
         }
         _checkX = currentX;
 
-        if (!_level._checkCollision(_checkX, --_checkY, this)) return Directions.UP;
+        if (!_level._checkCollision(_checkX, --_checkY, this))
+          return Directions.UP;
         _checkY = currentY;
 
         return Directions.NOTHING;
@@ -528,7 +552,8 @@ abstract class Ghost extends GameElement {
         }
         _checkX = currentX;
 
-        if (!_level._checkCollision(_checkX, ++_checkY, this)) return Directions.DOWN;
+        if (!_level._checkCollision(_checkX, ++_checkY, this))
+          return Directions.DOWN;
         _checkY = currentY;
 
         return Directions.NOTHING;

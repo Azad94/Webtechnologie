@@ -1,8 +1,8 @@
 part of pacmanModelLib;
 
 /**
- * Represents one level. A level includes the map and all meta data, like lives, score etc.
- * The level also detect collision of two [GameElement]s.
+ * Represents one level. A level includes the map and all meta data,
+ * like lives, score etc. The level also detect collision of two [GameElement]s.
  */
 class Level {
   /**
@@ -232,8 +232,9 @@ class Level {
   }
 
   /**
-   * checks if the given [GameElement] collides on a given position with a [Environment]
-   * return true if the object collides with another one, if not false; error: null
+   * checks if the given [GameElement] collides on a given position
+   * with a [Environment] return true if the object collides with another one,
+   * if not false; error: null
    */
   bool _checkCollision(int x, int y, GameElement g) {
     if (x == null || y == null || g == null) {
@@ -251,11 +252,13 @@ class Level {
     if (tile._environment._collisionGhost == true && g is Ghost) {
       // is a side where is no collision
       if (tile._environment._noCollisionSidesGhost != null) {
-        //check if side in list and calculate side is the same, if yes no collision
+        //check if side in list and calculate side is the same,
+        // if yes no collision
         for (int i = 0;
             i < tile._environment._noCollisionSidesGhost.length;
             i++)
-          if (tile._environment._noCollisionSidesGhost[i] == side) return false;
+          if (tile._environment._noCollisionSidesGhost[i] == side)
+            return false;
       }
       return true;
     }
@@ -265,7 +268,8 @@ class Level {
       if (_pacmanPowerMode) return false;
       // is a side where is no collision
       if (tile._environment._noCollisionSidesPlayer != null) {
-        //check if side in list and calculate side is the same, if yes no collision
+        //check if side in list and calculate side is the same,
+        // if yes no collision
         for (int i = 0;
             i < tile._environment._noCollisionSidesPlayer.length;
             i++)
@@ -280,7 +284,8 @@ class Level {
 
   /**
    * Register a [GameElement] on a new position.
-   * xOld and yOld is the old position and xNew and yNew the new one. g is a reference on the moving objekt.
+   * xOld and yOld is the old position and xNew and yNew the new one.
+   * g is a reference on the moving objekt.
    */
   void _registerElement(int xOld, int yOld, int xNew, int yNew, GameElement g) {
     if (xOld == null ||
@@ -322,9 +327,10 @@ class Level {
    */
   List<List<Types>> _getMap() {
     /*
-         * if more ghosts of pacman and ghosts on the same field the following priority are used:
-         * if pacman on a field, only pacman is returned
-         * if two or more ghost on one field, only the first ghost in list is returned
+         * if more ghosts of pacman and ghosts on the same field the
+         * following priority are used: if pacman on a field, only pacman
+         * is returned if two or more ghost on one field, only the first
+         * ghost in list is returned
          */
     List<List<Types>> ret = new List<List<Types>>();
     for (int y = 0; y < _sizeY; y++) {
@@ -552,7 +558,7 @@ class Level {
   /*
   Helper methods
    */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
   /**
    *  DO NOT CALL; PRIVATE
    * creates all game objects and put them into the game field (_tiles).

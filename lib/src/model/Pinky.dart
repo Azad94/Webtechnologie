@@ -27,7 +27,8 @@ class Pinky extends Ghost {
 
     //checks if Pinky is allowed to move yet
     if (_started) {
-      //if Pinky is at his origin position his first target is to get out of the Door
+      //if Pinky is at his origin position his first target is to
+      // get out of the Door
       if (_x == _start_x && _y == _start_y) {
         _targetX = _doorX;
         _targetY = _doorY;
@@ -65,7 +66,8 @@ class Pinky extends Ghost {
 
       //updates the target of Pinky while in chasing mode
       //four squares ahead of the current position of Pac-Man
-      if (_isScattering == false && _isChasing == true && (_changeModeTimer % update) == 0) {
+      if (_isScattering == false && _isChasing == true
+          && (_changeModeTimer % update) == 0) {
         switch(_level._pacmanPre){
           case Types.PACMAN_UP:
             _targetX = _level.pacmanX;
@@ -88,9 +90,10 @@ class Pinky extends Ghost {
         }
       }
 
-      //gets the Direction Pinky is allowed to head next, registers his next position
-      //and updates his previous direction
-      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirections, this)) {
+      //gets the Direction Pinky is allowed to head next,
+      // registers his next position and updates his previous direction
+      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate,
+          _previousDirections, this)) {
         case Directions.UP:
           _level._registerElement(_x, _y, _x, --_y, this);
           _previousDirections = Directions.UP;

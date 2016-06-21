@@ -9,9 +9,11 @@ part of pacmanModelLib;
  */
 class Blinky extends Ghost {
 
-  Blinky(int startx, int starty, bool collPlayer, bool collGhost, Level l, num eatTime,
+  Blinky(int startx, int starty, bool collPlayer, bool collGhost,
+      Level l, num eatTime,
       num startTime, num score)
-      : super( startx, starty, collPlayer, collGhost, l, eatTime, startTime, score){
+      : super( startx, starty, collPlayer, collGhost, l, eatTime,
+      startTime, score){
 
     //Scatter position of Blinky
     _scatterX = _level._sizeX - 1;
@@ -30,7 +32,8 @@ class Blinky extends Ghost {
 
     //checks if Blinky is allowed to move yet
     if (_started) {
-      //if Blinky is at his origin position his first target is to get out of the Door
+      //if Blinky is at his origin position his first target is to
+      // get out of the Door
       if (_x == _start_x && _y == _start_y) {
         _targetX = _doorX;
         _targetY = _doorY;
@@ -93,9 +96,11 @@ class Blinky extends Ghost {
         }
       }
 
-      //gets the Direction Blinky is allowed to head next, registers his next position
+      //gets the Direction Blinky is allowed to head next, registers
+      // his next position
       //and updates his previous direction
-      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirections, this)) {
+      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate,
+          _previousDirections, this)) {
         case Directions.UP:
           _level._registerElement(_x, _y, _x, --_y, this);
           _previousDirections = Directions.UP;

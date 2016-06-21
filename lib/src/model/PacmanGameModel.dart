@@ -216,7 +216,8 @@ class PacmanGameModel {
   }
 
   /**
-   * move [Pacman] and [Ghost] to the next position. Call this method each frame.
+   * move [Pacman] and [Ghost] to the next position. Call this
+   * method each frame.
    */
   void triggerFrame() {
     if (_counter > -1) _counter++;

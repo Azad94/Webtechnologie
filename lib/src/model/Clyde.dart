@@ -30,7 +30,8 @@ class Clyde extends Ghost {
 
     //checks if Clyde is allowed to move yet
     if (_started) {
-      //if Clyde is at his origin position his first target is to get out of the Door
+      //if Clyde is at his origin position his first target is
+      // to get out of the Door
       if (_x == _start_x && _y == _start_y) {
         _targetX = _doorX;
         _targetY = _doorY;
@@ -61,21 +62,24 @@ class Clyde extends Ghost {
 
       //switches to chasing mode if the requirements are fulfilled
       if (_outOfGate == true && _isScattering == true && _isChasing == false
-          && _changeModeTimer != 0 && (_changeModeTimer % _scatteringTimer) == 0)  {
+          && _changeModeTimer != 0
+          && (_changeModeTimer % _scatteringTimer) == 0)  {
         _isScattering = false;
         changeMode();
       }
 
       //updates the target of Clyde while in chasing mode to the current
       //position of Pac-Man every five steps
-      if (_isScattering == false && _isChasing == true && (_changeModeTimer % update) == 0) {
+      if (_isScattering == false && _isChasing == true
+          && (_changeModeTimer % update) == 0) {
         _targetX = _level.pacmanX;
         _targetY = _level.pacmanY;
       }
 
-      //gets the Direction Clyde is allowed to head next, registers his next position
-      //and updates his previous direction
-      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate, _previousDirections, this)) {
+      //gets the Direction Clyde is allowed to head next,
+      //registers his next position and updates his previous direction
+      switch (getNextMove(_x, _y, _targetX, _targetY, _outOfGate,
+          _previousDirections, this)) {
         case Directions.UP:
           _level._registerElement(_x, _y, _x, --_y, this);
           _previousDirections = Directions.UP;

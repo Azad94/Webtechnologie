@@ -55,7 +55,8 @@ class GameKeyClient {
    * This method can be used to authenticate a game.
    * A game must know its [id] and its [secret].
    * This method is used to check periodically gamekey service availability
-   * and sets _available flag accordingly. Furthermore the method checks if the user called "pacman" is available for saving
+   * and sets _available flag accordingly. Furthermore the method checks if the
+   * user called "pacman" is available for saving
    * states, if not the user will be created
    */
   Future<bool> authenticate() async {
@@ -95,7 +96,8 @@ class GameKeyClient {
    * Autor: Nane Kratzke
    * Registers a non existing user with the gamekey service.
    * - Returns user map with stored values on success
-   * - Returns null if user could not be stored (due to several reasons, gamekey service not reachable, user already existing)
+   * - Returns null if user could not be stored (due to several reasons, gamekey
+   * service not reachable, user already existing)
    */
   Future<Map> _registerUser(String name, String pwd) async {
     if (!_available) return new Future.value(null);

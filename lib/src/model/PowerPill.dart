@@ -1,7 +1,8 @@
 part of pacmanModelLib;
 
 /**
- * represents a power pill in pacman game. Is like a normal pill, but enable the powerMode.
+ * represents a power pill in pacman game. Is like a normal pill,
+ * but enable the powerMode.
  */
 class PowerPill extends Item {
   /**

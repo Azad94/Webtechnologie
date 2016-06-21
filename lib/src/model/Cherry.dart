@@ -1,7 +1,8 @@
 part of pacmanModelLib;
 
 /**
- * A special item with high score. If a bonus level available, open wall for entry
+ * A special item with high score. If a bonus level available,
+ * open wall for entry
  */
 class Cherry extends Item {
   /**

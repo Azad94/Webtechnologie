@@ -27,7 +27,8 @@ class PacmanGameController {
   int _maxLevel = 3;
 
   /**
-   * a few different values, if the game is paused, an error occured an the achievedScore during a session
+   * a few different values, if the game is paused, an error occured an the
+   * achievedScore during a session
    */
   bool _paused = false;
   bool _err = false;
@@ -116,7 +117,8 @@ class PacmanGameController {
 
     //also continueGame is used to initalise the Timer
     _continueGame();
-    //when the game is played from a mobile device the mobile keys are initialised
+    //when the game is played from a mobile device the mobile keys
+    // are initialised
     if (_pacmanView.mql.matches) {
       if (_up != null) _up.cancel();
       _up = _pacmanView.mobileUp.onClick.listen((_) {
@@ -195,7 +197,8 @@ class PacmanGameController {
   }
 
   /**
-   * load the current game elements and graphis into the table, at their updated position
+   * load the current game elements and graphis into the table,
+   * at their updated position
    */
   void _refreshLabyrinth(List<List<Types>> l) {
     _pacmanView.labyrinthFill(l);
@@ -253,7 +256,8 @@ class PacmanGameController {
   }
 
   /**
-   * saves the score a player achieved through all the levels to the gamekeyserver.
+   * saves the score a player achieved through all the levels to
+   * the gamekeyserver.
    */
   void _saveScore() {
     if (_gamekey._available) {
