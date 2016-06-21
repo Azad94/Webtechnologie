@@ -223,7 +223,6 @@ class PacmanGameModel {
     if (_appleTime == _counter) _counter = -1;
     _level.pacmanDir = _pacmanDir;
     if (_pacman != null) _pacman._move(_pacmanDir);
-    _pacmanDir = Directions.NOTHING;
     this._moveGhost();
     _cherrys.forEach((c) => c._triggerFrame());
     _pacman._triggerFrame();
@@ -295,7 +294,7 @@ class PacmanGameModel {
   /*
    * local helper methods
    */
-  /////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
   /**
    * DO NOT CALL; PRIVATE
    * Moves all [Ghost]s
